@@ -10,18 +10,19 @@
     "license": "MIT",
     "require": {
         "php": "^8.2",
-        "laravel/framework": "^12.0",
+        "laravel/framework": "^12.32.5",
         "laravel/tinker": "^2.10.1"
     },
     "require-dev": {
         "driftingly/rector-laravel": "^2.0.7",
-        "fakerphp/faker": "^1.23",
-        "laravel/pail": "^1.2.2",
-        "laravel/pint": "^1.24",
-        "laravel/sail": "^1.41",
-        "mockery/mockery": "^1.6",
-        "nunomaduro/collision": "^8.6",
-        "phpunit/phpunit": "^11.5.3"
+        "fakerphp/faker": "^1.24.1",
+        "larastan/larastan": "^3.7.2",
+        "laravel/pail": "^1.2.3",
+        "laravel/pint": "^1.25.1",
+        "laravel/sail": "^1.46",
+        "mockery/mockery": "^1.6.12",
+        "nunomaduro/collision": "^8.8.2",
+        "phpunit/phpunit": "^11.5.42"
     },
     "autoload": {
         "psr-4": {
@@ -45,7 +46,9 @@
             "@php artisan package:discover --ansi"
         ],
         "post-update-cmd": [
-            "@php artisan vendor:publish --tag=laravel-assets --ansi --force"
+            "@php artisan vendor:publish --tag=laravel-assets --ansi --force",
+            "@php artisan clear",
+            "@update:requirements"
         ],
         "post-root-package-install": [
             "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
@@ -62,14 +65,18 @@
             "composer bump"
         ],
         "lint": [
-            "rector"
+            "rector",
+            "pint --parallel"
         ],
         "test:lint": [
-            "rector --dry-run"
+            "rector --dry-run",
+            "pint --parallel --test"
         ],
+        "test:types": "phpstan",
         "test": [
             "@php artisan config:clear --ansi",
-            "@php artisan test"
+            "@test:lint",
+            "@test:types"
         ]
     },
     "extra": {
