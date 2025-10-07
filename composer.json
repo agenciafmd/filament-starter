@@ -65,21 +65,26 @@
             "Illuminate\\Foundation\\ComposerScripts::prePackageUninstall"
         ],
         "update:requirements": [
-            "composer bump"
+            "composer bump",
+            "npx npm-check-updates -u"
         ],
         "lint": [
             "rector",
-            "pint --parallel"
+            "pint --parallel",
+            "npm run lint"
         ],
         "test:type-coverage": "pest --type-coverage --min=100",
         "test:lint": [
             "rector --dry-run",
-            "pint --parallel --test"
+            "pint --parallel --test",
+            "npm run test:lint"
         ],
+        "test:unit": "pest --parallel --coverage",
         "test:types": "phpstan",
         "test": [
             "@php artisan config:clear --ansi",
             "@test:type-coverage",
+            "@test:unit",
             "@test:lint",
             "@test:types"
         ]
@@ -90,6 +95,7 @@
         }
     },
     "config": {
+        "bump-after-update": true,
         "optimize-autoloader": true,
         "preferred-install": "dist",
         "sort-packages": true,
