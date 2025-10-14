@@ -13,7 +13,8 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(static function (Middleware $middleware): void {
-        //
+        $middleware->trustProxies(at: '*');
+        $middleware->trustHosts(at: ['filament.local']);
     })
     ->withExceptions(static function (Exceptions $exceptions): void {
         //
