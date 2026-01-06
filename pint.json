@@ -5,10 +5,17 @@
         "tmp"
     ],
     "rules": {
+        "align_multiline_comment": true,
         "array_push": true,
         "backtick_to_shell_exec": true,
+        "combine_consecutive_issets": true,
+        "combine_consecutive_unsets": true,
+        "concat_space": {
+            "spacing": "one"
+        },
         "date_time_immutable": true,
         "declare_strict_types": true,
+        "explicit_string_variable": true,
         "lowercase_keywords": true,
         "lowercase_static_reference": true,
         "final_class": true,
