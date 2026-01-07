@@ -74,7 +74,7 @@ return [
         ],
         'admix-users' => [
             'driver' => 'eloquent',
-            'model' => \Agenciafmd\Admix\Models\User::class,
+            'model' => Agenciafmd\Admix\Models\User::class,
         ],
         // 'users' => [
         //     'driver' => 'database',

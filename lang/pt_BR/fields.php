@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
     'auditable_id' => 'registro',
     'auditable_type' => 'local',
