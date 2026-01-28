@@ -1,13 +1,9 @@
 {
     "agents": [
-        "phpstorm"
+        "copilot",
+        "junie"
     ],
-    "editors": [
-        "phpstorm"
-    ],
-    "guidelines": [
-        "agenciafmd/filament-admix",
-        "filament/filament"
-    ],
+    "herd_mcp": false,
+    "mcp": true,
     "sail": true
 }
