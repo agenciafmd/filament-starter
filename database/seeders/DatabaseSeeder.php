@@ -8,7 +8,10 @@ use Agenciafmd\Admix\Models\User;
 //use Agenciafmd\Articles\Database\Seeders\ArticleSeeder;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Schema;
+
+// use Agenciafmd\Articles\Database\Seeders\ArticleSeeder;
 
 final class DatabaseSeeder extends Seeder
 {
@@ -17,7 +20,7 @@ final class DatabaseSeeder extends Seeder
     public function run(): void
     {
         /* remove files from storage/public/fake */
-        @rmdir(public_path('storage/fake'));
+        File::cleanDirectory(storage_path('app/public/fake'));
 
         Schema::disableForeignKeyConstraints();
 
