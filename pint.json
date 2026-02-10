@@ -2,7 +2,8 @@
     "preset": "laravel",
     "notPath": [
         "tests/TestCase.php",
-        "tmp"
+        "tmp",
+        "packages/agenciafmd/filament-postal/resources/mail"
     ],
     "rules": {
         "align_multiline_comment": true,
