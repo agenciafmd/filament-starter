@@ -3,7 +3,12 @@
         "copilot",
         "junie"
     ],
+    "guidelines": true,
     "herd_mcp": false,
     "mcp": true,
+    "packages": [
+        "agenciafmd/filament-admix",
+        "filament/filament"
+    ],
     "sail": true
 }
