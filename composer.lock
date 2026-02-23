@@ -12,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/agenciafmd/filament-admix.git",
-                "reference": "e0cab91d5a384dba1dc342d0c495bfdf5dc43434"
+                "reference": "09cbe07447f6e5227accf16ba6f72cbef302acae"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/agenciafmd/filament-admix/zipball/e0cab91d5a384dba1dc342d0c495bfdf5dc43434",
-                "reference": "e0cab91d5a384dba1dc342d0c495bfdf5dc43434",
+                "url": "https://api.github.com/repos/agenciafmd/filament-admix/zipball/09cbe07447f6e5227accf16ba6f72cbef302acae",
+                "reference": "09cbe07447f6e5227accf16ba6f72cbef302acae",
                 "shasum": ""
             },
             "require": {
@@ -61,7 +61,7 @@
                 "issues": "https://github.com/agenciafmd/filament-admix/issues",
                 "source": "https://github.com/agenciafmd/filament-admix/tree/master"
             },
-            "time": "2026-02-23T20:57:04+00:00"
+            "time": "2026-02-23T21:36:13+00:00"
         },
         {
             "name": "agenciafmd/filament-postal",
@@ -120,12 +120,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/agenciafmd/laravel-support.git",
-                "reference": "f056da097a3bb21ec57861edf70882f7087c3cad"
+                "reference": "9adc9c6c8895f105bf417ffdef14b488cc1159f3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/agenciafmd/laravel-support/zipball/f056da097a3bb21ec57861edf70882f7087c3cad",
-                "reference": "f056da097a3bb21ec57861edf70882f7087c3cad",
+                "url": "https://api.github.com/repos/agenciafmd/laravel-support/zipball/9adc9c6c8895f105bf417ffdef14b488cc1159f3",
+                "reference": "9adc9c6c8895f105bf417ffdef14b488cc1159f3",
                 "shasum": ""
             },
             "require": {
@@ -164,7 +164,7 @@
                 "issues": "https://github.com/agenciafmd/laravel-support/issues",
                 "source": "https://github.com/agenciafmd/laravel-support/tree/master"
             },
-            "time": "2026-02-17T14:23:19+00:00"
+            "time": "2026-02-23T21:36:13+00:00"
         },
         {
             "name": "anourvalar/eloquent-serialize",
