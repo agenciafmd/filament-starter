@@ -6,9 +6,14 @@
     "guidelines": true,
     "herd_mcp": false,
     "mcp": true,
+    "nightwatch_mcp": false,
     "packages": [
         "agenciafmd/filament-admix",
         "filament/filament"
     ],
-    "sail": true
+    "sail": true,
+    "skills": [
+        "pest-testing",
+        "tailwindcss-development"
+    ]
 }
