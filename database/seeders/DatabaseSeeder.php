@@ -5,11 +5,12 @@ declare(strict_types=1);
 namespace Database\Seeders;
 
 use Agenciafmd\Admix\Models\User;
-//use Agenciafmd\Articles\Database\Seeders\ArticleSeeder;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Schema;
+
+// use Agenciafmd\Articles\Database\Seeders\ArticleSeeder;
 
 // use Agenciafmd\Articles\Database\Seeders\ArticleSeeder;
 
@@ -34,7 +35,7 @@ final class DatabaseSeeder extends Seeder
             ]);
 
         $this->call([
-//            ArticleSeeder::class,
+            //            ArticleSeeder::class,
         ]);
 
         Schema::enableForeignKeyConstraints();
