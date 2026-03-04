@@ -11,21 +11,36 @@
         "agenciafmd"
     ],
     "license": "MIT",
+    "repositories": {
+        "agenciafmd/frontend": {
+            "type": "path",
+            "url": "packages/agenciafmd/frontend",
+            "options": {
+                "symlink": true
+            }
+        }
+    },
     "require": {
         "php": "^8.4",
+        "agenciafmd/admix-icons": "v12.x-dev",
         "agenciafmd/filament-admix": "v1.x-dev|dev-master",
+        "agenciafmd/filament-leads": "v1.x-dev|dev-master",
         "agenciafmd/filament-postal": "v1.x-dev|dev-master",
+        "agenciafmd/frontend": "*",
+        "agenciafmd/laravel-social-meta": "v12.x-dev",
         "agenciafmd/laravel-support": "v12.x-dev|dev-master",
-        "filament/filament": "^4.7.2",
-        "laravel/framework": "^12.52.0",
-        "laravel/tinker": "^2.11.1"
+        "agenciafmd/laravel-turbo": "dev-master",
+        "filament/filament": "^4.8.1",
+        "laravel/framework": "^12.53.0",
+        "laravel/tinker": "^2.11.1",
+        "spatie/laravel-google-fonts": "^1.5"
     },
     "require-dev": {
         "barryvdh/laravel-ide-helper": "^3.6.1",
         "driftingly/rector-laravel": "^2.1.9",
         "fakerphp/faker": "^1.24.1",
-        "larastan/larastan": "^3.9.2",
-        "laravel/boost": "^2.2.0",
+        "larastan/larastan": "^3.9.3",
+        "laravel/boost": "^2.2.2",
         "laravel/pail": "^1.2.6",
         "laravel/pint": "^1.27.1",
         "laravel/sail": "^1.53",

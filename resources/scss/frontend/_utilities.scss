@@ -1,0 +1,173 @@
+$utilities: map-merge(
+    $utilities,
+    (
+      "fill": (
+        property: fill,
+        state: hover,
+        values: map-merge(
+            $theme-colors,
+            (
+              "reset": currentColor,
+            ),
+        ),
+      ),
+      "stroke": (
+        property: stroke,
+        state: hover,
+        values: $theme-colors
+      ),
+      "letter-spacing": (
+        property: letter-spacing,
+        class: ls,
+        values: $letter-spacing-map,
+      ),
+      "line-height": (
+        property: line-height,
+        class: lh,
+        values: $line-height-map,
+      ),
+      'overflow': map-merge(
+          map-get($utilities, 'overflow'),
+          (
+            responsive: true,
+          ),
+      ),
+      'ratio': (
+        property: --bs-aspect-ratio,
+        class: ratio,
+        responsive: true,
+        values: $aspect-ratios,
+      ),
+      "rounded": (
+        property: border-radius,
+        class: rounded,
+        values: $border-radius-map,
+      ),
+      "rounded-top-left": (
+        property: border-top-left-radius,
+        class: rounded-top-left,
+        responsive: true,
+        values: $border-radius-map,
+      ),
+      "rounded-top-right": (
+        property: border-top-right-radius,
+        class: rounded-top-right,
+        responsive: true,
+        values: $border-radius-map,
+      ),
+      "rounded-bottom-right": (
+        property: border-bottom-right-radius,
+        class: rounded-bottom-right,
+        responsive: true,
+        values: $border-radius-map,
+      ),
+      "rounded-bottom-left": (
+        property: border-bottom-left-radius,
+        class: rounded-bottom-left,
+        responsive: true,
+        values: $border-radius-map,
+      ),
+      "opacity": map-merge(
+          map-get($utilities, "opacity"),
+          (
+            responsive: true,
+            state: hover,
+            values: map-merge(
+                map-get(map-get($utilities, 'opacity'), 'values'),
+                $opacity-map,
+            ),
+          ),
+      ),
+      "width": map-merge(
+          map-get($utilities, "width"),
+          (
+            responsive: true,
+            values: $sizing-values
+          ),
+      ),
+      "max-width": map-merge(
+          map-get($utilities, "max-width"),
+          (
+            responsive: true,
+            values: $sizing-values
+          ),
+      ),
+      "height": map-merge(
+          map-get($utilities, "height"),
+          (
+            responsive: true,
+            values: $sizing-values
+          ),
+      ),
+      "max-height": map-merge(
+          map-get($utilities, "max-height"),
+          (
+            responsive: true,
+            values: $sizing-values
+          ),
+      ),
+      "position": map-merge(
+          map-get($utilities, "position"),
+          (
+            responsive: true,
+          ),
+      ),
+      "translate-middle": map-merge(
+          map-get($utilities, "translate-middle"),
+          (
+            responsive: true,
+          ),
+      ),
+      "top": map-merge(
+          map-get($utilities, "top"),
+          (
+            responsive: true,
+          ),
+      ),
+      "end": map-merge(
+          map-get($utilities, "end"),
+          (
+            responsive: true,
+          ),
+      ),
+      "bottom": map-merge(
+          map-get($utilities, "bottom"),
+          (
+            responsive: true,
+          ),
+      ),
+      "start": map-merge(
+          map-get($utilities, "start"),
+          (
+            responsive: true,
+          ),
+      ),
+      'font-size': map-merge(
+          map-get($utilities, 'font-size'),
+          (
+            responsive: true,
+          ),
+      ),
+      'color': map-merge(
+          map-get($utilities, 'color'),
+          (
+            state: hover,
+          ),
+      ),
+      'background-color': map-merge(
+          map-get($utilities, 'background-color'),
+          (
+            state: hover,
+            values: map-merge(
+                map-get(map-get($utilities, 'background-color'), 'values'),
+                $custom-colors-map,
+            ),
+          ),
+      ),
+      "font-weight": (
+        property: font-weight,
+        class: fw,
+        values: $font-weight-map,
+      ),
+    )
+);
