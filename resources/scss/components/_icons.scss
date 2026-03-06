@@ -1,0 +1,112 @@
+$icon-xxxsm: 1rem !default; // 16
+$icon-xxsm: 1.25rem !default; //20
+$icon-xsm: 1.5rem !default; //24
+$icon-sm: 2rem !default; //32
+$icon-md: 3rem !default; //48
+$icon-lg: 3.25rem !default; //52
+$icon-xl: 4rem !default; //64
+
+@mixin icons-size-setup {
+
+  .ic {
+    max-width: 100%;
+    width: $icon-md;
+    height: $icon-md;
+
+    &-xxxsm {
+      width: $icon-xxxsm;
+      height: $icon-xxxsm;
+    }
+
+    &-xxsm {
+      width: $icon-xxsm;
+      height: $icon-xxsm;
+    }
+
+    &-xsm {
+      width: $icon-xsm;
+      height: $icon-xsm;
+    }
+
+    &-sm {
+      width: $icon-sm;
+      height: $icon-sm;
+    }
+
+    &-lg {
+      width: $icon-lg;
+      height: $icon-lg;
+    }
+
+    &-xl {
+      width: $icon-xl;
+      height: $icon-xl;
+    }
+  }
+}
+
+@import 'icon-link';
+
+@include icons-size-setup;
+
+.ic {
+
+  &-rotate-n90 {
+    transform: rotate(-90deg);
+  }
+
+  &-rotate-90 {
+    transform: rotate(90deg);
+  }
+
+  &-inverse {
+    transform: scale(-1);
+  }
+
+  &-inverse-x {
+    transform: scaleX(-1);
+  }
+
+  &-inverse-y {
+    transform: scaleY(-1);
+  }
+
+  &-play {
+
+    color: $white;
+    background: rgba($primary, $opacity-level-semi-opaque);
+    transition: $transition-base;
+    width: $icon-md;
+    height: $icon-md;
+
+    @include media-breakpoint-up(xl) {
+      width: $icon-md * 1.5;
+      height: $icon-md * 1.5;
+    }
+
+    &-container {
+      display: block;
+
+      @include media-breakpoint-up(md) {
+        &:hover {
+          .ic-play {
+            box-shadow: $box-shadow;
+            background: rgba($primary, $opacity-level-intense);
+          }
+        }
+      }
+    }
+  }
+
+  &-glightbox-zoom {
+    background: rgba($primary, $ds-opacity-level-light);
+    backdrop-filter: blur(1px);
+    border-radius: $border-radius;
+    padding: $spacer * .5;
+
+    .icon {
+      width: $icon-xsm;
+      height: $icon-xsm;
+    }
+  }
+}
