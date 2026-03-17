@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use Agenciafmd\Leads\LeadsPlugin;
 use Agenciafmd\Postal\PostalPlugin;
 
 return [
@@ -12,6 +13,7 @@ return [
         'format' => env('ADMIX_TIMESTAMP_FORMAT', 'd/m/Y H:i:s'),
     ],
     'plugins' => [
+        LeadsPlugin::class,
         PostalPlugin::class,
     ],
 ];
