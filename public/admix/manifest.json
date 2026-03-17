@@ -1,0 +1,11 @@
+{
+  "resources/css/filament/filament-admix/theme.css": {
+    "file": "assets/theme-IHOZ8VW3.css",
+    "src": "resources/css/filament/filament-admix/theme.css",
+    "isEntry": true,
+    "name": "theme",
+    "names": [
+      "theme.css"
+    ]
+  }
+}

@@ -13,7 +13,6 @@
     ],
     "sail": true,
     "skills": [
-        "pest-testing",
-        "tailwindcss-development"
+        "pest-testing"
     ]
 }

@@ -8,22 +8,23 @@
         "webp": "node resources/js/utilities/webp.js",
         "pwa": "node resources/js/utilities/create-manifest.js",
         "lint": "prettier --write resources/",
-        "test:lint": "prettier --check resources/"
+        "test:lint": "prettier --check resources/",
+        "build:filament": "vite build --config vite.admix.config.js"
     },
     "devDependencies": {
         "@erbelion/vite-plugin-laravel-purgecss": "^0.4.7",
+        "@tailwindcss/vite": "^4.2.1",
         "concurrently": "^9.2.1",
         "imagemin": "^9.0.1",
         "imagemin-webp": "^8.0.0",
         "laravel-vite-plugin": "^2.1.0",
-        "npm-check-updates": "^19.6.3",
+        "npm-check-updates": "^19.6.5",
         "playwright": "^1.58.2",
         "prettier": "^3.8.1",
         "prettier-plugin-organize-imports": "^4.3.0",
         "prettier-plugin-tailwindcss": "^0.7.2",
         "rollup-plugin-critical": "^1.0.15",
-        "sass": "^1.97.3",
-        "tailwindcss": "^4.2.1",
+        "sass": "^1.98.0",
         "vite": "^7.3.1"
     },
     "dependencies": {
@@ -35,7 +36,7 @@
         "infinite-scroll": "^5.0.0",
         "plyr": "^3.8.4",
         "share-api-polyfill": "^1.1.1",
-        "sweetalert2": "^11.26.21",
+        "sweetalert2": "^11.26.23",
         "swiper": "^12.1.2",
         "tom-select": "^2.5.2",
         "wow.js": "^1.2.2"
