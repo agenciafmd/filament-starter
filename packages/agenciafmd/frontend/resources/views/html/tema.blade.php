@@ -37,6 +37,7 @@
               (object) ['name' => 'Progress'],
               (object) ['name' => 'Toasts'],
               (object) ['name' => 'Tooltips'],
+              (object) ['name' => 'Social Network'],
               ];
               @endphp
 
@@ -2102,6 +2103,12 @@
               </div>
             </div>
 
+            <div id="social-network">
+              <h2 class="mb-block-small h6">Social  network</h2>
+              <x-frontend::social-network
+                                class="text-secondary-hover flex-grow-0 icon-link"
+                                iconClass="bi ic-sm"/>
+            </div>
           </div>
 
           <div class="vstack gap-block-small gap-md-block"
