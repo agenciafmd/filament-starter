@@ -52,6 +52,7 @@
                 <div class="form-floating">
                     <input wire:model.lazy="phone"
                            x-mask:dynamic="$input.length <= 14 ? '(99) 9999-9999' : '(99) 99999-9999'"
+                           x-data
                            type="tel"
                            id="phone"
                            autocomplete="off"
