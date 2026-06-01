@@ -38,6 +38,10 @@ export default defineConfig({
         'resources/js/components/sliders/banners.js',
         'resources/js/components/share-api.js',
       ],
+      assets: [
+        'resources/images/**',
+        'resources/fonts/**',
+      ],
       refresh: true, // TODO add all paths to watch and refresh on change
     }),
     PluginCritical({
