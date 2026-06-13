@@ -10,10 +10,6 @@ use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Schema;
 
-// use Agenciafmd\Articles\Database\Seeders\ArticleSeeder;
-
-// use Agenciafmd\Articles\Database\Seeders\ArticleSeeder;
-
 final class DatabaseSeeder extends Seeder
 {
     use WithoutModelEvents;
@@ -25,8 +21,8 @@ final class DatabaseSeeder extends Seeder
 
         Schema::disableForeignKeyConstraints();
 
-        User::factory(100)
-            ->create();
+//        User::factory(100)
+//            ->create();
 
         User::factory()
             ->create([
