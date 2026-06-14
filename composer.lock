@@ -62,12 +62,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/agenciafmd/filament-admix.git",
-                "reference": "d0a46b6d853ecf372b9cda4fac37613a6b760fcd"
+                "reference": "52f9a16845e46a9fb322b6074524e0a6e289931d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/agenciafmd/filament-admix/zipball/d0a46b6d853ecf372b9cda4fac37613a6b760fcd",
-                "reference": "d0a46b6d853ecf372b9cda4fac37613a6b760fcd",
+                "url": "https://api.github.com/repos/agenciafmd/filament-admix/zipball/52f9a16845e46a9fb322b6074524e0a6e289931d",
+                "reference": "52f9a16845e46a9fb322b6074524e0a6e289931d",
                 "shasum": ""
             },
             "require": {
@@ -113,7 +113,7 @@
                 "issues": "https://github.com/agenciafmd/filament-admix/issues",
                 "source": "https://github.com/agenciafmd/filament-admix/tree/master"
             },
-            "time": "2026-06-10T22:54:28+00:00"
+            "time": "2026-06-14T01:00:11+00:00"
         },
         {
             "name": "agenciafmd/filament-leads",
@@ -121,12 +121,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/agenciafmd/filament-leads.git",
-                "reference": "15e315fd004d7d835cda65557c9553b0da2693cb"
+                "reference": "719912543e09fcedaf9dbddae3d2e0c9eb212383"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/agenciafmd/filament-leads/zipball/15e315fd004d7d835cda65557c9553b0da2693cb",
-                "reference": "15e315fd004d7d835cda65557c9553b0da2693cb",
+                "url": "https://api.github.com/repos/agenciafmd/filament-leads/zipball/719912543e09fcedaf9dbddae3d2e0c9eb212383",
+                "reference": "719912543e09fcedaf9dbddae3d2e0c9eb212383",
                 "shasum": ""
             },
             "require": {
@@ -164,7 +164,7 @@
                 "issues": "https://github.com/agenciafmd/filament-leads/issues",
                 "source": "https://github.com/agenciafmd/filament-leads/tree/master"
             },
-            "time": "2026-04-01T21:16:21+00:00"
+            "time": "2026-06-14T01:00:11+00:00"
         },
         {
             "name": "agenciafmd/filament-postal",
@@ -172,12 +172,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/agenciafmd/filament-postal.git",
-                "reference": "1f9b207b4bfb28862adbd2cd3f510532c8b74099"
+                "reference": "8049c2fdfb943c9b0f38fb9b1581a32673e6093c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/agenciafmd/filament-postal/zipball/1f9b207b4bfb28862adbd2cd3f510532c8b74099",
-                "reference": "1f9b207b4bfb28862adbd2cd3f510532c8b74099",
+                "url": "https://api.github.com/repos/agenciafmd/filament-postal/zipball/8049c2fdfb943c9b0f38fb9b1581a32673e6093c",
+                "reference": "8049c2fdfb943c9b0f38fb9b1581a32673e6093c",
                 "shasum": ""
             },
             "require": {
@@ -215,7 +215,7 @@
                 "issues": "https://github.com/agenciafmd/filament-postal/issues",
                 "source": "https://github.com/agenciafmd/filament-postal/tree/master"
             },
-            "time": "2026-04-22T20:47:30+00:00"
+            "time": "2026-06-14T01:00:11+00:00"
         },
         {
             "name": "agenciafmd/frontend",

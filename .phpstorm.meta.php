@@ -12001,7 +12001,8 @@ namespace PHPSTORM_META {
 'APP_NAME','APP_ENV','APP_KEY','APP_DEBUG','APP_PORT',
 'APP_URL','DB_CONNECTION','DB_HOST','DB_USERNAME','DB_PASSWORD',
 'DB_DATABASE','MAIL_MAILER','MAIL_HOST','MAIL_PORT','QUEUE_CONNECTION',
-'REDIS_HOST','VITE_APP_NAME','APP_SERVICE',);
+'REDIS_HOST','VITE_APP_NAME','APP_SERVICE','VITE_PORT','FORWARD_DB_PORT',
+'FORWARD_REDIS_PORT','FORWARD_MAILPIT_PORT','FORWARD_MAILPIT_DASHBOARD_PORT',);
         
                 expectedArguments(\Illuminate\Support\Facades\Gate::has(), 0, argumentsSet('auth'));
     expectedArguments(\Illuminate\Support\Facades\Gate::allows(), 0, argumentsSet('auth'));
