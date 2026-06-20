@@ -7,21 +7,21 @@
      id="{{ $id }}"
      tabindex="-1"
      aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered modal-lg">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h2 class="modal-title text-center">
-          {!! $title !!}
-        </h2>
-        <button type="button"
-                class="btn-close"
-                data-bs-dismiss="modal"
-                aria-label="Fechar modal"></button>
-      </div>
-      <div class="modal-body">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title text-center">
+                    {!! $title !!}
+                </h2>
+                <button type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Fechar modal"></button>
+            </div>
+            <div class="modal-body">
 
-        {{ $slot }}
-      </div>
+                {{ $slot }}
+            </div>
+        </div>
     </div>
-  </div>
 </div>

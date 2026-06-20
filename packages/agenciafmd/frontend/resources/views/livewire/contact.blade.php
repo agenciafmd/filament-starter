@@ -79,7 +79,7 @@
                            id="privacy-terms">
                     <label class="form-check-label"
                            for="privacy-terms">
-                        <x-frontend::privacy-terms-message/>
+                        <x-frontend::privacy-terms-message />
                     </label>
                     @error('terms')
                     <span class="d-block invalid-feedback">

@@ -5,6 +5,6 @@
         <x-frontend::link link="//fmd.ag"
                           is-extern="true"
                           title="Desenvolvido por F&MD"
-                          label="Desenvolvido por F&MD"/>
+                          label="Desenvolvido por F&MD" />
     </p>
 </footer>

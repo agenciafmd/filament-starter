@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="{{ strtolower(str_replace('_', '-', app()->getLocale())) }}">
 <head>
-    <x-frontend::gtm-head/>
+    <x-frontend::gtm-head />
 
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -18,23 +18,23 @@
         </script>
     @endif
     <x-social-meta
-        title="{{ $__env->yieldContent('title', 'A cultura come a estratégia no café da manhã') }} | {{ config('app.name') }}"
-        description="{{ $__env->yieldContent('description') }}"
+            title="{{ $__env->yieldContent('title', 'A cultura come a estratégia no café da manhã') }} | {{ config('app.name') }}"
+            description="{{ $__env->yieldContent('description') }}"
     />
-    <x-frontend::pwa/>
-    <x-frontend::fonts-preload/>
-    <x-frontend::site-verification/>
-    <x-frontend::critical-css :$critical/>
+    <x-frontend::pwa />
+    <x-frontend::fonts-preload />
+    <x-frontend::site-verification />
+    <x-frontend::critical-css :$critical />
 
     @vite('resources/scss/frontend.scss')
 
-    <livewire:styles/>
+    <livewire:styles />
 
     @stack('head')
 </head>
 <body class="{{ ($bodyClass) ?? '' }}">
 
-<x-frontend::gtm-body/>
+<x-frontend::gtm-body />
 
 @stack('header')
 
@@ -48,7 +48,7 @@
 
 @vite('resources/js/frontend-imports.js')
 
-<livewire:scripts/>
+<livewire:scripts />
 
 @include('frontend::partials.message')
 

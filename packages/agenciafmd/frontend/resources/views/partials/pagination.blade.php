@@ -48,7 +48,7 @@
         <div class="infinite-scroll-request text-center">
             <x-icon
                     name="frontend-ic-loading"
-                             class="animation-spin-right ic-xl text-primary"
+                    class="animation-spin-right ic-xl text-primary"
             />
         </div>
         <p class="infinite-scroll-last"></p>

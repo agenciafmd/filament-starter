@@ -9,18 +9,18 @@
     <meta name="description" content="@yield('description', '')">
     <meta name="author" content="@yield('author', 'F&MD')">
 
-    <meta property="og:title" content="@yield('title', '') | {{ config('app.name') }}"/>
-    <meta property="og:url" content="@yield('url', request()->fullUrl())"/>
-    <meta property="og:image" content="@yield('image', url('/images/logo.png'))"/>
-    <meta property="og:site_name" content="{{ config('app.name') }}"/>
+    <meta property="og:title" content="@yield('title', '') | {{ config('app.name') }}" />
+    <meta property="og:url" content="@yield('url', request()->fullUrl())" />
+    <meta property="og:image" content="@yield('image', url('/images/logo.png'))" />
+    <meta property="og:site_name" content="{{ config('app.name') }}" />
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <x-frontend::pwa/>
-    <x-frontend::fonts-preload/>
+    <x-frontend::pwa />
+    <x-frontend::fonts-preload />
 
     @vite('resources/scss/frontend.scss')
 
-    <livewire:styles/>
+    <livewire:styles />
 
     @stack('head')
 </head>
@@ -38,7 +38,7 @@
 
 @vite('resources/js/frontend-imports.js')
 
-<livewire:scripts/>
+<livewire:scripts />
 
 @include('frontend::html.partials.message')
 

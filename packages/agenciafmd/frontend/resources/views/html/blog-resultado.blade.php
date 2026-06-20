@@ -7,184 +7,184 @@
 @section('description', 'Descrição de página.')
 
 @section('content')
-<main>
+    <main>
 
-  <section class="pb-block-small pb-md-block">
+        <section class="pb-block-small pb-md-block">
 
-    <div class="container">
+            <div class="container">
 
-      <div class="mb-block-small">
-        <div class="row align-items-center">
-          <div class="col-md">
-            @php
-            $breadcrumb = [
-            'Home' => '/html',
-            'Blog' => '/html/blog',
-            'Resultado de busca: “empreendimento”' => '',
-            ];
-            @endphp
+                <div class="mb-block-small">
+                    <div class="row align-items-center">
+                        <div class="col-md">
+                            @php
+                                $breadcrumb = [
+                                'Home' => '/html',
+                                'Blog' => '/html/blog',
+                                'Resultado de busca: “empreendimento”' => '',
+                                ];
+                            @endphp
 
-            <x-frontend::breadcrumb :list="$breadcrumb"
-                                    class="mb-0h my-md-0h"/>
-          </div>
-          <div class="col-12">
-            <h1 class="h3 text-break">
-              Resultado de busca: “empreendimento”
-            </h1>
-          </div>
-        </div>
-      </div>
+                            <x-frontend::breadcrumb :list="$breadcrumb"
+                                                    class="mb-0h my-md-0h" />
+                        </div>
+                        <div class="col-12">
+                            <h1 class="h3 text-break">
+                                Resultado de busca: “empreendimento”
+                            </h1>
+                        </div>
+                    </div>
+                </div>
 
-      {{-- @formatter:off --}}
-      @php
-      $articles = [
 
-      (object)[
-        'name' => Str::squish('Lorem ipsum dolor sit amet, consectetur adipisicing elit.'),
-        'subtitle' => 'Categoria',
-        'date' => '01 de janeiro de 2025',
-        'route' => '/html/blog-detalhe',
-        'image' => (object)[
-          'src' => 'ratios/img-4x3.jpg',
-          'name' => 'Imagem 4x3',
-          'pictureClass' => 'ratio ratio-4x3',
-          'imageClass' => 'img-cover',
-        ],
-      ],
+                @php
+                    $articles = [
 
-      (object)[
-        'name' => Str::squish('Lorem ipsum dolor sit amet, consectetur adipisicing elit.'),
-        'subtitle' => 'Categoria',
-        'date' => '01 de janeiro de 2025',
-        'route' => '/html/blog-detalhe',
-        'image' => (object)[
-          'src' => 'ratios/img-4x3.jpg',
-          'name' => 'Imagem 4x3',
-          'pictureClass' => 'ratio ratio-4x3',
-          'imageClass' => 'img-cover',
-        ],
-      ],
+                    (object)[
+                      'name' => Str::squish('Lorem ipsum dolor sit amet, consectetur adipisicing elit.'),
+                      'subtitle' => 'Categoria',
+                      'date' => '01 de janeiro de 2025',
+                      'route' => '/html/blog-detalhe',
+                      'image' => (object)[
+                        'src' => 'ratios/img-4x3.jpg',
+                        'name' => 'Imagem 4x3',
+                        'pictureClass' => 'ratio ratio-4x3',
+                        'imageClass' => 'img-cover',
+                      ],
+                    ],
 
-      (object)[
-        'name' => Str::squish('Lorem ipsum dolor sit amet, consectetur adipisicing elit.'),
-        'subtitle' => 'Categoria',
-        'date' => '01 de janeiro de 2025',
-        'route' => '/html/blog-detalhe',
-        'image' => (object)[
-          'src' => 'ratios/img-4x3.jpg',
-          'name' => 'Imagem 4x3',
-          'pictureClass' => 'ratio ratio-4x3',
-          'imageClass' => 'img-cover',
-        ],
-      ],
+                    (object)[
+                      'name' => Str::squish('Lorem ipsum dolor sit amet, consectetur adipisicing elit.'),
+                      'subtitle' => 'Categoria',
+                      'date' => '01 de janeiro de 2025',
+                      'route' => '/html/blog-detalhe',
+                      'image' => (object)[
+                        'src' => 'ratios/img-4x3.jpg',
+                        'name' => 'Imagem 4x3',
+                        'pictureClass' => 'ratio ratio-4x3',
+                        'imageClass' => 'img-cover',
+                      ],
+                    ],
 
-      (object)[
-        'name' => Str::squish('Lorem ipsum dolor sit amet, consectetur adipisicing elit.'),
-        'subtitle' => 'Categoria',
-        'date' => '01 de janeiro de 2025',
-        'route' => '/html/blog-detalhe',
-        'image' => (object)[
-          'src' => 'ratios/img-4x3.jpg',
-          'name' => 'Imagem 4x3',
-          'pictureClass' => 'ratio ratio-4x3',
-          'imageClass' => 'img-cover',
-        ],
-      ],
+                    (object)[
+                      'name' => Str::squish('Lorem ipsum dolor sit amet, consectetur adipisicing elit.'),
+                      'subtitle' => 'Categoria',
+                      'date' => '01 de janeiro de 2025',
+                      'route' => '/html/blog-detalhe',
+                      'image' => (object)[
+                        'src' => 'ratios/img-4x3.jpg',
+                        'name' => 'Imagem 4x3',
+                        'pictureClass' => 'ratio ratio-4x3',
+                        'imageClass' => 'img-cover',
+                      ],
+                    ],
 
-      (object)[
-        'name' => Str::squish('Lorem ipsum dolor sit amet, consectetur adipisicing elit.'),
-        'subtitle' => 'Categoria',
-        'date' => '01 de janeiro de 2025',
-        'route' => '/html/blog-detalhe',
-        'image' => (object)[
-          'src' => 'ratios/img-4x3.jpg',
-          'name' => 'Imagem 4x3',
-          'pictureClass' => 'ratio ratio-4x3',
-          'imageClass' => 'img-cover',
-        ],
-      ],
+                    (object)[
+                      'name' => Str::squish('Lorem ipsum dolor sit amet, consectetur adipisicing elit.'),
+                      'subtitle' => 'Categoria',
+                      'date' => '01 de janeiro de 2025',
+                      'route' => '/html/blog-detalhe',
+                      'image' => (object)[
+                        'src' => 'ratios/img-4x3.jpg',
+                        'name' => 'Imagem 4x3',
+                        'pictureClass' => 'ratio ratio-4x3',
+                        'imageClass' => 'img-cover',
+                      ],
+                    ],
 
-      (object)[
-        'name' => Str::squish('Lorem ipsum dolor sit amet, consectetur adipisicing elit.'),
-        'subtitle' => 'Categoria',
-        'date' => '01 de janeiro de 2025',
-        'route' => '/html/blog-detalhe',
-        'image' => (object)[
-          'src' => 'ratios/img-4x3.jpg',
-          'name' => 'Imagem 4x3',
-          'pictureClass' => 'ratio ratio-4x3',
-          'imageClass' => 'img-cover',
-        ],
-      ],
+                    (object)[
+                      'name' => Str::squish('Lorem ipsum dolor sit amet, consectetur adipisicing elit.'),
+                      'subtitle' => 'Categoria',
+                      'date' => '01 de janeiro de 2025',
+                      'route' => '/html/blog-detalhe',
+                      'image' => (object)[
+                        'src' => 'ratios/img-4x3.jpg',
+                        'name' => 'Imagem 4x3',
+                        'pictureClass' => 'ratio ratio-4x3',
+                        'imageClass' => 'img-cover',
+                      ],
+                    ],
 
-      ];
-      @endphp
-      {{-- @formatter:on --}}
+                    (object)[
+                      'name' => Str::squish('Lorem ipsum dolor sit amet, consectetur adipisicing elit.'),
+                      'subtitle' => 'Categoria',
+                      'date' => '01 de janeiro de 2025',
+                      'route' => '/html/blog-detalhe',
+                      'image' => (object)[
+                        'src' => 'ratios/img-4x3.jpg',
+                        'name' => 'Imagem 4x3',
+                        'pictureClass' => 'ratio ratio-4x3',
+                        'imageClass' => 'img-cover',
+                      ],
+                    ],
 
-      @if(!count($articles))
+                    ];
+                @endphp
 
-      <x-frontend::alert message="Não foi encontrado nenhum artigo no momento"
-                         class="alert-primary hstack justify-content-center"/>
 
-      @else
+                @if(!count($articles))
 
-      <div class="row gy-2h infinite-scroll">
-        @foreach($articles as $article)
+                    <x-frontend::alert message="Não foi encontrado nenhum artigo no momento"
+                                       class="alert-primary hstack justify-content-center" />
 
-        @if(!Str::of(request()->getRequestUri())->startsWith('/html'))
+                @else
 
-        <div class="col-sm-6 col-md-4">
+                    <div class="row gy-2h infinite-scroll">
+                        @foreach($articles as $article)
 
-          {{--
-          Resolução das imagens para utilização:
-          mobile: 360x270 - ratio 3x4
-          notebook: 348x261 - ratio 3x4
-          desktop: 475x356 - ratio 3x4
-          --}}
+                            @if(!Str::of(request()->getRequestUri())->startsWith('/html'))
 
-          <x-frontend::articles.item :article="$article"/>
+                                <div class="col-sm-6 col-md-4">
 
-        </div>
+                                    {{--
+                                    Resolução das imagens para utilização:
+                                    mobile: 360x270 - ratio 3x4
+                                    notebook: 348x261 - ratio 3x4
+                                    desktop: 475x356 - ratio 3x4
+                                    --}}
 
-        @else
+                                    <x-frontend::articles.item :article="$article" />
 
-        <div class="col-sm-6 col-md-4">
+                                </div>
 
-          {{--
-          Resolução das imagens para utilização:
-          mobile: 360x270 - ratio 3x4
-          notebook: 348x261 - ratio 3x4
-          desktop: 475x356 - ratio 3x4
-          --}}
+                            @else
 
-          <x-frontend::articles.item :article="$article"/>
+                                <div class="col-sm-6 col-md-4">
 
-        </div>
+                                    {{--
+                                    Resolução das imagens para utilização:
+                                    mobile: 360x270 - ratio 3x4
+                                    notebook: 348x261 - ratio 3x4
+                                    desktop: 475x356 - ratio 3x4
+                                    --}}
 
-        @endif
-        @endforeach
-      </div>
+                                    <x-frontend::articles.item :article="$article" />
 
-      {{--
-      $articles->appends(request()->except('page'))->links('agenciafmd/frontend::partials.pagination')
-      --}}
+                                </div>
 
-      {{-- para exemplo, isso já vem da partials.pagination acima --}}
-      <div class="page-load-status mx-auto">
-        <div class="infinite-scroll-request text-center">
-          <x-icon
-                  name="frontend-ic-loading"
-                           class="animation-spin-right ic-xl text-primary"
-          />
-        </div>
-        <p class="infinite-scroll-last"></p>
-        <p class="infinite-scroll-error"></p>
-      </div>
+                            @endif
+                        @endforeach
+                    </div>
 
-      @endif
-    </div>
+                    {{--
+                    $articles->appends(request()->except('page'))->links('agenciafmd/frontend::partials.pagination')
+                    --}}
 
-  </section>
+                    {{-- para exemplo, isso já vem da partials.pagination acima --}}
+                    <div class="page-load-status mx-auto">
+                        <div class="infinite-scroll-request text-center">
+                            <x-icon
+                                    name="frontend-ic-loading"
+                                    class="animation-spin-right ic-xl text-primary"
+                            />
+                        </div>
+                        <p class="infinite-scroll-last"></p>
+                        <p class="infinite-scroll-error"></p>
+                    </div>
 
-</main>
+                @endif
+            </div>
+
+        </section>
+
+    </main>
 @endsection

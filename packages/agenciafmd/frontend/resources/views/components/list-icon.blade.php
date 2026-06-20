@@ -13,7 +13,7 @@
                     <x-icon
                             name="frontend-{{ $list->icon }}"
                             class="mw-unset {{ $iconClass }}"
-                                     />
+                    />
                 </span>
             @endif
             {!! $list->text !!}

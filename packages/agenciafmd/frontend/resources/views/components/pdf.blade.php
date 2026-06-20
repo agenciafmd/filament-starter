@@ -6,8 +6,8 @@
 
 <a href="{{ @vite('/pdf/' . $name . '.pdf') }}"
    @if($download) download @else target="_blank" @endif
-   {{ $attributes }}>
-  <span aria-hidden="true">
-    {{ $label }}
-  </span>
+        {{ $attributes }}>
+    <span aria-hidden="true">
+        {{ $label }}
+    </span>
 </a>
