@@ -4,6 +4,7 @@ namespace Agenciafmd\Frontend\Providers;
 
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
+use BladeUI\Icons\Factory;
 
 class BladeServiceProvider extends ServiceProvider
 {
@@ -22,7 +23,7 @@ class BladeServiceProvider extends ServiceProvider
 
     public function register(): void
     {
-        //
+        $this->registerIconSet();
     }
 
     private function bootBladeComponents(): void
@@ -50,5 +51,15 @@ class BladeServiceProvider extends ServiceProvider
     private function bootPublish(): void
     {
         //
+    }
+
+    private function registerIconSet(): void
+    {
+        $this->callAfterResolving(Factory::class, function (Factory $factory) {
+            $factory->add('frontend', [
+                'path' => resource_path('svg'),
+                'prefix' => 'frontend',
+            ]);
+        });
     }
 }

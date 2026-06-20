@@ -15,7 +15,10 @@
   {{ $slot }}
 
   <div class="m-0hq position-absolute top-0 end-0 ic-glightbox-zoom">
-    <x-frontend-icon name="ic-ui-expand" class="icon" />
+    <x-icon
+            name="frontend-ic-ui-expand"
+            class="icon"
+    />
   </div>
 </x-frontend::link>
 

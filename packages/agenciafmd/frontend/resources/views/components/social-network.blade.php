@@ -55,8 +55,10 @@
                     aria-label="{{ $socialNetwork['title'] }}"
                     title="{{ $socialNetwork['title'] }}"
                     {{ $attributes }}>
-    <x-frontend-icon class="{{ $iconClass }}"
-                     name="{{ $socialNetwork['icon']  }}"/>
+    <x-icon
+            name="frontend-{{ $socialNetwork['icon']  }}"
+            class="{{ $iconClass }}"
+                     />
   </x-frontend::link>
 
   @endforeach

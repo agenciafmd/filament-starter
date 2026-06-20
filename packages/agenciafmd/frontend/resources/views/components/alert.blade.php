@@ -14,8 +14,10 @@
 <div role="alert" {{ $attributes->merge(['class' => $alertClasses]) }}>
 
     @if($icon)
-        <x-frontend-icon class="bi flex-shrink-0 {{ $iconClass }}"
-                          name="{{ $icon }}"/>
+        <x-icon
+                name="frontend-{{ $icon }}"
+                class="bi flex-shrink-0 {{ $iconClass }}"
+        />
     @endif
 
     @if($message)

@@ -10,8 +10,10 @@
         <li class="{{ $listClass }}">
             @if(!empty($list->icon))
                 <span>
-                    <x-frontend-icon class="mw-unset {{ $iconClass }}"
-                                     name="{{ $list->icon }}"/>
+                    <x-icon
+                            name="frontend-{{ $list->icon }}"
+                            class="mw-unset {{ $iconClass }}"
+                                     />
                 </span>
             @endif
             {!! $list->text !!}

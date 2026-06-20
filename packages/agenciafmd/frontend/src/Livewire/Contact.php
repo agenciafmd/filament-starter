@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Agenciafmd\Frontend\Livewire;
 
 use Agenciafmd\Postal\Models\Postal;
@@ -8,7 +10,7 @@ use Illuminate\Contracts\View\View;
 use Livewire\Attributes\Validate;
 use Livewire\Component;
 
-class Contact extends Component
+final class Contact extends Component
 {
     #[Validate]
     public string $name = '';
@@ -74,7 +76,7 @@ class Contact extends Component
             ->where('slug', 'contato')
             ->first();
 
-        if (!$postal) {
+        if (! $postal) {
             $this->dispatch(
                 event: 'swal',
                 level: 'error',

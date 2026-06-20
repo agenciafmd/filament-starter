@@ -59,8 +59,10 @@
                   @endforeach
                 </select>
 
-                <x-frontend-icon name="ic-ui-search"
-                                 class="ms-0hq text-primary ic-xxsm position-absolute top-50 translate-middle-y start-0 z-1"/>
+                <x-icon
+                        name="frontend-ic-ui-search"
+                                 class="ms-0hq text-primary ic-xxsm position-absolute top-50 translate-middle-y start-0 z-1"
+                />
 
                 <button type="submit"
                         wire:loading.attr="disabled"
@@ -263,8 +265,10 @@
       {{-- para exemplo, isso já vem da partials.pagination acima --}}
       <div class="page-load-status mx-auto">
         <div class="infinite-scroll-request text-center">
-          <x-frontend-icon name="ic-loading"
-                           class="animation-spin-right ic-xl text-primary"/>
+          <x-icon
+                  name="frontend-ic-loading"
+                           class="animation-spin-right ic-xl text-primary"
+          />
         </div>
         <p class="infinite-scroll-last"></p>
         <p class="infinite-scroll-error"></p>

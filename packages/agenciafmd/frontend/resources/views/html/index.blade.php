@@ -89,8 +89,9 @@
       <div class="row justify-content-center">
         <div class="col-md-6">
 
-          <x-frontend-icon name="ic-cup-coffee"
-                           class="coffee ic mb-0h"/>
+          <x-icon name="frontend-ic-cup-coffee"
+                           class="coffee ic mb-0h"
+          />
           <p class="mb-1 fw-bold fs-small fs-md-base">
             Que tal uma xícara de café enquanto aguarda?
           </p>

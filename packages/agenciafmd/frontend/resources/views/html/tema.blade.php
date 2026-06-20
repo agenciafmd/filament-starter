@@ -272,10 +272,13 @@
                     Example of an alert with an icon, title, link, and btn-close
                   </h2>
 
-                  <x-frontend::alert has-dismissible="true"
+                  <x-frontend::alert
+                          has-dismissible="true"
                                      class="alert-primary hstack gap-1">
-                    <x-frontend-icon class="bi flex-shrink-0 ic-sm"
-                                     name="ic-info"/>
+                    <x-icon
+                            name="frontend-ic-info"
+                            class="bi flex-shrink-0 ic-sm"
+                                     />
                     <div>
                       <h4 class="mb-0">Title alert</h4>
                       <p class="mb-0">
@@ -3619,8 +3622,10 @@
                     @endforeach
                   </select>
 
-                  <x-frontend-icon name="ic-ui-search"
-                                   class="ms-0hq text-primary ic-xxsm position-absolute top-50 translate-middle-y start-0 z-1"/>
+                  <x-icon
+                          name="frontend-ic-ui-search"
+                                   class="ms-0hq text-primary ic-xxsm position-absolute top-50 translate-middle-y start-0 z-1"
+                  />
                 </div>
               </div>
 
@@ -3797,8 +3802,10 @@
                       </button>
                     </div>
                     <div class="mt-1 hstack gap-0hq fs-small justify-content-center align-items-center">
-                      <x-frontend-icon name="ic-shield"
-                                       class="ic-xs"/>
+                      <x-icon
+                              name="frontend-ic-shield"
+                                       class="ic-xs"
+                      />
                       Seus dados estão seguros!
                     </div>
                   </div>
@@ -3932,8 +3939,10 @@
                     @foreach($icons as $icon)
                     <div class="col-auto">
                       <div class="bs-component">
-                        <x-frontend-icon name="{{ $icon }}"
-                                         class="ic-xl"/>
+                        <x-icon
+                                name="frontend-{{ $icon }}"
+                                         class="ic-xl"
+                        />
                       </div>
                     </div>
                     @endforeach
@@ -4043,8 +4052,10 @@
               <div class="vstack gap-1">
                 <div class="page-load-status mx-auto">
                   <div class="infinite-scroll-request text-center text-primary">
-                    <x-frontend-icon name="ic-loading"
-                                     class="animation-spin-right ic-xl text-primary"/>
+                    <x-icon
+                            name="frontend-ic-loading"
+                                     class="animation-spin-right ic-xl text-primary"
+                    />
                   </div>
                   <p class="infinite-scroll-last"></p>
                   <p class="infinite-scroll-error"></p>

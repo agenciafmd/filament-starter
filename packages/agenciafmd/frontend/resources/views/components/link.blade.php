@@ -18,8 +18,10 @@
    {{ $attributes->merge(['class' => ($icon ? 'icon-link icon-link-hover' : '') . ($iconChangePosition ? ' flex-row-reverse' : '')]) }}>
 
       @if($icon)
-          <x-frontend-icon class="bi {{ $iconClass }}"
-                           name="{{ $icon }}"/>
+          <x-icon
+                  name="frontend-{{ $icon }}"
+                  class="bi {{ $iconClass }}"
+                           />
       @endif
 
       @if($label)
