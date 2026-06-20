@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Agenciafmd\Frontend\Providers;
 
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 use BladeUI\Icons\Factory;
 
-class BladeServiceProvider extends ServiceProvider
+final class BladeServiceProvider extends ServiceProvider
 {
     public function boot(): void
     {

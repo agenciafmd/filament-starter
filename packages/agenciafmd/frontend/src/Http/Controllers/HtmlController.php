@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Agenciafmd\Frontend\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 
-class HtmlController extends Controller
+final class HtmlController extends Controller
 {
     public function index(string $file = 'index'): View|RedirectResponse
     {
@@ -15,7 +17,7 @@ class HtmlController extends Controller
         }
 
         $path = base_path('packages/agenciafmd/frontend/resources/views/html/');
-        if (!file_exists($path . $file . '.blade.php')) {
+        if (! file_exists($path . $file . '.blade.php')) {
             $file = 'index';
         }
 

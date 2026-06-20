@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use Agenciafmd\Frontend\Http\Controllers\FrontendController;
 use Agenciafmd\Frontend\Http\Controllers\HtmlController;
 use Illuminate\Support\Facades\Route;

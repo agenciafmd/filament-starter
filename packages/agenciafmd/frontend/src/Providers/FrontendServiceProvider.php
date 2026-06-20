@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Agenciafmd\Frontend\Providers;
 
 use Illuminate\Support\Facades\Vite;
 use Illuminate\Support\ServiceProvider;
 
-class FrontendServiceProvider extends ServiceProvider
+final class FrontendServiceProvider extends ServiceProvider
 {
     public function boot(): void
     {
