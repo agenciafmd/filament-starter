@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Agenciafmd\Frontend\View\Components;
 
 use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Str;
 use Illuminate\View\Component;
 
 final class CriticalCss extends Component
@@ -14,10 +13,9 @@ final class CriticalCss extends Component
 
     public function __construct(
         public ?string $critical = null,
-    )
-    {
+    ) {
         $this->content = Cache::rememberForever('critical-css-' . $critical, static function () use ($critical) {
-            $criticalCss = Str::of($critical)
+            $criticalCss = str($critical)
                 ->beforeLast('.css')
                 ->append('_critical.min.css');
 
