@@ -3,18 +3,22 @@
 
 # Laravel Boost Guidelines
 
-The Laravel Boost guidelines are specifically curated by Laravel maintainers for this application. These guidelines should be followed closely to enhance the user's satisfaction building Laravel applications.
+The Laravel Boost guidelines are specifically curated by Laravel maintainers for this application. These guidelines should be followed closely to ensure the best experience when building Laravel applications.
 
 ## Foundational Context
+
 This application is a Laravel application and its main Laravel ecosystems package & versions are below. You are an expert with them all. Ensure you abide by these specific packages & versions.
 
-- php - 8.4.13
-- filament/filament (FILAMENT) - v4
-- laravel/framework (LARAVEL) - v12
+- php - 8.4
+- filament/filament (FILAMENT) - v5
+- laravel/framework (LARAVEL) - v13
+- laravel/horizon (HORIZON) - v5
 - laravel/prompts (PROMPTS) - v0
-- livewire/livewire (LIVEWIRE) - v3
+- livewire/livewire (LIVEWIRE) - v4
 - larastan/larastan (LARASTAN) - v3
+- laravel/boost (BOOST) - v2
 - laravel/mcp (MCP) - v0
+- laravel/pail (PAIL) - v1
 - laravel/pint (PINT) - v1
 - laravel/sail (SAIL) - v1
 - pestphp/pest (PEST) - v4
@@ -23,405 +27,1209 @@ This application is a Laravel application and its main Laravel ecosystems packag
 - prettier (PRETTIER) - v3
 - tailwindcss (TAILWINDCSS) - v4
 
+## Skills Activation
+
+This project has domain-specific skills available in `**/skills/**`. You MUST activate the relevant skill whenever you work in that domain—don't wait until you're stuck.
+
 ## Conventions
+
 - You must follow all existing code conventions used in this application. When creating or editing a file, check sibling files for the correct structure, approach, and naming.
 - Use descriptive names for variables and methods. For example, `isRegisteredForDiscounts`, not `discount()`.
 - Check for existing components to reuse before writing a new one.
 
 ## Verification Scripts
-- Do not create verification scripts or tinker when tests cover that functionality and prove it works. Unit and feature tests are more important.
+
+- Do not create verification scripts or tinker when tests cover that functionality and prove they work. Unit and feature tests are more important.
 
 ## Application Structure & Architecture
+
 - Stick to existing directory structure; don't create new base folders without approval.
 - Do not change the application's dependencies without approval.
 
 ## Frontend Bundling
-- If the user doesn't see a frontend change reflected in the UI, it could mean they need to run `npm run build`, `npm run dev`, or `composer run dev`. Ask them.
 
-## Replies
-- Be concise in your explanations - focus on what's important rather than explaining obvious details.
+- If the user doesn't see a frontend change reflected in the UI, it could mean they need to run `vendor/bin/sail npm run build`, `vendor/bin/sail npm run dev`, or `vendor/bin/sail composer run dev`. Ask them.
 
 ## Documentation Files
+
 - You must only create documentation files if explicitly requested by the user.
+
+## Replies
+
+- Be concise in your explanations - focus on what's important rather than explaining obvious details.
 
 === boost rules ===
 
-## Laravel Boost
-- Laravel Boost is an MCP server that comes with powerful tools designed specifically for this application. Use them.
+# Laravel Boost
+
+## Tools
+
+- Laravel Boost is an MCP server with tools designed specifically for this application. Prefer Boost tools over manual alternatives like shell commands or file reads.
+- Use `database-query` to run read-only queries against the database instead of writing raw SQL in tinker.
+- Use `database-schema` to inspect table structure before writing migrations or models.
+- Use `get-absolute-url` to resolve the correct scheme, domain, and port for project URLs. Always use this before sharing a URL with the user.
+- Use `browser-logs` to read browser logs, errors, and exceptions. Only recent logs are useful, ignore old entries.
+
+## Searching Documentation (IMPORTANT)
+
+- Always use `search-docs` before making code changes. Do not skip this step. It returns version-specific docs based on installed packages automatically.
+- Pass a `packages` array to scope results when you know which packages are relevant.
+- Use multiple broad, topic-based queries: `['rate limiting', 'routing rate limiting', 'routing']`. Expect the most relevant results first.
+- Do not add package names to queries because package info is already shared. Use `test resource table`, not `filament 4 test resource table`.
+
+### Search Syntax
+
+1. Use words for auto-stemmed AND logic: `rate limit` matches both "rate" AND "limit".
+2. Use `"quoted phrases"` for exact position matching: `"infinite scroll"` requires adjacent words in order.
+3. Combine words and phrases for mixed queries: `middleware "rate limit"`.
+4. Use multiple queries for OR logic: `queries=["authentication", "middleware"]`.
 
 ## Artisan
-- Use the `list-artisan-commands` tool when you need to call an Artisan command to double-check the available parameters.
 
-## URLs
-- Whenever you share a project URL with the user, you should use the `get-absolute-url` tool to ensure you're using the correct scheme, domain/IP, and port.
+- Run Artisan commands directly via the command line (e.g., `vendor/bin/sail artisan route:list`). Use `vendor/bin/sail artisan list` to discover available commands and `vendor/bin/sail artisan [command] --help` to check parameters.
+- Inspect routes with `vendor/bin/sail artisan route:list`. Filter with: `--method=GET`, `--name=users`, `--path=api`, `--except-vendor`, `--only-vendor`.
+- Read configuration values using dot notation: `vendor/bin/sail artisan config:show app.name`, `vendor/bin/sail artisan config:show database.default`. Or read config files directly from the `config/` directory.
 
-## Tinker / Debugging
-- You should use the `tinker` tool when you need to execute PHP to debug code or query Eloquent models directly.
-- Use the `database-query` tool when you only need to read from the database.
+## Tinker
 
-## Reading Browser Logs With the `browser-logs` Tool
-- You can read browser logs, errors, and exceptions using the `browser-logs` tool from Boost.
-- Only recent browser logs will be useful - ignore old logs.
-
-## Searching Documentation (Critically Important)
-- Boost comes with a powerful `search-docs` tool you should use before any other approaches when dealing with Laravel or Laravel ecosystem packages. This tool automatically passes a list of installed packages and their versions to the remote Boost API, so it returns only version-specific documentation for the user's circumstance. You should pass an array of packages to filter on if you know you need docs for particular packages.
-- The `search-docs` tool is perfect for all Laravel-related packages, including Laravel, Inertia, Livewire, Filament, Tailwind, Pest, Nova, Nightwatch, etc.
-- You must use this tool to search for Laravel ecosystem documentation before falling back to other approaches.
-- Search the documentation before making code changes to ensure we are taking the correct approach.
-- Use multiple, broad, simple, topic-based queries to start. For example: `['rate limiting', 'routing rate limiting', 'routing']`.
-- Do not add package names to queries; package information is already shared. For example, use `test resource table`, not `filament 4 test resource table`.
-
-### Available Search Syntax
-- You can and should pass multiple queries at once. The most relevant results will be returned first.
-
-1. Simple Word Searches with auto-stemming - query=authentication - finds 'authenticate' and 'auth'.
-2. Multiple Words (AND Logic) - query=rate limit - finds knowledge containing both "rate" AND "limit".
-3. Quoted Phrases (Exact Position) - query="infinite scroll" - words must be adjacent and in that order.
-4. Mixed Queries - query=middleware "rate limit" - "middleware" AND exact phrase "rate limit".
-5. Multiple Queries - queries=["authentication", "middleware"] - ANY of these terms.
+- Execute PHP in app context for debugging and testing code. Do not create models without user approval, prefer tests with factories instead. Prefer existing Artisan commands over custom tinker code.
+- Always use single quotes to prevent shell expansion: `vendor/bin/sail artisan tinker --execute 'Your::code();'`
+  - Double quotes for PHP strings inside: `vendor/bin/sail artisan tinker --execute 'User::where("active", true)->count();'`
 
 === php rules ===
 
-## PHP
+# PHP
 
-- Always use curly braces for control structures, even if it has one line.
+- Always use curly braces for control structures, even for single-line bodies.
+- Use PHP 8 constructor property promotion: `public function __construct(public GitHub $github) { }`. Do not leave empty zero-parameter `__construct()` methods unless the constructor is private.
+- Use explicit return type declarations and type hints for all method parameters: `function isAccessible(User $user, ?string $path = null): bool`
+- Use TitleCase for Enum keys: `FavoritePerson`, `BestLake`, `Monthly`.
+- Prefer PHPDoc blocks over inline comments. Only add inline comments for exceptionally complex logic.
+- Use array shape type definitions in PHPDoc blocks.
 
-### Constructors
-- Use PHP 8 constructor property promotion in `__construct()`.
-    - <code-snippet>public function __construct(public GitHub $github) { }</code-snippet>
-- Do not allow empty `__construct()` methods with zero parameters unless the constructor is private.
+=== deployments rules ===
 
-### Type Declarations
-- Always use explicit return type declarations for methods and functions.
-- Use appropriate PHP type hints for method parameters.
+# Deployment
 
-<code-snippet name="Explicit Return Types and Method Params" lang="php">
-protected function isAccessible(User $user, ?string $path = null): bool
-{
-    ...
-}
-</code-snippet>
+- Laravel can be deployed using [Laravel Cloud](https://cloud.laravel.com/), which is the fastest way to deploy and scale production Laravel applications.
 
-## Comments
-- Prefer PHPDoc blocks over inline comments. Never use comments within the code itself unless there is something very complex going on.
+=== sail rules ===
 
-## PHPDoc Blocks
-- Add useful array shape type definitions for arrays when appropriate.
+# Laravel Sail
 
-## Enums
-- Typically, keys in an Enum should be TitleCase. For example: `FavoritePerson`, `BestLake`, `Monthly`.
+- This project runs inside Laravel Sail's Docker containers. You MUST execute all commands through Sail.
+- Start services using `vendor/bin/sail up -d` and stop them with `vendor/bin/sail stop`.
+- Open the application in the browser by running `vendor/bin/sail open`.
+- Always prefix PHP, Artisan, Composer, and Node commands with `vendor/bin/sail`. Examples:
+    - Run Artisan Commands: `vendor/bin/sail artisan migrate`
+    - Install Composer packages: `vendor/bin/sail composer install`
+    - Execute Node commands: `vendor/bin/sail npm run dev`
+    - Execute PHP scripts: `vendor/bin/sail php [script]`
+- View all available Sail commands by running `vendor/bin/sail` without arguments.
 
 === laravel/core rules ===
 
-## Do Things the Laravel Way
+# Do Things the Laravel Way
 
-- Use `php artisan make:` commands to create new files (i.e. migrations, controllers, models, etc.). You can list available Artisan commands using the `list-artisan-commands` tool.
-- If you're creating a generic PHP class, use `php artisan make:class`.
+- Use `vendor/bin/sail artisan make:` commands to create new files (i.e. migrations, controllers, models, etc.). You can list available Artisan commands using `vendor/bin/sail artisan list` and check their parameters with `vendor/bin/sail artisan [command] --help`.
+- If you're creating a generic PHP class, use `vendor/bin/sail artisan make:class`.
 - Pass `--no-interaction` to all Artisan commands to ensure they work without user input. You should also pass the correct `--options` to ensure correct behavior.
 
-### Database
-- Always use proper Eloquent relationship methods with return type hints. Prefer relationship methods over raw queries or manual joins.
-- Use Eloquent models and relationships before suggesting raw database queries.
-- Avoid `DB::`; prefer `Model::query()`. Generate code that leverages Laravel's ORM capabilities rather than bypassing them.
-- Generate code that prevents N+1 query problems by using eager loading.
-- Use Laravel's query builder for very complex database operations.
-
 ### Model Creation
-- When creating new models, create useful factories and seeders for them too. Ask the user if they need any other things, using `list-artisan-commands` to check the available options to `php artisan make:model`.
 
-### APIs & Eloquent Resources
+- When creating new models, create useful factories and seeders for them too. Ask the user if they need any other things, using `vendor/bin/sail artisan make:model --help` to check the available options.
+
+## APIs & Eloquent Resources
+
 - For APIs, default to using Eloquent API Resources and API versioning unless existing API routes do not, then you should follow existing application convention.
 
-### Controllers & Validation
-- Always create Form Request classes for validation rather than inline validation in controllers. Include both validation rules and custom error messages.
-- Check sibling Form Requests to see if the application uses array or string based validation rules.
+## URL Generation
 
-### Queues
-- Use queued jobs for time-consuming operations with the `ShouldQueue` interface.
-
-### Authentication & Authorization
-- Use Laravel's built-in authentication and authorization features (gates, policies, Sanctum, etc.).
-
-### URL Generation
 - When generating links to other pages, prefer named routes and the `route()` function.
 
-### Configuration
-- Use environment variables only in configuration files - never use the `env()` function directly outside of config files. Always use `config('app.name')`, not `env('APP_NAME')`.
+## Testing
 
-### Testing
 - When creating models for tests, use the factories for the models. Check if the factory has custom states that can be used before manually setting up the model.
 - Faker: Use methods such as `$this->faker->word()` or `fake()->randomDigit()`. Follow existing conventions whether to use `$this->faker` or `fake()`.
-- When creating tests, make use of `php artisan make:test [options] {name}` to create a feature test, and pass `--unit` to create a unit test. Most tests should be feature tests.
+- When creating tests, make use of `vendor/bin/sail artisan make:test [options] {name}` to create a feature test, and pass `--unit` to create a unit test. Most tests should be feature tests.
 
-### Vite Error
-- If you receive an "Illuminate\Foundation\ViteException: Unable to locate file in Vite manifest" error, you can run `npm run build` or ask the user to run `npm run dev` or `composer run dev`.
+## Vite Error
 
-=== laravel/v12 rules ===
-
-## Laravel 12
-
-- Use the `search-docs` tool to get version-specific documentation.
-- Since Laravel 11, Laravel has a new streamlined file structure which this project uses.
-
-### Laravel 12 Structure
-- In Laravel 12, middleware are no longer registered in `app/Http/Kernel.php`.
-- Middleware are configured declaratively in `bootstrap/app.php` using `Application::configure()->withMiddleware()`.
-- `bootstrap/app.php` is the file to register middleware, exceptions, and routing files.
-- `bootstrap/providers.php` contains application specific service providers.
-- The `app\Console\Kernel.php` file no longer exists; use `bootstrap/app.php` or `routes/console.php` for console configuration.
-- Console commands in `app/Console/Commands/` are automatically available and do not require manual registration.
-
-### Database
-- When modifying a column, the migration must include all of the attributes that were previously defined on the column. Otherwise, they will be dropped and lost.
-- Laravel 12 allows limiting eagerly loaded records natively, without external packages: `$query->latest()->limit(10);`.
-
-### Models
-- Casts can and likely should be set in a `casts()` method on a model rather than the `$casts` property. Follow existing conventions from other models.
-
-=== livewire/core rules ===
-
-## Livewire
-
-- Use the `search-docs` tool to find exact version-specific documentation for how to write Livewire and Livewire tests.
-- Use the `php artisan make:livewire [Posts\CreatePost]` Artisan command to create new components.
-- State should live on the server, with the UI reflecting it.
-- All Livewire requests hit the Laravel backend; they're like regular HTTP requests. Always validate form data and run authorization checks in Livewire actions.
-
-## Livewire Best Practices
-- Livewire components require a single root element.
-- Use `wire:loading` and `wire:dirty` for delightful loading states.
-- Add `wire:key` in loops:
-
-    ```blade
-    @foreach ($items as $item)
-        <div wire:key="item-{{ $item->id }}">
-            {{ $item->name }}
-        </div>
-    @endforeach
-    ```
-
-- Prefer lifecycle hooks like `mount()`, `updatedFoo()` for initialization and reactive side effects:
-
-<code-snippet name="Lifecycle Hook Examples" lang="php">
-    public function mount(User $user) { $this->user = $user; }
-    public function updatedSearch() { $this->resetPage(); }
-</code-snippet>
-
-## Testing Livewire
-
-<code-snippet name="Example Livewire Component Test" lang="php">
-    Livewire::test(Counter::class)
-        ->assertSet('count', 0)
-        ->call('increment')
-        ->assertSet('count', 1)
-        ->assertSee(1)
-        ->assertStatus(200);
-</code-snippet>
-
-<code-snippet name="Testing Livewire Component Exists on Page" lang="php">
-    $this->get('/posts/create')
-    ->assertSeeLivewire(CreatePost::class);
-</code-snippet>
-
-=== livewire/v3 rules ===
-
-## Livewire 3
-
-### Key Changes From Livewire 2
-- These things changed in Livewire 3, but may not have been updated in this application. Verify this application's setup to ensure you conform with application conventions.
-    - Use `wire:model.live` for real-time updates, `wire:model` is now deferred by default.
-    - Components now use the `App\Livewire` namespace (not `App\Http\Livewire`).
-    - Use `$this->dispatch()` to dispatch events (not `emit` or `dispatchBrowserEvent`).
-    - Use the `components.layouts.app` view as the typical layout path (not `layouts.app`).
-
-### New Directives
-- `wire:show`, `wire:transition`, `wire:cloak`, `wire:offline`, `wire:target` are available for use. Use the documentation to find usage examples.
-
-### Alpine
-- Alpine is now included with Livewire; don't manually include Alpine.js.
-- Plugins included with Alpine: persist, intersect, collapse, and focus.
-
-### Lifecycle Hooks
-- You can listen for `livewire:init` to hook into Livewire initialization, and `fail.status === 419` for the page expiring:
-
-<code-snippet name="Livewire Init Hook Example" lang="js">
-document.addEventListener('livewire:init', function () {
-    Livewire.hook('request', ({ fail }) => {
-        if (fail && fail.status === 419) {
-            alert('Your session expired');
-        }
-    });
-
-    Livewire.hook('message.failed', (message, component) => {
-        console.error(message);
-    });
-});
-</code-snippet>
+- If you receive an "Illuminate\Foundation\ViteException: Unable to locate file in Vite manifest" error, you can run `vendor/bin/sail npm run build` or ask the user to run `vendor/bin/sail npm run dev` or `vendor/bin/sail composer run dev`.
 
 === pint/core rules ===
 
-## Laravel Pint Code Formatter
+# Laravel Pint Code Formatter
 
-- You must run `vendor/bin/pint --dirty` before finalizing changes to ensure your code matches the project's expected style.
-- Do not run `vendor/bin/pint --test`, simply run `vendor/bin/pint` to fix any formatting issues.
+- If you have modified any PHP files, you must run `vendor/bin/sail bin pint --dirty --format agent` before finalizing changes to ensure your code matches the project's expected style.
+- Do not run `vendor/bin/sail bin pint --test --format agent`, simply run `vendor/bin/sail bin pint --format agent` to fix any formatting issues.
 
 === pest/core rules ===
 
 ## Pest
-### Testing
-- If you need to verify a feature is working, write or update a Unit / Feature test.
 
-### Pest Tests
-- All tests must be written using Pest. Use `php artisan make:test --pest {name}`.
-- You must not remove any tests or test files from the tests directory without approval. These are not temporary or helper files - these are core to the application.
-- Tests should test all of the happy paths, failure paths, and weird paths.
-- Tests live in the `tests/Feature` and `tests/Unit` directories.
-- Pest tests look and behave like this:
-<code-snippet name="Basic Pest Test Example" lang="php">
-it('is true', function () {
-    expect(true)->toBeTrue();
-});
-</code-snippet>
+- This project uses Pest for testing. Create tests: `vendor/bin/sail artisan make:test --pest {name}`.
+- The `{name}` argument should not include the test suite directory. Use `vendor/bin/sail artisan make:test --pest SomeFeatureTest` instead of `vendor/bin/sail artisan make:test --pest Feature/SomeFeatureTest`.
+- Run tests: `vendor/bin/sail artisan test --compact` or filter: `vendor/bin/sail artisan test --compact --filter=testName`.
+- Do NOT delete tests without approval.
 
-### Running Tests
-- Run the minimal number of tests using an appropriate filter before finalizing code edits.
-- To run all tests: `php artisan test --compact`.
-- To run all tests in a file: `php artisan test --compact tests/Feature/ExampleTest.php`.
-- To filter on a particular test name: `php artisan test --compact --filter=testName` (recommended after making a change to a related file).
-- When the tests relating to your changes are passing, ask the user if they would like to run the entire test suite to ensure everything is still passing.
+=== agenciafmd/filament-admix rules ===
 
-### Pest Assertions
-- When asserting status codes on a response, use the specific method like `assertForbidden` and `assertNotFound` instead of using `assertStatus(403)` or similar, e.g.:
-<code-snippet name="Pest Example Asserting postJson Response" lang="php">
-it('returns all', function () {
-    $response = $this->postJson('/api/docs', []);
+## Admix
 
-    $response->assertSuccessful();
-});
-</code-snippet>
+Este pacote é um starter kit para ajudar desenvolvedores.
+A ideia principal é facilitar os CRUDS dos recursos mais comuns em aplicações e sites.
 
-### Mocking
-- Mocking can be very helpful when appropriate.
-- When mocking, you can use the `Pest\Laravel\mock` Pest function, but always import it via `use function Pest\Laravel\mock;` before using it. Alternatively, you can use `$this->mock()` if existing tests do.
-- You can also create partial mocks using the same import or self method.
+### Features
 
-### Datasets
-- Use datasets in Pest to simplify tests that have a lot of duplicated data. This is often the case when testing validation rules, so consider this solution when writing tests for validation rules.
+- Usuários: cria usuários para acesso ao painel administrativo (admix).
+- Auditoria: registra ações realizadas no sistema, permitindo a restauração dos dados.
 
-<code-snippet name="Pest Dataset Example" lang="php">
-it('has emails', function (string $email) {
-    expect($email)->not->toBeEmpty();
-})->with([
-    'james' => 'james@laravel.com',
-    'taylor' => 'taylor@laravel.com',
-]);
-</code-snippet>
+### Estrutura para criação de novos recursos / pacotes
 
-=== pest/v4 rules ===
+Os recursos / pacotes devem seguir as seguintes instruções:
+- o nome do pacote deve estar no plural, em inglês e prefixado por `local-`. Ex.: `local-articles`
+- os arquivos do pacote deve estar dentro do diretório `packages/agenciafmd/`. Ex: `packages/agenciafmd/local-articles`
+- o pacote será carregado pelo composer.json, usando um repositorio customizado do tipo `path` e com a opção `symlink` habilitada.
+Ex.
+```json
+"repositories": {
+    "agenciafmd/local-articles": {
+        "type": "path",
+        "url": "packages/agenciafmd/local-articles",
+        "options": {
+            "symlink": true
+        }
+    }
+},
+```
 
-## Pest 4
+### Estrutura de arquivos
 
-- Pest 4 is a huge upgrade to Pest and offers: browser testing, smoke testing, visual regression testing, test sharding, and faster type coverage.
-- Browser testing is incredibly powerful and useful for this project.
-- Browser tests should live in `tests/Browser/`.
-- Use the `search-docs` tool for detailed guidance on utilizing these features.
+/config/local-articles.php
+/database/factories/ArticleFactory.php
+/database/migrations/YYYY_MM_DD_HHMMSS_create_articles_table.php
+/database/seeders/ArticleSeeder.php
+/lang/pt_BR/fields.php
+/lang/pt_BR.json
+/src/Models/Article.php
+/src/Providers/ArticleServiceProvider.php
+/src/Resources/Articles/Pages/CreateArticle.php
+/src/Resources/Articles/Pages/EditArticle.php
+/src/Resources/Articles/Pages/ListArticles.php
+/src/Resources/Articles/Schemas/ArticleForm.php
+/src/Resources/Articles/Tables/ArticlesTable.php
+/src/Resources/Articles/ArticleResource.php
+/src/Services/ArticleService.php
+/src/ArticlesPlugin.php
 
-### Browser Testing
-- You can use Laravel features like `Event::fake()`, `assertAuthenticated()`, and model factories within Pest 4 browser tests, as well as `RefreshDatabase` (when needed) to ensure a clean state for each test.
-- Interact with the page (click, type, scroll, select, submit, drag-and-drop, touch gestures, etc.) when appropriate to complete the test.
-- If requested, test on multiple browsers (Chrome, Firefox, Safari).
-- If requested, test on different devices and viewports (like iPhone 14 Pro, tablets, or custom breakpoints).
-- Switch color schemes (light/dark mode) when appropriate.
-- Take screenshots or pause tests for debugging when appropriate.
+- /config/local-articles.php
+configuração do pacote
 
-### Example Tests
+    <code-snippet name="Example content of config/local-articles.php" lang="php">
+        return [
+            'name' => 'Articles',
+        ];
+    </code-snippet>
 
-<code-snippet name="Pest Browser Test Example" lang="php">
-it('may reset the password', function () {
-    Notification::fake();
+- /database/factories/ArticleFactory.php
+fabrica de dados para inserirmos no banco
 
-    $this->actingAs(User::factory()->create());
+    <code-snippet name="Example content of ArticleFactory" lang="php">
+        public function definition(): array
+        {
+            $title = fake()->sentence(4);
+            $slug = str($title)->slug();
 
-    $page = visit('/sign-in'); // Visit on a real browser...
+            return [
+                'is_active' => fake()->boolean(),
+                'star' => fake()->boolean(),
+                'title' => $title,
+                'subtitle' => fake()->sentence(8),
+                'summary' => fake()->text(),
+                'content' => fake()->htmlParagraphs(),
+                'video' => fake()->youtubeRandomUri(),
+                'published_at' => fake()->dateTimeBetween(now()->subMonths(6), now()->addDay()),
+                'tags' => fake()->tags(),
+                'image' => Storage::putFile('fake', fake()->localImage(ratio: '16:9')),
+                'images' => collect(range(0, fake()->numberBetween(1, 6)))
+                    ->map(fn () => Storage::putFile('fake', fake()->localImage(ratio: '16:9')))
+                    ->toArray(),
+                'slug' => $slug,
+            ];
+        }
+    </code-snippet>
 
-    $page->assertSee('Sign In')
-        ->assertNoJavascriptErrors() // or ->assertNoConsoleLogs()
-        ->click('Forgot Password?')
-        ->fill('email', 'nuno@laravel.com')
-        ->click('Send Reset Link')
-        ->assertSee('We have emailed your password reset link!')
+utilize a relação de valores abaixo para os campos, caso sejam solicitados.
 
-    Notification::assertSent(ResetPassword::class);
-});
-</code-snippet>
-
-<code-snippet name="Pest Smoke Testing Example" lang="php">
-$pages = visit(['/', '/about', '/contact']);
-
-$pages->assertNoJavascriptErrors()->assertNoConsoleLogs();
-</code-snippet>
-
-=== tailwindcss/core rules ===
-
-## Tailwind CSS
-
-- Use Tailwind CSS classes to style HTML; check and use existing Tailwind conventions within the project before writing your own.
-- Offer to extract repeated patterns into components that match the project's conventions (i.e. Blade, JSX, Vue, etc.).
-- Think through class placement, order, priority, and defaults. Remove redundant classes, add classes to parent or child carefully to limit repetition, and group elements logically.
-- You can use the `search-docs` tool to get exact examples from the official documentation when needed.
-
-### Spacing
-- When listing items, use gap utilities for spacing; don't use margins.
-
-<code-snippet name="Valid Flex Gap Spacing Example" lang="html">
-    <div class="flex gap-8">
-        <div>Superior</div>
-        <div>Michigan</div>
-        <div>Erie</div>
-    </div>
-</code-snippet>
-
-### Dark Mode
-- If existing pages and components support dark mode, new pages and components must support dark mode in a similar way, typically using `dark:`.
-
-=== tailwindcss/v4 rules ===
-
-## Tailwind CSS 4
-
-- Always use Tailwind CSS v4; do not use the deprecated utilities.
-- `corePlugins` is not supported in Tailwind v4.
-- In Tailwind v4, configuration is CSS-first using the `@theme` directive — no separate `tailwind.config.js` file is needed.
-
-<code-snippet name="Extending Theme in CSS" lang="css">
-@theme {
-  --color-brand: oklch(0.72 0.11 178);
-}
-</code-snippet>
-
-- In Tailwind v4, you import Tailwind using a regular CSS `@import` statement, not using the `@tailwind` directives used in v3:
-
-<code-snippet name="Tailwind v4 Import Tailwind Diff" lang="diff">
-   - @tailwind base;
-   - @tailwind components;
-   - @tailwind utilities;
-   + @import "tailwindcss";
-</code-snippet>
-
-### Replaced Utilities
-- Tailwind v4 removed deprecated utilities. Do not use the deprecated option; use the replacement.
-- Opacity values are still numeric.
-
-| Deprecated |	Replacement |
+| campo | padrão |
 |------------+--------------|
-| bg-opacity-* | bg-black/* |
-| text-opacity-* | text-black/* |
-| border-opacity-* | border-black/* |
-| divide-opacity-* | divide-black/* |
-| ring-opacity-* | ring-black/* |
-| placeholder-opacity-* | placeholder-black/* |
-| flex-shrink-* | shrink-* |
-| flex-grow-* | grow-* |
-| overflow-ellipsis | text-ellipsis |
-| decoration-slice | box-decoration-slice |
-| decoration-clone | box-decoration-clone |
+| is_active | fake()->boolean() |
+| star | fake()->boolean() |
+| name | fake()->sentence(4) |
+| title | fake()->sentence(4) |
+| subtitle | fake()->sentence(8) |
+| author | fake()->firstName . ' ' . fake()->lastName |
+| summary | fake()->text() |
+| published_at | fake()->dateTimeBetween(now()->subMonths(6), now()->addDay()) |
+| content | fake()->htmlParagraphs() |
+| description | fake()->htmlParagraphs() |
+| tags | fake()->tags() |
+| video | fake()->youtubeRandomUri() |
+| image | Storage::putFile('fake', fake()->localImage(ratio: '16:9')) |
+| images | collect(range(0, fake()->numberBetween(1, 6)))->map(fn () => Storage::putFile('fake', fake()->localImage(ratio: '16:9'))) ->toArray() |
+| slug | str($title)->slug() |
+
+- /database/migrations/YYYY_MM_DD_HHMMSS_create_articles_table.php
+não utilize o metodo `down` e remova os `dock blocks`, caso existam
+separe as migrações em 1 arquivo por recurso ou tabela
+adicione `->index()` para os campos booleanos
+adicione `->nullable()` para os campos que não são obrigatórios
+adicione os campos `created_at`, `updated_at` e `deleted_at` utilizando os metodos `$table->timestamps()` e `$table->softDeletes()`
+
+    <code-snippet name="Example content of create_articles_table migration" lang="php">
+        public function up(): void
+        {
+            Schema::create('articles', static function (Blueprint $table) {
+                $table->id();
+                $table->boolean('is_active')
+                    ->default(true)
+                    ->unsigned()
+                    ->index();
+                $table->boolean('star')
+                    ->default(false)
+                    ->unsigned()
+                    ->index();
+                $table->string('title');
+                $table->string('subtitle')
+                    ->nullable();
+                $table->string('author')
+                    ->nullable();
+                $table->text('summary')
+                    ->nullable();
+                $table->longText('content')
+                    ->nullable();
+                $table->string('video')
+                    ->nullable();
+                $table->timestamp('published_at')
+                    ->nullable();
+                $table->text('tags')
+                    ->nullable();
+                $table->text('image')
+                    ->nullable();
+                $table->text('images')
+                    ->nullable();
+                $table->string('slug')
+                    ->unique()
+                    ->index();
+                $table->timestamps();
+                $table->softDeletes();
+            });
+        }
+    </code-snippet>
+
+- /database/seeders/ArticleSeeder.php
+
+    <code-snippet name="Example content of ArticleSeeder" lang="php">
+        public function run(): void
+        {
+            Article::query()
+                ->truncate();
+
+            Article::factory()
+                ->count(50)
+                ->create();
+        }
+    </code-snippet>
+
+- /lang/pt_BR/fields.php
+
+    <code-snippet name="Example content of fields" lang="php">
+        return [
+            //
+        ];
+    </code-snippet>
+
+- /lang/pt_BR.json
+utilizado para aplicar traduções nos labels dos campos
+
+    <code-snippet name="Example content of pt_BR.json" lang="json">
+        {
+            "Articles": "Artigos",
+            "Article": "Artigo",
+            "Title": "Título",
+            "Subtitle": "Subtítulo",
+            "Summary": "Resumo",
+            "Content": "Conteúdo",
+            "Image": "Imagem",
+            "Images": "Imagens",
+            "Star": "Destaque",
+            "Published at": "Data de publicação",
+            "Published from": "Publicado a partir de",
+            "Published until": "Publicado até",
+            "Author": "Autor",
+            "Tags": "Marcadores"
+        }
+    </code-snippet>
+
+- /src/Models/Article.php
+não utilizar o fillable
+
+    <code-snippet name="Example of content of Article" lang="php">
+        use Agenciafmd\Articles\Database\Factories\ArticleFactory;
+        use Illuminate\Database\Eloquent\Attributes\UseFactory;
+        use Illuminate\Database\Eloquent\Builder;
+        use Illuminate\Database\Eloquent\Factories\HasFactory;
+        use Illuminate\Database\Eloquent\Model;
+        use Illuminate\Database\Eloquent\Prunable;
+        use Illuminate\Database\Eloquent\SoftDeletes;
+        use OwenIt\Auditing\Auditable;
+        use OwenIt\Auditing\Contracts\Auditable as AuditableContract;
+
+        #[UseFactory(ArticleFactory::class)]
+        class Article extends Model implements AuditableContract
+        {
+            use Auditable, HasFactory, Prunable, SoftDeletes;
+
+            public function prunable(): Builder
+            {
+                return self::query()
+                    ->where('deleted_at', '<=', now()->subDays(30));
+            }
+
+            protected function casts(): array
+            {
+                return [
+                    'is_active' => 'boolean',
+                    'star' => 'boolean',
+                    'tags' => 'array',
+                    'images' => 'array',
+                    'published_at' => 'timestamp',
+                ];
+            }
+        }
+    </code-snippet>
+
+utilize a relação de valores abaixo para os campos no casts, caso sejam solicitados.
+| campo | padrão |
+|------------+--------------|
+| is_active | boolean() |
+| star | boolean() |
+| tags | array |
+| images | array |
+| published_at | timestamps |
+
+- /src/Providers/ArticleServiceProvider.php
+responsável por registrar os recursos do pacote
+
+    <code-snippet name="Example content of ArticleServiceProvider" lang="php">
+        final class ArticleServiceProvider extends ServiceProvider
+        {
+            public function boot(): void
+            {
+                $this->bootProviders();
+
+                $this->bootMigrations();
+
+                $this->bootTranslations();
+            }
+
+            public function register(): void
+            {
+                $this->registerConfigs();
+            }
+
+            private function bootProviders(): void
+            {
+                //
+            }
+
+            private function bootMigrations(): void
+            {
+                $this->loadMigrationsFrom(__DIR__ . '/../../database/migrations');
+            }
+
+            private function bootTranslations(): void
+            {
+                $this->loadTranslationsFrom(__DIR__ . '/../../lang', 'local-articles');
+                $this->loadJsonTranslationsFrom(__DIR__ . '/../../lang');
+            }
+
+            private function registerConfigs(): void
+            {
+                $this->mergeConfigFrom(__DIR__ . '/../../config/local-articles.php', 'local-articles');
+            }
+        }
+    </code-snippet>
+
+- /src/Resources/Articles/Pages/CreateArticle.php
+registramos o resource de articles e aplicamos o trait RedirectBack para retornar para a lista após criar um novo registro
+
+    <code-snippet name="Example content of CreateArticle" lang="php">
+        namespace Agenciafmd\Articles\Resources\Articles\Pages;
+
+        use Agenciafmd\Admix\Resources\Concerns\RedirectBack;
+        use Agenciafmd\Articles\Resources\Articles\ArticleResource;
+        use Filament\Resources\Pages\CreateRecord;
+
+        class CreateArticle extends CreateRecord
+        {
+            use RedirectBack;
+
+            protected static string $resource = ArticleResource::class;
+        }
+    </code-snippet>
+
+- /src/Resources/Articles/Pages/EditArticle.php
+registramos o resource de articles e aplicamos o trait RedirectBack para retornar para a lista após criar um novo registro
+registramos o listener de `auditRestored` para atualizamos o registro após restaurar do audit
+adicionamos no `getHeaderActions` as ações de deletar `DeleteAction::make()`, forçar deleção (ForceDeleteAction::make()) e restaurar (RestoreAction::make())
+
+    <code-snippet name="Example content of EditArticle" lang="php">
+        namespace Agenciafmd\Articles\Resources\Articles\Pages;
+
+        use Agenciafmd\Admix\Resources\Concerns\RedirectBack;
+        use Agenciafmd\Articles\Resources\Articles\ArticleResource;
+        use Filament\Actions\DeleteAction;
+        use Filament\Actions\ForceDeleteAction;
+        use Filament\Actions\RestoreAction;
+        use Filament\Resources\Pages\EditRecord;
+
+        class EditArticle extends EditRecord
+        {
+            use RedirectBack;
+
+            protected static string $resource = ArticleResource::class;
+
+            protected $listeners = [
+                'auditRestored',
+            ];
+
+            public function getRelationManagers(): array
+            {
+                if ($this->record->trashed()) {
+                    return [];
+                }
+
+                return parent::getRelationManagers();
+            }
+
+            public function auditRestored(): void
+            {
+                $this->fillForm();
+            }
+
+            protected function getHeaderActions(): array
+            {
+                return [
+                    DeleteAction::make(),
+                    ForceDeleteAction::make(),
+                    RestoreAction::make(),
+                ];
+            }
+        }
+    </code-snippet>
+
+- /src/Resources/Articles/Pages/ListArticles.php
+registramos o resource de articles
+adicionamos no `getHeaderActions` as ações de criar novo registro `CreateAction::make()`
+
+    <code-snippet name="Example content of ListArticles" lang="php">
+        namespace Agenciafmd\Articles\Resources\Articles\Pages;
+
+        use Agenciafmd\Articles\Resources\Articles\ArticleResource;
+        use Filament\Actions\CreateAction;
+        use Filament\Resources\Pages\ListRecords;
+
+        class ListArticles extends ListRecords
+        {
+            protected static string $resource = ArticleResource::class;
+
+            protected function getHeaderActions(): array
+            {
+                return [
+                    CreateAction::make(),
+                ];
+            }
+        }
+    </code-snippet>
+
+- /src/Resources/Articles/Schemas/ArticleForm.php
+formulário do resource de articles
+separe os campos em seções (Section)
+a primeira seção deve ser chamada de "Geral" (__('General')) e conter os campos principais do recurso
+a segunda seção deve ser chamada de "Informações" (__('Information')) e conter os campos `is_active`, `star`, `published_at`, `created_at` e `updated_at`, caso sejam solicitados
+
+    <code-snippet name="Example content of ArticleForm" lang="php">
+        namespace Agenciafmd\Articles\Resources\Articles\Schemas;
+
+        use Agenciafmd\Admix\Resources\Infolists\Components\DateTimeEntry;
+        use Agenciafmd\Admix\Resources\Forms\Components\ImageUploadMultipleWithDefault;
+        use Agenciafmd\Admix\Resources\Forms\Components\ImageUploadWithDefault;
+        use Agenciafmd\Admix\Resources\Forms\Components\RichEditorWithDefault;
+        use Agenciafmd\Admix\Resources\Forms\Components\YouTubeInput;
+        use Agenciafmd\Articles\Services\ArticleService;
+        use Filament\Forms\Components\DateTimePicker;
+        use Filament\Forms\Components\TagsInput;
+        use Filament\Forms\Components\Textarea;
+        use Filament\Forms\Components\TextInput;
+        use Filament\Forms\Components\Toggle;
+        use Filament\Schemas\Components\Section;
+        use Filament\Schemas\Components\Utilities\Get;
+        use Filament\Schemas\Components\Utilities\Set;
+        use Filament\Schemas\Schema;
+
+        final class ArticleForm
+        {
+            public static function configure(Schema $schema): Schema
+            {
+                return $schema
+                    ->components([
+                        Section::make(__('General'))
+                            ->schema([
+                                TextInput::make('title')
+                                    ->translateLabel()
+                                    ->live(onBlur: true)
+                                    ->afterStateUpdated(function (Get $get, Set $set, ?string $old, ?string $state) {
+                                        if (($get('slug') ?? '') !== str($old)->slug()->toString()) {
+                                            return;
+                                        }
+
+                                        $set('slug', str($state)->slug()->toString());
+                                        })
+                                    ->autofocus()
+                                    ->minLength(3)
+                                    ->maxLength(255)
+                                    ->required(),
+                                TextInput::make('slug')
+                                    ->translateLabel()
+                                    ->unique()
+                                    ->required(),
+                                Textarea::make('summary')
+                                    ->translateLabel()
+                                    ->required()
+                                    ->rows(5)
+                                    ->columnSpanFull(),
+                                RichEditorWithDefault::make(name: 'content', directory: 'article/content')
+                                    ->translateLabel()
+                                    ->required()
+                                    ->columnSpanFull(),
+                                YouTubeInput::make(),
+                                ImageUploadWithDefault::make(name: 'image', directory: 'article/image', fileNameField: 'title'),
+                                ImageUploadMultipleWithDefault::make(name: 'images', directory: 'article/images', fileNameField: 'title'),
+                                TagsInput::make('tags')
+                                    ->translateLabel()
+                                    ->suggestions(fn (): array => ArticleService::make()
+                                    ->tags()
+                                    ->toArray())
+                                    ->columnSpanFull(),
+                            ])
+                            ->collapsible()
+                            ->columns()
+                            ->columnSpan(2),
+                        Section::make(__('Information'))
+                            ->schema([
+                                Toggle::make('is_active')
+                                    ->translateLabel()
+                                    ->default(true),
+                                Toggle::make('star')
+                                    ->translateLabel()
+                                    ->default(false),
+                                DateTimePicker::make('published_at')
+                                    ->translateLabel()
+                                    ->columnSpanFull(),
+                                DateTimeEntry::make('created_at'),
+                                DateTimeEntry::make('updated_at'),
+                            ])
+                            ->collapsible()
+                            ->columns(),
+                    ])
+                    ->columns(3);
+            }
+        }
+    </code-snippet>
+
+utilize a relação de valores abaixo para os campos do formulário, caso sejam solicitados.
+- title ou name
+
+    <code-snippet name="Example content of title ou name field" lang="php">
+        TextInput::make('title')
+            ->translateLabel()
+            ->live(onBlur: true)
+            ->afterStateUpdated(function (Get $get, Set $set, ?string $old, ?string $state) {
+                if (($get('slug') ?? '') !== str($old)->slug()->toString()) {
+                    return;
+                }
+
+                $set('slug', str($state)->slug()->toString());
+            })
+            ->autofocus()
+            ->minLength(3)
+            ->maxLength(255)
+            ->required(),
+    </code-snippet>
+
+- slug
+
+    <code-snippet name="Example content of slug field" lang="php">
+        TextInput::make('slug')
+            ->translateLabel()
+            ->unique()
+            ->required(),
+    </code-snippet>
+
+- sumary ou description
+
+    <code-snippet name="Example content of summary or description field" lang="php">
+        Textarea::make('summary')
+            ->translateLabel()
+            ->required()
+            ->rows(5)
+            ->columnSpanFull(),
+    </code-snippet>
+
+- video
+
+    <code-snippet name="Example content of video field" lang="php">
+        YouTubeInput::make(),
+    </code-snippet>
+
+- tags
+
+    <code-snippet name="Example content of tags field" lang="php">
+        TagsInput::make('tags')
+            ->translateLabel()
+            ->suggestions(fn (): array => ArticleService::make()
+            ->tags()
+            ->toArray())
+            ->columnSpanFull(),
+    </code-snippet>
+
+- image
+no valor do campo `directory`, utilize o formato `{recurso}/{campo}`, ex: `article/image`
+no valor do campo `fileNameField`, utilize o campo `title` ou `name`, conforme o caso
+
+    <code-snippet name="Example content of image field" lang="php">
+        ImageUploadWithDefault::make(name: 'image', directory: 'article/image', fileNameField: 'title'),
+    </code-snippet>
+
+- images
+no valor do campo `directory`, utilize o formato `{recurso}/{campo}`, ex: `article/images`
+no valor do campo `fileNameField`, utilize o campo `title` ou `name`, conforme o caso
+
+    <code-snippet name="Example content of image field" lang="php">
+        ImageUploadWithDefault::make(name: 'image', directory: 'article/image', fileNameField: 'title'),
+    </code-snippet>
+
+- is_active
+
+    <code-snippet name="Example content of is_active field" lang="php">
+        Toggle::make('is_active')
+            ->translateLabel()
+            ->default(true),
+    </code-snippet>
+
+- star
+
+    <code-snippet name="Example content of star field" lang="php">
+        Toggle::make('is_active')
+            ->translateLabel()
+            ->default(false),
+    </code-snippet>
+
+- published_at
+
+    <code-snippet name="Example content of published_at field" lang="php">
+        DateTimePicker::make('published_at')
+            ->translateLabel()
+            ->columnSpanFull(),
+    </code-snippet>
+
+- relacionamentos do tipo belongsToMany
+
+    <code-snippet name="Example content of belongsToMany relationship field" lang="php">
+        CheckboxList::make('relationship_name')
+            ->translateLabel()
+            ->relationship('relationship_name', 'display_field')
+            ->searchable()
+            ->bulkToggleable()
+            ->columns(3)
+            ->gridDirection(GridDirection::Row)
+            ->columnSpanFull(),
+    </code-snippet>
+
+- /src/Resources/Articles/Tables/ArticlesTable.php
+tabela do resource de articles
+a listagem principal dos campos, quando disponíveis, são: title ou name, published_at, star e is_active
+os filtros principais, quando disponíveis, são: is_active, star, tags e published_at
+na ação padrão de ordenação (defaultSort), utilize os campos is_active, star, published_at e title ou name
+o `BulkActionGroup`, deve conter `DeleteBulkAction::make()`, `ForceDeleteBulkAction::make()` e `RestoreBulkAction::make()`
+
+    <code-snippet name="Example content of ArticlesTable" lang="php">
+        namespace Agenciafmd\Articles\Resources\Articles\Tables;
+
+        use Agenciafmd\Articles\Services\ArticleService;
+        use Filament\Actions\BulkActionGroup;
+        use Filament\Actions\DeleteBulkAction;
+        use Filament\Actions\EditAction;
+        use Filament\Actions\ForceDeleteBulkAction;
+        use Filament\Actions\RestoreBulkAction;
+        use Filament\Forms\Components\DateTimePicker;
+        use Filament\Tables\Columns\TextColumn;
+        use Filament\Tables\Columns\ToggleColumn;
+        use Filament\Tables\Filters\Filter;
+        use Filament\Tables\Filters\SelectFilter;
+        use Filament\Tables\Filters\TernaryFilter;
+        use Filament\Tables\Filters\TrashedFilter;
+        use Filament\Tables\Table;
+        use Illuminate\Database\Eloquent\Builder;
+
+        final class ArticlesTable
+        {
+            public static function configure(Table $table): Table
+            {
+                return $table
+                    ->columns([
+                        TextColumn::make('title')
+                            ->translateLabel()
+                            ->sortable()
+                            ->searchable(),
+                        TextColumn::make('published_at')
+                            ->translateLabel()
+                            ->dateTime(config('filament-admix.timestamp.format'))
+                            ->sortable(),
+                        ToggleColumn::make('star')
+                            ->translateLabel()
+                            ->sortable(),
+                        ToggleColumn::make('is_active')
+                            ->translateLabel()
+                            ->sortable(),
+                    ])
+                    ->filters([
+                        TernaryFilter::make('is_active')
+                            ->translateLabel(),
+                        TernaryFilter::make('star')
+                            ->translateLabel(),
+                        SelectFilter::make('tags')
+                            ->translateLabel()
+                            ->options(fn (): array => ArticleService::make()
+                                ->tags()
+                                ->toArray())
+                            ->query(function (Builder $query, array $data): Builder {
+                                return $query->when($data['value'], fn (Builder $query, $value): Builder => $query->whereJsonContains('tags', $value));
+                            }),
+                        Filter::make('published_at')
+                            ->schema([
+                                DateTimePicker::make('published_from')
+                                    ->translateLabel(),
+                                DateTimePicker::make('published_until')
+                                    ->translateLabel(),
+                            ])
+                            ->query(function (Builder $query, array $data): Builder {
+                                return $query
+                                    ->when(
+                                        $data['published_from'],
+                                        fn (Builder $query, $date): Builder => $query->whereDate('published_at', '>=', $date),
+                                    )
+                                    ->when(
+                                        $data['published_until'],
+                                        fn (Builder $query, $date): Builder => $query->whereDate('published_at', '<=', $date),
+                                    );
+                            }),
+                        TrashedFilter::make(),
+                    ])
+                    ->recordActions([
+                        EditAction::make(),
+                    ])
+                    ->toolbarActions([
+                        BulkActionGroup::make([
+                            DeleteBulkAction::make(),
+                            ForceDeleteBulkAction::make(),
+                            RestoreBulkAction::make(),
+                        ]),
+                    ])
+                    ->defaultSort(function (Builder $query): Builder {
+                        return $query->orderBy('is_active', 'desc')
+                            ->orderBy('star', 'desc')
+                            ->orderBy('published_at', 'desc')
+                            ->orderBy('title');
+                    });
+            }
+        }
+    </code-snippet>
+
+- /src/Resources/Articles/ArticleResource.php
+resource de articles
+
+    <code-snippet name="Example content of ArticleResource" lang="php">
+        namespace Agenciafmd\Articles\Resources\Articles;
+
+        use Agenciafmd\Articles\Models\Article;
+        use Agenciafmd\Articles\Resources\Articles\Pages\CreateArticle;
+        use Agenciafmd\Articles\Resources\Articles\Pages\EditArticle;
+        use Agenciafmd\Articles\Resources\Articles\Pages\ListArticles;
+        use Agenciafmd\Articles\Resources\Articles\Schemas\ArticleForm;
+        use Agenciafmd\Articles\Resources\Articles\Tables\ArticlesTable;
+        use BackedEnum;
+        use Filament\Resources\Resource;
+        use Filament\Schemas\Schema;
+        use Filament\Support\Icons\Heroicon;
+        use Filament\Tables\Table;
+        use Illuminate\Database\Eloquent\Builder;
+        use Illuminate\Database\Eloquent\SoftDeletingScope;
+        use Tapp\FilamentAuditing\RelationManagers\AuditsRelationManager;
+
+        final class ArticleResource extends Resource
+        {
+            protected static ?string $model = Article::class;
+
+            protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedPencilSquare;
+
+            protected static ?string $recordTitleAttribute = 'title';
+
+            public static function getModelLabel(): string
+            {
+                return __('Article');
+            }
+
+            public static function getPluralModelLabel(): string
+            {
+                return __('Articles');
+            }
+
+            public static function form(Schema $schema): Schema
+            {
+                return ArticleForm::configure($schema);
+            }
+
+            public static function table(Table $table): Table
+            {
+                return ArticlesTable::configure($table);
+            }
+
+            public static function getRelations(): array
+            {
+                return [
+                    AuditsRelationManager::class,
+                ];
+            }
+
+            public static function getPages(): array
+            {
+                return [
+                    'index' => ListArticles::route('/'),
+                    'create' => CreateArticle::route('/create'),
+                    'edit' => EditArticle::route('/{record}/edit'),
+                ];
+            }
+
+            public static function getRecordRouteBindingEloquentQuery(): Builder
+            {
+                return parent::getRecordRouteBindingEloquentQuery()
+                    ->withoutGlobalScopes([
+                        SoftDeletingScope::class,
+                    ]);
+            }
+        }
+    </code-snippet>
+
+- /src/Services/ArticleService.php
+serviço do resource de articles
+usado quando precisamos de regras de negócio específicas
+no caso abaixo, para obter a lista de tags únicas já cadastradas e utilizarmos no formulário e tabela
+
+    <code-snippet name="Example content of ArticleService" lang="php">
+        final class ArticleService
+        {
+            public static function make(): static
+            {
+                return app(self::class);
+            }
+
+            public function tags(): Collection
+            {
+                return $this->queryBuilder()
+                    ->pluck('tags')
+                    ->filter()
+                    ->flatten()
+                    ->unique()
+                    ->mapWithKeys(fn ($item) => [$item => $item])
+                    ->sort();
+            }
+
+            private function queryBuilder(): Builder
+            {
+                return Article::query();
+            }
+        }
+    </code-snippet>
+
+- /src/ArticlesPlugin.php
+classe principal do pacote
+aqui registramos o resource no painel administrativo (admix)
+
+    <code-snippet name="Example content of ArticlesPlugin" lang="php">
+        final class ArticlesPlugin implements Plugin
+        {
+            public static function make(): static
+            {
+                return app(self::class);
+            }
+
+            public function getId(): string
+            {
+                return 'articles';
+            }
+
+            public function register(Panel $panel): void
+            {
+                $panel
+                    ->resources([
+                        ArticleResource::class,
+                    ]);
+            }
+
+            public function boot(Panel $panel): void
+            {
+                //
+            }
+        }
+    </code-snippet>
+
+=== filament/filament rules ===
+
+## Filament
+
+- Filament is a Laravel UI framework built on Livewire, Alpine.js, and Tailwind CSS. UIs are defined in PHP via fluent, chainable components. Follow existing conventions in this app.
+- Use the `search-docs` tool for official documentation on Artisan commands, code examples, testing, relationships, and idiomatic practices. If `search-docs` is unavailable, refer to https://filamentphp.com/docs.
+
+### Artisan
+
+- Always use Filament-specific Artisan commands to create files. Find available commands with the `list-artisan-commands` tool, or run `php artisan --help`.
+- Inspect required options before running, and always pass `--no-interaction`.
+
+### Patterns
+
+Always use static `make()` methods to initialize components. Most configuration methods accept a `Closure` for dynamic values.
+
+Use `Get $get` to read other form field values for conditional logic:
+
+<code-snippet name="Conditional form field visibility" lang="php">
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\TextInput;
+use Filament\Schemas\Components\Utilities\Get;
+
+Select::make('type')
+    ->options(CompanyType::class)
+    ->required()
+    ->live(),
+
+TextInput::make('company_name')
+    ->required()
+    ->visible(fn (Get $get): bool => $get('type') === 'business'),
+
+</code-snippet>
+
+Use `Set $set` inside `->afterStateUpdated()` on a `->live()` field to mutate another field reactively. Prefer `->live(onBlur: true)` on text inputs to avoid per-keystroke updates:
+
+<code-snippet name="Reactive field update" lang="php">
+use Filament\Schemas\Components\Utilities\Set;
+use Illuminate\Support\Str;
+
+TextInput::make('title')
+    ->required()
+    ->live(onBlur: true)
+    ->afterStateUpdated(fn (Set $set, ?string $state) => $set(
+        'slug',
+        Str::slug($state ?? ''),
+    )),
+
+TextInput::make('slug')
+    ->required(),
+
+</code-snippet>
+
+Compose layout by nesting `Section` and `Grid`. Children need explicit `->columnSpan()` or `->columnSpanFull()`:
+
+<code-snippet name="Section and Grid layout" lang="php">
+use Filament\Schemas\Components\Grid;
+use Filament\Schemas\Components\Section;
+
+Section::make('Details')
+    ->schema([
+        Grid::make(2)->schema([
+            TextInput::make('first_name')
+                ->columnSpan(1),
+            TextInput::make('last_name')
+                ->columnSpan(1),
+            TextInput::make('bio')
+                ->columnSpanFull(),
+        ]),
+    ]),
+
+</code-snippet>
+
+Use `Repeater` for inline `HasMany` management. `->relationship()` with no args binds to the relationship matching the field name:
+
+<code-snippet name="Repeater for HasMany" lang="php">
+use Filament\Forms\Components\Repeater;
+
+Repeater::make('qualifications')
+    ->relationship()
+    ->schema([
+        TextInput::make('institution')
+            ->required(),
+        TextInput::make('qualification')
+            ->required(),
+    ])
+    ->columns(2),
+
+</code-snippet>
+
+Use `state()` with a `Closure` to compute derived column values:
+
+<code-snippet name="Computed table column value" lang="php">
+use Filament\Tables\Columns\TextColumn;
+
+TextColumn::make('full_name')
+    ->state(fn (User $record): string => "{$record->first_name} {$record->last_name}"),
+
+</code-snippet>
+
+Use `SelectFilter` for enum or relationship filters, and `Filter` with a `->query()` closure for custom logic:
+
+<code-snippet name="Table filters" lang="php">
+use Filament\Tables\Filters\Filter;
+use Filament\Tables\Filters\SelectFilter;
+use Illuminate\Database\Eloquent\Builder;
+
+SelectFilter::make('status')
+    ->options(UserStatus::class),
+
+SelectFilter::make('author')
+    ->relationship('author', 'name'),
+
+Filter::make('verified')
+    ->query(fn (Builder $query) => $query->whereNotNull('email_verified_at')),
+
+</code-snippet>
+
+Actions are buttons that encapsulate optional modal forms and behavior:
+
+<code-snippet name="Action with modal form" lang="php">
+use Filament\Actions\Action;
+
+Action::make('updateEmail')
+    ->schema([
+        TextInput::make('email')
+            ->email()
+            ->required(),
+    ])
+    ->action(fn (array $data, User $record) => $record->update($data)),
+
+</code-snippet>
+
+### Testing
+
+Testing setup (requires `pestphp/pest-plugin-livewire` in `composer.json`):
+
+- Always call `$this->actingAs(User::factory()->create())` before testing panel functionality.
+- For edit pages, pass `['record' => $user->id]`, use `->call('save')` (not `->call('create')`), and do not assert `->assertRedirect()` (edit pages do not redirect after save).
+
+<code-snippet name="Table test" lang="php">
+use function Pest\Livewire\livewire;
+
+livewire(ListUsers::class)
+    ->assertCanSeeTableRecords($users)
+    ->searchTable($users->first()->name)
+    ->assertCanSeeTableRecords($users->take(1))
+    ->assertCanNotSeeTableRecords($users->skip(1));
+
+</code-snippet>
+
+<code-snippet name="Create resource test" lang="php">
+use function Pest\Laravel\assertDatabaseHas;
+
+livewire(CreateUser::class)
+    ->fillForm([
+        'name' => 'Test',
+        'email' => 'test@example.com',
+    ])
+    ->call('create')
+    ->assertNotified()
+    ->assertHasNoFormErrors()
+    ->assertRedirect();
+
+assertDatabaseHas(User::class, [
+    'name' => 'Test',
+    'email' => 'test@example.com',
+]);
+
+</code-snippet>
+
+<code-snippet name="Edit resource test" lang="php">
+livewire(EditUser::class, ['record' => $user->id])
+    ->fillForm(['name' => 'Updated'])
+    ->call('save')
+    ->assertNotified()
+    ->assertHasNoFormErrors();
+
+assertDatabaseHas(User::class, [
+    'id' => $user->id,
+    'name' => 'Updated',
+]);
+
+</code-snippet>
+
+<code-snippet name="Testing validation" lang="php">
+livewire(CreateUser::class)
+    ->fillForm([
+        'name' => null,
+        'email' => 'invalid-email',
+    ])
+    ->call('create')
+    ->assertHasFormErrors([
+        'name' => 'required',
+        'email' => 'email',
+    ])
+    ->assertNotNotified();
+
+</code-snippet>
+
+Use `->callAction(DeleteAction::class)` for page actions, or `->callAction(TestAction::make('name')->table($record))` for table actions:
+
+<code-snippet name="Calling actions" lang="php">
+use Filament\Actions\Testing\TestAction;
+
+livewire(ListUsers::class)
+    ->callAction(TestAction::make('promote')->table($user), [
+        'role' => 'admin',
+    ])
+    ->assertNotified();
+
+</code-snippet>
+
+### Correct Namespaces
+
+- Form fields (`TextInput`, `Select`, `Repeater`, etc.): `Filament\Forms\Components\`
+- Infolist entries (`TextEntry`, `IconEntry`, etc.): `Filament\Infolists\Components\`
+- Layout components (`Grid`, `Section`, `Fieldset`, `Tabs`, `Wizard`, etc.): `Filament\Schemas\Components\`
+- Schema utilities (`Get`, `Set`, etc.): `Filament\Schemas\Components\Utilities\`
+- Table columns (`TextColumn`, `IconColumn`, etc.): `Filament\Tables\Columns\`
+- Table filters (`SelectFilter`, `Filter`, etc.): `Filament\Tables\Filters\`
+- Actions (`DeleteAction`, `CreateAction`, etc.): `Filament\Actions\`. Never use `Filament\Tables\Actions\`, `Filament\Forms\Actions\`, or any other sub-namespace for actions.
+- Icons: `Filament\Support\Icons\Heroicon` enum (e.g., `Heroicon::PencilSquare`)
+
+### Common Mistakes
+
+- **Never assume public file visibility.** File visibility is `private` by default. Always use `->visibility('public')` when public access is needed.
+- **Never assume full-width layout.** `Grid`, `Section`, `Fieldset`, and `Repeater` do not span all columns by default.
+- **Use `Select::make('author_id')->relationship('author', 'name')` for BelongsTo fields.** `BelongsToSelect` does not exist in v4.
+- **`Repeater` uses `->schema()`, not `->fields()`.**
+- **Never add `->dehydrated(false)` to fields that need to be saved.** It strips the value from form state before `->action()` or the save handler runs. Only use it for helper/UI-only fields.
+- **Use correct property types when overriding `Page`, `Resource`, and `Widget` properties.** These properties have union types or changed modifiers that must be preserved:
+  - `$navigationIcon`: `protected static string | BackedEnum | null` (not `?string`)
+  - `$navigationGroup`: `protected static string | UnitEnum | null` (not `?string`)
+  - `$view`: `protected string` (not `protected static string`) on `Page` and `Widget` classes
+
 </laravel-boost-guidelines>

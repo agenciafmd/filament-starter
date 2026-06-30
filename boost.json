@@ -1,13 +1,14 @@
 {
     "agents": [
-        "copilot",
-        "junie"
+        "junie",
+        "claude_code",
+        "opencode",
+        "copilot"
     ],
     "cloud": false,
     "guidelines": true,
-    "herd_mcp": false,
     "mcp": true,
-    "nightwatch_mcp": false,
+    "nightwatch": false,
     "packages": [
         "agenciafmd/filament-admix",
         "filament/filament"
@@ -16,6 +17,7 @@
     "skills": [
         "laravel-best-practices",
         "configuring-horizon",
-        "pest-testing"
+        "pest-testing",
+        "tailwindcss-development"
     ]
 }

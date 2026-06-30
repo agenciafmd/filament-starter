@@ -21,8 +21,8 @@ final class DatabaseSeeder extends Seeder
 
         Schema::disableForeignKeyConstraints();
 
-//        User::factory(100)
-//            ->create();
+        //        User::factory(100)
+        //            ->create();
 
         User::factory()
             ->create([
