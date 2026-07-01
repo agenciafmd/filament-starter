@@ -14,8 +14,22 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(static function (Middleware $middleware): void {
         $middleware->trustProxies(at: '*');
-        $middleware->trustHosts(at: ['filament.local']);
+        $middleware->trustHosts(at: [
+            'filament.local',
+        ]);
+        $middleware->encryptCookies(except: [
+            'cid',
+            'gclid',
+            'hubspotutk',
+            'utm_campaign',
+            'utm_content',
+            'utm_medium',
+            'utm_source',
+            'utm_term',
+            'utm_today',
+        ]);
     })
     ->withExceptions(static function (Exceptions $exceptions): void {
         //
-    })->create();
+    })
+    ->create();
