@@ -5,8 +5,8 @@ import tailwindcss from '@tailwindcss/vite';
 export default defineConfig({
     plugins: [
         laravel({
-            hotFile: 'public/admix.hot',
-            buildDirectory: 'admix',
+            hotFile: 'public/filament-admix.hot',
+            buildDirectory: 'filament-admix',
             input: [
                 'resources/css/filament/filament-admix/theme.css',
             ],
