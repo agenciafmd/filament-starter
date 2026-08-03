@@ -121,7 +121,10 @@ export function setupUtmHelpers() {
     setUtmFromUrl('utm_campaign');
     setUtmFromUrl('utm_term');
     setUtmFromUrl('utm_content');
+    setUtmFromUrl('cid');
     setUtmFromUrl('gclid');
+    setUtmFromUrl('fbclid');
+    setUtmFromUrl('hubspotutk');
   }
 
   manageUtmHelpers();

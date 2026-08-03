@@ -20,6 +20,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->encryptCookies(except: [
             'cid',
             'gclid',
+            'fbclid',
             'hubspotutk',
             'utm_campaign',
             'utm_content',
