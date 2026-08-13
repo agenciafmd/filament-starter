@@ -8,10 +8,26 @@ export default defineConfig({
             hotFile: 'public/filament-admix.hot',
             buildDirectory: 'filament-admix',
             input: [
-                'resources/css/filament/filament-admix/theme.css',
+                'resources/filament/filament-admix/css/theme.css',
+            ],
+            assets: [
+                'resources/filament/filament-admix/svg/**',
             ],
             refresh: true,
         }),
         tailwindcss(),
     ],
+    build: {
+        rollupOptions: {
+            output: {
+                assetFileNames: (assetInfo) => {
+                    if (assetInfo.name?.endsWith('.svg')) {
+                        return 'svg/[name]-[hash][extname]';
+                    }
+
+                    return 'assets/[name]-[hash][extname]';
+                },
+            },
+        },
+    },
 });

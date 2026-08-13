@@ -5,7 +5,7 @@
 
 /**
  * A helper file for Laravel, to provide autocomplete information to your IDE
- * Generated for Laravel 13.18.0.
+ * Generated for Laravel 13.20.0.
  *
  * This file should not be included in your code, only analyzed by your IDE!
  *
@@ -10550,6 +10550,7 @@ namespace Illuminate\Support\Facades {
      * @method static \Illuminate\Http\Client\PendingRequest dd()
      * @method static \Illuminate\Http\Client\Response|\GuzzleHttp\Promise\PromiseInterface get(string $url, array|string|null $query = null)
      * @method static \Illuminate\Http\Client\Response|\GuzzleHttp\Promise\PromiseInterface head(string $url, array|string|null $query = null)
+     * @method static \Illuminate\Http\Client\Response|\GuzzleHttp\Promise\PromiseInterface query(string $url, array|\JsonSerializable|\Illuminate\Contracts\Support\Arrayable $data = [])
      * @method static \Illuminate\Http\Client\Response|\GuzzleHttp\Promise\PromiseInterface post(string $url, array|\JsonSerializable|\Illuminate\Contracts\Support\Arrayable $data = [])
      * @method static \Illuminate\Http\Client\Response|\GuzzleHttp\Promise\PromiseInterface patch(string $url, array|\JsonSerializable|\Illuminate\Contracts\Support\Arrayable $data = [])
      * @method static \Illuminate\Http\Client\Response|\GuzzleHttp\Promise\PromiseInterface put(string $url, array|\JsonSerializable|\Illuminate\Contracts\Support\Arrayable $data = [])
@@ -11992,6 +11993,20 @@ namespace Illuminate\Support\Facades {
         {
             /** @var \Illuminate\Support\Testing\Fakes\MailFake $instance */
             $instance->assertQueued($mailable, $callback);
+        }
+
+        /**
+         * Assert if a mailable was queued a number of times.
+         *
+         * @param string $mailable
+         * @param int $times
+         * @return void
+         * @static
+         */
+        public static function assertQueuedTimes($mailable, $times = 1)
+        {
+            /** @var \Illuminate\Support\Testing\Fakes\MailFake $instance */
+            $instance->assertQueuedTimes($mailable, $times);
         }
 
         /**
@@ -13666,7 +13681,7 @@ namespace Illuminate\Support\Facades {
          * Get the delayed jobs for the given queue.
          *
          * @param \UnitEnum|string|null $queue
-         * @return \Illuminate\Support\Collection
+         * @return \Illuminate\Support\Collection<int, \Illuminate\Queue\Jobs\InspectedJob>
          * @static
          */
         public static function delayedJobs($queue = null)
@@ -13679,7 +13694,7 @@ namespace Illuminate\Support\Facades {
          * Get the reserved jobs for the given queue.
          *
          * @param \UnitEnum|string|null $queue
-         * @return \Illuminate\Support\Collection
+         * @return \Illuminate\Support\Collection<int, \Illuminate\Queue\Jobs\InspectedJob>
          * @static
          */
         public static function reservedJobs($queue = null)
@@ -13703,7 +13718,7 @@ namespace Illuminate\Support\Facades {
         /**
          * Get all delayed jobs across every queue.
          *
-         * @return \Illuminate\Support\Collection
+         * @return \Illuminate\Support\Collection<int, \Illuminate\Queue\Jobs\InspectedJob>
          * @static
          */
         public static function allDelayedJobs()
@@ -13715,7 +13730,7 @@ namespace Illuminate\Support\Facades {
         /**
          * Get all reserved jobs across every queue.
          *
-         * @return \Illuminate\Support\Collection
+         * @return \Illuminate\Support\Collection<int, \Illuminate\Queue\Jobs\InspectedJob>
          * @static
          */
         public static function allReservedJobs()
@@ -13828,6 +13843,20 @@ namespace Illuminate\Support\Facades {
         }
 
         /**
+         * Mark the given job as reserved.
+         *
+         * @param \Closure|string|object $job
+         * @param \UnitEnum|string|null $queue
+         * @return void
+         * @static
+         */
+        public static function reserve($job, $queue = null)
+        {
+            /** @var \Illuminate\Support\Testing\Fakes\QueueFake $instance */
+            $instance->reserve($job, $queue);
+        }
+
+        /**
          * Pop the next job off of the queue.
          *
          * @param \UnitEnum|string|null $queue
@@ -13902,6 +13931,44 @@ namespace Illuminate\Support\Facades {
         {
             /** @var \Illuminate\Support\Testing\Fakes\QueueFake $instance */
             $instance->releaseUniqueJobLocks();
+        }
+
+        /**
+         * Clear all of the reserved jobs.
+         *
+         * @return void
+         * @static
+         */
+        public static function clearReserved()
+        {
+            /** @var \Illuminate\Support\Testing\Fakes\QueueFake $instance */
+            $instance->clearReserved();
+        }
+
+        /**
+         * Register a callback to be invoked before pushing a job.
+         *
+         * @param callable $callback
+         * @return \Illuminate\Support\Testing\Fakes\QueueFake
+         * @static
+         */
+        public static function beforePushing($callback)
+        {
+            /** @var \Illuminate\Support\Testing\Fakes\QueueFake $instance */
+            return $instance->beforePushing($callback);
+        }
+
+        /**
+         * Register a callback to be invoked after pushing a job.
+         *
+         * @param callable $callback
+         * @return \Illuminate\Support\Testing\Fakes\QueueFake
+         * @static
+         */
+        public static function afterPushing($callback)
+        {
+            /** @var \Illuminate\Support\Testing\Fakes\QueueFake $instance */
+            return $instance->afterPushing($callback);
         }
 
         /**
@@ -16664,6 +16731,17 @@ namespace Illuminate\Support\Facades {
         {
             /** @var \Illuminate\Http\Request $instance */
             return $instance->file($key, $default);
+        }
+
+        /**
+         * Retrieve a file from the request as an image instance.
+         *
+         * @static
+         */
+        public static function image($key)
+        {
+            /** @var \Illuminate\Http\Request $instance */
+            return $instance->image($key);
         }
 
         /**
@@ -20934,6 +21012,19 @@ namespace Illuminate\Support\Facades {
         }
 
         /**
+         * Assert that the disk contains no files.
+         *
+         * @return \Illuminate\Filesystem\LocalFilesystemAdapter
+         * @static
+         */
+        public static function assertEmpty()
+        {
+            //Method inherited from \Illuminate\Filesystem\FilesystemAdapter 
+            /** @var \Illuminate\Filesystem\LocalFilesystemAdapter $instance */
+            return $instance->assertEmpty();
+        }
+
+        /**
          * Determine if a file or directory exists.
          *
          * @param string $path
@@ -21111,6 +21202,18 @@ namespace Illuminate\Support\Facades {
             //Method inherited from \Illuminate\Filesystem\FilesystemAdapter 
             /** @var \Illuminate\Filesystem\LocalFilesystemAdapter $instance */
             return $instance->download($path, $name, $headers);
+        }
+
+        /**
+         * Create an image instance from a file in storage.
+         *
+         * @static
+         */
+        public static function image($path)
+        {
+            //Method inherited from \Illuminate\Filesystem\FilesystemAdapter 
+            /** @var \Illuminate\Filesystem\LocalFilesystemAdapter $instance */
+            return $instance->image($path);
         }
 
         /**
@@ -24233,125 +24336,229 @@ namespace Facades\Agenciafmd\Support {
             return \Agenciafmd\Support\Helper::getContentAndExtensionFromBase64File($string);
         }
 
+        /**
+         * @static
+         */
+        public static function floatToInt($value)
+        {
+            return \Agenciafmd\Support\Helper::floatToInt($value);
+        }
+
+            }
+    }
+
+namespace AnourValar\EloquentSerialize\Facades {
+    /**
+     */
+    class EloquentSerializeFacade {
+        /**
+         * Pack
+         *
+         * @param \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Relations\Relation $builder
+         * @return string
+         * @throws \RuntimeException
+         * @static
+         */
+        public static function serialize($builder)
+        {
+            /** @var \AnourValar\EloquentSerialize\Service $instance */
+            return $instance->serialize($builder);
+        }
+
+        /**
+         * Unpack
+         *
+         * @param mixed $package
+         * @throws \LogicException
+         * @return \Illuminate\Database\Eloquent\Builder
+         * @static
+         */
+        public static function unserialize($package)
+        {
+            /** @var \AnourValar\EloquentSerialize\Service $instance */
+            return $instance->unserialize($package);
+        }
+
             }
     }
 
 namespace Intervention\Image\Laravel\Facades {
     /**
+     * @method static \Intervention\Image\Interfaces\ImageInterface read(mixed $input, string|array|\Intervention\Image\Interfaces\DecoderInterface $decoders = [])
+     * @method static \Intervention\Image\Interfaces\ImageInterface create(int $width, int $height)
+     * @method static \Intervention\Image\Interfaces\ImageInterface animate(callable $callback)
      */
     class Image {
         /**
-         * Create image manager with given driver
+         * Create an image instance from raw bytes.
          *
-         * @link https://image.intervention.io/v3/basics/configuration-drivers#static-constructor
-         * @throws DriverException
-         * @throws InputException
          * @static
          */
-        public static function withDriver($driver, ...$options)
+        public static function fromBytes($contents)
         {
-            return \Intervention\Image\ImageManager::withDriver($driver, ...$options);
+            /** @var \Illuminate\Image\ImageManager $instance */
+            return $instance->fromBytes($contents);
         }
 
         /**
-         * Create image manager with GD driver
+         * Create an image instance from a base64 encoded string.
          *
-         * @link https://image.intervention.io/v3/basics/configuration-drivers#static-gd-driver-constructor
-         * @throws DriverException
-         * @throws InputException
          * @static
          */
-        public static function gd(...$options)
+        public static function fromBase64($base64)
         {
-            return \Intervention\Image\ImageManager::gd(...$options);
+            /** @var \Illuminate\Image\ImageManager $instance */
+            return $instance->fromBase64($base64);
         }
 
         /**
-         * Create image manager with Imagick driver
+         * Create an image instance from a file path.
          *
-         * @link https://image.intervention.io/v3/basics/configuration-drivers#static-imagick-driver-constructor
-         * @throws DriverException
-         * @throws InputException
          * @static
          */
-        public static function imagick(...$options)
+        public static function fromPath($path)
         {
-            return \Intervention\Image\ImageManager::imagick(...$options);
+            /** @var \Illuminate\Image\ImageManager $instance */
+            return $instance->fromPath($path);
         }
 
         /**
-         * Create new image instance with given width & height
+         * Create an image instance from a storage disk path.
          *
-         * @see ImageManagerInterface::create()
-         * @link https://image.intervention.io/v3/basics/instantiation#create-new-images
-         * @throws RuntimeException
          * @static
          */
-        public static function create($width, $height)
+        public static function fromStorage($path, $disk = null)
         {
-            /** @var \Intervention\Image\ImageManager $instance */
-            return $instance->create($width, $height);
+            /** @var \Illuminate\Image\ImageManager $instance */
+            return $instance->fromStorage($path, $disk);
         }
 
         /**
-         * Create new image instance from given input which can be one of the following
+         * Create an image instance from an uploaded file.
          *
-         * - Path in filesystem
-         * - File Pointer resource
-         * - SplFileInfo object
-         * - Raw binary image data
-         * - Base64 encoded image data
-         * - Data Uri
-         * - Intervention\Image\Image Instance
-         *
-         * To decode the raw input data, you can optionally specify a decoding strategy
-         * with the second parameter. This can be an array of class names or objects
-         * of decoders to be processed in sequence. In this case, the input must be
-         * decodedable with one of the decoders passed. It is also possible to pass
-         * a single object or class name of a decoder.
-         *
-         * All decoders that implement the `DecoderInterface::class` can be passed. Usually
-         * a selection of classes of the namespace `Intervention\Image\Decoders`
-         *
-         * If the second parameter is not set, an attempt to decode the input is made
-         * with all available decoders of the driver.
-         *
-         * @see ImageManagerInterface::read()
-         * @link https://image.intervention.io/v3/basics/instantiation#read-image-sources
-         * @param string|array<string|DecoderInterface>|\Intervention\Image\Interfaces\DecoderInterface $decoders
-         * @throws RuntimeException
          * @static
          */
-        public static function read($input, $decoders = [])
+        public static function fromUpload($file)
         {
-            /** @var \Intervention\Image\ImageManager $instance */
-            return $instance->read($input, $decoders);
+            /** @var \Illuminate\Image\ImageManager $instance */
+            return $instance->fromUpload($file);
         }
 
         /**
-         * Create new animated image by given callback
+         * Create an image instance from a URL.
          *
-         * @see ImageManagerInterface::animate()
-         * @link https://image.intervention.io/v3/basics/instantiation#create-animations
-         * @throws RuntimeException
          * @static
          */
-        public static function animate($init)
+        public static function fromUrl($url)
         {
-            /** @var \Intervention\Image\ImageManager $instance */
-            return $instance->animate($init);
+            /** @var \Illuminate\Image\ImageManager $instance */
+            return $instance->fromUrl($url);
         }
 
         /**
-         * Return currently used driver
+         * Register a transformation handler for the given driver.
          *
-         * @see ImageManagerInterface::driver()
+         * @param class-string<\Illuminate\Contracts\Image\Transformation> $transformation
          * @static
          */
-        public static function driver()
+        public static function transformUsing($driver, $transformation, $callback)
         {
-            /** @var \Intervention\Image\ImageManager $instance */
-            return $instance->driver();
+            /** @var \Illuminate\Image\ImageManager $instance */
+            return $instance->transformUsing($driver, $transformation, $callback);
+        }
+
+        /**
+         * Get the default image driver name.
+         *
+         * @static
+         */
+        public static function getDefaultDriver()
+        {
+            /** @var \Illuminate\Image\ImageManager $instance */
+            return $instance->getDefaultDriver();
+        }
+
+        /**
+         * Get a driver instance.
+         *
+         * @param \UnitEnum|string|null $driver
+         * @return mixed
+         * @throws \InvalidArgumentException
+         * @static
+         */
+        public static function driver($driver = null)
+        {
+            //Method inherited from \Illuminate\Support\Manager 
+            /** @var \Illuminate\Image\ImageManager $instance */
+            return $instance->driver($driver);
+        }
+
+        /**
+         * Register a custom driver creator Closure.
+         *
+         * @param string $driver
+         * @param-closure-this $this  $callback
+         * @return \Illuminate\Image\ImageManager
+         * @static
+         */
+        public static function extend($driver, $callback)
+        {
+            //Method inherited from \Illuminate\Support\Manager 
+            /** @var \Illuminate\Image\ImageManager $instance */
+            return $instance->extend($driver, $callback);
+        }
+
+        /**
+         * Get all of the created "drivers".
+         *
+         * @return array<string, mixed>
+         * @static
+         */
+        public static function getDrivers()
+        {
+            //Method inherited from \Illuminate\Support\Manager 
+            /** @var \Illuminate\Image\ImageManager $instance */
+            return $instance->getDrivers();
+        }
+
+        /**
+         * Get the container instance used by the manager.
+         *
+         * @return \Illuminate\Contracts\Container\Container
+         * @static
+         */
+        public static function getContainer()
+        {
+            //Method inherited from \Illuminate\Support\Manager 
+            /** @var \Illuminate\Image\ImageManager $instance */
+            return $instance->getContainer();
+        }
+
+        /**
+         * Set the container instance used by the manager.
+         *
+         * @param \Illuminate\Contracts\Container\Container $container
+         * @return \Illuminate\Image\ImageManager
+         * @static
+         */
+        public static function setContainer($container)
+        {
+            //Method inherited from \Illuminate\Support\Manager 
+            /** @var \Illuminate\Image\ImageManager $instance */
+            return $instance->setContainer($container);
+        }
+
+        /**
+         * Forget all of the resolved driver instances.
+         *
+         * @return \Illuminate\Image\ImageManager
+         * @static
+         */
+        public static function forgetDrivers()
+        {
+            //Method inherited from \Illuminate\Support\Manager 
+            /** @var \Illuminate\Image\ImageManager $instance */
+            return $instance->forgetDrivers();
         }
 
             }
@@ -34184,6 +34391,7 @@ namespace  {
     class Vite extends \Illuminate\Support\Facades\Vite {}
     class OpenGraphImage extends \Facades\Agenciafmd\SocialMeta\Services\OpenGraphImage {}
     class Helper extends \Facades\Agenciafmd\Support\Helper {}
+    class EloquentSerialize extends \AnourValar\EloquentSerialize\Facades\EloquentSerializeFacade {}
     class Image extends \Intervention\Image\Laravel\Facades\Image {}
     class Clockwork extends \Clockwork\Support\Laravel\Facade {}
     class Horizon extends \Laravel\Horizon\Horizon {}

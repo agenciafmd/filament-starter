@@ -1,11 +1,19 @@
 {
-  "resources/css/filament/filament-admix/theme.css": {
+  "resources/filament/filament-admix/css/theme.css": {
     "file": "assets/theme-BNVzqxlI.css",
     "name": "theme",
     "names": [
       "theme.css"
     ],
-    "src": "resources/css/filament/filament-admix/theme.css",
+    "src": "resources/filament/filament-admix/css/theme.css",
     "isEntry": true
+  },
+  "resources/filament/filament-admix/svg/favicon.svg": {
+    "file": "svg/favicon-CTPFgwRN.svg",
+    "src": "resources/filament/filament-admix/svg/favicon.svg"
+  },
+  "resources/filament/filament-admix/svg/logo.svg": {
+    "file": "svg/logo-C7_8-GMS.svg",
+    "src": "resources/filament/filament-admix/svg/logo.svg"
   }
 }
