@@ -36,7 +36,7 @@
     </script>
 @empty
     @if (session()->get('errors'))
-        @if(collect(session()->get('errors'))->flatten()->first()->has('hp_time'))
+        @if (collect(session()->get('errors'))->flatten()->first()->has('hp_time'))
             {{--@dd(collect(session()->get('errors'))->flatten()->first()->first('hp_time'))--}}
             <script>
                 Swal.fire({

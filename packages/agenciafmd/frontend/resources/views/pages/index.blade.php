@@ -9,7 +9,7 @@
 @push('head')
     <style>
         :root {
-            --glow-color: #E9FF00;
+            --glow-color: #e9ff00;
             --bs-dark-rgb: 0, 0, 0;
         }
     </style>
@@ -17,7 +17,7 @@
 
 @section('content')
     <main class="vstack justify-content-around flex-grow-1">
-        <section class="text-opacity-75 p-1 py-md-1h w-100 text-center bg-black z-1 text-light fs-xsmall fw-bold">
+        <section class="text-opacity-75 py-md-1h text-light fs-xsmall fw-bold z-1 w-100 bg-black p-1 text-center">
             @php
                 $phrases = collect([
                     // Irineu
@@ -62,34 +62,27 @@
 
                     // Vitor
                     'Quem responde antes de ouvir mostra que é insensato e passa vergonha.',
-                    'As pessoas aprendem umas com as outras, assim como o ferro afia o próprio ferro.'
+                    'As pessoas aprendem umas com as outras, assim como o ferro afia o próprio ferro.',
                 ]);
             @endphp
 
             {!! $phrases->random(1)->first() !!}
         </section>
-        <section class="mb-block-large text-center justify-content-center">
+        <section class="mb-block-large justify-content-center text-center">
             <div class="container">
                 <div class="row justify-content-center">
                     <div class="col-md-6">
-                        <div class="mb-0h text-uppercase fs-xxsmall ls-1">
-                            mais uma produção do:
-                        </div>
-                        <x-icon
-                                name="frontend-logo-mdm"
-                                class="mb-block-small mb-md-block-large img-sanitize"
-                        />
+                        <div class="mb-0h text-uppercase fs-xxsmall ls-1">mais uma produção do:</div>
+                        <x-icon name="frontend-logo-mdm" class="mb-block-small mb-md-block-large img-sanitize" />
 
-                        <x-frontend::link
-                                link="/html/index"
-                                class="glowing-btn text-decoration-none">
-                            <span class='glowing-txt'>
+                        <x-frontend::link link="/html/index" class="glowing-btn text-decoration-none">
+                            <span class="glowing-txt">
                                 I
-                                <span class='faulty-letter'>N</span>
+                                <span class="faulty-letter">N</span>
                                 ICIAR
-                                <span class='faulty-letter'>J</span>
+                                <span class="faulty-letter">J</span>
                                 ORN
-                                <span class='faulty-letter'>A</span>
+                                <span class="faulty-letter">A</span>
                                 DA
                             </span>
                         </x-frontend::link>

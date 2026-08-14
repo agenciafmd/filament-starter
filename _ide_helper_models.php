@@ -113,6 +113,8 @@ namespace Agenciafmd\Articles\Models{
  * @property \Carbon\CarbonImmutable|null $deleted_at
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \OwenIt\Auditing\Models\Audit> $audits
  * @property-read int|null $audits_count
+ * @property-read \Filament\Forms\Components\RichEditor\RichContentRenderer $front_content
+ * @property-read string $url
  * @method static \Agenciafmd\Articles\Database\Factories\ArticleFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Article isActive()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Article newModelQuery()
@@ -166,6 +168,7 @@ namespace Agenciafmd\Banners\Models{
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \OwenIt\Auditing\Models\Audit> $audits
  * @property-read int|null $audits_count
  * @method static \Agenciafmd\Banners\Database\Factories\BannerFactory factory($count = null, $state = [])
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Banner isActive()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Banner newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Banner newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Banner onlyTrashed()
@@ -229,13 +232,34 @@ namespace Agenciafmd\BigNumbers\Models{
 
 namespace Agenciafmd\Faqs\Models{
 /**
+ * @property int $id
+ * @property bool $is_active
+ * @property string $name
+ * @property string $slug
+ * @property string|null $description
+ * @property int|null $sort
+ * @property \Carbon\CarbonImmutable|null $created_at
+ * @property \Carbon\CarbonImmutable|null $updated_at
+ * @property \Carbon\CarbonImmutable|null $deleted_at
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \OwenIt\Auditing\Models\Audit> $audits
  * @property-read int|null $audits_count
+ * @property-read \Filament\Forms\Components\RichEditor\RichContentRenderer $front_description
  * @method static \Agenciafmd\Faqs\Database\Factories\FaqFactory factory($count = null, $state = [])
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Faq isActive()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Faq newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Faq newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Faq onlyTrashed()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Faq query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Faq sort()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Faq whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Faq whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Faq whereDescription($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Faq whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Faq whereIsActive($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Faq whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Faq whereSlug($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Faq whereSort($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Faq whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Faq withTrashed(bool $withTrashed = true)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Faq withoutTrashed()
  */

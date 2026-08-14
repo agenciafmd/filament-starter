@@ -11,7 +11,7 @@
                         <li><a href="{{ $paginator->previousPageUrl() }}" rel="prev">&laquo;</a></li>
                     @endif
 
-                    @if(isset($elements))
+                    @if (isset($elements))
                         @foreach ($elements as $element)
                             @if (is_string($element))
                                 <li class="disabled">
@@ -21,7 +21,7 @@
 
                             @if (is_array($element))
                                 @foreach ($element as $page => $url)
-                                    @if ($page == $paginator->currentPage())
+                                    @if ($page === $paginator->currentPage())
                                         <li class="active">
                                             <span>{{ $page }}</span>
                                         </li>
@@ -46,20 +46,17 @@
     </div>
     <div class="page-load-status mx-auto">
         <div class="infinite-scroll-request text-center">
-            <x-icon
-                    name="frontend-ic-loading"
-                    class="animation-spin-right ic-xl text-primary"
-            />
+            <x-icon name="frontend-ic-loading" class="animation-spin-right ic-xl text-primary" />
         </div>
         <p class="infinite-scroll-last"></p>
         <p class="infinite-scroll-error"></p>
     </div>
     @push('head')
-        @if (!$paginator->onFirstPage())
-            <link rel="prev" href="{{ $paginator->previousPageUrl() }}">
+        @if (! $paginator->onFirstPage())
+            <link rel="prev" href="{{ $paginator->previousPageUrl() }}" />
         @endif
         @if ($paginator->hasMorePages())
-            <link rel="next" href="{{ $paginator->nextPageUrl() }}">
+            <link rel="next" href="{{ $paginator->nextPageUrl() }}" />
         @endif
     @endpush
 @endif

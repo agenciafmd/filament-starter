@@ -5,9 +5,6 @@
     'hasShadow' => false,
 ])
 
-<div id="{{ $id }}"
-        {{ $attributes->merge(['class' => 'card' . ($hasShadow ? ' shadow' : '' )]) }}>
-    <div class="card-body {{ $cardBodyClass }}">
-        {{ $slot }}
-    </div>
+<div id="{{ $id }}" {{ $attributes->merge(['class' => 'card' . ($hasShadow ? ' shadow' : '' )]) }}>
+    <div class="card-body {{ $cardBodyClass }}">{{ $slot }}</div>
 </div>

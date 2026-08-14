@@ -1,6 +1,6 @@
 @extends('frontend::html.master', [
     'critical' => ($critical) ?? '',
-    'bodyClass' => 'internal'
+    'bodyClass' => 'internal',
 ])
 
 {{--@section('header')--}}
