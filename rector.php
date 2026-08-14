@@ -3,7 +3,6 @@
 declare(strict_types=1);
 
 use Rector\Caching\ValueObject\Storage\FileCacheStorage;
-use Rector\CodingStyle\Rector\Encapsed\EncapsedStringsToSprintfRector;
 use Rector\Config\RectorConfig;
 use RectorLaravel\Set\LaravelSetList;
 use RectorLaravel\Set\LaravelSetProvider;
@@ -37,8 +36,7 @@ return RectorConfig::configure()
     ])
     ->withImportNames()
     ->withSkip([
-        //        AddOverrideAttributeToOverriddenMethodsRector::class,
-        EncapsedStringsToSprintfRector::class,
+        //
     ])
     ->withPreparedSets(
         deadCode: true,
