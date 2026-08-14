@@ -1,17 +1,13 @@
-import GLightbox from 'glightbox';
+import GLightbox from "glightbox";
 
 function setupGLightBox() {
-
-  return GLightbox({
-    touchNavigation: true,
-    loop: true,
-    autoplayVideos: true,
-  });
+    return GLightbox({
+        touchNavigation: true,
+        loop: true,
+        autoplayVideos: true,
+    });
 }
 
 (() => {
-
-  setupGLightBox();
-
+    setupGLightBox();
 })();
-

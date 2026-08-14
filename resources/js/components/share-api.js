@@ -1,7 +1,5 @@
-import { setupShareAPI } from '../frontend.js';
+import { setupShareAPI } from "../frontend.js";
 
 (() => {
-
-  setupShareAPI();
-
+    setupShareAPI();
 })();

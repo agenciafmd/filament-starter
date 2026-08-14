@@ -1,12 +1,9 @@
-import Swal from 'sweetalert2';
+import Swal from "sweetalert2";
 
 function setupSweetAlert() {
-
-  return window.Swal = Swal;
+    return (window.Swal = Swal);
 }
 
 (() => {
-
-   setupSweetAlert();
-
+    setupSweetAlert();
 })();

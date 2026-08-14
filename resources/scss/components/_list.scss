@@ -1,8 +1,8 @@
 .list {
-  &-unstyled {
-    li {
-      display: flex;
-      gap: $spacer * .5;
+    &-unstyled {
+        li {
+            display: flex;
+            gap: $spacer * 0.5;
+        }
     }
-  }
 }

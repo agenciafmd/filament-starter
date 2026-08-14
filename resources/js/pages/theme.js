@@ -1,18 +1,16 @@
 import {
-  setupPopover,
-  setupShareAPI,
-  setupToast,
-  setupTooltip,
-} from '../frontend.js';
+    setupPopover,
+    setupShareAPI,
+    setupToast,
+    setupTooltip,
+} from "../frontend.js";
 
 (function () {
+    setupShareAPI();
 
-  setupShareAPI();
+    setupPopover();
 
-  setupPopover();
+    setupTooltip();
 
-  setupTooltip();
-
-  setupToast()
-
+    setupToast();
 })();

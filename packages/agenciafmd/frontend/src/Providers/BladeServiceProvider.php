@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Agenciafmd\Frontend\Providers;
 
 use Agenciafmd\Frontend\View\Components\ResponsiveImage;
+use BladeUI\Icons\Factory;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
-use BladeUI\Icons\Factory;
 
 final class BladeServiceProvider extends ServiceProvider
 {

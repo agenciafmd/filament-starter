@@ -1,27 +1,23 @@
 .accordion {
-
-  @include media-breakpoint-up(md) {
-
-    --#{$prefix}accordion-btn-padding-y: #{ $spacer };
-    --#{$prefix}accordion-btn-padding-x: #{ $spacer };
-    --#{$prefix}accordion-body-padding-x: #{ $spacer };
-  }
-
-
-  &-button {
-    font-weight: $font-weight-bold;
-
-    &:not(.collapsed) {
-      background-color: unset;
-      box-shadow: unset;
+    @include media-breakpoint-up(md) {
+        --#{$prefix}accordion-btn-padding-y: #{$spacer};
+        --#{$prefix}accordion-btn-padding-x: #{$spacer};
+        --#{$prefix}accordion-body-padding-x: #{$spacer};
     }
-  }
 
-  &-body {
-    padding-top: 0;
-  }
+    &-button {
+        font-weight: $font-weight-bold;
 
-  &-item {
+        &:not(.collapsed) {
+            background-color: unset;
+            box-shadow: unset;
+        }
+    }
 
-  }
+    &-body {
+        padding-top: 0;
+    }
+
+    &-item {
+    }
 }

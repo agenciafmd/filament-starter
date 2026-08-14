@@ -13,31 +13,30 @@
  * */
 
 export function setupDataLayerEventClickButton() {
+    const buttons = document.querySelectorAll(".js-btn-data-layer");
 
-  const buttons = document.querySelectorAll('.js-btn-data-layer');
+    if (!buttons.length) {
+        return;
+    }
 
-  if (!buttons.length) {
+    buttons.forEach((button) => {
+        button.addEventListener("click", (clickEvent) => {
+            const nameDataLayerAction = "data-fmd-datalayer-action";
+            const linkDataLayerAction =
+                clickEvent.currentTarget.getAttribute(nameDataLayerAction);
 
-    return;
-  }
+            if (!linkDataLayerAction) {
+                throw new Error(
+                    `Adicione atributo ${nameDataLayerAction} com seu valor`,
+                );
+            }
 
-  buttons.forEach((button) => {
-
-    button.addEventListener('click', (clickEvent) => {
-
-      const nameDataLayerAction = 'data-fmd-datalayer-action';
-      const linkDataLayerAction = clickEvent.currentTarget.getAttribute(
-          nameDataLayerAction);
-
-      if (!linkDataLayerAction) {
-
-        throw new Error(`Adicione atributo ${ nameDataLayerAction } com seu valor`);
-      }
-
-      const dataLayerClickEvent = generateDataLayerEvent({ action: linkDataLayerAction });
-      updateDataLayer(dataLayerClickEvent);
+            const dataLayerClickEvent = generateDataLayerEvent({
+                action: linkDataLayerAction,
+            });
+            updateDataLayer(dataLayerClickEvent);
+        });
     });
-  });
 }
 
 /**
@@ -46,14 +45,13 @@ export function setupDataLayerEventClickButton() {
  * @return {DataLayerEvent} - The new (or udpated) Data Layer event options
  * */
 function generateDataLayerEvent(options) {
-
-  return {
-    ...options,
-    event: options.event || 'gaEvent',
-    category: options.category || 'clique',
-    action: options.action || '',
-    label: options.label || 'enviado',
-  };
+    return {
+        ...options,
+        event: options.event || "gaEvent",
+        category: options.category || "clique",
+        action: options.action || "",
+        label: options.label || "enviado",
+    };
 }
 
 /**
@@ -61,17 +59,12 @@ function generateDataLayerEvent(options) {
  * @param {DataLayerEvent} dataToBePushed
  * */
 function updateDataLayer(dataToBePushed) {
+    const hasDataLayer = !!window.dataLayer && !!window.dataLayer.length;
 
-  const hasDataLayer = !!window.dataLayer && !!window.dataLayer.length;
+    if (hasDataLayer) {
+        window.dataLayer = [...window.dataLayer, dataToBePushed];
+        return;
+    }
 
-  if (hasDataLayer) {
-
-    window.dataLayer = [
-      ...window.dataLayer,
-      dataToBePushed,
-    ];
-    return;
-  }
-
-  window.dataLayer = [dataToBePushed];
+    window.dataLayer = [dataToBePushed];
 }

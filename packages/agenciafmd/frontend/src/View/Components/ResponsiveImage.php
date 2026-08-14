@@ -68,11 +68,11 @@ final class ResponsiveImage extends Component
 
             $fileContent = base64_decode('R0lGODlhAQABAIAAAMLCwgAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==');
             $resourceFile = resource_path("images/{$file}");
-            if(File::exists($resourceFile)) {
+            if (File::exists($resourceFile)) {
                 $fileContent = File::get($resourceFile);
             }
 
-            if(Storage::exists($file)) {
+            if (Storage::exists($file)) {
                 $fileContent = Storage::get($file);
             }
 

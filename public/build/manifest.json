@@ -1,6 +1,6 @@
 {
-  "_frontend-CEf3_Kq1.js": {
-    "file": "assets/frontend-CEf3_Kq1.js",
+  "_frontend-BwGcF5yX.js": {
+    "file": "assets/frontend-BwGcF5yX.js",
     "name": "frontend"
   },
   "_swiper-QJfgd1c3.js": {
@@ -539,22 +539,22 @@
     "src": "resources/images/video-film.webp"
   },
   "resources/js/components/share-api.js": {
-    "file": "assets/share-api-hMy1_FtX.js",
+    "file": "assets/share-api-hiJpl8sv.js",
     "name": "share-api",
     "src": "resources/js/components/share-api.js",
     "isEntry": true,
     "imports": [
-      "_frontend-CEf3_Kq1.js"
+      "_frontend-BwGcF5yX.js"
     ]
   },
   "resources/js/components/sliders/articles.js": {
-    "file": "assets/articles-kyu37NnF.js",
+    "file": "assets/articles-C00XW8jp.js",
     "name": "articles",
     "src": "resources/js/components/sliders/articles.js",
     "isEntry": true,
     "imports": [
       "_swiper-QJfgd1c3.js",
-      "_frontend-CEf3_Kq1.js",
+      "_frontend-BwGcF5yX.js",
       "_swiper-core-BP-vm3Xz.js"
     ]
   },
@@ -569,26 +569,31 @@
     ]
   },
   "resources/js/frontend-imports.js": {
-    "file": "assets/frontend-imports-Cec_SVye.js",
+    "file": "assets/frontend-imports-CUVx8aA0.js",
     "name": "frontend-imports",
     "src": "resources/js/frontend-imports.js",
     "isEntry": true,
     "imports": [
-      "_frontend-CEf3_Kq1.js",
+      "_frontend-BwGcF5yX.js",
       "_swiper-core-BP-vm3Xz.js"
     ]
   },
   "resources/js/pages/theme.js": {
-    "file": "assets/theme-C6O44T0Y.js",
+    "file": "assets/theme-CZqSAG-B.js",
     "name": "theme",
     "src": "resources/js/pages/theme.js",
     "isEntry": true,
     "imports": [
-      "_frontend-CEf3_Kq1.js"
+      "_frontend-BwGcF5yX.js"
     ]
   },
   "resources/scss/frontend.scss": {
-    "file": "assets/frontend-xVpQtHfG-833c78f6.css",
-    "src": "resources/scss/frontend.scss"
+    "file": "assets/frontend-BfuWtB_D.css",
+    "src": "resources/scss/frontend.scss",
+    "isEntry": true,
+    "name": "frontend",
+    "names": [
+      "frontend.css"
+    ]
   }
 }

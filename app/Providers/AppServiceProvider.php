@@ -29,12 +29,12 @@ final class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Model::unguard();
-        Model::shouldBeStrict(!app()->isProduction());
+        Model::shouldBeStrict(! app()->isProduction());
         DB::prohibitDestructiveCommands(app()->isProduction());
         Date::use(CarbonImmutable::class);
 
         if ($this->app->environment('production')) {
-            DB::listen(function ($query) {
+            DB::listen(function ($query): void {
                 if ($query->time > 500) { // Log queries slower than 500ms
                     Log::warning("Slow query detected ({$query->time}ms)", [
                         'sql' => $query->sql,
