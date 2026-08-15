@@ -6,12 +6,16 @@ namespace Agenciafmd\Frontend\Livewire;
 
 use Agenciafmd\Postal\Models\Postal;
 use Agenciafmd\Postal\Notifications\SendNotification;
+use Agenciafmd\Support\Rules\HumanName;
+use Agenciafmd\Support\Traits\FormRateLimiter;
 use Illuminate\Contracts\View\View;
 use Livewire\Attributes\Validate;
 use Livewire\Component;
 
 final class Contact extends Component
 {
+    use FormRateLimiter;
+
     #[Validate]
     public string $name = '';
 
@@ -41,6 +45,7 @@ final class Contact extends Component
         return [
             'name' => [
                 'required',
+                new HumanName(),
                 'min:6',
             ],
             'phone' => [
@@ -70,6 +75,8 @@ final class Contact extends Component
 
     public function submit(): void
     {
+        $this->withRateLimiter();
+
         $data = $this->validate($this->rules(), [], $this->attributes());
 
         $postal = Postal::query()

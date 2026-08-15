@@ -12,7 +12,10 @@ final class LivewireServiceProvider extends ServiceProvider
 {
     public function boot(): void
     {
-        Livewire::component('frontend::contact', Contact::class);
+        Livewire::addNamespace(
+            namespace: 'frontend',
+            classNamespace: 'Agenciafmd\\Frontend\\Livewire',
+        );
     }
 
     public function register(): void
