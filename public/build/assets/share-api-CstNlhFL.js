@@ -1,0 +1,1 @@
+import{r as e}from"./frontend-DNcdExJB.js";e();
