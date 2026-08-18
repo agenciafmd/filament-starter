@@ -1,2 +1,3 @@
 @import "../../../../vendor/filament/filament/resources/css/theme.css";
 @source '../../../../vendor/guava/filament-icon-picker/resources/**/*';
+@source '../../../../packages/agenciafmd/filament-admix/resources/views/**/*';
