@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Agenciafmd\Frontend\Providers;
 
-use Agenciafmd\Frontend\Livewire\Contact;
 use Illuminate\Support\ServiceProvider;
 use Livewire\Livewire;
 

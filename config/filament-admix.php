@@ -13,7 +13,6 @@ use Agenciafmd\Postal\PostalPlugin;
 use Agenciafmd\Redirects\RedirectsPlugin;
 use Agenciafmd\Testimonials\TestimonialsPlugin;
 use Filament\Support\Colors\Color;
-use Illuminate\Support\Str;
 
 return [
     'schedule' => [

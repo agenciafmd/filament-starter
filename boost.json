@@ -19,6 +19,10 @@
         "laravel-best-practices",
         "configuring-horizon",
         "pest-testing",
-        "tailwindcss-development"
+        "tailwindcss-development",
+        "creating-filament-admix-package",
+        "filament-admix-components",
+        "filament-admix-form-fields",
+        "filament-admix-table-conventions"
     ]
 }

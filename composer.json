@@ -18,17 +18,123 @@
             "options": {
                 "symlink": true
             }
+        },
+        "agenciafmd/filament-admix": {
+            "type": "path",
+            "url": "packages/agenciafmd/filament-admix",
+            "options": {
+                "symlink": true
+            }
+        },
+        "agenciafmd/filament-articles": {
+            "type": "path",
+            "url": "packages/agenciafmd/filament-articles",
+            "options": {
+                "symlink": true
+            }
+        },
+        "agenciafmd/filament-banners": {
+            "type": "path",
+            "url": "packages/agenciafmd/filament-banners",
+            "options": {
+                "symlink": true
+            }
+        },
+        "agenciafmd/filament-big-numbers": {
+            "type": "path",
+            "url": "packages/agenciafmd/filament-big-numbers",
+            "options": {
+                "symlink": true
+            }
+        },
+        "agenciafmd/filament-faqs": {
+            "type": "path",
+            "url": "packages/agenciafmd/filament-faqs",
+            "options": {
+                "symlink": true
+            }
+        },
+        "agenciafmd/filament-http-logs": {
+            "type": "path",
+            "url": "packages/agenciafmd/filament-http-logs",
+            "options": {
+                "symlink": true
+            }
+        },
+        "agenciafmd/filament-leads": {
+            "type": "path",
+            "url": "packages/agenciafmd/filament-leads",
+            "options": {
+                "symlink": true
+            }
+        },
+        "agenciafmd/filament-partners": {
+            "type": "path",
+            "url": "packages/agenciafmd/filament-partners",
+            "options": {
+                "symlink": true
+            }
+        },
+        "agenciafmd/filament-postal": {
+            "type": "path",
+            "url": "packages/agenciafmd/filament-postal",
+            "options": {
+                "symlink": true
+            }
+        },
+        "agenciafmd/filament-redirects": {
+            "type": "path",
+            "url": "packages/agenciafmd/filament-redirects",
+            "options": {
+                "symlink": true
+            }
+        },
+        "agenciafmd/filament-testimonials": {
+            "type": "path",
+            "url": "packages/agenciafmd/filament-testimonials",
+            "options": {
+                "symlink": true
+            }
+        },
+        "agenciafmd/laravel-social-meta": {
+            "type": "path",
+            "url": "packages/agenciafmd/laravel-social-meta",
+            "options": {
+                "symlink": true
+            }
+        },
+        "agenciafmd/laravel-support": {
+            "type": "path",
+            "url": "packages/agenciafmd/laravel-support",
+            "options": {
+                "symlink": true
+            }
+        },
+        "agenciafmd/laravel-turbo": {
+            "type": "path",
+            "url": "packages/agenciafmd/laravel-turbo",
+            "options": {
+                "symlink": true
+            }
         }
     },
     "require": {
         "php": "^8.4",
-        "agenciafmd/filament-admix": "dev-master",
-        "agenciafmd/filament-leads": "dev-master",
-        "agenciafmd/filament-postal": "dev-master",
+        "agenciafmd/filament-admix": "*",
+        "agenciafmd/filament-articles": "*",
+        "agenciafmd/filament-banners": "*",
+        "agenciafmd/filament-big-numbers": "*",
+        "agenciafmd/filament-faqs": "*",
+        "agenciafmd/filament-http-logs": "*",
+        "agenciafmd/filament-leads": "*",
+        "agenciafmd/filament-partners": "*",
+        "agenciafmd/filament-postal": "*",
+        "agenciafmd/filament-redirects": "*",
+        "agenciafmd/filament-testimonials": "*",
         "agenciafmd/frontend": "*",
-        "agenciafmd/laravel-social-meta": "dev-master",
-        "agenciafmd/laravel-support": "dev-master",
-        "agenciafmd/laravel-turbo": "dev-master",
+        "agenciafmd/laravel-social-meta": "*",
+        "agenciafmd/laravel-support": "*",
+        "agenciafmd/laravel-turbo": "*",
         "filament/filament": "^5.7.6",
         "laravel/framework": "^13.25.0",
         "laravel/tinker": "^v3.0.2",
