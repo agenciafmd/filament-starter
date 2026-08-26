@@ -17,8 +17,8 @@
     "skills": [
         "infer-conventions",
         "laravel-best-practices",
+        "testing-best-practices",
         "configuring-horizon",
-        "pest-testing",
         "tailwindcss-development",
         "creating-filament-admix-package",
         "filament-admix-components",
