@@ -29,26 +29,28 @@
         "agenciafmd/laravel-social-meta": "dev-master",
         "agenciafmd/laravel-support": "dev-master",
         "agenciafmd/laravel-turbo": "dev-master",
-        "filament/filament": "^5.7.6",
-        "laravel/framework": "^13.26.1",
+        "filament/filament": "^5.8.2",
+        "laravel/framework": "^13.32.0",
         "laravel/tinker": "^v3.0.2",
         "spatie/laravel-google-fonts": "^1.7"
     },
     "require-dev": {
         "barryvdh/laravel-ide-helper": "^3.7.0",
-        "driftingly/rector-laravel": "^2.5.0",
+        "driftingly/rector-laravel": "^2.6.2",
         "fakerphp/faker": "^1.24.1",
-        "larastan/larastan": "^3.10.0",
-        "laravel/boost": "^2.5.5",
+        "larastan/larastan": "^3.12.1",
+        "laravel/boost": "^2.9.0",
         "laravel/pail": "^1.2.7",
-        "laravel/pint": "^1.30.5",
+        "laravel/pao": "^1.1.5",
+        "laravel/pint": "^1.32.1",
         "laravel/sail": "^1.67",
         "mockery/mockery": "^1.6.15",
         "nunomaduro/collision": "^8.9.5",
-        "pestphp/pest": "^4.7.8",
-        "pestphp/pest-plugin-browser": "^4.3.1",
-        "pestphp/pest-plugin-laravel": "^4.1.0",
-        "pestphp/pest-plugin-type-coverage": "^4.0.4"
+        "pestphp/pest": "^5.2.0",
+        "pestphp/pest-plugin-browser": "^5.0.1",
+        "pestphp/pest-plugin-laravel": "^5.0.1",
+        "pestphp/pest-plugin-rector": "^5.0.4",
+        "pestphp/pest-plugin-type-coverage": "^5.0.2"
     },
     "autoload": {
         "psr-4": {
@@ -120,7 +122,8 @@
             "pint --parallel --blade --test",
             "npm run test:lint"
         ],
-        "test:unit": "pest --parallel --coverage",
+        "test:unit": "pest --parallel --tia",
+        "test:unit:baseline": "pest --parallel --tia --fresh",
         "test:types": "phpstan",
         "test": [
             "@php artisan config:clear --ansi",

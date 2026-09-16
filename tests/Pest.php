@@ -22,6 +22,9 @@ pest()->extend(TestCase::class)
     })
     ->in('Browser', 'Feature', 'Unit');
 
+pest()->tia()
+    ->defaultBranch('master');
+
 expect()->extend('toBeOne', fn () => $this->toBe(1));
 
 function something(): void

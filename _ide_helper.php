@@ -5,7 +5,7 @@
 
 /**
  * A helper file for Laravel, to provide autocomplete information to your IDE
- * Generated for Laravel 13.29.0.
+ * Generated for Laravel 13.32.0.
  *
  * This file should not be included in your code, only analyzed by your IDE!
  *
@@ -2120,6 +2120,19 @@ namespace Illuminate\Support\Facades {
         }
 
         /**
+         * Get the registered command instance with the given name, if any.
+         *
+         * @param string $name
+         * @return \Symfony\Component\Console\Command\Command|null
+         * @static
+         */
+        public static function findCommand($name)
+        {
+            /** @var \Illuminate\Foundation\Console\Kernel $instance */
+            return $instance->findCommand($name);
+        }
+
+        /**
          * Get all of the commands registered with the console.
          *
          * @return array
@@ -3815,6 +3828,19 @@ namespace Illuminate\Support\Facades {
         {
             /** @var \Illuminate\Broadcasting\BroadcastManager $instance */
             return $instance->forgetDrivers();
+        }
+
+        /**
+         * Get a Mercure hub instance for the given configuration.
+         *
+         * @param array $config
+         * @return \Symfony\Component\Mercure\HubInterface
+         * @static
+         */
+        public static function mercure($config)
+        {
+            /** @var \Illuminate\Broadcasting\BroadcastManager $instance */
+            return $instance->mercure($config);
         }
 
         /**
@@ -11943,6 +11969,19 @@ namespace Illuminate\Support\Facades {
         }
 
         /**
+         * Assert if a mailable was sent exactly once.
+         *
+         * @param string $mailable
+         * @return void
+         * @static
+         */
+        public static function assertSentOnce($mailable)
+        {
+            /** @var \Illuminate\Support\Testing\Fakes\MailFake $instance */
+            $instance->assertSentOnce($mailable);
+        }
+
+        /**
          * Determine if a mailable was not sent or queued to be sent based on a truth-test callback.
          *
          * @param string|\Closure $mailable
@@ -12020,6 +12059,19 @@ namespace Illuminate\Support\Facades {
         {
             /** @var \Illuminate\Support\Testing\Fakes\MailFake $instance */
             $instance->assertQueuedTimes($mailable, $times);
+        }
+
+        /**
+         * Assert if a mailable was queued exactly once.
+         *
+         * @param string $mailable
+         * @return void
+         * @static
+         */
+        public static function assertQueuedOnce($mailable)
+        {
+            /** @var \Illuminate\Support\Testing\Fakes\MailFake $instance */
+            $instance->assertQueuedOnce($mailable);
         }
 
         /**
@@ -12598,6 +12650,19 @@ namespace Illuminate\Support\Facades {
         }
 
         /**
+         * Assert if a notification was sent on-demand exactly once.
+         *
+         * @param string $notification
+         * @return void
+         * @static
+         */
+        public static function assertSentOnDemandOnce($notification)
+        {
+            /** @var \Illuminate\Support\Testing\Fakes\NotificationFake $instance */
+            $instance->assertSentOnDemandOnce($notification);
+        }
+
+        /**
          * Assert if a notification was sent a number of times.
          *
          * @param mixed $notifiable
@@ -12610,6 +12675,20 @@ namespace Illuminate\Support\Facades {
         {
             /** @var \Illuminate\Support\Testing\Fakes\NotificationFake $instance */
             $instance->assertSentToTimes($notifiable, $notification, $times);
+        }
+
+        /**
+         * Assert if a notification was sent exactly once.
+         *
+         * @param mixed $notifiable
+         * @param string $notification
+         * @return void
+         * @static
+         */
+        public static function assertSentToOnce($notifiable, $notification)
+        {
+            /** @var \Illuminate\Support\Testing\Fakes\NotificationFake $instance */
+            $instance->assertSentToOnce($notifiable, $notification);
         }
 
         /**
@@ -13280,8 +13359,8 @@ namespace Illuminate\Support\Facades {
         /**
          * Pause a queue by its connection and name.
          *
-         * @param string $connection
-         * @param string $queue
+         * @param \UnitEnum|string $connection
+         * @param \UnitEnum|string $queue
          * @return void
          * @static
          */
@@ -13294,8 +13373,8 @@ namespace Illuminate\Support\Facades {
         /**
          * Pause a queue by its connection and name for a given amount of time.
          *
-         * @param string $connection
-         * @param string $queue
+         * @param \UnitEnum|string $connection
+         * @param \UnitEnum|string $queue
          * @param \DateTimeInterface|\DateInterval|int $ttl
          * @return void
          * @static
@@ -13321,8 +13400,8 @@ namespace Illuminate\Support\Facades {
         /**
          * Resume a paused queue by its connection and name.
          *
-         * @param string $connection
-         * @param string $queue
+         * @param \UnitEnum|string $connection
+         * @param \UnitEnum|string $queue
          * @return void
          * @static
          */
@@ -13477,6 +13556,19 @@ namespace Illuminate\Support\Facades {
         {
             /** @var \Illuminate\Queue\QueueManager $instance */
             return $instance->setApplication($app);
+        }
+
+        /**
+         * Register a callback to be executed when creating job payloads.
+         *
+         * @param callable|null $callback
+         * @return void
+         * @static
+         */
+        public static function createPayloadUsing($callback)
+        {
+            /** @var \Illuminate\Queue\QueueManager $instance */
+            $instance->createPayloadUsing($callback);
         }
 
         /**
@@ -13772,6 +13864,18 @@ namespace Illuminate\Support\Facades {
         {
             /** @var \Illuminate\Support\Testing\Fakes\QueueFake $instance */
             return $instance->reservedSize($queue);
+        }
+
+        /**
+         * Get the number of jobs across every queue.
+         *
+         * @return int
+         * @static
+         */
+        public static function totalSize()
+        {
+            /** @var \Illuminate\Support\Testing\Fakes\QueueFake $instance */
+            return $instance->totalSize();
         }
 
         /**
@@ -14182,19 +14286,6 @@ namespace Illuminate\Support\Facades {
             //Method inherited from \Illuminate\Queue\Queue 
             /** @var \Illuminate\Queue\SyncQueue $instance */
             return $instance->getJobExpiration($job);
-        }
-
-        /**
-         * Register a callback to be executed when creating job payloads.
-         *
-         * @param callable|null $callback
-         * @return void
-         * @static
-         */
-        public static function createPayloadUsing($callback)
-        {
-            //Method inherited from \Illuminate\Queue\Queue 
-            \Illuminate\Queue\SyncQueue::createPayloadUsing($callback);
         }
 
         /**
@@ -18894,7 +18985,7 @@ namespace Illuminate\Support\Facades {
          * Call the given Closure with this instance then return the instance.
          *
          * @param (callable($this): mixed)|null $callback
-         * @return ($callback is null ? \Illuminate\Support\HigherOrderTapProxy : $this)
+         * @return ($callback is null ? \Illuminate\Support\HigherOrderTapProxy<$this> : $this)
          * @static
          */
         public static function tap($callback = null)
@@ -21584,6 +21675,38 @@ namespace Illuminate\Support\Facades {
         }
 
         /**
+         * Copy a file to another disk.
+         *
+         * @param string|\Illuminate\Contracts\Filesystem\Filesystem $disk
+         * @param string $from
+         * @param string|null $to
+         * @return bool
+         * @static
+         */
+        public static function copyToDisk($disk, $from, $to = null)
+        {
+            //Method inherited from \Illuminate\Filesystem\FilesystemAdapter 
+            /** @var \Illuminate\Filesystem\LocalFilesystemAdapter $instance */
+            return $instance->copyToDisk($disk, $from, $to);
+        }
+
+        /**
+         * Move a file to another disk.
+         *
+         * @param string|\Illuminate\Contracts\Filesystem\Filesystem $disk
+         * @param string $from
+         * @param string|null $to
+         * @return bool
+         * @static
+         */
+        public static function moveToDisk($disk, $from, $to = null)
+        {
+            //Method inherited from \Illuminate\Filesystem\FilesystemAdapter 
+            /** @var \Illuminate\Filesystem\LocalFilesystemAdapter $instance */
+            return $instance->moveToDisk($disk, $from, $to);
+        }
+
+        /**
          * Get the file size of a given file.
          *
          * @param string $path
@@ -24101,6 +24224,18 @@ namespace Illuminate\Support\Facades {
         }
 
         /**
+         * Get the URL of the running Vite development server.
+         *
+         * @return string|null
+         * @static
+         */
+        public static function devServerUrl()
+        {
+            /** @var \Illuminate\Foundation\Vite $instance */
+            return $instance->devServerUrl();
+        }
+
+        /**
          * Get the URL for an asset.
          *
          * @param string $asset
@@ -24762,6 +24897,14 @@ namespace Facades\Agenciafmd\Support {
             return \Agenciafmd\Support\Helper::floatToInt($value);
         }
 
+        /**
+         * @static
+         */
+        public static function aspectRatio($width, $height)
+        {
+            return \Agenciafmd\Support\Helper::aspectRatio($width, $height);
+        }
+
             }
     }
 
@@ -25070,12 +25213,13 @@ namespace Laravel\Mcp\Facades {
         /**
          * @param \Closure(string, TokenSet):  mixed|array{0: class-string, 1: string}  $handler
          * @param array<int, string>|string $middleware
+         * @param array<string, mixed> $clientMetadata
          * @static
          */
-        public static function oAuthRoutesFor($client, $handler, $middleware = 'web', $connectUri = null, $callbackUri = null)
+        public static function oAuthRoutesFor($client, $handler, $middleware = 'web', $connectUri = null, $callbackUri = null, $clientMetadataUri = null, $clientMetadata = [])
         {
             /** @var \Laravel\Mcp\Server\Registrar $instance */
-            return $instance->oAuthRoutesFor($client, $handler, $middleware, $connectUri, $callbackUri);
+            return $instance->oAuthRoutesFor($client, $handler, $middleware, $connectUri, $callbackUri, $clientMetadataUri, $clientMetadata);
         }
 
         /**
@@ -25763,6 +25907,7 @@ namespace Illuminate\Support {
          * @see \Agenciafmd\Support\Providers\StrServiceProvider::loadStrMacros()
          * @param string $string
          * @param string $delimiter
+         * @return string
          * @static
          */
         public static function acronym($string, $delimiter = '')
@@ -25773,6 +25918,7 @@ namespace Illuminate\Support {
         /**
          * @see \Agenciafmd\Support\Providers\StrServiceProvider::loadStrMacros()
          * @param mixed $text
+         * @return int
          * @static
          */
         public static function readDuration(...$text)
@@ -25783,6 +25929,7 @@ namespace Illuminate\Support {
         /**
          * @see \Agenciafmd\Support\Providers\StrServiceProvider::loadStrMacros()
          * @param string $string
+         * @return string
          * @static
          */
         public static function localSquish($string)
@@ -25793,6 +25940,7 @@ namespace Illuminate\Support {
         /**
          * @see \Agenciafmd\Support\Providers\StrServiceProvider::loadStrMacros()
          * @param string $string
+         * @return string|null
          * @static
          */
         public static function printable($string)
@@ -25804,6 +25952,7 @@ namespace Illuminate\Support {
          * @see \Agenciafmd\Support\Providers\StrServiceProvider::loadStrMacros()
          * @param mixed|null $string
          * @param array $dictionary
+         * @return string
          * @static
          */
         public static function numbersToWords($string, $dictionary = [])
@@ -25849,6 +25998,7 @@ namespace Illuminate\Support {
         /**
          * @see \Agenciafmd\Support\Providers\StrServiceProvider::loadStringableMacros()
          * @param string $delimiter
+         * @return \Illuminate\Support\Stringable
          * @static
          */
         public static function acronym($delimiter = '')
@@ -25858,6 +26008,7 @@ namespace Illuminate\Support {
 
         /**
          * @see \Agenciafmd\Support\Providers\StrServiceProvider::loadStringableMacros()
+         * @return \Illuminate\Support\Stringable
          * @static
          */
         public static function readDuration()
@@ -25867,6 +26018,7 @@ namespace Illuminate\Support {
 
         /**
          * @see \Agenciafmd\Support\Providers\StrServiceProvider::loadStringableMacros()
+         * @return \Illuminate\Support\Stringable
          * @static
          */
         public static function sanitizeName()
@@ -25876,6 +26028,7 @@ namespace Illuminate\Support {
 
         /**
          * @see \Agenciafmd\Support\Providers\StrServiceProvider::loadStringableMacros()
+         * @return \Illuminate\Support\Stringable
          * @static
          */
         public static function localSquish()
@@ -25885,6 +26038,7 @@ namespace Illuminate\Support {
 
         /**
          * @see \Agenciafmd\Support\Providers\StrServiceProvider::loadStringableMacros()
+         * @return \Illuminate\Support\Stringable
          * @static
          */
         public static function printable()
@@ -25895,6 +26049,7 @@ namespace Illuminate\Support {
         /**
          * @see \Agenciafmd\Support\Providers\StrServiceProvider::loadStringableMacros()
          * @param array $dictionary
+         * @return \Illuminate\Support\Stringable
          * @static
          */
         public static function numbersToWords($dictionary = [])

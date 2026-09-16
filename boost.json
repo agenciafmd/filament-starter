@@ -23,6 +23,7 @@
         "creating-filament-admix-package",
         "filament-admix-components",
         "filament-admix-form-fields",
-        "filament-admix-table-conventions"
+        "filament-admix-table-conventions",
+        "filament-development"
     ]
 }

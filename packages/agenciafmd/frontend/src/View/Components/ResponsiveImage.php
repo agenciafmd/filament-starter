@@ -58,7 +58,7 @@ final class ResponsiveImage extends Component
             ->slug()
             ->toString();
 
-        return cache()->rememberForever($key, function () use ($file, $cacheDirectory) {
+        return cache()->rememberForever($key, function () use ($file, $cacheDirectory): array {
             $hash = str(md5($file))->limit(10, '');
             $timestamp = now()->format('YmdHis');
             $directory = $cacheDirectory . '/' . pathinfo($file, PATHINFO_DIRNAME);
@@ -91,8 +91,10 @@ final class ResponsiveImage extends Component
                     $img->scale(width: $width);
                     Storage::put($relativePath, (string) $img->encodeByExtension($extension, quality: $this->quality));
                 }
+
                 $srcsetArray[] = Storage::url($relativePath) . " {$width}w";
             }
+
             $placeholderImg = Image::read($fileContent)
                 ->scale(width: 32);
             $base64String = base64_encode((string) $placeholderImg->encodeByExtension($extension, quality: 20));

@@ -32,7 +32,7 @@ final class BladeServiceProvider extends ServiceProvider
     private function bootBladeComponents(): void
     {
         Blade::componentNamespace('Agenciafmd\\Frontend\\View\\Components', 'frontend');
-        Blade::component('img', ResponsiveImage::class);
+        Blade::aliasComponent(ResponsiveImage::class, 'img');
     }
 
     private function bootBladeComposers(): void
@@ -59,7 +59,7 @@ final class BladeServiceProvider extends ServiceProvider
 
     private function registerIconSet(): void
     {
-        $this->callAfterResolving(Factory::class, function (Factory $factory) {
+        $this->callAfterResolving(Factory::class, function (Factory $factory): void {
             $factory->add('frontend', [
                 'path' => resource_path('svg'),
                 'prefix' => 'frontend',

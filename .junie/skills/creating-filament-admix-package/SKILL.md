@@ -54,7 +54,8 @@ public function up(): void { Schema::create('articles', static function (Bluepri
 
 <!-- Example content of ArticleSeeder -->
 ```php
-public function run(): void { Article::query() ->truncate(); Article::factory() ->count(50) ->create(); }
+public function run(): void { Schema::withoutForeignKeyConstraints(fn () => Article::query() ->truncate());
+    ArticleFactory::new() ->count(50) ->create(); }
 ```
 
 - /lang/pt_BR/fields.php
@@ -165,7 +166,10 @@ declare(strict_types=1); namespace Agenciafmd\Articles\Resources\Articles\Pages;
 - /src/Resources/Articles/ArticleResource.php resource de articles `getNavigationSort()` e `getNavigationGroup()` leem
 do config do pacote, permitindo reordenar/reagrupar o menu sem alterar código `form()`/`table()` só delegam pras classes
 `ArticleForm`/`ArticlesTable` — veja as skills `filament-admix-form-fields` e `filament-admix-table-conventions` pra
-montar o conteúdo delas
+montar o conteúdo delas `getRelations()` lista os RelationManagers do recurso, sempre com o
+`AuditsRelationManager::class` por último; os RelationManagers próprios do pacote ficam em
+/src/Resources/Articles/RelationManagers/ e as convenções deles (nome, localização entre pacotes, modo só leitura) estão
+na skill `filament-admix-table-conventions`
 
 <!-- Example content of ArticleResource -->
 ```php
@@ -199,7 +203,7 @@ específicas no caso abaixo, para obter a lista de tags únicas já cadastradas 
 ```php
 declare(strict_types=1); namespace Agenciafmd\Articles\Services; use Agenciafmd\Articles\Models\Article; use
     Illuminate\Database\Eloquent\Builder; use Illuminate\Support\Collection; final class ArticleService { public static
-    function make(): static { return app(self::class); } public function tags(): Collection { return
+    function make(): static { return resolve(self::class); } public function tags(): Collection { return
     $this->queryBuilder() ->pluck('tags') ->filter() ->flatten() ->unique() ->mapWithKeys(fn ($item) => [$item =>
     $item]) ->sort(); } private function queryBuilder(): Builder { return Article::query(); } }
 ```
@@ -210,7 +214,7 @@ declare(strict_types=1); namespace Agenciafmd\Articles\Services; use Agenciafmd\
 ```php
 declare(strict_types=1); namespace Agenciafmd\Articles; use Agenciafmd\Articles\Resources\Articles\ArticleResource;
     use Filament\Contracts\Plugin; use Filament\Panel; final class ArticlesPlugin implements Plugin { public static
-    function make(): static { return app(self::class); } public function getId(): string { return 'articles'; } public
-    function register(Panel $panel): void { $panel ->resources([ ArticleResource::class, ]); } public function
+    function make(): static { return resolve(self::class); } public function getId(): string { return 'articles'; }
+    public function register(Panel $panel): void { $panel ->resources([ ArticleResource::class, ]); } public function
     boot(Panel $panel): void { // } }
 ```
