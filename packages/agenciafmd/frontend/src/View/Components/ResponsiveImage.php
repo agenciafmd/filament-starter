@@ -7,7 +7,8 @@ namespace Agenciafmd\Frontend\View\Components;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\View\Component;
-use Intervention\Image\Laravel\Facades\Image;
+use Intervention\Image\Drivers\Imagick\Driver;
+use Intervention\Image\ImageManager;
 
 final class ResponsiveImage extends Component
 {
@@ -17,7 +18,7 @@ final class ResponsiveImage extends Component
         public ?string $src,
         public int $quality = 80,
     ) {
-        $this->image = $this->generate($src);
+        $this->image = ($src === null || $src === '') ? [] : $this->generate($src);
     }
 
     public function render(): string
@@ -81,13 +82,14 @@ final class ResponsiveImage extends Component
                 Storage::put($originalPath, $fileContent);
             }
 
+            $manager = $this->imageManager();
             $sizes = $this->getSizes($fileContent);
             $srcsetArray = [];
             foreach ($sizes as $width) {
                 $filename = "{$slugName}-{$width}w.{$extension}";
                 $relativePath = "{$directory}/responsive/{$filename}";
                 if (Storage::exists($relativePath) === false) {
-                    $img = Image::read($fileContent);
+                    $img = $manager->read($fileContent);
                     $img->scale(width: $width);
                     Storage::put($relativePath, (string) $img->encodeByExtension($extension, quality: $this->quality));
                 }
@@ -95,7 +97,7 @@ final class ResponsiveImage extends Component
                 $srcsetArray[] = Storage::url($relativePath) . " {$width}w";
             }
 
-            $placeholderImg = Image::read($fileContent)
+            $placeholderImg = $manager->read($fileContent)
                 ->scale(width: 32);
             $base64String = base64_encode((string) $placeholderImg->encodeByExtension($extension, quality: 20));
             $placeholderDataUri = "data:image/{$extension};base64,{$base64String}";
@@ -108,9 +110,14 @@ final class ResponsiveImage extends Component
         });
     }
 
+    private function imageManager(): ImageManager
+    {
+        return new ImageManager(new Driver);
+    }
+
     private function getSizes(string $fileContent): array
     {
-        $img = Image::read($fileContent);
+        $img = $this->imageManager()->read($fileContent);
 
         $sizes = [];
         $width = $img->width();

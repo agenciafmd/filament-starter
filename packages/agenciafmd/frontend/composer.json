@@ -10,6 +10,7 @@
         }
     ],
     "require": {
+        "intervention/image": "^3.11",
         "laravel/framework": "^v13.15.0"
     },
     "autoload": {

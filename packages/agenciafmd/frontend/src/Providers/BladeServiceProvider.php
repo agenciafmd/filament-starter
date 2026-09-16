@@ -8,6 +8,7 @@ use Agenciafmd\Frontend\View\Components\ResponsiveImage;
 use BladeUI\Icons\Factory;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\View\Compilers\BladeCompiler;
 
 final class BladeServiceProvider extends ServiceProvider
 {
@@ -32,7 +33,10 @@ final class BladeServiceProvider extends ServiceProvider
     private function bootBladeComponents(): void
     {
         Blade::componentNamespace('Agenciafmd\\Frontend\\View\\Components', 'frontend');
-        Blade::aliasComponent(ResponsiveImage::class, 'img');
+
+        $this->callAfterResolving(BladeCompiler::class, function (BladeCompiler $blade): void {
+            $blade->component(ResponsiveImage::class, 'img');
+        });
     }
 
     private function bootBladeComposers(): void
