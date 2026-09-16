@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Database\Seeders;
 
-use Agenciafmd\Admix\Models\User;
+use Agenciafmd\Admix\Database\Factories\UserFactory;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\File;
@@ -21,18 +21,15 @@ final class DatabaseSeeder extends Seeder
 
         Schema::disableForeignKeyConstraints();
 
-        //        User::factory(100)
-        //            ->create();
+        $this->call([
+            //            ArticleSeeder::class,
+        ]);
 
-        User::factory()
+        UserFactory::new()
             ->create([
                 'name' => 'Irineu Junior',
                 'email' => 'irineu@fmd.ag',
             ]);
-
-        $this->call([
-            //            ArticleSeeder::class,
-        ]);
 
         Schema::enableForeignKeyConstraints();
     }
