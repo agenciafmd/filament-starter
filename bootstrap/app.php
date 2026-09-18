@@ -29,7 +29,7 @@ return Application::configure(basePath: dirname(__DIR__))
             'utm_term',
             'utm_today',
         ]);
-        $middleware->validateCsrfTokens(except: [
+        $middleware->preventRequestForgery(except: [
             'livewire/message/*',
             'livewire/update*',
             'livewire/upload-file*',
