@@ -129,7 +129,7 @@ it('saves the checked permissions on the role', function (): void {
         ->fillForm([
             'name' => 'Editors',
             'is_active' => true,
-            'permission_groups.' . str(ArticleResource::class)->replace('\\', '_') => [
+            'permissions' => [
                 articlePermission('view'),
                 articlePermission('update'),
             ],
@@ -139,6 +139,31 @@ it('saves the checked permissions on the role', function (): void {
 
     expect(Role::query()->firstWhere('name', 'Editors')->permissions)
         ->toBe([articlePermission('view'), articlePermission('update')]);
+});
+
+it('drops unknown permission keys when saving the role', function (): void {
+    actingAsAdmixUser();
+
+    Livewire::test(CreateRole::class)
+        ->fillForm([
+            'name' => 'Editors',
+            'is_active' => true,
+            'permissions' => [articlePermission('view'), 'Unknown\\Resource@view'],
+        ])
+        ->call('create')
+        ->assertHasNoFormErrors();
+
+    expect(Role::query()->firstWhere('name', 'Editors')->permissions)
+        ->toBe([articlePermission('view')]);
+});
+
+it('renders the permission matrix on the role form', function (): void {
+    actingAsAdmixUser();
+
+    get(RoleResource::getUrl('create'))
+        ->assertOk()
+        ->assertSee(ArticleResource::getPluralModelLabel())
+        ->assertSee(__('send'));
 });
 
 it('prevents non administrators from changing administrators', function (): void {

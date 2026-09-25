@@ -12,8 +12,13 @@ parameters:
         - database
         - public
         - routes
+        - packages/agenciafmd/laravel-rdstation/src
 
 
     level: max
 
     tmpDir: /tmp/phpstan
+
+    configDirectories:
+        - config
+        - packages/*/*/src/config

@@ -119,6 +119,16 @@ This project has domain-specific skills available in `**/skills/**`. You MUST ac
     - Execute PHP scripts: `vendor/bin/sail php [script]`
 - View all available Sail commands by running `vendor/bin/sail` without arguments.
 
+=== tests rules ===
+
+# Test Enforcement
+
+- Add or update tests for behavior and logic changes when a test provides meaningful regression coverage.
+- Pure copy, styling, and layout-only changes do not require new or updated tests.
+- When test coverage applies, run the affected tests and ensure they pass.
+- Test the changed behavior and its important failure modes, but do not add tests beyond them.
+- Read the `testing-best-practices` skill before writing tests.
+
 === laravel/core rules ===
 
 # Do Things the Laravel Way
@@ -183,6 +193,7 @@ A ideia principal é facilitar os CRUDS dos recursos mais comuns em aplicações
 
 - Usuários: cria usuários para acesso ao painel administrativo (admix).
 - Auditoria: registra ações realizadas no sistema, permitindo a restauração dos dados.
+- Grupos: controle de permissões automático por Resource (usuário sem grupo é administrador); nenhum pacote precisa de Policy ou config para isso.
 
 ### Estrutura para criação de novos recursos / pacotes
 
@@ -234,6 +245,7 @@ O conteúdo detalhado de cada arquivo (exemplos de código, tabelas de campos) e
 - `creating-filament-admix-package` — scaffold completo de um pacote novo (config, factory, migration, seeder, lang, Model, ServiceProviders, Pages, Resource, Service, Plugin)
 - `filament-admix-form-fields` — Schema/Form do Resource (layout, campos, macro `generateSlug()`)
 - `filament-admix-table-conventions` — Table do Resource (columns, filters, actions, defaultSort)
+- `filament-admix-permissions` — Grupos e permissões (`role_id`, `ResourcePolicy`, `PermissionRegistry`, `getExtraPermissions()` para actions próprias, testes com usuário restrito)
 - `filament-admix-components` — catálogo de componentes e traits reutilizáveis do Admix (verificar antes de criar um componente novo)
 
 </laravel-boost-guidelines>
