@@ -9,10 +9,9 @@ metadata:
 # Componentes reutilizáveis do Admix Antes de criar um novo componente de formulário, verifique se já existe um
 
 equivalente no pacote `filament-admix`. Evite reimplementar upload de arquivo/vídeo, seletor de ícone, campo de senha,
-etc. | componente | namespace | descrição | |------------+-----------+-----------| | ImageUploadWithDefault |
-Agenciafmd\Admix\Resources\Forms\Components | upload de imagem única, com editor de imagem | |
-ImageUploadMultipleWithDefault | Agenciafmd\Admix\Resources\Forms\Components | upload de múltiplas imagens, com editor
-de imagem | | FileUploadWithDefault | Agenciafmd\Admix\Resources\Forms\Components | upload de arquivo genérico, com nome
+etc. | componente | namespace | descrição | |------------+-----------+-----------| | ImageUploadWithAutomaticallyResize |
+Agenciafmd\Admix\Resources\Forms\Components | upload de imagem única, com redimensionamento automático de imagem | |
+ImageUploadMultipleWithAutomaticallyResize | Agenciafmd\Admix\Resources\Forms\Components | upload de múltiplas imagens, com redimensionamento automático de imagem | | FileUploadWithDefault | Agenciafmd\Admix\Resources\Forms\Components | upload de arquivo genérico, com nome
 de arquivo derivado de outro campo | | VideoUploadWithDefault | Agenciafmd\Admix\Resources\Forms\Components | upload de
 vídeo (mp4), baseado em FileUploadWithDefault | | RichEditorWithDefault | Agenciafmd\Admix\Resources\Forms\Components |
 editor de texto rico (rich editor) com configuração padrão do pacote | | YouTubeInput |
@@ -25,4 +24,8 @@ Agenciafmd\Admix\Resources\Infolists\Components | exibição (infolist) de data/
 no formulário | Traits e concerns reutilizáveis: | trait/concern | namespace | descrição |
 |------------+-----------+-----------| | RedirectBack | Agenciafmd\Admix\Resources\Concerns | usado nas Pages de
 Create/Edit para retornar à listagem após salvar | | WithScopes | Agenciafmd\Admix\Traits | fornece os scopes `isActive`
-e `sort` para o Model; leia `$defaultSort` em vez de reimplementar ordenação |
+e `sort` para o Model; leia `$defaultSort` em vez de reimplementar ordenação | | PermissionRegistry |
+Agenciafmd\Admix\Permissions | lista as permissões dos Resources do painel e monta as chaves `{ResourceClass}@{ability}`
+(`permissionKey()`, `permissionFor()`); não reimplemente listas de permissões | | ResourcePolicy |
+Agenciafmd\Admix\Policies | policy genérica registrada automaticamente para os models dos Resources; não crie Policy por
+model (veja a skill `filament-admix-permissions`) |

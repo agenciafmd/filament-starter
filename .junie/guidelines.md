@@ -815,7 +815,7 @@ no valor do campo `fileNameField`, utilize o campo `title` ou `name`, conforme o
 - star
 
     <code-snippet name="Example content of star field" lang="php">
-        Toggle::make('is_active')
+        Toggle::make('star')
             ->translateLabel()
             ->default(false),
     </code-snippet>
