@@ -16,11 +16,12 @@ final class HtmlController extends Controller
             return redirect('/', 301);
         }
 
-        $path = base_path('packages/agenciafmd/frontend/resources/views/html/');
-        if (! file_exists($path . $file . '.blade.php')) {
-            $file = 'index';
+        $view = 'frontend::html.' . $file;
+
+        if (! view()->exists($view)) {
+            $view = 'frontend::html.index';
         }
 
-        return view('frontend::html.' . $file);
+        return view()->make($view);
     }
 }

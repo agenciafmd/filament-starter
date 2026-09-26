@@ -12,6 +12,9 @@ use Intervention\Image\ImageManager;
 
 final class ResponsiveImage extends Component
 {
+    /**
+     * @var array{src?: string, srcset?: string, placeholder?: string}
+     */
     public array $image;
 
     public function __construct(
@@ -50,6 +53,9 @@ final class ResponsiveImage extends Component
         blade;
     }
 
+    /**
+     * @return array{src: string, srcset: string, placeholder: string}
+     */
     private function generate(string $file, string $cacheDirectory = 'cache'): array
     {
         //        --max=85 --strip-all --all-progressive
@@ -74,7 +80,7 @@ final class ResponsiveImage extends Component
             }
 
             if (Storage::exists($file)) {
-                $fileContent = Storage::get($file);
+                $fileContent = Storage::get($file) ?? $fileContent;
             }
 
             $originalPath = "{$directory}/{$slugName}-original.{$extension}";
@@ -115,6 +121,11 @@ final class ResponsiveImage extends Component
         return new ImageManager(new Driver);
     }
 
+    /**
+     * Larguras do srcset, da original até 200px, reduzindo 25% a cada passo.
+     *
+     * @return array<int, int>
+     */
     private function getSizes(string $fileContent): array
     {
         $img = $this->imageManager()->read($fileContent);

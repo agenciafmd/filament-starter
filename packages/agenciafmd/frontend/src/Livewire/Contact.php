@@ -40,6 +40,9 @@ final class Contact extends Component
         $this->validateOnly($field, $this->rules(), [], $this->attributes());
     }
 
+    /**
+     * @return array<string, array<int, mixed>>
+     */
     public function rules(): array
     {
         return [
@@ -63,6 +66,9 @@ final class Contact extends Component
         ];
     }
 
+    /**
+     * @return array<string, string>
+     */
     public function attributes(): array
     {
         return [
@@ -77,7 +83,7 @@ final class Contact extends Component
     {
         $this->withRateLimiter();
 
-        $data = $this->validate($this->rules(), [], $this->attributes());
+        $this->validate($this->rules(), [], $this->attributes());
 
         $postal = Postal::query()
             ->where('slug', 'contato')
@@ -96,11 +102,11 @@ final class Contact extends Component
         $postal->notify(new SendNotification([
             'greeting' => 'Contato',
             'introLines' => [
-                "**Nome:** {$data['name']}",
-                "**E-mail:** {$data['email']}",
-                "**Telefone:** {$data['phone']}",
+                "**Nome:** {$this->name}",
+                "**E-mail:** {$this->email}",
+                "**Telefone:** {$this->phone}",
             ],
-        ], [$data['email'] => $data['name']]));
+        ], [$this->email => $this->name]));
 
         $this->dispatch(
             event: 'swal',
@@ -111,9 +117,9 @@ final class Contact extends Component
         $this->dispatch(
             event: 'datalayer',
             form_name: 'contato',
-            name: $data['name'],
-            email: $data['email'],
-            phone: $data['phone'],
+            name: $this->name,
+            email: $this->email,
+            phone: $this->phone,
         );
 
         $this->reset();

@@ -37,8 +37,8 @@ final class FrontendServiceProvider extends ServiceProvider
 
     private function bootViteMacros(): void
     {
-        Vite::macro('image', fn (string $asset) => $this->asset("resources/images/{$asset}"));
-        Vite::macro('font', fn (string $asset) => $this->asset("resources/fonts/{$asset}"));
+        Vite::macro('image', static fn (string $asset): string => Vite::asset("resources/images/{$asset}"));
+        Vite::macro('font', static fn (string $asset): string => Vite::asset("resources/fonts/{$asset}"));
     }
 
     private function registerConfigs(): void
