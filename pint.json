@@ -3,7 +3,8 @@
     "notPath": [
         "tests/TestCase.php",
         "tmp",
-        "packages/agenciafmd/filament-postal/resources/mail"
+        "packages/agenciafmd/filament-postal/resources/mail",
+        "packages/agenciafmd/filament-admix/resources/boost"
     ],
     "rules": {
         "align_multiline_comment": true,

@@ -1,6 +1,4 @@
 includes:
-    - vendor/larastan/larastan/extension.neon
-    - vendor/nesbot/carbon/extension.neon
     - phar://phpstan.phar/conf/bleedingEdge.neon
 
 parameters:
@@ -14,10 +12,24 @@ parameters:
         - public
         - routes
 
+    excludePaths:
+        - packages/*/*/tests/*
+
     level: max
+
+    parseModelCastsMethod: true
 
     tmpDir: /tmp/phpstan
 
     configDirectories:
         - config
-        - packages/*/*/src/config
+        - packages/*/*/config
+
+    ignoreErrors:
+        -
+            identifier: trait.unused
+            path: packages/agenciafmd/laravel-support/src/Traits/SeederSupport.php
+
+    databaseMigrationsPath:
+        - database/migrations
+        - packages/*/*/database/migrations
