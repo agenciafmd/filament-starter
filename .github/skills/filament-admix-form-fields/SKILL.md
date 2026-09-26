@@ -32,7 +32,7 @@ declare(strict_types=1); namespace Agenciafmd\Articles\Resources\Articles\Schema
     ->columnSpanFull(), YouTubeInput::make(), ImageUploadWithAutomaticallyResize::make(name: 'image', directory:
     'article/image'), ImageUploadMultipleWithAutomaticallyResize::make(name: 'images', directory: 'article/images'),
     TagsInput::make('tags') ->translateLabel() ->suggestions(fn (): array => ArticleService::make() ->tags()
-    ->toArray()) ->columnSpanFull(), ]) ->collapsible() ->columns() ->columnSpan(2), ]) ->columnSpan(2), Group::make([
+    ->all()) ->columnSpanFull(), ]) ->collapsible() ->columns() ->columnSpan(2), ]) ->columnSpan(2), Group::make([
     Section::make(__('Information')) ->schema([ Toggle::make('is_active') ->translateLabel() ->default(true),
     Toggle::make('star') ->translateLabel() ->default(false), DateTimePicker::make('published_at') ->translateLabel()
     ->columnSpanFull(), DateTimeEntry::make('created_at'), DateTimeEntry::make('updated_at'), ]) ->collapsible()
@@ -75,7 +75,7 @@ YouTubeInput::make(),
 <!-- Example content of tags field -->
 ```php
 TagsInput::make('tags') ->translateLabel() ->suggestions(fn (): array => ArticleService::make() ->tags()
-    ->toArray()) ->columnSpanFull(),
+    ->all()) ->columnSpanFull(),
 ```
 
 - image no valor do campo `directory`, utilize o formato `{recurso}/{campo}`, ex: `article/image` no valor do campo
@@ -122,4 +122,18 @@ DateTimePicker::make('published_at') ->translateLabel() ->columnSpanFull(),
 ```php
 CheckboxList::make('relationship_name') ->translateLabel() ->relationship('relationship_name', 'display_field')
     ->searchable() ->bulkToggleable() ->columns(3) ->gridDirection(GridDirection::Row) ->columnSpanFull(),
+```
+
+- campos controlados pelo config do pacote leia a visibilidade com `config()->boolean()` e as dimensões da imagem com
+`config()->integer()`, sempre com o valor padrão; o `config()` puro devolve `mixed`, que os métodos do Filament não
+aceitam. Valores que vêm do formulário (`$get('campo')`) também são `mixed`: confira o tipo antes de usar
+
+<!-- Example content of fields controlled by the config -->
+```php
+TextInput::make('subtitle') ->translateLabel() ->maxLength(255)
+    ->visible(config()->boolean('local-articles.subtitle.visible', false)) ->columnSpanFull(),
+    ImageUploadWithAutomaticallyResize::make( name: 'image', directory: 'article/image', fileNameField: 'title', width:
+    (string) config()->integer('local-articles.image.width', 1920), height: (string)
+    config()->integer('local-articles.image.height', 1080), ) ->visible(config()->boolean('local-articles.image.visible',
+    true)),
 ```

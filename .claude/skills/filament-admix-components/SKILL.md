@@ -19,16 +19,28 @@ RichEditorWithDefault | Agenciafmd\Admix\Resources\Forms\Components | editor de 
 configuração padrão do pacote | | YouTubeInput | Agenciafmd\Admix\Resources\Forms\Components | campo de URL de vídeo do
 YouTube | | IconPickerWithDefault | Agenciafmd\Admix\Resources\Forms\Components | seletor de ícone
 (heroicons/tabler/frontend) | | PasswordInput | Agenciafmd\Admix\Resources\Forms\Components | campo de senha com regra
-de validação e `dehydrated` condicional | | PermissionMatrix |
-Agenciafmd\Admix\Resources\Forms\Components | matriz de permissões (linhas = Resources, colunas = abilities, coluna
-"Outros" para `getExtraPermissions()`), usada no formulário de Grupos no campo `permissions` | | DateTimePickerDisabled | Agenciafmd\Admix\Resources\Forms\Components | campo
-de data/hora desabilitado, oculto na criação (ex.: `created_at`/`updated_at` editáveis só na edição) | | DateTimeEntry |
+de validação e `dehydrated` condicional | | PermissionMatrix | Agenciafmd\Admix\Resources\Forms\Components | matriz de
+permissões (linhas = Resources, colunas = abilities, coluna "Outros" para `getExtraPermissions()`), usada no formulário
+de Grupos no campo `permissions` | | DateTimePickerDisabled | Agenciafmd\Admix\Resources\Forms\Components | campo de
+data/hora desabilitado, oculto na criação (ex.: `created_at`/`updated_at` editáveis só na edição) | | DateTimeEntry |
 Agenciafmd\Admix\Resources\Infolists\Components | exibição (infolist) de data/hora, usado em `created_at`/`updated_at`
 no formulário | Traits e concerns reutilizáveis: | trait/concern | namespace | descrição |
 |------------+-----------+-----------| | RedirectBack | Agenciafmd\Admix\Resources\Concerns | usado nas Pages de
 Create/Edit para retornar à listagem após salvar | | WithScopes | Agenciafmd\Admix\Traits | fornece os scopes `isActive`
-e `sort` para o Model; leia `$defaultSort` em vez de reimplementar ordenação | | PermissionRegistry |
+e `sort` para o Model; o `sort` lê o `$defaultSort`, que é obrigatório no Model, em vez de reimplementar ordenação | | PermissionRegistry |
 Agenciafmd\Admix\Permissions | lista as permissões dos Resources do painel e monta as chaves `{ResourceClass}@{ability}`
 (`permissionKey()`, `permissionFor()`); não reimplemente listas de permissões | | ResourcePolicy |
 Agenciafmd\Admix\Policies | policy genérica registrada automaticamente para os models dos Resources; não crie Policy por
 model (veja a skill `filament-admix-permissions`) |
+
+Extensões do PHPStan: o admix e o `laravel-support` registram extensões pelo `phpstan/extension-installer`, então não
+anote nem ignore os erros que elas resolvem.
+
+| extensão | pacote | o que o PHPStan passa a entender |
+|----------|--------|----------------------------------|
+| FilamentMacroMethodsExtension | filament-admix | macros registrados com o `Macroable` do Filament, como `TextInput::generateSlug()`, `TextColumn::limitWithTooltip()` e o `optimize()` do `image-optimizer` |
+| WithScopesBuilderMethodsExtension | filament-admix | os scopes do `WithScopes` num `Builder` sem model definido, como o `$query->sort()` do `defaultSort` das Tables |
+| FakerProviderMethodsExtension | laravel-support | os métodos do nosso Faker `Provider`, como `localImage()`, `htmlParagraphs()`, `tags()` e `youtubeRandomUri()` |
+
+Um macro novo do Filament, registrado no `boot()` de um ServiceProvider, é reconhecido automaticamente. Dentro da closure
+do macro, o `$this` já é o componente, então não é preciso anotar o tipo do `$this`.
