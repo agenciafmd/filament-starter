@@ -5,7 +5,7 @@
 
 /**
  * A helper file for Laravel, to provide autocomplete information to your IDE
- * Generated for Laravel 13.32.0.
+ * Generated for Laravel 13.33.0.
  *
  * This file should not be included in your code, only analyzed by your IDE!
  *
@@ -24571,6 +24571,7 @@ namespace Illuminate\Support\Facades {
         /**
          * @see \Agenciafmd\Frontend\Providers\FrontendServiceProvider::bootViteMacros()
          * @param string $asset
+         * @return string
          * @static
          */
         public static function image($asset)
@@ -24581,6 +24582,7 @@ namespace Illuminate\Support\Facades {
         /**
          * @see \Agenciafmd\Frontend\Providers\FrontendServiceProvider::bootViteMacros()
          * @param string $asset
+         * @return string
          * @static
          */
         public static function font($asset)
@@ -24654,6 +24656,9 @@ namespace Facades\Agenciafmd\Support {
 
         /**
          * Formata a string a partir da mascara
+         *
+         * Cada `#` da máscara recebe o próximo caractere da string. Os `#` que sobram continuam na máscara
+         * e os caracteres excedentes são descartados.
          *
          * @static
          */
@@ -24785,6 +24790,7 @@ namespace Facades\Agenciafmd\Support {
         /**
          * Formata o retorno de falha para json normalizado
          *
+         * @param array<array-key, mixed> $data
          * @static
          */
         public static function error($data = [], $message = 'Item não encontrado', $code = 404)
@@ -24841,6 +24847,9 @@ namespace Facades\Agenciafmd\Support {
         }
 
         /**
+         * Estados e cidades de `public/json/estados-cidades.json`, com `sigla`, `nome` e `cidades`
+         *
+         * @return Collection<int, stdClass>
          * @static
          */
         public static function statesCities()
@@ -24849,6 +24858,7 @@ namespace Facades\Agenciafmd\Support {
         }
 
         /**
+         * @return array<string, string>
          * @static
          */
         public static function states()
@@ -24857,6 +24867,7 @@ namespace Facades\Agenciafmd\Support {
         }
 
         /**
+         * @return array<string, string>
          * @static
          */
         public static function cities($uf)
@@ -24865,6 +24876,7 @@ namespace Facades\Agenciafmd\Support {
         }
 
         /**
+         * @return \Agenciafmd\Support\array{0: string, 1: string} conteúdo binário e extensão
          * @static
          */
         public static function getContentAndExtensionFromBase64File($string)
@@ -25901,7 +25913,7 @@ namespace Illuminate\Support {
 
         /**
          * @see \Agenciafmd\Support\Providers\StrServiceProvider::loadStrMacros()
-         * @param mixed $text
+         * @param string $text
          * @return int
          * @static
          */
@@ -25924,7 +25936,7 @@ namespace Illuminate\Support {
         /**
          * @see \Agenciafmd\Support\Providers\StrServiceProvider::loadStrMacros()
          * @param string $string
-         * @return string|null
+         * @return string
          * @static
          */
         public static function printable($string)
@@ -25934,7 +25946,7 @@ namespace Illuminate\Support {
 
         /**
          * @see \Agenciafmd\Support\Providers\StrServiceProvider::loadStrMacros()
-         * @param mixed|null $string
+         * @param string|int $string
          * @param array $dictionary
          * @return string
          * @static
@@ -26361,6 +26373,7 @@ namespace Illuminate\Foundation {
         /**
          * @see \Agenciafmd\Frontend\Providers\FrontendServiceProvider::bootViteMacros()
          * @param string $asset
+         * @return string
          * @static
          */
         public static function image($asset)
@@ -26371,6 +26384,7 @@ namespace Illuminate\Foundation {
         /**
          * @see \Agenciafmd\Frontend\Providers\FrontendServiceProvider::bootViteMacros()
          * @param string $asset
+         * @return string
          * @static
          */
         public static function font($asset)
@@ -26384,6 +26398,9 @@ namespace Illuminate\Foundation {
 namespace Livewire\Features\SupportTesting {
     /**
      * @template TComponent of \Livewire\Component
+     * @method $this assertSuccessful()
+     * @method $this assertOk()
+     * @method $this assertStatus(int $status)
      * @mixin \Illuminate\Testing\TestResponse
      */
     class Testable {
@@ -31704,12 +31721,14 @@ namespace  {
 
         /**
          * @see \Agenciafmd\Support\Providers\EloquentServiceProvider::loadMacros()
+         * @param string $label
+         * @param string $value
          * @return array
          * @static
          */
-        public static function toSimpleSelectOptions()
+        public static function toSimpleSelectOptions($label = 'name', $value = 'id')
         {
-            return \Illuminate\Database\Eloquent\Builder::toSimpleSelectOptions();
+            return \Illuminate\Database\Eloquent\Builder::toSimpleSelectOptions($label, $value);
         }
 
         /**
