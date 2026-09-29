@@ -21,6 +21,7 @@ return [
     'timestamp' => [
         'format' => env('ADMIX_TIMESTAMP_FORMAT', 'd/m/Y H:i:s'),
     ],
+    'auto_login' => env('ADMIX_AUTO_LOGIN', true),
     'plugins' => [
         ArticlesPlugin::class,
         BannersPlugin::class,
