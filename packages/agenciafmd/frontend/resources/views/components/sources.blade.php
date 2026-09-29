@@ -15,11 +15,11 @@
     <source
         type="image/webp"
         media="({{ $breakpoint }})"
-        srcset="{{ Vite::image( Str::replaceLast('.', "{$suffix}.", Str::replace(['.jpg', '.png'], '.webp', $image)) ) }}, {{ Vite::image(Str::replaceLast('.', "{$suffix}@2x.", Str::replace(['.jpg', '.png'], '.webp', $image)) ) }} 2x"
+        srcset="{{ Vite::image(str($image)->replace(['.jpg', '.png'], '.webp')->replaceLast('.', "{$suffix}.")->toString()) }}, {{ Vite::image(str($image)->replace(['.jpg', '.png'], '.webp')->replaceLast('.', "{$suffix}@2x.")->toString()) }} 2x"
     />
     <source
         media="({{ $breakpoint }})"
-        srcset="{{ Vite::image( Str::replaceLast('.', "{$suffix}.", $image) ) }}, {{ Vite::image( Str::replaceLast('.', "{$suffix}@2x.", $image) ) }} 2x"
+        srcset="{{ Vite::image(str($image)->replaceLast('.', "{$suffix}.")->toString()) }}, {{ Vite::image(str($image)->replaceLast('.', "{$suffix}@2x.")->toString()) }} 2x"
     />
 @endforeach
 

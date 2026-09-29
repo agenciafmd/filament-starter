@@ -129,7 +129,7 @@
                     $articles = [
 
                         (object) [
-                            'name' => Str::squish('Lorem ipsum dolor sit amet, consectetur adipisicing elit.'),
+                            'name' => str('Lorem ipsum dolor sit amet, consectetur adipisicing elit.')->squish()->toString(),
                             'subtitle' => 'Categoria',
                             'date' => '01 de janeiro de 2025',
                             'route' => '/html/blog-detalhe',
@@ -142,7 +142,7 @@
                         ],
 
                         (object) [
-                            'name' => Str::squish('Lorem ipsum dolor sit amet, consectetur adipisicing elit.'),
+                            'name' => str('Lorem ipsum dolor sit amet, consectetur adipisicing elit.')->squish()->toString(),
                             'subtitle' => 'Categoria',
                             'date' => '01 de janeiro de 2025',
                             'route' => '/html/blog-detalhe',
@@ -155,7 +155,7 @@
                         ],
 
                         (object) [
-                            'name' => Str::squish('Lorem ipsum dolor sit amet, consectetur adipisicing elit.'),
+                            'name' => str('Lorem ipsum dolor sit amet, consectetur adipisicing elit.')->squish()->toString(),
                             'subtitle' => 'Categoria',
                             'date' => '01 de janeiro de 2025',
                             'route' => '/html/blog-detalhe',
@@ -168,7 +168,7 @@
                         ],
 
                         (object) [
-                            'name' => Str::squish('Lorem ipsum dolor sit amet, consectetur adipisicing elit.'),
+                            'name' => str('Lorem ipsum dolor sit amet, consectetur adipisicing elit.')->squish()->toString(),
                             'subtitle' => 'Categoria',
                             'date' => '01 de janeiro de 2025',
                             'route' => '/html/blog-detalhe',
@@ -181,7 +181,7 @@
                         ],
 
                         (object) [
-                            'name' => Str::squish('Lorem ipsum dolor sit amet, consectetur adipisicing elit.'),
+                            'name' => str('Lorem ipsum dolor sit amet, consectetur adipisicing elit.')->squish()->toString(),
                             'subtitle' => 'Categoria',
                             'date' => '01 de janeiro de 2025',
                             'route' => '/html/blog-detalhe',
@@ -194,7 +194,7 @@
                         ],
 
                         (object) [
-                            'name' => Str::squish('Lorem ipsum dolor sit amet, consectetur adipisicing elit.'),
+                            'name' => str('Lorem ipsum dolor sit amet, consectetur adipisicing elit.')->squish()->toString(),
                             'subtitle' => 'Categoria',
                             'date' => '01 de janeiro de 2025',
                             'route' => '/html/blog-detalhe',
@@ -218,7 +218,7 @@
                 @else
                     <div class="row gy-2h infinite-scroll">
                         @foreach ($articles as $article)
-                            @if (! Str::of(request()->getRequestUri())->startsWith('/html'))
+                            @if (! str(request()->getRequestUri())->startsWith('/html'))
                                 <div class="col-sm-6 col-md-4">
                                     {{--
                                     Resolução das imagens para utilização:

@@ -9,7 +9,7 @@
     loading="lazy"
     decoding="async"
     src="data:image/gif;base64,R0lGODlhAQABAIAAAMLCwgAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=="
-    srcset="{{ Vite::image($image).($isSingleImage ? '' : ', '. Vite::image(Str::replaceLast('.', '@2x.', $image)) .' 2x') }}"
+    srcset="{{ Vite::image($image).($isSingleImage ? '' : ', '. Vite::image(str($image)->replaceLast('.', '@2x.')->toString()) .' 2x') }}"
     alt="{{ $alt ?? $title }}"
     title="{{ $title }}"
     width="1"

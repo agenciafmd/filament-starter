@@ -15,7 +15,7 @@
                 --}}
 
                 <x-frontend::glightbox.player-embed
-                    id="video-{{ Str::slug($galleryName) }}"
+                    id="video-{{ str($galleryName)->slug() }}"
                     link="https://www.youtube.com/embed/lG7o0r-7coo?si=3Mha-V2mBcvJ536u"
                     image="ratios/{{ $video->src }}.jpg"
                     class="bg-gradient rounded"
@@ -40,7 +40,7 @@
 
                 <x-frontend::glightbox.image
                     description="{{ $image->name }}"
-                    gallery="galeria-{{ Str::slug($galleryName) }}"
+                    gallery="galeria-{{ str($galleryName)->slug() }}"
                     link="ratios/{{ $image->src }}-xl@2x.jpg"
                 >
                     <x-frontend::picture

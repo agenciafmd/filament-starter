@@ -9,7 +9,6 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Events\QueryExecuted;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\ServiceProvider;
 use Override;
 
@@ -37,7 +36,7 @@ final class AppServiceProvider extends ServiceProvider
         if ($this->app->environment('production')) {
             DB::listen(function (QueryExecuted $query): void {
                 if ($query->time > 500) { // Log queries slower than 500ms
-                    Log::warning("Slow query detected ({$query->time}ms)", [
+                    logger()->warning("Slow query detected ({$query->time}ms)", [
                         'sql' => $query->sql,
                         'bindings' => $query->bindings,
                         'time_ms' => $query->time,

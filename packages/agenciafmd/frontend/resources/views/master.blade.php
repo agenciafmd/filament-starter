@@ -36,11 +36,11 @@
 
     @stack('header')
 
-    @yield('header', View::make('frontend::partials.header'))
+    @yield('header', view('frontend::partials.header'))
 
     @yield('content')
 
-    @yield('footer', View::make('frontend::partials.footer'))
+    @yield('footer', view('frontend::partials.footer'))
 
     @stack('footer')
 

@@ -30,11 +30,11 @@
 <body class="{{ ($bodyClass) ?? '' }}">
     @stack('header')
 
-    @yield('header', View::make('frontend::html.partials.header'))
+    @yield('header', view('frontend::html.partials.header'))
 
     @yield('content')
 
-    @yield('footer', View::make('frontend::html.partials.footer'))
+    @yield('footer', view('frontend::html.partials.footer'))
 
     @stack('footer')
 

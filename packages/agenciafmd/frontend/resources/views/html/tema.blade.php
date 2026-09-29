@@ -41,7 +41,7 @@
                                 @foreach ($componentsLinks as $link)
                                     <li class="nav-item">
                                         <x-frontend::link
-                                            link="#{{ Str::slug($link->name) }}"
+                                            link="#{{ str($link->name)->slug() }}"
                                             label="{{ $link->name }}"
                                             title="Ir para {{ $link->name }}"
                                             class="py-0h nav-link btn-link fs-base js-scroll-top px-0"
@@ -65,7 +65,7 @@
                                 @foreach ($contentLinks as $link)
                                     <li class="nav-item">
                                         <x-frontend::link
-                                            link="#{{ Str::slug($link->name) }}"
+                                            link="#{{ str($link->name)->slug() }}"
                                             label="{{ $link->name }}"
                                             title="Ir para {{ $link->name }}"
                                             class="py-0h nav-link fs-base js-scroll-top px-0"
@@ -95,7 +95,7 @@
                                 @foreach ($formsLinks as $link)
                                     <li class="nav-item">
                                         <x-frontend::link
-                                            link="#{{ Str::slug($link->name) }}"
+                                            link="#{{ str($link->name)->slug() }}"
                                             label="{{ $link->name }}"
                                             title="Ir para {{ $link->name }}"
                                             class="py-0h nav-link fs-base js-scroll-top px-0"
@@ -125,7 +125,7 @@
                                 @foreach ($iconLinks as $link)
                                     <li class="nav-item">
                                         <x-frontend::link
-                                            link="#{{ Str::slug($link->name) }}"
+                                            link="#{{ str($link->name)->slug() }}"
                                             label="{{ $link->name }}"
                                             title="Ir para {{ $link->name }}"
                                             class="py-0h nav-link fs-base js-scroll-top px-0"

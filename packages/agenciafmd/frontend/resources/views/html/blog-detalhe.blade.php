@@ -143,7 +143,7 @@
                             $articles = [
 
                                 (object) [
-                                    'name' => Str::squish('Lorem ipsum dolor sit amet consectetur suspendisse lacus'),
+                                    'name' => str('Lorem ipsum dolor sit amet consectetur suspendisse lacus')->squish()->toString(),
                                     'date' => '01 de janeiro de 2025',
                                     'subtitle' => 'Categoria',
                                     'route' => '/html/blog-detalhe',
@@ -157,7 +157,7 @@
                                 ],
 
                                 (object) [
-                                    'name' => Str::squish('Lorem ipsum dolor sit amet consectetur suspendisse lacus'),
+                                    'name' => str('Lorem ipsum dolor sit amet consectetur suspendisse lacus')->squish()->toString(),
                                     'date' => '01 de janeiro de 2025',
                                     'subtitle' => 'Categoria',
                                     'route' => '/html/blog-detalhe',
@@ -171,7 +171,7 @@
                                 ],
 
                                 (object) [
-                                    'name' => Str::squish('Lorem ipsum dolor sit amet consectetur suspendisse lacus'),
+                                    'name' => str('Lorem ipsum dolor sit amet consectetur suspendisse lacus')->squish()->toString(),
                                     'date' => '01 de janeiro de 2025',
                                     'subtitle' => 'Categoria',
                                     'route' => '/html/blog-detalhe',
