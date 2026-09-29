@@ -1,10 +1,11 @@
 {
     "name": "agenciafmd/frontend",
     "description": "Frontend - Agência F&MD",
+    "license": "MIT",
     "authors": [
         {
-            "name": "Irineu Martins Junior",
-            "email": "irineu@fmd",
+            "name": "Irineu Junior",
+            "email": "irineu@fmd.ag",
             "homepage": "https://fmd.ag/",
             "role": "Developer"
         }
