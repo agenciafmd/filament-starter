@@ -30,8 +30,8 @@
         "agenciafmd/laravel-social-meta": "dev-master",
         "agenciafmd/laravel-support": "dev-master",
         "agenciafmd/laravel-turbo": "dev-master",
-        "filament/filament": "^5.8.4",
-        "laravel/framework": "^13.33.0",
+        "filament/filament": "^5.9.0",
+        "laravel/framework": "^13.34.0",
         "laravel/tinker": "^v3.0.2",
         "spatie/laravel-google-fonts": "^1.7"
     },
