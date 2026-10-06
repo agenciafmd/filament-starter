@@ -67,7 +67,6 @@ final class ResponsiveImage extends Component
 
         return cache()->rememberForever($key, function () use ($file, $cacheDirectory): array {
             $hash = str(md5($file))->limit(10, '');
-            $timestamp = now()->format('YmdHis');
             $directory = $cacheDirectory . '/' . pathinfo($file, PATHINFO_DIRNAME);
             $baseName = pathinfo($file, PATHINFO_FILENAME);
             $extension = pathinfo($file, PATHINFO_EXTENSION);
