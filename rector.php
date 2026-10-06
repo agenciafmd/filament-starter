@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use Pest\Rector\Set\PestSetList;
 use Rector\Caching\ValueObject\Storage\FileCacheStorage;
 use Rector\Config\RectorConfig;
 use RectorLaravel\Set\LaravelSetList;
@@ -18,6 +19,7 @@ return RectorConfig::configure()
         LaravelSetList::LARAVEL_FACTORIES,
         LaravelSetList::LARAVEL_IF_HELPERS,
         LaravelSetList::LARAVEL_LEGACY_FACTORIES_TO_CLASSES,
+        PestSetList::CODING_STYLE,
     ])
     ->withComposerBased(laravel: true)
     ->withCache(
@@ -32,6 +34,7 @@ return RectorConfig::configure()
         __DIR__ . '/packages',
         __DIR__ . '/public',
         __DIR__ . '/routes',
+        __DIR__ . '/tests',
     ])
     ->withImportNames()
     ->withSkip([
