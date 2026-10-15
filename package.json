@@ -26,7 +26,7 @@
         "prettier-plugin-tailwindcss": "^0.8.1",
         "rollup-plugin-critical": "^1.0.18",
         "sass": "^1.105.1",
-        "vite": "^8.3.1"
+        "vite": "^8.3.3"
     },
     "dependencies": {
         "@alpinejs/mask": "^3.17.4",
@@ -35,7 +35,7 @@
         "clipboard": "^2.0.11",
         "glightbox": "^3.3.1",
         "infinite-scroll": "^5.0.0",
-        "plyr": "^3.8.4",
+        "plyr": "^3.8.5",
         "share-api-polyfill": "^1.1.1",
         "sweetalert2": "^11.26.25",
         "swiper": "^14.3.0",
