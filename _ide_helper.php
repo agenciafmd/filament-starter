@@ -34968,7 +34968,6 @@ namespace  {
     class Helper extends \Facades\Agenciafmd\Support\Helper {}
     class EloquentSerialize extends \AnourValar\EloquentSerialize\Facades\EloquentSerializeFacade {}
     class Clockwork extends \Clockwork\Support\Laravel\Facade {}
-    class Horizon extends \Laravel\Horizon\Horizon {}
     class Mcp extends \Laravel\Mcp\Facades\Mcp {}
     class Livewire extends \Livewire\Livewire {}
 }
