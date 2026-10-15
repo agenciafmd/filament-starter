@@ -38,7 +38,7 @@ return RectorConfig::configure()
     ])
     ->withImportNames()
     ->withSkip([
-        //
+        '*/resources/boost/*',
     ])
     ->withPreparedSets(
         deadCode: true,

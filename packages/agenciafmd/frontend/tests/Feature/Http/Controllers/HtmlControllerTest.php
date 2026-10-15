@@ -9,7 +9,7 @@ use Tests\TestCase;
 
 use function Pest\Laravel\get;
 
-uses(TestCase::class, RefreshDatabase::class);
+pest()->extend(TestCase::class)->use(RefreshDatabase::class);
 
 it('renders the requested html page', function (): void {
     get('/html/tema')->assertViewIs('frontend::html.tema');

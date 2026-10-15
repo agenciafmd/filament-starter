@@ -8,8 +8,8 @@ use Agenciafmd\Frontend\View\Components\CriticalCss;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
-uses(TestCase::class, RefreshDatabase::class);
+pest()->extend(TestCase::class)->use(RefreshDatabase::class);
 
 it('renders nothing when the critical css file does not exist', function (): void {
-    expect(new CriticalCss('arquivo-inexistente.css')->render())->toBe('');
+    expect(new CriticalCss('arquivo-inexistente.css')->render())->toBeEmpty();
 });

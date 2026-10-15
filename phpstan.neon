@@ -14,6 +14,7 @@ parameters:
 
     excludePaths:
         - packages/*/*/tests/*
+        - */resources/boost/*
 
     level: max
 
