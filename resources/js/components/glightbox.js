@@ -1,6 +1,10 @@
-import GLightbox from "glightbox";
+async function setupGLightBox() {
+    if (!document.querySelector(".glightbox")) {
+        return;
+    }
 
-function setupGLightBox() {
+    const { default: GLightbox } = await import("glightbox");
+
     return GLightbox({
         touchNavigation: true,
         loop: true,

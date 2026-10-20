@@ -10,10 +10,7 @@ import {
 import { setupUtmHelpers } from "./helpers/utm-helper.js";
 import { setupFmdHeader } from "./components/fmd-header.js";
 import mask from "@alpinejs/mask";
-import ClipboardJS from "clipboard";
-import WOW from "wow.js";
 import { Modal, Popover, Tooltip, Toast } from "bootstrap";
-import InfiniteScroll from "infinite-scroll";
 
 export function getThemeVariables() {
     const root = getComputedStyle(document.documentElement);
@@ -433,7 +430,7 @@ function setupAnchorReloadPrevention() {
     });
 }
 
-function setupInfiniteScroll() {
+async function setupInfiniteScroll() {
     const scrollContainerElement = document.querySelector(".infinite-scroll");
     const nextElementSelector = 'a[rel~="next"]';
     const nextPageElement = document.querySelector(nextElementSelector);
@@ -441,6 +438,8 @@ function setupInfiniteScroll() {
     if (!scrollContainerElement || !nextPageElement) {
         return;
     }
+
+    const { default: InfiniteScroll } = await import("infinite-scroll");
 
     new InfiniteScroll(scrollContainerElement, {
         path: nextElementSelector,
@@ -451,8 +450,14 @@ function setupInfiniteScroll() {
     });
 }
 
-function setupClipboardJS() {
+async function setupClipboardJS() {
     // Don't forget to install the package: npm install clipboard --save
+
+    if (!document.querySelector(".js-copy")) {
+        return;
+    }
+
+    const { default: ClipboardJS } = await import("clipboard");
 
     const triggerElement = new ClipboardJS(".js-copy");
 
@@ -528,7 +533,9 @@ export function setupShareAPI() {
     });
 }
 
-function setupWOWJS() {
+async function setupWOWJS() {
+    const { default: WOW } = await import("wow.js");
+
     new WOW().init();
 }
 

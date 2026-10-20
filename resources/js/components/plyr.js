@@ -1,13 +1,13 @@
-import Plyr from "plyr";
-
-function setupPlyr() {
+async function setupPlyr() {
     const playerEmbeds = document.querySelectorAll(".js-player-embed");
 
     let players = [];
 
-    if (!playerEmbeds) {
+    if (!playerEmbeds.length) {
         return;
     }
+
+    const { default: Plyr } = await import("plyr");
 
     playerEmbeds.forEach((player) => {
         const playerEmbed = new Plyr(player, {
