@@ -12,6 +12,7 @@ final class CriticalCss extends Component
 
     public function __construct(
         public ?string $critical = null,
+        public string $stylesheet = 'resources/scss/frontend.scss',
     ) {
         $this->content = cache()->rememberForever('critical-css-' . $critical, static function () use ($critical): string {
             $criticalCss = str($critical)
@@ -22,16 +23,28 @@ final class CriticalCss extends Component
         });
     }
 
+    /**
+     * Sem CSS crítico, o stylesheet é carregado normalmente (bloqueante).
+     * Com CSS crítico, ele já cobre a primeira dobra, então o stylesheet
+     * completo é carregado de forma assíncrona para não bloquear a renderização.
+     */
     public function render(): string
     {
         if (! $this->content) {
-            return '';
+            return <<<'blade'
+            @vite($stylesheet)
+            blade;
         }
 
         return <<<'blade'
         <style>
             {!! $content !!}
         </style>
+        <link rel="preload" as="style" href="{{ Vite::asset($stylesheet) }}" />
+        <link rel="stylesheet" href="{{ Vite::asset($stylesheet) }}" media="print" onload="this.media='all'" data-navigate-track="reload" />
+        <noscript>
+            <link rel="stylesheet" href="{{ Vite::asset($stylesheet) }}" />
+        </noscript>
         blade;
     }
 }
