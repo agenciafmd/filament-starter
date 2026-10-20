@@ -101,7 +101,8 @@ export default defineConfig({
         standard: [
           /^file-upload-button/,
           /^fmd-header-/,
-          /^g/,
+          // GLightbox (glightbox, gslide, gclose...), without Bootstrap gutters (g-, gx-, gy-) and gap-
+          /^g(?![xy]?-|ap-)/,
           /^hs-/,
           /^js-/,
           /^swal2-/,
