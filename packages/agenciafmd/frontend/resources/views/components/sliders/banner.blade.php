@@ -27,6 +27,7 @@
                                     breakpointDesktopSuffix="xl"
                                     breakpointNotebookWidth="768px"
                                     breakpointNotebookSuffix="lg"
+                                    :priority="$loop->first"
                                 />
                             </div>
                             @if ($banner->content)
