@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "58b6cf61f93b88bce9985ee347fafaab",
+    "content-hash": "105b9376c35dfa652b24dbb02fe5fe56",
     "packages": [
         {
             "name": "agenciafmd/filament-admix",
@@ -12,7 +12,7 @@
             "dist": {
                 "type": "path",
                 "url": "packages/agenciafmd/filament-admix",
-                "reference": "4b1dc6275d9a63dc694f563192abb68bbe931495"
+                "reference": "44198699592621076197048864fd2262fe01b727"
             },
             "require": {
                 "agenciafmd/laravel-support": "v12.x-dev|dev-master",
@@ -67,7 +67,7 @@
             "dist": {
                 "type": "path",
                 "url": "packages/agenciafmd/filament-articles",
-                "reference": "ff1f7faf93185f7c8902ac8ae0e328d9a3666c86"
+                "reference": "f484df8cbc8be89475ee073b06bf25467a0a535f"
             },
             "require": {
                 "agenciafmd/filament-admix": "v1.x-dev|dev-master",
@@ -111,7 +111,7 @@
             "dist": {
                 "type": "path",
                 "url": "packages/agenciafmd/filament-banners",
-                "reference": "d8e154351911e17374db91c7e0901daa0b18d089"
+                "reference": "b6da6d3cdd422c460430c5e0ea2fe572d6cf4b70"
             },
             "require": {
                 "agenciafmd/filament-admix": "v1.x-dev|dev-master",
@@ -155,7 +155,7 @@
             "dist": {
                 "type": "path",
                 "url": "packages/agenciafmd/filament-big-numbers",
-                "reference": "fa70fc3327a2239e0205dc58dac7de7213e5465a"
+                "reference": "87d20521307456c99b877641eee4d59ecb07f042"
             },
             "require": {
                 "agenciafmd/filament-admix": "v1.x-dev|dev-master",
@@ -197,7 +197,7 @@
             "dist": {
                 "type": "path",
                 "url": "packages/agenciafmd/filament-faqs",
-                "reference": "ae4a77d469d0eb49a8966fd9b3a9e87504cac7a0"
+                "reference": "0aaf0728ce30f0bded76d2be06c384ce513c33ab"
             },
             "require": {
                 "agenciafmd/filament-admix": "v1.x-dev|dev-master",
@@ -239,7 +239,7 @@
             "dist": {
                 "type": "path",
                 "url": "packages/agenciafmd/filament-http-logs",
-                "reference": "05ae24e1933bba24d0fced314d7b57a877304bcd"
+                "reference": "21062e419daeab919c93d1729b275025298e652e"
             },
             "require": {
                 "agenciafmd/filament-admix": "v1.x-dev|dev-master",
@@ -324,7 +324,7 @@
             "dist": {
                 "type": "path",
                 "url": "packages/agenciafmd/filament-leads",
-                "reference": "64442ab09e8f96f988dd98d38631f49e606e4010"
+                "reference": "0d1ec67b9da5b382a44dd9107637a04280c5e2eb"
             },
             "require": {
                 "agenciafmd/filament-admix": "v1.x-dev|dev-master",
@@ -366,7 +366,7 @@
             "dist": {
                 "type": "path",
                 "url": "packages/agenciafmd/filament-partners",
-                "reference": "56dffca36e309f6d039c87e159fa9bac88437c38"
+                "reference": "8560a3dac18889d0138eb900ac55e50e97f94405"
             },
             "require": {
                 "agenciafmd/filament-admix": "v1.x-dev|dev-master",
@@ -410,7 +410,7 @@
             "dist": {
                 "type": "path",
                 "url": "packages/agenciafmd/filament-postal",
-                "reference": "e8b9b70b9f352fafda73feb17b6c6a7765188435"
+                "reference": "d554981fa82fe5c1c5afde053fc83174c8ccc2d9"
             },
             "require": {
                 "agenciafmd/filament-admix": "v1.x-dev|dev-master",
@@ -452,7 +452,7 @@
             "dist": {
                 "type": "path",
                 "url": "packages/agenciafmd/filament-redirects",
-                "reference": "7189fa23fa90d24d64007f3bd83e887cab381b6b"
+                "reference": "f5f82f9c94e2ad9c78ac4224b2f6a37ee7406f5b"
             },
             "require": {
                 "agenciafmd/filament-admix": "v1.x-dev|dev-master",
@@ -494,7 +494,7 @@
             "dist": {
                 "type": "path",
                 "url": "packages/agenciafmd/filament-testimonials",
-                "reference": "856a1c58226d6da29cc03a127e2da2ac41c3352c"
+                "reference": "412072d4d2e67d725ed4fd3ebf00902542dc78b2"
             },
             "require": {
                 "agenciafmd/filament-admix": "v1.x-dev|dev-master",
@@ -623,7 +623,7 @@
             "dist": {
                 "type": "path",
                 "url": "packages/agenciafmd/laravel-sitemap",
-                "reference": "e9897bbf7c69e13890170b1957c22ec9d3d03940"
+                "reference": "64a8ed0259598aeadb3e1ef939a1e93dd707f348"
             },
             "require": {
                 "laravel/framework": "^12.0|^13.0",
@@ -666,7 +666,7 @@
             "dist": {
                 "type": "path",
                 "url": "packages/agenciafmd/laravel-social-meta",
-                "reference": "203e053172c52627ebd4983c3cf12b2469ad07f5"
+                "reference": "2064f5b71b10c1de502e02d8ac3732bbb3f382e3"
             },
             "require": {
                 "ext-fileinfo": "*",
@@ -716,7 +716,7 @@
             "dist": {
                 "type": "path",
                 "url": "packages/agenciafmd/laravel-support",
-                "reference": "f78edf5d87cbfd3fea2ad36c1025bbe73fc1d7b9"
+                "reference": "369e401130b3f189fbffdad50afd3167b78a5bee"
             },
             "require": {
                 "ext-bcmath": "*",
@@ -774,7 +774,7 @@
             "dist": {
                 "type": "path",
                 "url": "packages/agenciafmd/laravel-turbo",
-                "reference": "4236f6cddbeb9bd79656d00f18b40d1efd283d06"
+                "reference": "f9f165303da51a7e797ed9a1df1d23569e5b6529"
             },
             "require": {
                 "laravel/framework": "^12.0|^13.0",
@@ -7044,88 +7044,6 @@
                 }
             ],
             "time": "2026-08-24T12:39:05+00:00"
-        },
-        {
-            "name": "spatie/laravel-google-fonts",
-            "version": "1.7.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/spatie/laravel-google-fonts.git",
-                "reference": "9a78b88154b72432a92444303896aec2df46072a"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-google-fonts/zipball/9a78b88154b72432a92444303896aec2df46072a",
-                "reference": "9a78b88154b72432a92444303896aec2df46072a",
-                "shasum": ""
-            },
-            "require": {
-                "guzzlehttp/guzzle": "^7.2|^8.0",
-                "illuminate/contracts": "^8.37|^9.0|^10.0|^11.0|^12.0|^13.0",
-                "php": "^8.0",
-                "spatie/laravel-package-tools": "^1.7.0"
-            },
-            "require-dev": {
-                "brianium/paratest": "^6.3|^7.4",
-                "nunomaduro/collision": "^5.4|^6.0|^8.0",
-                "orchestra/testbench": "^6.17|^7.0|^8.0|^9.0|^10.0|^11.0",
-                "pestphp/pest": "^1.22|^2.34|^3.7|^4.4",
-                "spatie/laravel-ray": "^1.17",
-                "spatie/pest-plugin-snapshots": "^1.1|^2.1",
-                "spatie/phpunit-snapshot-assertions": "^4.2|^5.1"
-            },
-            "type": "library",
-            "extra": {
-                "laravel": {
-                    "aliases": {
-                        "GoogleFonts": "Spatie\\GoogleFonts\\GoogleFontsFacade"
-                    },
-                    "providers": [
-                        "Spatie\\GoogleFonts\\GoogleFontsServiceProvider"
-                    ]
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Spatie\\GoogleFonts\\": "src",
-                    "Spatie\\GoogleFonts\\Database\\Factories\\": "database/factories"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Sebastian De Deyne",
-                    "email": "sebastian@spatie.be",
-                    "role": "Developer"
-                },
-                {
-                    "name": "Freek Van der herten",
-                    "email": "freek@spatie.be",
-                    "role": "Developer"
-                }
-            ],
-            "description": "Manage self-hosted Google Fonts in Laravel apps",
-            "homepage": "https://github.com/spatie/laravel-google-fonts",
-            "keywords": [
-                "google fonts",
-                "laravel",
-                "laravel-google-fonts",
-                "spatie"
-            ],
-            "support": {
-                "issues": "https://github.com/spatie/laravel-google-fonts/issues",
-                "source": "https://github.com/spatie/laravel-google-fonts/tree/1.7.0"
-            },
-            "funding": [
-                {
-                    "url": "https://github.com/spatie",
-                    "type": "github"
-                }
-            ],
-            "time": "2026-08-20T09:32:39+00:00"
         },
         {
             "name": "spatie/laravel-package-tools",

@@ -13,7 +13,7 @@ Base do site público dos projetos: layout `master`, páginas e partials, rotas 
 Também utilizados pelo código, mas não declarados no `composer.json` do pacote (precisam estar instalados na aplicação):
 
 - livewire/livewire ^4 (namespace `frontend` e formulário de contato)
-- spatie/laravel-google-fonts (diretiva `@googlefonts` no `fonts-preload`)
+- vite-plugin-webfont-dl (npm; gera o `webfonts.css` carregado pelo `fonts-preload`)
 - blade-ui-kit/blade-icons (componente `<x-icon>` e icon set `frontend`)
 - agenciafmd/laravel-social-meta (componente `<x-social-meta>` no `master`)
 - agenciafmd/laravel-support (regra `HumanName` e trait `FormRateLimiter`)

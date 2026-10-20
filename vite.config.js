@@ -3,6 +3,7 @@ import laravel from 'laravel-vite-plugin';
 import purge from '@erbelion/vite-plugin-laravel-purgecss';
 import { join } from 'node:path';
 import PluginCritical from 'rollup-plugin-critical';
+import webfontDownload from 'vite-plugin-webfont-dl';
 
 const { APP_URL } = {
   ...loadEnv(
@@ -26,6 +27,13 @@ const purgeCheckPaths = [
 ]
     .map((path) => join(__dirname, path));
 
+const assetFolders = {
+  css: /\.css$/,
+  fonts: /\.(woff2?|ttf|otf|eot)$/,
+  svg: /\.svg$/,
+  images: /\.(png|jpe?g|gif|webp|avif|ico|bmp)$/,
+};
+
 export default defineConfig({
   plugins: [
     laravel({
@@ -44,6 +52,9 @@ export default defineConfig({
       ],
       refresh: true, // TODO add all paths to watch and refresh on change
     }),
+    webfontDownload([
+      'https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap',
+    ]),
     PluginCritical({
       criticalUrl: `${ CRITICAL_URL }/html/`,
       criticalBase: 'public/css/critical',
@@ -94,6 +105,23 @@ export default defineConfig({
       ],
     }),
   ],
+  build: {
+    rolldownOptions: {
+      output: {
+        entryFileNames: 'assets/js/[name]-[hash].js',
+        chunkFileNames: 'assets/js/[name]-[hash].js',
+        assetFileNames: ({ names }) => {
+          const name = names[0] ?? '';
+          const folder = Object.entries(assetFolders)
+              .find(([, pattern]) => pattern.test(name))?.[0];
+
+          return folder
+              ? `assets/${ folder }/[name]-[hash][extname]`
+              : 'assets/[name]-[hash][extname]';
+        },
+      },
+    },
+  },
   resolve: {
     // to improve JS imports
     alias: {

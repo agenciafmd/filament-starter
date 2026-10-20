@@ -1,4 +1,4 @@
-@googlefonts
+@vite('webfonts.css')
 
 {{-- exmplo de importação de fontes externas --}}
 {{--<link rel="preconnect"--}}
