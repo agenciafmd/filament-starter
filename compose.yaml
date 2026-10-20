@@ -50,6 +50,8 @@ services:
                 - CMD
                 - mysqladmin
                 - ping
+                - '-h'
+                - '127.0.0.1'
                 - '-p${DB_PASSWORD:-password}'
             retries: 3
             timeout: 5s
