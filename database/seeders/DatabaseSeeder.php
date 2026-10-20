@@ -16,8 +16,9 @@ final class DatabaseSeeder extends Seeder
 
     public function run(): void
     {
-        /* remove files from storage/public/fake */
+        /* remove arquivos não necessários */
         File::cleanDirectory(storage_path('app/public/fake'));
+        File::cleanDirectory(storage_path('app/public/media'));
 
         Schema::disableForeignKeyConstraints();
 
