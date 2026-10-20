@@ -19,13 +19,15 @@ const CRITICAL_URL = `${ url.protocol }//${ url.hostname }`;
 
 const purgeCheckPaths = [
   'packages/agenciafmd/frontend/resources/views/**/*.php',
+  'resources/js/**/*.js',
   'node_modules/swiper/**/*.js',
   'node_modules/glightbox/dist/js/*.js',
   'node_modules/sweetalert2/dist/*.js',
+  'node_modules/tom-select/dist/js/*.js',
   'node_modules/wow.js/dist/*.js',
   'node_modules/bootstrap/dist/js/bootstrap.min.js',
 ]
-    .map((path) => join(__dirname, path));
+    .map((path) => join(import.meta.dirname, path));
 
 const assetFolders = {
   css: /\.css$/,
@@ -91,18 +93,23 @@ export default defineConfig({
     purge({
       paths: purgeCheckPaths,
       // Include classes we don't have direct access
-      safelist: [
-        /hs-*/,
-        /js-*/,
-        /swiper-*/,
-        /swal2-*/,
-        /file-upload-button*/,
-        /fmd-header-*/,
-        /was-*/,
-        /g*/,
-        /plyr*/,
-        /ts*/,
-      ],
+      safelist: {
+        greedy: [
+          /lang/,
+          /plyr/,
+        ],
+        standard: [
+          /^file-upload-button/,
+          /^fmd-header-/,
+          /^g/,
+          /^hs-/,
+          /^js-/,
+          /^swal2-/,
+          /^swiper-/,
+          /^ts-/,
+          /^was-/,
+        ],
+      },
     }),
   ],
   build: {
