@@ -1,3 +1,5 @@
+@use "sass:map";
+
 // Project's font configuration
 
 // There's 5 generic family groups ‘serif’, ‘sans-serif’, ‘cursive’, ‘fantasy’, and ‘monospace’
@@ -15,17 +17,17 @@ $should-use-local-font-face: true;
 //  );
 
 @mixin font-face($font-map) {
-    $file-name: map-get($font-map, "file-name");
-    $font-family: map-get($font-map, "font-family");
-    $font-weight: map-get($font-map, "font-weight");
-    $font-style: map-get($font-map, "font-style");
-    $font-display: map-get($font-map, "font-display");
+    $file-name: map.get($font-map, "file-name");
+    $font-family: map.get($font-map, "font-family");
+    $font-weight: map.get($font-map, "font-weight");
+    $font-style: map.get($font-map, "font-style");
+    $font-display: map.get($font-map, "font-display");
 
     font-family: $font-family;
     src: url("#{$fonts-base-path}/#{$file-name}.woff2") format("woff2");
     font-weight: $font-weight;
-    font-style: if($font-style, $font-style, normal);
-    font-display: if($font-display, $font-display, swap);
+    font-style: $font-style or normal;
+    font-display: $font-display or swap;
 }
 
 $light-font-map: (
@@ -54,7 +56,7 @@ $local-fonts: (
 
 @if ($should-use-local-font-face) {
     @each $font-key, $font-map in $local-fonts {
-        @if (map-get($font-map, "file-name")) {
+        @if (map.get($font-map, "file-name")) {
             @font-face {
                 @include font-face($font-map);
             }
@@ -63,5 +65,5 @@ $local-fonts: (
 }
 
 @function get-font-family($font-map) {
-    @return map-get($font-map, "font-family");
+    @return map.get($font-map, "font-family");
 }

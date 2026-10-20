@@ -112,6 +112,15 @@ export default defineConfig({
       },
     }),
   ],
+  css: {
+    preprocessorOptions: {
+      scss: {
+        // Bootstrap 5 does not support the Sass module system (@use) yet
+        quietDeps: true,
+        silenceDeprecations: ['import'],
+      },
+    },
+  },
   build: {
     rolldownOptions: {
       output: {

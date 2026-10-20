@@ -1,3 +1,7 @@
+@use "sass:color";
+@use "sass:map";
+@use "sass:string";
+
 // Variables
 //
 // Variables should follow the `$component-state-property-size` formula for
@@ -359,7 +363,7 @@ $success-bg-subtle: tint-color($success, $ds-tint-level-3) !default;
 $info-bg-subtle: tint-color($info, $ds-tint-level-3) !default;
 $warning-bg-subtle: tint-color($warning, $ds-tint-level-3) !default;
 $danger-bg-subtle: tint-color($danger, $ds-tint-level-3) !default;
-$light-bg-subtle: mix($gray-100, $white) !default;
+$light-bg-subtle: color.mix($gray-100, $white) !default;
 $dark-bg-subtle: $gray-400 !default;
 // scss-docs-end theme-bg-subtle-variables
 
@@ -441,7 +445,7 @@ $spacers: () !default;
         "#{$i}hq": $unit + 0.75
     );
 
-    $spacers: map-merge($spacers, $unit-variations);
+    $spacers: map.merge($spacers, $unit-variations);
 }
 
 // Block spacing is not a Bootstrap standard feature
@@ -458,7 +462,7 @@ $custom-spacers: (
     "header-height": var(--header-height),
 );
 
-$spacers: map-merge($spacers, $custom-spacers);
+$spacers: map.merge($spacers, $custom-spacers);
 // scss-docs-end spacer-variables-maps
 
 // Position
@@ -1819,7 +1823,7 @@ $breadcrumb-margin-bottom: 1rem !default;
 $breadcrumb-bg: null !default;
 $breadcrumb-divider-color: var(--#{$prefix}secondary-color) !default;
 $breadcrumb-active-color: var(--#{$prefix}secondary-color) !default;
-$breadcrumb-divider: quote("") !default;
+$breadcrumb-divider: string.quote("") !default;
 $breadcrumb-divider-flipped: $breadcrumb-divider !default;
 $breadcrumb-border-radius: null !default;
 // scss-docs-end breadcrumb-variables
