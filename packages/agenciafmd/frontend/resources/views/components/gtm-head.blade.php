@@ -1,12 +1,12 @@
 @if (config('frontend.google.tagmanager'))
-    <link href="https://www.google-analytics.com" rel="preconnect" crossorigin />
-    <link href="https://www.google-analytics.com" rel="dns-prefetch" crossorigin />
-    <link href="https://www.googletagmanager.com" rel="preconnect" crossorigin />
-    <link href="https://www.googletagmanager.com" rel="dns-prefetch" crossorigin />
-    <link href="https://connect.facebook.net" rel="preconnect" crossorigin />
-    <link href="https://connect.facebook.net" rel="dns-prefetch" crossorigin />
+    <link href="https://www.googletagmanager.com" rel="dns-prefetch" />
 
     <!-- Google Tag Manager -->
+    {{--
+        O dataLayer é criado de imediato (eventos enviados antes do carregamento ficam na fila),
+        mas o gtm.js só é baixado na primeira interação do usuário ou 3s após o load,
+        para não disputar banda e CPU com a renderização da página.
+    --}}
     <script>
         (function (w, d, s, l, i) {
             w[l] = w[l] || [];
@@ -14,12 +14,33 @@
                 'gtm.start': new Date().getTime(),
                 event: 'gtm.js',
             });
-            var f = d.getElementsByTagName(s)[0],
-                j = d.createElement(s),
-                dl = l != 'dataLayer' ? '&l=' + l : '';
-            j.async = true;
-            j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
-            f.parentNode.insertBefore(j, f);
+
+            var loaded = false,
+                events = ['pointerdown', 'keydown', 'scroll', 'touchstart'];
+
+            function load() {
+                if (loaded) {
+                    return;
+                }
+                loaded = true;
+                events.forEach(function (event) {
+                    w.removeEventListener(event, load);
+                });
+
+                var f = d.getElementsByTagName(s)[0],
+                    j = d.createElement(s),
+                    dl = l != 'dataLayer' ? '&l=' + l : '';
+                j.async = true;
+                j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+                f.parentNode.insertBefore(j, f);
+            }
+
+            events.forEach(function (event) {
+                w.addEventListener(event, load, { once: true, passive: true });
+            });
+            w.addEventListener('load', function () {
+                setTimeout(load, 1000);
+            });
         })(window, document, 'script', 'dataLayer', '{{ config('frontend.google.tagmanager') }}');
     </script>
     <!-- End Google Tag Manager -->
