@@ -1,75 +1,50 @@
-@forelse (session('flash_notification', collect())->toArray() as $message)
-    <script>
-        @if($message['level'] === 'success')
-        Swal.fire({
-            text: '{!! $message['message'] !!}',
-            icon: 'success',
-            title: 'Sucesso',
-            showConfirmButton: false,
-            showCloseButton: true,
-        });
-        @elseif($message['level'] === 'danger')
-        Swal.fire({
-            text: '{!! $message['message'] !!}',
-            icon: 'error',
-            title: 'Falhou!',
-            showConfirmButton: false,
-            showCloseButton: true,
-        });
-        @elseif($message['level'] === 'warning')
-        Swal.fire({
-            text: '{!! $message['message'] !!}',
-            icon: 'warning',
-            title: 'Atenção',
-            showConfirmButton: false,
-            showCloseButton: true,
-        });
-        @else
-        Swal.fire({
-            text: '{!! $message['message'] !!}',
-            icon: 'info',
-            title: 'Informação',
-            showConfirmButton: false,
-            showCloseButton: true,
-        });
-        @endif
-    </script>
-@empty
-    @if (session()->get('errors'))
-        @if (collect(session()->get('errors'))->flatten()->first()->has('hp_time'))
-            {{--@dd(collect(session()->get('errors'))->flatten()->first()->first('hp_time'))--}}
-            <script>
-                Swal.fire({
-                    text: 'Por favor, aguarde alguns segundos para enviar os dados.',
-                    icon: 'info',
-                    title: 'Informação',
-                    showConfirmButton: false,
-                    showCloseButton: true,
-                });
-            </script>
-        @endif
-    @endif
-@endforelse
+@php
+    $alerts = collect(session('flash_notification', collect())->toArray())
+        ->map(fn (array $message): array => [
+            'level' => $message['level'],
+            'message' => $message['message'],
+        ]);
 
-{{ session()->forget('flash_notification') }}
+    if ($alerts->isEmpty() && session('errors')?->has('hp_time')) {
+        $alerts->push([
+            'level' => 'info',
+            'message' => 'Por favor, aguarde alguns segundos para enviar os dados.',
+        ]);
+    }
 
-<script>
+    session()->forget('flash_notification');
+@endphp
+
+{{--
+    type="module": scripts de módulo rodam na ordem do documento, depois do @vite('resources/js/frontend-imports.js'),
+    então o window.Swal já existe quando os alertas são disparados.
+--}}
+<script type="module">
+    const alertTypes = {
+        success: { icon: 'success', title: 'Sucesso' },
+        danger: { icon: 'error', title: 'Falhou!' },
+        warning: { icon: 'warning', title: 'Atenção' },
+        info: { icon: 'info', title: 'Informação' },
+    };
+
+    function showAlert({ level, message }) {
+        const { icon, title } = alertTypes[level] ?? alertTypes.info;
+
+        Swal.fire({
+            text: message,
+            icon,
+            title,
+            showConfirmButton: false,
+            showCloseButton: true,
+        });
+    }
+
+    @js($alerts->values())
+        .forEach(showAlert);
+
     document.addEventListener('livewire:init', () => {
         Livewire.on('swal', (param) => {
-            const title = {
-                success: 'Sucesso',
-                danger: 'Falhou',
-                warning: 'Atenção',
-                info: 'Informação',
-            };
-
-            Swal.fire({
-                text: param.message,
-                icon: param.level,
-                title: title[param.level],
-                showConfirmButton: false,
-                showCloseButton: true,
-            });
+            showAlert(param);
         });
 
         Livewire.on('datalayer', (param) => {
