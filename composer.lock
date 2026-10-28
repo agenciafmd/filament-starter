@@ -4,15 +4,21 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f456b8a115d567238c8171039f5055cb",
+    "content-hash": "ec2e1db8043053666db76543a2fe91da",
     "packages": [
         {
             "name": "agenciafmd/filament-admix",
             "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/agenciafmd/filament-admix.git",
+                "reference": "c9427bc73d4fe0e650a5d315c7e935c662a01515"
+            },
             "dist": {
-                "type": "path",
-                "url": "packages/agenciafmd/filament-admix",
-                "reference": "6149503dbb61a671c3e04df744edd150e793bacb"
+                "type": "zip",
+                "url": "https://api.github.com/repos/agenciafmd/filament-admix/zipball/c9427bc73d4fe0e650a5d315c7e935c662a01515",
+                "reference": "c9427bc73d4fe0e650a5d315c7e935c662a01515",
+                "shasum": ""
             },
             "require": {
                 "agenciafmd/laravel-support": "v12.x-dev|dev-master",
@@ -23,6 +29,7 @@
                 "php": "^8.4",
                 "tapp/filament-auditing": "^4.0.6"
             },
+            "default-branch": true,
             "type": "library",
             "extra": {
                 "laravel": {
@@ -39,10 +46,11 @@
             "autoload": {
                 "psr-4": {
                     "Agenciafmd\\Admix\\": "src/",
-                    "Agenciafmd\\Admix\\Database\\Factories\\": "database/factories/",
-                    "Agenciafmd\\Admix\\Database\\Seeders\\": "database/seeders/"
+                    "Agenciafmd\\Admix\\Database\\Seeders\\": "database/seeders/",
+                    "Agenciafmd\\Admix\\Database\\Factories\\": "database/factories/"
                 }
             },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -55,280 +63,31 @@
                 }
             ],
             "description": "Filament - Admix",
-            "transport-options": {
-                "symlink": true,
-                "relative": true
-            }
-        },
-        {
-            "name": "agenciafmd/filament-articles",
-            "version": "dev-master",
-            "dist": {
-                "type": "path",
-                "url": "packages/agenciafmd/filament-articles",
-                "reference": "f484df8cbc8be89475ee073b06bf25467a0a535f"
+            "support": {
+                "issues": "https://github.com/agenciafmd/filament-admix/issues",
+                "source": "https://github.com/agenciafmd/filament-admix/tree/master"
             },
-            "require": {
-                "agenciafmd/filament-admix": "v1.x-dev|dev-master",
-                "php": "^8.4"
-            },
-            "type": "library",
-            "extra": {
-                "laravel": {
-                    "providers": [
-                        "Agenciafmd\\Articles\\Providers\\ArticleServiceProvider"
-                    ]
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Agenciafmd\\Articles\\": "src/",
-                    "Agenciafmd\\Articles\\Database\\Factories\\": "database/factories/",
-                    "Agenciafmd\\Articles\\Database\\Seeders\\": "database/seeders/"
-                }
-            },
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Irineu Junior",
-                    "email": "irineu@fmd.ag",
-                    "homepage": "https://fmd.ag/",
-                    "role": "Developer"
-                }
-            ],
-            "description": "Filament - Articles",
-            "transport-options": {
-                "symlink": true,
-                "relative": true
-            }
-        },
-        {
-            "name": "agenciafmd/filament-banners",
-            "version": "dev-master",
-            "dist": {
-                "type": "path",
-                "url": "packages/agenciafmd/filament-banners",
-                "reference": "b6da6d3cdd422c460430c5e0ea2fe572d6cf4b70"
-            },
-            "require": {
-                "agenciafmd/filament-admix": "v1.x-dev|dev-master",
-                "php": "^8.4"
-            },
-            "type": "library",
-            "extra": {
-                "laravel": {
-                    "providers": [
-                        "Agenciafmd\\Banners\\Providers\\BannerServiceProvider"
-                    ]
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Agenciafmd\\Banners\\": "src/",
-                    "Agenciafmd\\Banners\\Database\\Factories\\": "database/factories/",
-                    "Agenciafmd\\Banners\\Database\\Seeders\\": "database/seeders/"
-                }
-            },
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "João Paulo dos Santos Ferreira",
-                    "email": "joao.paulo@fmd.ag",
-                    "homepage": "https://fmd.ag/",
-                    "role": "Developer"
-                }
-            ],
-            "description": "Filament - Banners",
-            "transport-options": {
-                "symlink": true,
-                "relative": true
-            }
-        },
-        {
-            "name": "agenciafmd/filament-big-numbers",
-            "version": "dev-master",
-            "dist": {
-                "type": "path",
-                "url": "packages/agenciafmd/filament-big-numbers",
-                "reference": "87d20521307456c99b877641eee4d59ecb07f042"
-            },
-            "require": {
-                "agenciafmd/filament-admix": "v1.x-dev|dev-master",
-                "php": "^8.4"
-            },
-            "type": "library",
-            "extra": {
-                "laravel": {
-                    "providers": [
-                        "Agenciafmd\\BigNumbers\\Providers\\BigNumberServiceProvider"
-                    ]
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Agenciafmd\\BigNumbers\\": "src/",
-                    "Agenciafmd\\BigNumbers\\Database\\Factories\\": "database/factories/",
-                    "Agenciafmd\\BigNumbers\\Database\\Seeders\\": "database/seeders/"
-                }
-            },
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Irineu Junior",
-                    "email": "irineu@fmd.ag"
-                }
-            ],
-            "description": "Filament - Big Numbers",
-            "transport-options": {
-                "symlink": true,
-                "relative": true
-            }
-        },
-        {
-            "name": "agenciafmd/filament-faqs",
-            "version": "dev-master",
-            "dist": {
-                "type": "path",
-                "url": "packages/agenciafmd/filament-faqs",
-                "reference": "0aaf0728ce30f0bded76d2be06c384ce513c33ab"
-            },
-            "require": {
-                "agenciafmd/filament-admix": "v1.x-dev|dev-master",
-                "php": "^8.4"
-            },
-            "type": "library",
-            "extra": {
-                "laravel": {
-                    "providers": [
-                        "Agenciafmd\\Faqs\\Providers\\FaqServiceProvider"
-                    ]
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Agenciafmd\\Faqs\\": "src/",
-                    "Agenciafmd\\Faqs\\Database\\Factories\\": "database/factories/",
-                    "Agenciafmd\\Faqs\\Database\\Seeders\\": "database/seeders/"
-                }
-            },
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Agência FMD",
-                    "email": "joao.paulo@fmd.ag"
-                }
-            ],
-            "description": "Filament - FAQs",
-            "transport-options": {
-                "symlink": true,
-                "relative": true
-            }
-        },
-        {
-            "name": "agenciafmd/filament-http-logs",
-            "version": "dev-master",
-            "dist": {
-                "type": "path",
-                "url": "packages/agenciafmd/filament-http-logs",
-                "reference": "21062e419daeab919c93d1729b275025298e652e"
-            },
-            "require": {
-                "agenciafmd/filament-admix": "v1.x-dev|dev-master",
-                "php": "^8.4"
-            },
-            "type": "library",
-            "extra": {
-                "laravel": {
-                    "providers": [
-                        "Agenciafmd\\HttpLogs\\Providers\\HttpLogServiceProvider"
-                    ]
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Agenciafmd\\HttpLogs\\": "src/",
-                    "Agenciafmd\\HttpLogs\\Database\\Factories\\": "database/factories/",
-                    "Agenciafmd\\HttpLogs\\Database\\Seeders\\": "database/seeders/"
-                }
-            },
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Irineu Junior",
-                    "email": "irineu@fmd.ag"
-                }
-            ],
-            "description": "Filament - Http Logs",
-            "transport-options": {
-                "symlink": true,
-                "relative": true
-            }
-        },
-        {
-            "name": "agenciafmd/filament-instagram",
-            "version": "dev-master",
-            "dist": {
-                "type": "path",
-                "url": "packages/agenciafmd/filament-instagram",
-                "reference": "c37f77ba2b951f77888adacea6228b12d2bdb8a1"
-            },
-            "require": {
-                "agenciafmd/filament-admix": "v1.x-dev|dev-master",
-                "justbetter/laravel-instagram-feed": ">=1.1.2",
-                "php": "^8.4"
-            },
-            "type": "library",
-            "extra": {
-                "laravel": {
-                    "providers": [
-                        "Agenciafmd\\Instagram\\Providers\\InstagramServiceProvider"
-                    ]
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Agenciafmd\\Instagram\\": "src/"
-                }
-            },
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Eduardo Rogerio",
-                    "email": "eduardo.rogerio@fmd.ag",
-                    "homepage": "https://fmd.ag/",
-                    "role": "Developer"
-                }
-            ],
-            "description": "Instagram - Agência F&MD",
-            "transport-options": {
-                "symlink": true,
-                "relative": true
-            }
+            "time": "2026-10-28T17:26:48+00:00"
         },
         {
             "name": "agenciafmd/filament-leads",
             "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/agenciafmd/filament-leads.git",
+                "reference": "bca42217f8719aeb005cd83ba4edcece04e456a9"
+            },
             "dist": {
-                "type": "path",
-                "url": "packages/agenciafmd/filament-leads",
-                "reference": "0d1ec67b9da5b382a44dd9107637a04280c5e2eb"
+                "type": "zip",
+                "url": "https://api.github.com/repos/agenciafmd/filament-leads/zipball/bca42217f8719aeb005cd83ba4edcece04e456a9",
+                "reference": "bca42217f8719aeb005cd83ba4edcece04e456a9",
+                "shasum": ""
             },
             "require": {
                 "agenciafmd/filament-admix": "v1.x-dev|dev-master",
                 "php": "^8.4"
             },
+            "default-branch": true,
             "type": "library",
             "extra": {
                 "laravel": {
@@ -340,10 +99,11 @@
             "autoload": {
                 "psr-4": {
                     "Agenciafmd\\Leads\\": "src/",
-                    "Agenciafmd\\Leads\\Database\\Factories\\": "database/factories/",
-                    "Agenciafmd\\Leads\\Database\\Seeders\\": "database/seeders/"
+                    "Agenciafmd\\Leads\\Database\\Seeders\\": "database/seeders/",
+                    "Agenciafmd\\Leads\\Database\\Factories\\": "database/factories/"
                 }
             },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -354,67 +114,31 @@
                 }
             ],
             "description": "Filament - Leads",
-            "transport-options": {
-                "symlink": true,
-                "relative": true
-            }
-        },
-        {
-            "name": "agenciafmd/filament-partners",
-            "version": "dev-master",
-            "dist": {
-                "type": "path",
-                "url": "packages/agenciafmd/filament-partners",
-                "reference": "8560a3dac18889d0138eb900ac55e50e97f94405"
+            "support": {
+                "issues": "https://github.com/agenciafmd/filament-leads/issues",
+                "source": "https://github.com/agenciafmd/filament-leads/tree/master"
             },
-            "require": {
-                "agenciafmd/filament-admix": "v1.x-dev|dev-master",
-                "php": "^8.4"
-            },
-            "type": "library",
-            "extra": {
-                "laravel": {
-                    "providers": [
-                        "Agenciafmd\\Partners\\Providers\\PartnerServiceProvider"
-                    ]
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Agenciafmd\\Partners\\": "src/",
-                    "Agenciafmd\\Partners\\Database\\Factories\\": "database/factories/",
-                    "Agenciafmd\\Partners\\Database\\Seeders\\": "database/seeders/"
-                }
-            },
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Irineu Junior",
-                    "email": "irineu@fmd.ag",
-                    "homepage": "https://fmd.ag/",
-                    "role": "Developer"
-                }
-            ],
-            "description": "Filament - Partners",
-            "transport-options": {
-                "symlink": true,
-                "relative": true
-            }
+            "time": "2026-10-28T17:02:11+00:00"
         },
         {
             "name": "agenciafmd/filament-postal",
             "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/agenciafmd/filament-postal.git",
+                "reference": "095104a9c9c93e25b924c32bb68b10291536a076"
+            },
             "dist": {
-                "type": "path",
-                "url": "packages/agenciafmd/filament-postal",
-                "reference": "d554981fa82fe5c1c5afde053fc83174c8ccc2d9"
+                "type": "zip",
+                "url": "https://api.github.com/repos/agenciafmd/filament-postal/zipball/095104a9c9c93e25b924c32bb68b10291536a076",
+                "reference": "095104a9c9c93e25b924c32bb68b10291536a076",
+                "shasum": ""
             },
             "require": {
                 "agenciafmd/filament-admix": "v1.x-dev|dev-master",
                 "php": "^8.4"
             },
+            "default-branch": true,
             "type": "library",
             "extra": {
                 "laravel": {
@@ -426,10 +150,11 @@
             "autoload": {
                 "psr-4": {
                     "Agenciafmd\\Postal\\": "src/",
-                    "Agenciafmd\\Postal\\Database\\Factories\\": "database/factories/",
-                    "Agenciafmd\\Postal\\Database\\Seeders\\": "database/seeders/"
+                    "Agenciafmd\\Postal\\Database\\Seeders\\": "database/seeders/",
+                    "Agenciafmd\\Postal\\Database\\Factories\\": "database/factories/"
                 }
             },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -440,96 +165,11 @@
                 }
             ],
             "description": "Filament - Postal",
-            "transport-options": {
-                "symlink": true,
-                "relative": true
-            }
-        },
-        {
-            "name": "agenciafmd/filament-redirects",
-            "version": "dev-master",
-            "dist": {
-                "type": "path",
-                "url": "packages/agenciafmd/filament-redirects",
-                "reference": "f5f82f9c94e2ad9c78ac4224b2f6a37ee7406f5b"
+            "support": {
+                "issues": "https://github.com/agenciafmd/filament-postal/issues",
+                "source": "https://github.com/agenciafmd/filament-postal/tree/master"
             },
-            "require": {
-                "agenciafmd/filament-admix": "v1.x-dev|dev-master",
-                "php": "^8.4"
-            },
-            "type": "library",
-            "extra": {
-                "laravel": {
-                    "providers": [
-                        "Agenciafmd\\Redirects\\Providers\\RedirectServiceProvider"
-                    ]
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Agenciafmd\\Redirects\\": "src/",
-                    "Agenciafmd\\Redirects\\Database\\Factories\\": "database/factories/",
-                    "Agenciafmd\\Redirects\\Database\\Seeders\\": "database/seeders/"
-                }
-            },
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Irineu Junior",
-                    "email": "irineu@fmd.ag"
-                }
-            ],
-            "description": "Filament - Redirects",
-            "transport-options": {
-                "symlink": true,
-                "relative": true
-            }
-        },
-        {
-            "name": "agenciafmd/filament-testimonials",
-            "version": "dev-master",
-            "dist": {
-                "type": "path",
-                "url": "packages/agenciafmd/filament-testimonials",
-                "reference": "412072d4d2e67d725ed4fd3ebf00902542dc78b2"
-            },
-            "require": {
-                "agenciafmd/filament-admix": "v1.x-dev|dev-master",
-                "php": "^8.4"
-            },
-            "type": "library",
-            "extra": {
-                "laravel": {
-                    "providers": [
-                        "Agenciafmd\\Testimonials\\Providers\\TestimonialServiceProvider"
-                    ]
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Agenciafmd\\Testimonials\\": "src/",
-                    "Agenciafmd\\Testimonials\\Database\\Factories\\": "database/factories/",
-                    "Agenciafmd\\Testimonials\\Database\\Seeders\\": "database/seeders/"
-                }
-            },
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Agência FMD",
-                    "email": "contato@fmd.ag",
-                    "homepage": "https://fmd.ag/",
-                    "role": "Developer"
-                }
-            ],
-            "description": "Filament - Testimonials",
-            "transport-options": {
-                "symlink": true,
-                "relative": true
-            }
+            "time": "2026-10-28T17:02:11+00:00"
         },
         {
             "name": "agenciafmd/frontend",
@@ -574,60 +214,24 @@
             }
         },
         {
-            "name": "agenciafmd/laravel-rdstation",
-            "version": "dev-master",
-            "dist": {
-                "type": "path",
-                "url": "packages/agenciafmd/laravel-rdstation",
-                "reference": "1ed7d55e198d01b352ade3c4407ace081a14d537"
-            },
-            "require": {
-                "laravel/framework": "13.*",
-                "php": "^8.4"
-            },
-            "type": "library",
-            "extra": {
-                "laravel": {
-                    "providers": [
-                        "Agenciafmd\\Rdstation\\Providers\\RdstationServiceProvider"
-                    ]
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Agenciafmd\\Rdstation\\": "src/"
-                }
-            },
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Irineu Junior",
-                    "email": "irineu@fmd.ag",
-                    "homepage": "https://fmd.ag/",
-                    "role": "Developer"
-                }
-            ],
-            "description": "Integração com a RD Station",
-            "homepage": "https://github.com/agenciafmd/laravel-rdstation",
-            "transport-options": {
-                "symlink": true,
-                "relative": true
-            }
-        },
-        {
             "name": "agenciafmd/laravel-sitemap",
             "version": "dev-master",
-            "dist": {
-                "type": "path",
-                "url": "packages/agenciafmd/laravel-sitemap",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/agenciafmd/laravel-sitemap.git",
                 "reference": "64a8ed0259598aeadb3e1ef939a1e93dd707f348"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/agenciafmd/laravel-sitemap/zipball/64a8ed0259598aeadb3e1ef939a1e93dd707f348",
+                "reference": "64a8ed0259598aeadb3e1ef939a1e93dd707f348",
+                "shasum": ""
             },
             "require": {
                 "laravel/framework": "^12.0|^13.0",
                 "spatie/laravel-sitemap": "^8.2"
             },
+            "default-branch": true,
             "type": "library",
             "extra": {
                 "laravel": {
@@ -641,6 +245,7 @@
                     "Agenciafmd\\Sitemap\\": "src/"
                 }
             },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -654,33 +259,41 @@
             ],
             "description": "Gerador de Sitemap",
             "homepage": "https://github.com/agenciafmd/laravel-sitemap",
-            "transport-options": {
-                "symlink": true,
-                "relative": true
-            }
+            "support": {
+                "issues": "https://github.com/agenciafmd/laravel-sitemap/issues",
+                "source": "https://github.com/agenciafmd/laravel-sitemap/tree/master"
+            },
+            "time": "2026-10-15T19:37:37+00:00"
         },
         {
             "name": "agenciafmd/laravel-social-meta",
             "version": "dev-master",
-            "dist": {
-                "type": "path",
-                "url": "packages/agenciafmd/laravel-social-meta",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/agenciafmd/laravel-social-meta.git",
                 "reference": "2064f5b71b10c1de502e02d8ac3732bbb3f382e3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/agenciafmd/laravel-social-meta/zipball/2064f5b71b10c1de502e02d8ac3732bbb3f382e3",
+                "reference": "2064f5b71b10c1de502e02d8ac3732bbb3f382e3",
+                "shasum": ""
             },
             "require": {
                 "ext-fileinfo": "*",
                 "intervention/image": "^3.11",
                 "laravel/framework": "^12.0|^13.0"
             },
+            "default-branch": true,
             "type": "library",
             "extra": {
                 "laravel": {
-                    "providers": [
-                        "Agenciafmd\\SocialMeta\\Providers\\SocialMetaServiceProvider"
-                    ],
                     "aliases": {
                         "OpenGraphImage": "\\Facades\\Agenciafmd\\SocialMeta\\Services\\OpenGraphImage"
-                    }
+                    },
+                    "providers": [
+                        "Agenciafmd\\SocialMeta\\Providers\\SocialMetaServiceProvider"
+                    ]
                 }
             },
             "autoload": {
@@ -691,6 +304,7 @@
                     "Agenciafmd\\SocialMeta\\": "src/"
                 }
             },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -704,18 +318,25 @@
             ],
             "description": "Social Meta for those who doesn't know for what it for",
             "homepage": "https://github.com/agenciafmd/laravel-social-meta",
-            "transport-options": {
-                "symlink": true,
-                "relative": true
-            }
+            "support": {
+                "issues": "https://github.com/agenciafmd/laravel-social-meta/issues",
+                "source": "https://github.com/agenciafmd/laravel-social-meta/tree/master"
+            },
+            "time": "2026-10-15T19:37:37+00:00"
         },
         {
             "name": "agenciafmd/laravel-support",
             "version": "dev-master",
-            "dist": {
-                "type": "path",
-                "url": "packages/agenciafmd/laravel-support",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/agenciafmd/laravel-support.git",
                 "reference": "369e401130b3f189fbffdad50afd3167b78a5bee"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/agenciafmd/laravel-support/zipball/369e401130b3f189fbffdad50afd3167b78a5bee",
+                "reference": "369e401130b3f189fbffdad50afd3167b78a5bee",
+                "shasum": ""
             },
             "require": {
                 "ext-bcmath": "*",
@@ -723,15 +344,16 @@
                 "laravel/framework": "^12.0|^13.0",
                 "spatie/image-optimizer": "^1.8"
             },
+            "default-branch": true,
             "type": "library",
             "extra": {
                 "laravel": {
-                    "providers": [
-                        "Agenciafmd\\Support\\Providers\\SupportServiceProvider"
-                    ],
                     "aliases": {
                         "Helper": "\\Facades\\Agenciafmd\\Support\\Helper"
-                    }
+                    },
+                    "providers": [
+                        "Agenciafmd\\Support\\Providers\\SupportServiceProvider"
+                    ]
                 },
                 "phpstan": {
                     "includes": [
@@ -744,11 +366,7 @@
                     "Agenciafmd\\Support\\": "src/"
                 }
             },
-            "autoload-dev": {
-                "psr-4": {
-                    "Agenciafmd\\Support\\Tests\\": "tests/"
-                }
-            },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -762,24 +380,32 @@
             ],
             "description": "Itens uteis para serem utilizados nos projetos",
             "homepage": "https://github.com/agenciafmd/laravel-support",
-            "transport-options": {
-                "symlink": true,
-                "relative": true
-            }
+            "support": {
+                "issues": "https://github.com/agenciafmd/laravel-support/issues",
+                "source": "https://github.com/agenciafmd/laravel-support/tree/master"
+            },
+            "time": "2026-10-15T19:37:37+00:00"
         },
         {
             "name": "agenciafmd/laravel-turbo",
             "version": "dev-master",
-            "dist": {
-                "type": "path",
-                "url": "packages/agenciafmd/laravel-turbo",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/agenciafmd/laravel-turbo.git",
                 "reference": "f9f165303da51a7e797ed9a1df1d23569e5b6529"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/agenciafmd/laravel-turbo/zipball/f9f165303da51a7e797ed9a1df1d23569e5b6529",
+                "reference": "f9f165303da51a7e797ed9a1df1d23569e5b6529",
+                "shasum": ""
             },
             "require": {
                 "laravel/framework": "^12.0|^13.0",
                 "silber/page-cache": "^1.1",
                 "vinkius-labs/laravel-page-speed": "^4.0"
             },
+            "default-branch": true,
             "type": "library",
             "extra": {
                 "laravel": {
@@ -793,6 +419,7 @@
                     "Agenciafmd\\Turbo\\": "src/"
                 }
             },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -806,10 +433,11 @@
             ],
             "description": "Turbo - Agência F&MD",
             "homepage": "https://github.com/agenciafmd/laravel-turbo",
-            "transport-options": {
-                "symlink": true,
-                "relative": true
-            }
+            "support": {
+                "issues": "https://github.com/agenciafmd/laravel-turbo/issues",
+                "source": "https://github.com/agenciafmd/laravel-turbo/tree/master"
+            },
+            "time": "2026-10-15T19:37:37+00:00"
         },
         {
             "name": "anourvalar/eloquent-serialize",
@@ -2771,26 +2399,27 @@
         },
         {
             "name": "guzzlehttp/guzzle",
-            "version": "7.16.1",
+            "version": "8.3.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/guzzle/guzzle.git",
-                "reference": "81755d989b3007ca7f88a069857553cd08e7dc2e"
+                "reference": "7d9b1f430bb65ac664e120af227bf9a795ad6333"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/guzzle/zipball/81755d989b3007ca7f88a069857553cd08e7dc2e",
-                "reference": "81755d989b3007ca7f88a069857553cd08e7dc2e",
+                "url": "https://api.github.com/repos/guzzle/guzzle/zipball/7d9b1f430bb65ac664e120af227bf9a795ad6333",
+                "reference": "7d9b1f430bb65ac664e120af227bf9a795ad6333",
                 "shasum": ""
             },
             "require": {
                 "ext-json": "*",
-                "guzzlehttp/promises": "^2.6",
-                "guzzlehttp/psr7": "^2.13.2",
-                "php": "^7.2.5 || ^8.0",
+                "guzzlehttp/promises": "^3.1",
+                "guzzlehttp/psr7": "^3.2",
+                "php": "^7.4 || ^8.0",
                 "psr/http-client": "^1.0",
-                "symfony/deprecation-contracts": "^2.5 || ^3.0",
-                "symfony/polyfill-php80": "^1.25"
+                "psr/http-factory": "^1.0",
+                "symfony/polyfill-php80": "^1.25",
+                "symfony/polyfill-php82": "^1.27"
             },
             "provide": {
                 "psr/http-client-implementation": "1.0"
@@ -2798,10 +2427,10 @@
             "require-dev": {
                 "bamarni/composer-bin-plugin": "^1.8.2",
                 "ext-curl": "*",
-                "guzzle/client-integration-tests": "3.0.3",
-                "guzzlehttp/test-server": "^0.7",
+                "guzzle/client-integration-tests": "4.0.1",
+                "guzzlehttp/test-server": "^1.1",
                 "php-http/message-factory": "^1.1",
-                "phpunit/phpunit": "^8.5.52 || ^9.6.34",
+                "phpunit/phpunit": "^9.6.34",
                 "psr/log": "^1.1 || ^2.0 || ^3.0"
             },
             "suggest": {
@@ -2817,9 +2446,6 @@
                 }
             },
             "autoload": {
-                "files": [
-                    "src/functions_include.php"
-                ],
                 "psr-4": {
                     "GuzzleHttp\\": "src/"
                 }
@@ -2879,7 +2505,7 @@
             ],
             "support": {
                 "issues": "https://github.com/guzzle/guzzle/issues",
-                "source": "https://github.com/guzzle/guzzle/tree/7.16.1"
+                "source": "https://github.com/guzzle/guzzle/tree/8.3.1"
             },
             "funding": [
                 {
@@ -2895,29 +2521,29 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2026-10-25T21:35:21+00:00"
+            "time": "2026-10-25T21:35:34+00:00"
         },
         {
             "name": "guzzlehttp/promises",
-            "version": "2.6.0",
+            "version": "3.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/guzzle/promises.git",
-                "reference": "3d88c829bd5f13d13847b39067dbf09a60af2154"
+                "reference": "094d0ec418eb3b1411ea271a180ec95cae6ae933"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/promises/zipball/3d88c829bd5f13d13847b39067dbf09a60af2154",
-                "reference": "3d88c829bd5f13d13847b39067dbf09a60af2154",
+                "url": "https://api.github.com/repos/guzzle/promises/zipball/094d0ec418eb3b1411ea271a180ec95cae6ae933",
+                "reference": "094d0ec418eb3b1411ea271a180ec95cae6ae933",
                 "shasum": ""
             },
             "require": {
-                "php": "^7.2.5 || ^8.0",
+                "php": "^7.4 || ^8.0",
                 "symfony/deprecation-contracts": "^2.5 || ^3.0"
             },
             "require-dev": {
                 "bamarni/composer-bin-plugin": "^1.8.2",
-                "phpunit/phpunit": "^8.5.52 || ^9.6.34"
+                "phpunit/phpunit": "^9.6.34"
             },
             "type": "library",
             "extra": {
@@ -2963,7 +2589,7 @@
             ],
             "support": {
                 "issues": "https://github.com/guzzle/promises/issues",
-                "source": "https://github.com/guzzle/promises/tree/2.6.0"
+                "source": "https://github.com/guzzle/promises/tree/3.1.0"
             },
             "funding": [
                 {
@@ -2979,39 +2605,39 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2026-10-18T12:46:59+00:00"
+            "time": "2026-10-18T12:48:16+00:00"
         },
         {
             "name": "guzzlehttp/psr7",
-            "version": "2.13.2",
+            "version": "3.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/guzzle/psr7.git",
-                "reference": "adee536f95101929f262b8c59e8a61472f347d58"
+                "reference": "cdc139396207a5eba10c242d241fb014cb098390"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/psr7/zipball/adee536f95101929f262b8c59e8a61472f347d58",
-                "reference": "adee536f95101929f262b8c59e8a61472f347d58",
+                "url": "https://api.github.com/repos/guzzle/psr7/zipball/cdc139396207a5eba10c242d241fb014cb098390",
+                "reference": "cdc139396207a5eba10c242d241fb014cb098390",
                 "shasum": ""
             },
             "require": {
-                "php": "^7.2.5 || ^8.0",
-                "psr/http-factory": "^1.0",
-                "psr/http-message": "^1.1 || ^2.0",
-                "ralouphie/getallheaders": "^3.0",
-                "symfony/deprecation-contracts": "^2.5 || ^3.0",
-                "symfony/polyfill-php80": "^1.25"
+                "php": "^7.4 || ^8.0",
+                "psr/http-factory": "^1.1",
+                "psr/http-message": "^2.0",
+                "symfony/polyfill-php80": "^1.25",
+                "symfony/polyfill-php82": "^1.27"
             },
             "provide": {
-                "psr/http-factory-implementation": "1.0",
-                "psr/http-message-implementation": "1.0"
+                "psr/http-factory-implementation": "1.1",
+                "psr/http-message-implementation": "2.0"
             },
             "require-dev": {
                 "bamarni/composer-bin-plugin": "^1.8.2",
                 "http-interop/http-factory-tests": "1.1.0",
                 "jshttp/mime-db": "1.54.0.1",
-                "phpunit/phpunit": "^8.5.52 || ^9.6.34"
+                "php-http/psr7-integration-tests": "^1.5.1",
+                "phpunit/phpunit": "^9.6.34"
             },
             "suggest": {
                 "laminas/laminas-httphandlerrunner": "Emit PSR-7 responses"
@@ -3082,7 +2708,7 @@
             ],
             "support": {
                 "issues": "https://github.com/guzzle/psr7/issues",
-                "source": "https://github.com/guzzle/psr7/tree/2.13.2"
+                "source": "https://github.com/guzzle/psr7/tree/3.2.0"
             },
             "funding": [
                 {
@@ -3098,7 +2724,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2026-10-17T23:49:46+00:00"
+            "time": "2026-10-17T23:57:19+00:00"
         },
         {
             "name": "guzzlehttp/uri-template",
@@ -3405,63 +3031,6 @@
                 }
             ],
             "time": "2025-09-14T15:34:49+00:00"
-        },
-        {
-            "name": "justbetter/laravel-instagram-feed",
-            "version": "v2.0.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/justbetter/laravel-instagram-feed.git",
-                "reference": "0268d660e725e5a60e379039b262b81432ea854b"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/justbetter/laravel-instagram-feed/zipball/0268d660e725e5a60e379039b262b81432ea854b",
-                "reference": "0268d660e725e5a60e379039b262b81432ea854b",
-                "shasum": ""
-            },
-            "require": {
-                "ext-json": "*",
-                "guzzlehttp/guzzle": "^7.0.1",
-                "illuminate/config": "^13.0",
-                "illuminate/console": "^13.0",
-                "illuminate/database": "^13.0",
-                "illuminate/http": "^13.0",
-                "illuminate/mail": "^13.0",
-                "illuminate/support": "^13.0",
-                "php": "^8.0"
-            },
-            "require-dev": {
-                "orchestra/testbench": "^11.0"
-            },
-            "type": "library",
-            "extra": {
-                "laravel": {
-                    "providers": [
-                        "JustBetter\\InstagramFeed\\InstagramFeedServiceProvider"
-                    ]
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "JustBetter\\InstagramFeed\\": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Michael Joyner",
-                    "email": "joyner.michael@gmail.com"
-                }
-            ],
-            "description": "Fetches the instagram feed for given authenticated profiles",
-            "support": {
-                "source": "https://github.com/justbetter/laravel-instagram-feed/tree/v2.0.0"
-            },
-            "time": "2026-04-20T12:56:41+00:00"
         },
         {
             "name": "kirschbaum-development/eloquent-power-joins",
@@ -6289,50 +5858,6 @@
             "time": "2026-06-29T15:41:09+00:00"
         },
         {
-            "name": "ralouphie/getallheaders",
-            "version": "3.0.3",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/ralouphie/getallheaders.git",
-                "reference": "120b605dfeb996808c31b6477290a714d356e822"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/ralouphie/getallheaders/zipball/120b605dfeb996808c31b6477290a714d356e822",
-                "reference": "120b605dfeb996808c31b6477290a714d356e822",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.6"
-            },
-            "require-dev": {
-                "php-coveralls/php-coveralls": "^2.1",
-                "phpunit/phpunit": "^5 || ^6.5"
-            },
-            "type": "library",
-            "autoload": {
-                "files": [
-                    "src/getallheaders.php"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Ralph Khattar",
-                    "email": "ralph.khattar@gmail.com"
-                }
-            ],
-            "description": "A polyfill for getallheaders.",
-            "support": {
-                "issues": "https://github.com/ralouphie/getallheaders/issues",
-                "source": "https://github.com/ralouphie/getallheaders/tree/develop"
-            },
-            "time": "2019-03-08T08:55:37+00:00"
-        },
-        {
             "name": "ramsey/collection",
             "version": "2.1.1",
             "source": {
@@ -8843,6 +8368,86 @@
             ],
             "support": {
                 "source": "https://github.com/symfony/polyfill-php80/tree/v1.43.0"
+            },
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://github.com/nicolas-grekas",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2026-09-25T15:50:05+00:00"
+        },
+        {
+            "name": "symfony/polyfill-php82",
+            "version": "v1.43.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/polyfill-php82.git",
+                "reference": "843bbe8b2a7934307b749751eede0f111f5d1cfc"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/polyfill-php82/zipball/843bbe8b2a7934307b749751eede0f111f5d1cfc",
+                "reference": "843bbe8b2a7934307b749751eede0f111f5d1cfc",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.2"
+            },
+            "type": "library",
+            "extra": {
+                "thanks": {
+                    "url": "https://github.com/symfony/polyfill",
+                    "name": "symfony/polyfill"
+                }
+            },
+            "autoload": {
+                "files": [
+                    "bootstrap.php"
+                ],
+                "psr-4": {
+                    "Symfony\\Polyfill\\Php82\\": ""
+                },
+                "classmap": [
+                    "Resources/stubs"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Nicolas Grekas",
+                    "email": "p@tchwork.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony polyfill backporting some PHP 8.2+ features to lower PHP versions",
+            "homepage": "https://symfony.com",
+            "keywords": [
+                "compatibility",
+                "polyfill",
+                "portable",
+                "shim"
+            ],
+            "support": {
+                "source": "https://github.com/symfony/polyfill-php82/tree/v1.43.0"
             },
             "funding": [
                 {
