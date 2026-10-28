@@ -5,7 +5,7 @@
 
 /**
  * A helper file for Laravel, to provide autocomplete information to your IDE
- * Generated for Laravel 13.35.0.
+ * Generated for Laravel 13.39.0.
  *
  * This file should not be included in your code, only analyzed by your IDE!
  *
@@ -1730,7 +1730,7 @@ namespace Illuminate\Support\Facades {
         /**
          * Get the name of the binding the container is currently resolving.
          *
-         * @return class-string|string|null
+         * @return class-string|string|int|null
          * @static
          */
         public static function currentlyResolving()
@@ -1825,7 +1825,7 @@ namespace Illuminate\Support\Facades {
         /**
          * Set the callback which determines the current container environment.
          *
-         * @param (callable(array<int, string>|string): bool|string)|null $callback
+         * @param (callable(array<int, string>|string): (bool|string))|null $callback
          * @return void
          * @static
          */
@@ -1865,7 +1865,7 @@ namespace Illuminate\Support\Facades {
         /**
          * Set the shared instance of the container.
          *
-         * @return \Illuminate\Contracts\Container\Container|static
+         * @return \Illuminate\Contracts\Container\Container|static|null
          * @static
          */
         public static function setInstance($container = null)
@@ -2669,7 +2669,7 @@ namespace Illuminate\Support\Facades {
         /**
          * Get the last user we attempted to authenticate.
          *
-         * @return \App\Models\User
+         * @return \App\Models\User|null
          * @static
          */
         public static function getLastAttempted()
@@ -2756,7 +2756,7 @@ namespace Illuminate\Support\Facades {
         /**
          * Get the event dispatcher instance.
          *
-         * @return \Illuminate\Contracts\Events\Dispatcher
+         * @return \Illuminate\Contracts\Events\Dispatcher|null
          * @static
          */
         public static function getDispatcher()
@@ -3368,6 +3368,19 @@ namespace Illuminate\Support\Facades {
         }
 
         /**
+         * Get the path to the compiled version of a view.
+         *
+         * @param string $path
+         * @return string
+         * @static
+         */
+        public static function getCompiledPath($path)
+        {
+            /** @var \Illuminate\View\Compilers\BladeCompiler $instance */
+            return $instance->getCompiledPath($path);
+        }
+
+        /**
          * Execute the given callback using a custom echo format.
          *
          * @param string $format
@@ -3428,20 +3441,6 @@ namespace Illuminate\Support\Facades {
         {
             /** @var \Illuminate\View\Compilers\BladeCompiler $instance */
             $instance->withoutComponentTags();
-        }
-
-        /**
-         * Get the path to the compiled version of a view.
-         *
-         * @param string $path
-         * @return string
-         * @static
-         */
-        public static function getCompiledPath($path)
-        {
-            //Method inherited from \Illuminate\View\Compilers\Compiler 
-            /** @var \Illuminate\View\Compilers\BladeCompiler $instance */
-            return $instance->getCompiledPath($path);
         }
 
         /**
@@ -7486,6 +7485,20 @@ namespace Illuminate\Support\Facades {
         }
 
         /**
+         * Execute the given callback using OLAP workload.
+         *
+         * @template TReturn
+         * @param (\Closure($this): TReturn) $callback
+         * @return TReturn
+         * @static
+         */
+        public static function olap($callback)
+        {
+            /** @var \Illuminate\Database\MySqlConnection $instance */
+            return $instance->olap($callback);
+        }
+
+        /**
          * Get the connection's last insert ID.
          *
          * @return string|int|null
@@ -7507,6 +7520,18 @@ namespace Illuminate\Support\Facades {
         {
             /** @var \Illuminate\Database\MySqlConnection $instance */
             return $instance->isMaria();
+        }
+
+        /**
+         * Determine if the connected database is a Vitess database.
+         *
+         * @return bool
+         * @static
+         */
+        public static function isVitess()
+        {
+            /** @var \Illuminate\Database\MySqlConnection $instance */
+            return $instance->isVitess();
         }
 
         /**
@@ -7972,7 +7997,7 @@ namespace Illuminate\Support\Facades {
         /**
          * Register a database query listener with the connection.
          *
-         * @param \Closure(\Illuminate\Database\Events\QueryExecuted) $callback
+         * @param \Closure(\Illuminate\Database\Events\QueryExecuted):  mixed  $callback
          * @return void
          * @static
          */
@@ -8079,6 +8104,21 @@ namespace Illuminate\Support\Facades {
             //Method inherited from \Illuminate\Database\Connection 
             /** @var \Illuminate\Database\MySqlConnection $instance */
             return $instance->useWriteConnectionWhenReading($value);
+        }
+
+        /**
+         * Execute the given callback using the write PDO connection for reads.
+         *
+         * @template TReturn
+         * @param (\Closure($this): TReturn) $callback
+         * @return TReturn
+         * @static
+         */
+        public static function usingWritePdo($callback)
+        {
+            //Method inherited from \Illuminate\Database\Connection 
+            /** @var \Illuminate\Database\MySqlConnection $instance */
+            return $instance->usingWritePdo($callback);
         }
 
         /**
@@ -10927,7 +10967,7 @@ namespace Illuminate\Support\Facades {
         /**
          * Get a collection of the request / response pairs matching the given truth test.
          *
-         * @param (\Closure(\Illuminate\Http\Client\Request, \Illuminate\Http\Client\Response|null): bool)|callable $callback
+         * @param (\Closure(\Illuminate\Http\Client\Request, \Illuminate\Http\Client\Response|null): bool)|callable|null $callback
          * @return \Illuminate\Support\Collection<int, array{0: \Illuminate\Http\Client\Request, 1: \Illuminate\Http\Client\Response|null}>
          * @static
          */
@@ -11972,8 +12012,6 @@ namespace Illuminate\Support\Facades {
      * @method static void alwaysReplyTo(string $address, string|null $name = null)
      * @method static void alwaysReturnPath(string $address)
      * @method static void alwaysTo(string $address, string|null $name = null)
-     * @method static \Illuminate\Mail\SentMessage|null html(string $html, mixed $callback)
-     * @method static \Illuminate\Mail\SentMessage|null plain(string $view, array $data, mixed $callback)
      * @method static string render(string|array $view, array $data = [])
      * @method static \Symfony\Component\Mailer\Transport\TransportInterface getSymfonyTransport()
      * @method static \Illuminate\Contracts\View\Factory getViewFactory()
@@ -12422,6 +12460,20 @@ namespace Illuminate\Support\Facades {
         }
 
         /**
+         * Send a new message with only an HTML part.
+         *
+         * @param string $html
+         * @param \Closure|string $callback
+         * @return void
+         * @static
+         */
+        public static function html($html, $callback)
+        {
+            /** @var \Illuminate\Support\Testing\Fakes\MailFake $instance */
+            $instance->html($html, $callback);
+        }
+
+        /**
          * Send a new message with only a raw text part.
          *
          * @param string $text
@@ -12433,6 +12485,21 @@ namespace Illuminate\Support\Facades {
         {
             /** @var \Illuminate\Support\Testing\Fakes\MailFake $instance */
             $instance->raw($text, $callback);
+        }
+
+        /**
+         * Send a new message with only a plain part.
+         *
+         * @param string $view
+         * @param array $data
+         * @param \Closure|string $callback
+         * @return void
+         * @static
+         */
+        public static function plain($view, $data, $callback)
+        {
+            /** @var \Illuminate\Support\Testing\Fakes\MailFake $instance */
+            $instance->plain($view, $data, $callback);
         }
 
         /**
@@ -13068,7 +13135,7 @@ namespace Illuminate\Support\Facades {
      * @method static \Illuminate\Process\PendingProcess tty(bool $tty = true)
      * @method static \Illuminate\Process\PendingProcess options(array $options)
      * @method static \Illuminate\Contracts\Process\ProcessResult run(array|string|null $command = null, callable|null $output = null)
-     * @method static \Illuminate\Process\InvokedProcess start(array|string|null $command = null, callable|null $output = null)
+     * @method static \Illuminate\Process\InvokedProcess|\Illuminate\Process\FakeInvokedProcess start(array|string|null $command = null, callable|null $output = null)
      * @method static bool supportsTty()
      * @method static \Illuminate\Process\PendingProcess withFakeHandlers(array $fakeHandlers)
      * @method static \Illuminate\Process\PendingProcess|mixed when(\Closure|mixed|null $value = null, callable|null $callback = null, callable|null $default = null)
@@ -15605,7 +15672,7 @@ namespace Illuminate\Support\Facades {
          *
          * @param string|null $param
          * @param mixed $default
-         * @return ($param is null ? \Illuminate\Routing\Route : object|string|null)
+         * @return ($param is null ? \Illuminate\Routing\Route|null : object|string|null)
          * @static
          */
         public static function route($param = null, $default = null)
@@ -25317,10 +25384,10 @@ namespace Laravel\Mcp\Facades {
         /**
          * @static
          */
-        public static function oauthRoutes($oauthPrefix = 'oauth')
+        public static function oauthRoutes($oauthPrefix = 'oauth', $registration = true)
         {
             /** @var \Laravel\Mcp\Server\Registrar $instance */
-            return $instance->oauthRoutes($oauthPrefix);
+            return $instance->oauthRoutes($oauthPrefix, $registration);
         }
 
         /**
@@ -29506,7 +29573,7 @@ namespace  {
         /**
          * Add an "order by" clause for a timestamp to the query.
          *
-         * @param string|\Illuminate\Contracts\Database\Query\Expression $column
+         * @param string|\Illuminate\Contracts\Database\Query\Expression|null $column
          * @return \Illuminate\Database\Eloquent\Builder<static>
          * @static
          */
@@ -29519,7 +29586,7 @@ namespace  {
         /**
          * Add an "order by" clause for a timestamp to the query.
          *
-         * @param string|\Illuminate\Contracts\Database\Query\Expression $column
+         * @param string|\Illuminate\Contracts\Database\Query\Expression|null $column
          * @return \Illuminate\Database\Eloquent\Builder<static>
          * @static
          */
@@ -31126,6 +31193,7 @@ namespace  {
          *
          * @param \Illuminate\Database\Eloquent\Relations\MorphTo<*, *>|string $relation
          * @param \Illuminate\Database\Eloquent\Model|iterable<int, \Illuminate\Database\Eloquent\Model>|string|null $model
+         * @param string $boolean
          * @return \Illuminate\Database\Eloquent\Builder<static>
          * @throws \InvalidArgumentException
          * @static
@@ -31141,6 +31209,7 @@ namespace  {
          *
          * @param \Illuminate\Database\Eloquent\Relations\MorphTo<*, *>|string $relation
          * @param \Illuminate\Database\Eloquent\Model|iterable<int, \Illuminate\Database\Eloquent\Model>|string $model
+         * @param string $boolean
          * @return \Illuminate\Database\Eloquent\Builder<static>
          * @throws \InvalidArgumentException
          * @static
@@ -31182,7 +31251,7 @@ namespace  {
         /**
          * Add a "belongs to" relationship where clause to the query.
          *
-         * @param \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Collection<int, \Illuminate\Database\Eloquent\Model> $related
+         * @param \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Collection<int, covariant \Illuminate\Database\Eloquent\Model> $related
          * @param string|null $relationshipName
          * @param string $boolean
          * @return \Illuminate\Database\Eloquent\Builder<static>
@@ -31199,7 +31268,7 @@ namespace  {
         /**
          * Add a "BelongsTo" relationship with an "or where" clause to the query.
          *
-         * @param \Illuminate\Database\Eloquent\Model $related
+         * @param \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Collection<int, covariant \Illuminate\Database\Eloquent\Model> $related
          * @param string|null $relationshipName
          * @return \Illuminate\Database\Eloquent\Builder<static>
          * @static
@@ -31213,7 +31282,7 @@ namespace  {
         /**
          * Add a "belongs to many" relationship where clause to the query.
          *
-         * @param \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Collection<int, \Illuminate\Database\Eloquent\Model> $related
+         * @param \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Collection<int, covariant \Illuminate\Database\Eloquent\Model> $related
          * @param string|null $relationshipName
          * @param string $boolean
          * @return \Illuminate\Database\Eloquent\Builder<static>
@@ -31230,7 +31299,7 @@ namespace  {
         /**
          * Add a "belongs to many" relationship with an "or where" clause to the query.
          *
-         * @param \Illuminate\Database\Eloquent\Model $related
+         * @param \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Collection<int, covariant \Illuminate\Database\Eloquent\Model> $related
          * @param string|null $relationshipName
          * @return \Illuminate\Database\Eloquent\Builder<static>
          * @throws \RuntimeException
@@ -33760,7 +33829,7 @@ namespace  {
          * Add a vector-distance "order by" clause to the query.
          *
          * @param \Illuminate\Contracts\Database\Query\Expression|string $column
-         * @param \Illuminate\Support\Collection<int, float>|\Illuminate\Contracts\Support\Arrayable|array<int, float> $vector
+         * @param \Illuminate\Support\Collection<int, float>|\Illuminate\Contracts\Support\Arrayable|array<int, float>|string $vector
          * @return \Illuminate\Database\Eloquent\Builder<static>
          * @throws \JsonException
          * @static
@@ -33841,7 +33910,7 @@ namespace  {
         /**
          * Alias to set the "limit" value of the query.
          *
-         * @param int $value
+         * @param int|null $value
          * @return \Illuminate\Database\Eloquent\Builder<static>
          * @static
          */
@@ -33854,7 +33923,7 @@ namespace  {
         /**
          * Set the "limit" value of the query.
          *
-         * @param int $value
+         * @param int|null $value
          * @return \Illuminate\Database\Eloquent\Builder<static>
          * @static
          */
