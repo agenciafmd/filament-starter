@@ -23,10 +23,7 @@
     <x-frontend::pwa />
     <x-frontend::fonts-preload />
     <x-frontend::site-verification />
-    <x-frontend::critical-css
-            :$critical
-            stylesheet="resources/scss/frontend.scss"
-    />
+    <x-frontend::critical-css :$critical stylesheet="resources/scss/frontend.scss" />
 
     <livewire:styles />
 

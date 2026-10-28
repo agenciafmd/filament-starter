@@ -39,8 +39,7 @@
         });
     }
 
-    @js($alerts->values())
-        .forEach(showAlert);
+    @js($alerts->values()).forEach(showAlert);
 
     document.addEventListener('livewire:init', () => {
         Livewire.on('swal', (param) => {
