@@ -17,7 +17,6 @@
             "require": {
                 "agenciafmd/laravel-support": "v12.x-dev|dev-master",
                 "daljo25/filament-tabler-icons": "^1.0",
-                "danihidayatx/image-optimizer": "^2.0",
                 "filament/filament": "^5.0",
                 "guava/filament-icon-picker": "^4.0",
                 "itsgoingd/clockwork": ">=5.3.5",
@@ -1632,94 +1631,6 @@
                 }
             ],
             "time": "2026-09-18T07:38:01+00:00"
-        },
-        {
-            "name": "danihidayatx/image-optimizer",
-            "version": "v2.2.5",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/danihidayatx/image-optimizer.git",
-                "reference": "a0f34c3806111bc653e2af283a48d07ab2dd8c9b"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/danihidayatx/image-optimizer/zipball/a0f34c3806111bc653e2af283a48d07ab2dd8c9b",
-                "reference": "a0f34c3806111bc653e2af283a48d07ab2dd8c9b",
-                "shasum": ""
-            },
-            "require": {
-                "filament/forms": "^3.0|^4.0|^5.0",
-                "illuminate/contracts": "^10.0|^11.0|^12.0|^13.0",
-                "intervention/image": "^2.7|^3.0",
-                "php": "^8.2",
-                "spatie/laravel-package-tools": "^1.19.0"
-            },
-            "require-dev": {
-                "larastan/larastan": "^2.9 || ^3.0",
-                "laravel/pint": "^1.0",
-                "nunomaduro/collision": "^7.9|^8.0",
-                "orchestra/testbench": "^8.0|^9.0|^10.0|^11.0",
-                "pestphp/pest": "^2.0|^3.0|^4.4",
-                "pestphp/pest-plugin-laravel": "^2.0|^3.0|^4.1"
-            },
-            "type": "library",
-            "extra": {
-                "laravel": {
-                    "aliases": {
-                        "ImageOptimizer": "DaniHidayatX\\ImageOptimizer\\Facades\\ImageOptimizer"
-                    },
-                    "providers": [
-                        "DaniHidayatX\\ImageOptimizer\\ImageOptimizerServiceProvider"
-                    ]
-                },
-                "phpstan": {
-                    "includes": [
-                        "extension.neon"
-                    ]
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "DaniHidayatX\\ImageOptimizer\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Dani Hidayat",
-                    "role": "Maintainer"
-                },
-                {
-                    "name": "Josh Embling",
-                    "email": "joshembling@gmail.com",
-                    "role": "Original Creator"
-                }
-            ],
-            "description": "Optimize your Filament images before they reach your database. Forked from joshembling/image-optimizer for Filament v4 & v5 support.",
-            "homepage": "https://github.com/danihidayatx/image-optimizer",
-            "keywords": [
-                "danihidayatx",
-                "filament",
-                "filamentphp",
-                "image",
-                "image-optimizer",
-                "laravel",
-                "optimization"
-            ],
-            "support": {
-                "issues": "https://github.com/danihidayatx/image-optimizer/issues",
-                "source": "https://github.com/danihidayatx/image-optimizer"
-            },
-            "funding": [
-                {
-                    "url": "https://github.com/danihidayatx",
-                    "type": "github"
-                }
-            ],
-            "time": "2026-10-28T14:03:05+00:00"
         },
         {
             "name": "dflydev/dot-access-data",
