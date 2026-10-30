@@ -1,3 +1,8 @@
+@use "bootstrap/scss/layout/breakpoints" as *;
+@use "icon-sizes" as *;
+
+// Loaded in the `helpers` layer (`frontend.scss`), after the Bootstrap 6 `.icon-link` helper it overrides
+
 .icon-link {
     text-decoration-color: inherit;
 

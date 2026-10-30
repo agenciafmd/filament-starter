@@ -5,7 +5,9 @@
 // There's 5 generic family groups ‘serif’, ‘sans-serif’, ‘cursive’, ‘fantasy’, and ‘monospace’
 
 $fonts-base-path: "/resources/fonts";
-$should-use-local-font-face: true;
+// The Roboto variable font (all weights, unicode subsets) comes from vite-plugin-webfont-dl (`webfonts.css`);
+// enabling the local files too made the browser download the family twice
+$should-use-local-font-face: false;
 
 // Generate @font-face's content body based on a map of font family.
 // e.g.: $open-sans-regular: (

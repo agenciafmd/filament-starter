@@ -1,5 +1,46 @@
-@import "variables";
-@import "sweetalert2/src/sweetalert2";
+@use "sass:map";
+@use "sass:meta";
+@use "variables" as swal2;
+
+// Only the variables that sweetalert2 declares with `!default` can be configured
+$swal2-unused-variables: (
+    "swal2-black",
+    "swal2-white",
+    "swal2-box-shadow",
+    "swal2-button-darken-active",
+    "swal2-button-darken-hover",
+    "swal2-button-focus-background-color",
+    "swal2-button-focus-box-shadow",
+    "swal2-button-focus-outline",
+    "swal2-cancel-button-border",
+    "swal2-close-button-line-height",
+    "swal2-content-color",
+    "swal2-content-font-size",
+    "swal2-content-font-weight",
+    "swal2-content-justify-content",
+    "swal2-content-line-height",
+    "swal2-content-margin",
+    "swal2-content-padding",
+    "swal2-content-text-align",
+    "swal2-content-word-wrap",
+    "swal2-icon-animations",
+    "swal2-icon-size",
+    "swal2-progress-step-border-radius",
+    "swal2-progress-step-height",
+    "swal2-progress-step-width",
+    "swal2-timer-progress-bar-height",
+    "swal2-toast-button-focus-box-shadow",
+    "swal2-toast-close-button-line-height",
+    "swal2-toast-content-font-size"
+);
+
+$swal2-config: meta.module-variables("swal2");
+
+@each $name in $swal2-unused-variables {
+    $swal2-config: map.remove($swal2-config, $name);
+}
+
+@include meta.load-css("sweetalert2/src/sweetalert2", $with: $swal2-config);
 
 .swal2 {
     &-title {

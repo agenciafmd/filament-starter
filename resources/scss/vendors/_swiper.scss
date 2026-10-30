@@ -1,3 +1,6 @@
+@use "../frontend/variables" as *;
+@use "bootstrap/scss/layout/breakpoints" as *;
+
 :root {
     --swiper-theme-color: #{$primary};
 }

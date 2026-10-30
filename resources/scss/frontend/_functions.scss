@@ -1,0 +1,70 @@
+@use "sass:color";
+@use "sass:math";
+
+// Bootstrap 5 color helpers removed in Bootstrap 6, kept for the project's tokens and partials
+
+// WCAG 2.2 relative luminance
+@function luminance($color) {
+    $sum: 0;
+    $weights: (
+        "red": 0.2126,
+        "green": 0.7152,
+        "blue": 0.0722,
+    );
+
+    @each $channel, $weight in $weights {
+        $value: math.div(color.channel($color, $channel, $space: rgb), 255);
+
+        @if $value < 0.04045 {
+            $value: math.div($value, 12.92);
+        } @else {
+            $value: math.pow(math.div($value + 0.055, 1.055), 2.4);
+        }
+
+        $sum: $sum + $value * $weight;
+    }
+
+    @return $sum;
+}
+
+@function contrast-ratio($background, $foreground) {
+    $l1: luminance($background);
+    $l2: luminance($foreground);
+
+    @return math.div(math.max($l1, $l2) + 0.05, math.min($l1, $l2) + 0.05);
+}
+
+// Same selection order as Bootstrap 5: light first, then dark, else the best ratio
+@function color-contrast($background, $min-contrast-ratio: 4.5) {
+    $max-ratio: 0;
+    $max-ratio-color: null;
+
+    @each $foreground in (#fff, #000) {
+        $ratio: contrast-ratio($background, $foreground);
+
+        @if $ratio >= $min-contrast-ratio {
+            @return $foreground;
+        } @else if $ratio > $max-ratio {
+            $max-ratio: $ratio;
+            $max-ratio-color: $foreground;
+        }
+    }
+
+    @return $max-ratio-color;
+}
+
+@function tint-color($color, $weight) {
+    @return color.mix(white, $color, $weight);
+}
+
+@function shade-color($color, $weight) {
+    @return color.mix(black, $color, $weight);
+}
+
+@function shift-color($color, $weight) {
+    @if $weight > 0 {
+        @return shade-color($color, $weight);
+    }
+
+    @return tint-color($color, -$weight);
+}

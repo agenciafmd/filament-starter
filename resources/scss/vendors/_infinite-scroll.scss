@@ -1,3 +1,5 @@
+@use "../frontend/variables" as *;
+
 .infinite-scroll {
     + .pagination-custom,
     .infinite-scroll-last,

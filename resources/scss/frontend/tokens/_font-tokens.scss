@@ -1,3 +1,6 @@
+@use "../fonts" as *;
+@use "design-tokens" as *;
+
 //font-size
 $ds-font-size: 1rem;
 $ds-font-size-xxs: $ds-font-size * 0.625 !default; //10

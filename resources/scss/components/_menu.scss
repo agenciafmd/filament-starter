@@ -1,0 +1,55 @@
+@use "../frontend/variables" as *;
+@use "bootstrap/scss/functions" as *;
+@use "bootstrap/scss/layout/breakpoints" as *;
+
+// Menu (`.menu`, `.menu-item`, was the Bootstrap 5 dropdown). Bootstrap 6 has no caret or wrapper:
+// `.menu-hover` (opens the menu on hover from lg, positioning context) and `.menu-toggle` (caret) are project classes.
+.menu-toggle {
+    $caret-color: $primary;
+    display: flex;
+    gap: $spacer * 0.5;
+
+    &:after {
+        content: "";
+        width: $spacer * 0.75;
+        height: $spacer * 0.75;
+        display: unset;
+        margin-left: auto;
+        border: none;
+        position: relative;
+        top: $spacer * 0.375;
+        background: escape-svg(
+            url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><path fill='none' stroke='#{$caret-color}' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/></svg>")
+        );
+        transition: $transition-base;
+    }
+}
+
+.menu-hover {
+    position: relative;
+
+    &:hover {
+        @include media-breakpoint-up(lg) {
+            // Opened by hover the menu is not positioned by Floating UI, so it is placed below the toggle
+            .menu:not(.show) {
+                display: flex;
+                top: 100%;
+                left: 0;
+            }
+        }
+    }
+}
+
+.menu {
+    box-shadow: var(--bs-menu-box-shadow);
+    overflow: hidden;
+
+    // Bootstrap 6 menu items are direct children of `.menu` (no `<li>`, required by the keyboard navigation)
+    > .menu-item + .menu-item {
+        margin-top: $spacer * 0.375;
+    }
+}
+
+.menu-item {
+    font-size: $font-size-sm;
+}

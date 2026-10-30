@@ -1,13 +1,90 @@
 @use "sass:map";
+@use "variables" as *;
+@use "maps" as *;
+@use "bootstrap/scss/config" as bs;
+// Loads the Bootstrap utilities, which fill `$utilities` (declared in `config`)
+@use "bootstrap/scss/utilities";
 
-$utilities: map.merge(
-    $utilities,
+// Bootstrap 6 builds `$utilities` with its own defaults, so the project changes are applied to the
+// generated map (before `utilities/api` runs) instead of being passed with `@use ... with`.
+
+@function extend-utility($key, $changes) {
+    @return map.merge(map.get(bs.$utilities, $key), $changes);
+}
+
+@function merge-utility-values($key, $values) {
+    @return map.merge(map.get(map.get(bs.$utilities, $key), "values"), $values);
+}
+
+// Spacing utilities keep the project scale (`$spacers`); Bootstrap components keep the Bootstrap 6 scale
+$spacing-utilities: (
+    "margin": true,
+    "margin-x": true,
+    "margin-y": true,
+    "margin-top": true,
+    "margin-end": true,
+    "margin-bottom": true,
+    "margin-start": true,
+    "padding": false,
+    "padding-x": false,
+    "padding-y": false,
+    "padding-top": false,
+    "padding-end": false,
+    "padding-bottom": false,
+    "padding-start": false,
+    "gap": false,
+    "row-gap": false,
+    "column-gap": false,
+    "space-x": false,
+    "space-y": false,
+);
+
+$project-utilities: ();
+
+@each $key, $has-auto in $spacing-utilities {
+    $values: map.get(map.get(bs.$utilities, $key), "values");
+    $negative-values: ();
+    $spacing-values: $spacers;
+
+    @each $negative-key in ("-1", "-2") {
+        @if map.has-key($values, $negative-key) {
+            $negative-values: map.set(
+                $negative-values,
+                $negative-key,
+                map.get($values, $negative-key)
+            );
+        }
+    }
+
+    @if $has-auto {
+        $spacing-values: map.merge(
+            $spacing-values,
+            (
+                auto: auto,
+            )
+        );
+    }
+
+    $project-utilities: map.set(
+        $project-utilities,
+        $key,
+        extend-utility(
+            $key,
+            (
+                values: map.merge($spacing-values, $negative-values),
+            )
+        )
+    );
+}
+
+$project-utilities: map.merge(
+    $project-utilities,
     (
         "fill": (
             property: fill,
             state: hover,
             values: map.merge(
-                    $theme-colors,
+                    $theme-colors-map,
                     (
                         "reset": currentColor,
                     )
@@ -16,35 +93,43 @@ $utilities: map.merge(
         "stroke": (
             property: stroke,
             state: hover,
-            values: $theme-colors,
+            values: $theme-colors-map,
         ),
         "letter-spacing": (
             property: letter-spacing,
             class: ls,
             values: $letter-spacing-map,
         ),
-        "line-height": (
-            property: line-height,
-            class: lh,
-            values: $line-height-map,
-        ),
-        "overflow": map.merge(
-                map.get($utilities, "overflow"),
+        "line-height": extend-utility(
+                "line-height",
+                (
+                    values: merge-utility-values(
+                            "line-height",
+                            $line-height-map
+                        ),
+                )
+            ),
+        "overflow": extend-utility(
+                "overflow",
                 (
                     responsive: true,
                 )
             ),
-        "ratio": (
-            property: --bs-aspect-ratio,
-            class: ratio,
-            responsive: true,
-            values: $aspect-ratios,
-        ),
-        "rounded": (
-            property: border-radius,
-            class: rounded,
-            values: $border-radius-map,
-        ),
+        "aspect-ratio": extend-utility(
+                "aspect-ratio",
+                (
+                    responsive: true,
+                )
+            ),
+        "border-radius": extend-utility(
+                "border-radius",
+                (
+                    values: merge-utility-values(
+                            "border-radius",
+                            $border-radius-map
+                        ),
+                )
+            ),
         "rounded-top-left": (
             property: border-top-left-radius,
             class: rounded-top-left,
@@ -69,110 +154,107 @@ $utilities: map.merge(
             responsive: true,
             values: $border-radius-map,
         ),
-        "opacity": map.merge(
-                map.get($utilities, "opacity"),
+        "opacity": extend-utility(
+                "opacity",
                 (
                     responsive: true,
                     state: hover,
-                    values: map.merge(
-                            map.get(map.get($utilities, "opacity"), "values"),
-                            $opacity-map
+                    values: merge-utility-values("opacity", $opacity-map),
+                )
+            ),
+        "width": extend-utility(
+                "width",
+                (
+                    responsive: true,
+                    values: merge-utility-values("width", $sizing-values),
+                )
+            ),
+        "max-width": extend-utility(
+                "max-width",
+                (
+                    responsive: true,
+                    values: merge-utility-values("max-width", $sizing-values),
+                )
+            ),
+        "height": extend-utility(
+                "height",
+                (
+                    responsive: true,
+                    values: merge-utility-values("height", $sizing-values),
+                )
+            ),
+        "max-height": extend-utility(
+                "max-height",
+                (
+                    responsive: true,
+                    values: merge-utility-values("max-height", $sizing-values),
+                )
+            ),
+        "position": extend-utility(
+                "position",
+                (
+                    responsive: true,
+                )
+            ),
+        "translate-middle": extend-utility(
+                "translate-middle",
+                (
+                    responsive: true,
+                )
+            ),
+        "top": extend-utility(
+                "top",
+                (
+                    responsive: true,
+                )
+            ),
+        "end": extend-utility(
+                "end",
+                (
+                    responsive: true,
+                )
+            ),
+        "bottom": extend-utility(
+                "bottom",
+                (
+                    responsive: true,
+                )
+            ),
+        "start": extend-utility(
+                "start",
+                (
+                    responsive: true,
+                )
+            ),
+        "font-size": extend-utility(
+                "font-size",
+                (
+                    responsive: true,
+                )
+            ),
+        "fg": extend-utility(
+                "fg",
+                (
+                    state: hover,
+                )
+            ),
+        "bg-color": extend-utility(
+                "bg-color",
+                (
+                    state: hover,
+                    values: merge-utility-values("bg-color", $custom-colors-map),
+                )
+            ),
+        "font-weight": extend-utility(
+                "font-weight",
+                (
+                    values: merge-utility-values(
+                            "font-weight",
+                            $font-weight-map
                         ),
                 )
             ),
-        "width": map.merge(
-                map.get($utilities, "width"),
-                (
-                    responsive: true,
-                    values: $sizing-values,
-                )
-            ),
-        "max-width": map.merge(
-                map.get($utilities, "max-width"),
-                (
-                    responsive: true,
-                    values: $sizing-values,
-                )
-            ),
-        "height": map.merge(
-                map.get($utilities, "height"),
-                (
-                    responsive: true,
-                    values: $sizing-values,
-                )
-            ),
-        "max-height": map.merge(
-                map.get($utilities, "max-height"),
-                (
-                    responsive: true,
-                    values: $sizing-values,
-                )
-            ),
-        "position": map.merge(
-                map.get($utilities, "position"),
-                (
-                    responsive: true,
-                )
-            ),
-        "translate-middle": map.merge(
-                map.get($utilities, "translate-middle"),
-                (
-                    responsive: true,
-                )
-            ),
-        "top": map.merge(
-                map.get($utilities, "top"),
-                (
-                    responsive: true,
-                )
-            ),
-        "end": map.merge(
-                map.get($utilities, "end"),
-                (
-                    responsive: true,
-                )
-            ),
-        "bottom": map.merge(
-                map.get($utilities, "bottom"),
-                (
-                    responsive: true,
-                )
-            ),
-        "start": map.merge(
-                map.get($utilities, "start"),
-                (
-                    responsive: true,
-                )
-            ),
-        "font-size": map.merge(
-                map.get($utilities, "font-size"),
-                (
-                    responsive: true,
-                )
-            ),
-        "color": map.merge(
-                map.get($utilities, "color"),
-                (
-                    state: hover,
-                )
-            ),
-        "background-color": map.merge(
-                map.get($utilities, "background-color"),
-                (
-                    state: hover,
-                    values: map.merge(
-                            map.get(
-                                map.get($utilities, "background-color"),
-                                "values"
-                            ),
-                            $custom-colors-map
-                        ),
-                )
-            ),
-        "font-weight": (
-            property: font-weight,
-            class: fw,
-            values: $font-weight-map,
-        ),
     )
 );
+
+bs.$utilities: map.merge(bs.$utilities, $project-utilities);

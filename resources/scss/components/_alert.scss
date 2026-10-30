@@ -1,3 +1,5 @@
+@use "../frontend/variables" as *;
+
 .alert {
     //.btn-close {
     //  $icon-variant-size: 1;
@@ -11,8 +13,13 @@
     //  transform: translateY(-50%);
     //}
 
-    &-primary {
-        --#{$prefix}alert-bg: #{$primary};
-        --#{$prefix}alert-color: #{$white};
+    // Bootstrap 5 alerts used the `*-text-emphasis` color; Bootstrap 6 uses the theme `fg` (the base color here)
+    color: var(--bs-theme-fg-emphasis, var(--bs-alert-color));
+
+    // Bootstrap 5 `.alert-primary` is `.alert.theme-primary` in Bootstrap 6
+    // (the `.theme-*` helpers sit above the `custom` layer, so the properties are set directly)
+    &.theme-primary {
+        color: $white;
+        background-color: $primary;
     }
 }

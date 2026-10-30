@@ -1,3 +1,6 @@
+@use "../frontend/variables" as *;
+@use "bootstrap/scss/layout/breakpoints" as *;
+
 .card {
     &-title {
         font-size: $font-size-xl;
@@ -19,11 +22,22 @@
     }
 
     &:not(.shadow) {
-        --#{$prefix}card-bg: none;
+        --bs-card-bg: none;
     }
 
     &.shadow {
-        --#{$prefix}card-border-width: none;
+        --bs-card-border-width: none;
         overflow: hidden;
+    }
+}
+
+// `.card-link` was removed in Bootstrap 6 and is kept as a project class
+.card-link {
+    &:hover {
+        text-decoration: none;
+    }
+
+    + .card-link {
+        margin-left: var(--bs-card-spacer-x);
     }
 }

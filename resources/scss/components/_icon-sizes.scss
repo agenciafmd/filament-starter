@@ -1,0 +1,45 @@
+$icon-xxxsm: 1rem !default; // 16
+$icon-xxsm: 1.25rem !default; //20
+$icon-xsm: 1.5rem !default; //24
+$icon-sm: 2rem !default; //32
+$icon-md: 3rem !default; //48
+$icon-lg: 3.25rem !default; //52
+$icon-xl: 4rem !default; //64
+
+@mixin icons-size-setup {
+    .ic {
+        max-width: 100%;
+        width: $icon-md;
+        height: $icon-md;
+
+        &-xxxsm {
+            width: $icon-xxxsm;
+            height: $icon-xxxsm;
+        }
+
+        &-xxsm {
+            width: $icon-xxsm;
+            height: $icon-xxsm;
+        }
+
+        &-xsm {
+            width: $icon-xsm;
+            height: $icon-xsm;
+        }
+
+        &-sm {
+            width: $icon-sm;
+            height: $icon-sm;
+        }
+
+        &-lg {
+            width: $icon-lg;
+            height: $icon-lg;
+        }
+
+        &-xl {
+            width: $icon-xl;
+            height: $icon-xl;
+        }
+    }
+}

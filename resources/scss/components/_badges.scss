@@ -1,11 +1,14 @@
+@use "../frontend/variables" as *;
+@use "../frontend/maps" as *;
+
 .badge {
     line-height: $line-height-sm;
 
-    @each $color, $value in $theme-colors {
+    @each $color, $value in $theme-colors-map {
         &.text-bg-outline-#{$color} {
-            @include button-outline-variant($value);
-            color: var(--#{$prefix}btn-color);
-            border: $border-width solid var(--#{$prefix}btn-color);
+            color: $value;
+            background-color: transparent;
+            border: $border-width solid $value;
         }
     }
 }

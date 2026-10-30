@@ -1,10 +1,144 @@
 @use "sass:map";
+@use "variables" as *;
+@use "variables-dark" as *;
 
-$theme-colors: map.merge($theme-colors, $custom-theme-colors);
+// Theme palette plus the project's custom theme colors (Bootstrap 6 has no `*-rgb` maps)
+$theme-colors-map: map.merge($theme-colors, $custom-theme-colors);
 
-$theme-colors-rgb: map-loop($theme-colors, to-rgb, "$value");
+// Bootstrap 6 maps (passed to Bootstrap in `frontend/_bootstrap.scss`)
 
-$utilities-colors: map.merge($theme-colors-rgb, $custom-utilities-colors);
+// Theme color map in the Bootstrap 6 format, built from the Bootstrap 5 light/dark values
+@function theme-color-tokens(
+    $color,
+    $text-emphasis,
+    $text-emphasis-dark,
+    $bg-subtle,
+    $bg-subtle-dark,
+    $border-subtle,
+    $border-subtle-dark
+) {
+    @return (
+        "base": $color,
+        "fg": $color,
+        "fg-emphasis": light-dark($text-emphasis, $text-emphasis-dark),
+        "bg": $color,
+        "bg-subtle": light-dark($bg-subtle, $bg-subtle-dark),
+        "bg-muted": light-dark($border-subtle, $border-subtle-dark),
+        "border": light-dark($border-subtle, $border-subtle-dark),
+        "focus-ring": color-mix(in oklch, $color 50%, var(--bg-body)),
+        "contrast": color-contrast($color, $min-contrast-ratio)
+    );
+}
+
+$bs-theme-colors: (
+    "primary": theme-color-tokens(
+            $primary,
+            $primary-text-emphasis,
+            $primary-text-emphasis-dark,
+            $primary-bg-subtle,
+            $primary-bg-subtle-dark,
+            $primary-border-subtle,
+            $primary-border-subtle-dark
+        ),
+    "secondary": theme-color-tokens(
+            $secondary,
+            $secondary-text-emphasis,
+            $secondary-text-emphasis-dark,
+            $secondary-bg-subtle,
+            $secondary-bg-subtle-dark,
+            $secondary-border-subtle,
+            $secondary-border-subtle-dark
+        ),
+    "success": theme-color-tokens(
+            $success,
+            $success-text-emphasis,
+            $success-text-emphasis-dark,
+            $success-bg-subtle,
+            $success-bg-subtle-dark,
+            $success-border-subtle,
+            $success-border-subtle-dark
+        ),
+    "info": theme-color-tokens(
+            $info,
+            $info-text-emphasis,
+            $info-text-emphasis-dark,
+            $info-bg-subtle,
+            $info-bg-subtle-dark,
+            $info-border-subtle,
+            $info-border-subtle-dark
+        ),
+    "warning": theme-color-tokens(
+            $warning,
+            $warning-text-emphasis,
+            $warning-text-emphasis-dark,
+            $warning-bg-subtle,
+            $warning-bg-subtle-dark,
+            $warning-border-subtle,
+            $warning-border-subtle-dark
+        ),
+    "danger": theme-color-tokens(
+            $danger,
+            $danger-text-emphasis,
+            $danger-text-emphasis-dark,
+            $danger-bg-subtle,
+            $danger-bg-subtle-dark,
+            $danger-border-subtle,
+            $danger-border-subtle-dark
+        ),
+    "light": theme-color-tokens(
+            $light,
+            $light-text-emphasis,
+            $light-text-emphasis-dark,
+            $light-bg-subtle,
+            $light-bg-subtle-dark,
+            $light-border-subtle,
+            $light-border-subtle-dark
+        ),
+    "dark": theme-color-tokens(
+            $dark,
+            $dark-text-emphasis,
+            $dark-text-emphasis-dark,
+            $dark-bg-subtle,
+            $dark-bg-subtle-dark,
+            $dark-border-subtle,
+            $dark-border-subtle-dark
+        ),
+);
+
+@each $name, $color in $custom-theme-colors {
+    $bs-theme-colors: map.set(
+        $bs-theme-colors,
+        $name,
+        theme-color-tokens(
+            $color,
+            $color,
+            $color,
+            $color,
+            $color,
+            $color,
+            $color
+        )
+    );
+}
+
+$bs-font-sizes: ();
+
+@each $name, $size in $font-sizes {
+    $bs-font-sizes: map.set(
+        $bs-font-sizes,
+        "#{$name}",
+        (
+            "font-size": $size,
+            "line-height": $line-height-base,
+        )
+    );
+}
+
+$bs-gray-tokens: ();
+
+@each $name, $value in $grays {
+    $bs-gray-tokens: map.set($bs-gray-tokens, --gray-#{$name}, $value);
+}
 
 //Custom Maps
 $letter-spacing-map: (

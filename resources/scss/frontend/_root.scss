@@ -1,13 +1,23 @@
+@use "variables" as *;
+
 :root {
-    @each $breakpoint, $value in $grid-breakpoints {
-        --#{$variable-prefix}breakpoint-#{$breakpoint}: #{$value};
+    --bs-border-width-md: #{$border-width-md};
+    --bs-border-width-sm: #{$border-width-sm};
+    --bs-border-radius-md: #{$border-radius-md};
+}
+
+// Bootstrap 6 sets `color-scheme: light dark` on `:root`, so `light-dark()` would follow the OS preference.
+// With `$color-mode-type: data` the project stays light unless `data-bs-theme="dark"` is set, like in Bootstrap 5.
+@if $color-mode-type == data {
+    :root,
+    :host,
+    [data-bs-theme="light"] {
+        color-scheme: light;
+        --bs-shadow-strength: 1;
     }
 
-    @each $color, $value in $custom-utilities-colors {
-        --bs-#{$color}-rgb: #{$value};
+    [data-bs-theme="dark"] {
+        color-scheme: dark;
+        --bs-shadow-strength: 2.4;
     }
-
-    --#{$prefix}border-width-md: #{$border-width-md};
-    --#{$prefix}border-width-sm: #{$border-width-sm};
-    --#{$prefix}border-radius-md: #{$border-radius-md};
 }

@@ -1,3 +1,6 @@
+@use "variables" as *;
+@use "bootstrap/scss/layout/breakpoints" as *;
+
 section {
     position: relative;
 }
@@ -11,8 +14,12 @@ p:last-child {
 }
 
 a {
-    outline: none !important;
     transition: $transition-base;
+
+    // Hides the outline on mouse/touch focus only; keyboard focus (`:focus-visible`) keeps it
+    &:focus:not(:focus-visible) {
+        outline: none;
+    }
 }
 
 .wysiwyg img {

@@ -1,16 +1,40 @@
+@use "../frontend/variables" as *;
+
 .btn {
     text-transform: $btn-text-transform;
 
     &-whatsapp {
         $whatsapp-green: #27b143;
-        @include button-variant($whatsapp-green, $whatsapp-green, $white);
-        --#{$prefix}btn-hover-color: #{$white};
+        --bs-btn-color: #{$white};
+        --bs-btn-bg: #{$whatsapp-green};
+        --bs-btn-border-color: #{$whatsapp-green};
+        --bs-btn-hover-color: #{$white};
+        --bs-btn-hover-bg: #{shade-color($whatsapp-green, 15%)};
+        --bs-btn-hover-border-color: #{shade-color($whatsapp-green, 20%)};
+        --bs-btn-active-color: #{$white};
+        --bs-btn-active-bg: #{shade-color($whatsapp-green, 20%)};
+        --bs-btn-active-border-color: #{shade-color($whatsapp-green, 25%)};
+        color: var(--bs-btn-color);
+        background-color: var(--bs-btn-bg);
+        border-color: var(--bs-btn-border-color);
+
+        &:hover {
+            color: var(--bs-btn-hover-color);
+            background-color: var(--bs-btn-hover-bg);
+            border-color: var(--bs-btn-hover-border-color);
+        }
+
+        &:active {
+            color: var(--bs-btn-active-color);
+            background-color: var(--bs-btn-active-bg);
+            border-color: var(--bs-btn-active-border-color);
+        }
     }
 
     //&-secondary, &-outline-secondary {
-    //  --#{$prefix}btn-color: #{$body-color};
-    //  --#{$prefix}btn-hover-color: #{$body-color};
-    //  --#{$prefix}btn-disabled-color: #{$body-color};
-    //  --#{$prefix}btn-active-color: #{$body-color};
+    //  --bs-btn-color: #{$body-color};
+    //  --bs-btn-hover-color: #{$body-color};
+    //  --bs-btn-disabled-color: #{$body-color};
+    //  --bs-btn-active-color: #{$body-color};
     //}
 }

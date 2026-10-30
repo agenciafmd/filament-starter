@@ -1,14 +1,15 @@
-@import "sweetalert2/dist/sweetalert2.min.css";
-//@import "wow.js/css/libs/animate.css";
-@import "swiper/swiper-bundle.css";
-@import "glightbox/dist/css/glightbox.min.css";
-@import "plyr/dist/plyr.css";
-@import "tom-select/dist/css/tom-select.min.css";
+@use "sass:meta";
+
+// Vendors css
+@include meta.load-css("sweetalert2/dist/sweetalert2.min.css");
+//@include meta.load-css("wow.js/css/libs/animate.css");
+@include meta.load-css("swiper/swiper-bundle.css");
+@include meta.load-css("glightbox/dist/css/glightbox.min.css");
+@include meta.load-css("plyr/dist/plyr.css");
 
 // Overwriting vendors css with frontend css
-//@import "hubspot-form";
-@import "infinite-scroll";
-@import "sweetalert2/sweetalert2";
-@import "swiper";
-@import "glightbox";
-@import "tom-select";
+//@include meta.load-css("hubspot-form");
+@include meta.load-css("infinite-scroll");
+@include meta.load-css("sweetalert2/sweetalert2");
+@include meta.load-css("swiper");
+@include meta.load-css("glightbox");

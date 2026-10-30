@@ -1,17 +1,20 @@
+@use "../frontend/variables" as *;
+@use "bootstrap/scss/layout/breakpoints" as *;
+
 .accordion {
     @include media-breakpoint-up(md) {
-        --#{$prefix}accordion-btn-padding-y: #{$spacer};
-        --#{$prefix}accordion-btn-padding-x: #{$spacer};
-        --#{$prefix}accordion-body-padding-x: #{$spacer};
+        --bs-accordion-btn-padding-y: #{$spacer};
+        --bs-accordion-btn-padding-x: #{$spacer};
+        --bs-accordion-body-padding-x: #{$spacer};
     }
 
-    &-button {
+    &-header {
         font-weight: $font-weight-bold;
+    }
 
-        &:not(.collapsed) {
-            background-color: unset;
-            box-shadow: unset;
-        }
+    &-item[open] > &-header {
+        background-color: unset;
+        box-shadow: unset;
     }
 
     &-body {

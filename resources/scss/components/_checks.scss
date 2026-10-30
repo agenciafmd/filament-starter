@@ -1,0 +1,5 @@
+// Bootstrap 6 alpha colors the disabled radio label with `--secondary-fg` (the checkbox uses `--fg-3`);
+// the project `secondary` is the brand yellow, so the radio follows the checkbox.
+.radio:disabled ~ label {
+    color: var(--bs-fg-3);
+}

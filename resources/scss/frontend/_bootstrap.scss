@@ -1,0 +1,256 @@
+@use "sass:map";
+@use "sass:meta";
+@use "variables" as v;
+@use "variables-dark" as vd;
+@use "maps" as m;
+
+// Bootstrap 6 configuration
+//
+// Bootstrap 6 only supports the Sass module system: each module is configured once, the first time it is loaded.
+// The values come from `frontend/_variables.scss` (light) and `frontend/_variables-dark.scss` (dark).
+// Load order follows `bootstrap/scss/bootstrap.scss`; `root` must come before any module that outputs a `@layer`.
+
+@use "bootstrap/scss/config" with (
+    $enable-rounded: v.$enable-rounded,
+    $enable-shadows: v.$enable-shadows,
+    $enable-gradients: v.$enable-gradients,
+    $enable-transitions: v.$enable-transitions,
+    $enable-reduced-motion: v.$enable-reduced-motion,
+    $enable-smooth-scroll: v.$enable-smooth-scroll,
+    $enable-grid-classes: v.$enable-grid-classes,
+    $enable-container-classes: v.$enable-container-classes,
+    $enable-cssgrid: v.$enable-cssgrid,
+    $enable-button-pointers: v.$enable-button-pointers,
+    $enable-deprecation-messages: v.$enable-deprecation-messages,
+    $color-mode-type: v.$color-mode-type,
+    $min-contrast-ratio: v.$min-contrast-ratio,
+    $spacer: v.$spacer,
+    $radius: v.$border-radius,
+    $radii: (
+        7: v.$border-radius,
+    ),
+    $breakpoints: v.$grid-breakpoints,
+    $container-max-widths: map.merge(
+            v.$container-max-widths,
+            (
+                2xl: null,
+            )
+        ),
+    $grid-gutter-x: v.$grid-gutter-width,
+    $gutters: v.$spacers,
+    $gradient: v.$gradient,
+    $position-values: v.$position-values,
+    $border-width: v.$border-width,
+    $border-widths: map.remove(v.$border-widths, null),
+    $shadows: (
+        null: v.$box-shadow,
+        xs: v.$box-shadow-sm,
+        sm: v.$box-shadow-sm,
+        lg: v.$box-shadow-lg,
+        xl: v.$box-shadow-lg,
+        inset: v.$box-shadow-inset,
+    ),
+    $aspect-ratios: v.$aspect-ratios,
+    $font-weights: (
+        semibold: v.$font-weight-semi-bold,
+        extrabold: v.$font-weight-extra-bold,
+        black: v.$font-weight-black,
+    ),
+    $font-sizes: m.$bs-font-sizes
+);
+
+@use "bootstrap/scss/colors" with (
+    $white: v.$white,
+    $black: v.$black,
+    $colors: v.$colors,
+    $color-tokens: m.$bs-gray-tokens
+);
+
+@use "bootstrap/scss/theme" with (
+    $theme-colors: m.$bs-theme-colors,
+    $theme-bgs: (
+        "body": light-dark(v.$body-bg, vd.$body-bg-dark),
+    ),
+    // Bootstrap 5 opacity steps used by the project (`.fg-25`, `.fg-75`, `.bg-25`...)
+    $util-opacity: (
+            25: 0.25,
+            75: 0.75,
+        ),
+    $theme-fgs: (
+        "body": light-dark(v.$body-color, vd.$body-color-dark),
+    )
+);
+
+@use "bootstrap/scss/root" with (
+    $root-tokens: (
+        --body-font-family: meta.inspect(v.$font-family-sans-serif),
+        --body-font-size: v.$font-size-base,
+        --body-line-height: v.$line-height-base,
+        --heading-color: v.$headings-color,
+        --link-color: light-dark(v.$link-color, vd.$link-color-dark),
+        --link-hover-color: light-dark(
+                v.$link-hover-color,
+                vd.$link-hover-color-dark
+            ),
+        --code-color: light-dark(v.$code-color, vd.$code-color-dark),
+        --border-color: light-dark(v.$border-color, vd.$border-color-dark),
+        --btn-input-line-height: v.$input-btn-line-height,
+        --btn-input-border-radius: v.$border-radius,
+        --btn-input-xs-border-radius: v.$border-radius-sm,
+        --btn-input-sm-border-radius: v.$border-radius-sm,
+        --btn-input-lg-border-radius: v.$border-radius-lg,
+    )
+);
+
+@use "bootstrap/scss/content/reboot" with (
+    $type-tokens: (
+        --heading-margin-bottom: v.$headings-margin-bottom,
+        --heading-font-family: v.$headings-font-family,
+        --heading-font-weight: v.$headings-font-weight,
+        --heading-line-height: v.$headings-line-height,
+        --paragraph-margin-bottom: v.$paragraph-margin-bottom,
+    )
+);
+
+@use "bootstrap/scss/buttons/button" with (
+    $button-tokens: (
+        --btn-white-space: v.$btn-white-space,
+    ),
+    $button-variants: (
+        "outline": (
+            "base": (
+                "bg": "transparent",
+                "color": "fg",
+                "border-color": "bg",
+            ),
+            "hover": (
+                "bg": "bg",
+                "color": "contrast",
+                "border-color": "bg",
+            ),
+            "active": (
+                "bg": "bg",
+                "color": "contrast",
+                "border-color": "bg",
+            ),
+        ),
+    )
+);
+
+@use "bootstrap/scss/card" with (
+    $card-tokens: (
+        --card-spacer-y: v.$spacer,
+        --card-spacer-x: v.$spacer,
+        --card-cap-padding-y: v.$spacer * 0.5,
+        --card-cap-padding-x: v.$spacer,
+        --card-height: 100%,
+    )
+);
+
+@use "bootstrap/scss/badge" with (
+    $badge-tokens: (
+        --badge-padding-x: 0.65em,
+        --badge-padding-y: 0.35em,
+        --badge-font-size: 0.75em,
+        --badge-font-weight: v.$font-weight-bold,
+        --badge-border-radius: v.$spacer * 0.25,
+    )
+);
+
+@use "bootstrap/scss/dialog" with (
+    $dialog-tokens: (
+        --dialog-padding: v.$dialog-inner-padding,
+        --dialog-header-padding: v.$dialog-inner-padding,
+        --dialog-footer-padding: v.$dialog-inner-padding,
+    )
+);
+
+@use "bootstrap/scss/tooltip" with (
+    $tooltip-tokens: (
+        --tooltip-padding-x: v.$spacer * 0.5,
+        --tooltip-padding-y: v.$spacer * 0.25,
+        --tooltip-opacity: v.$opacity-level-semi-opaque,
+    )
+);
+
+@use "bootstrap/scss/popover" with (
+    $popover-tokens: (
+        --popover-border-radius: v.$border-radius-sm,
+        --popover-inner-border-radius: calc(
+                #{v.$border-radius-sm} - var(--border-width)
+            ),
+        --popover-header-padding-y: 0.5rem,
+    )
+);
+
+@use "bootstrap/scss/toasts" with (
+    $toast-tokens: (
+        --toast-padding-x: 0.75rem,
+        --toast-padding-y: 0.5rem,
+        --toast-font-size: v.$font-size-sm,
+        --toast-bg: color-mix(
+                in oklch,
+                var(--bg-body) #{v.$opacity-level-semi-opaque * 100%},
+                transparent
+            ),
+        --toast-border-radius: v.$border-radius-sm,
+        --toast-header-bg: color-mix(
+                in oklch,
+                var(--bg-body) #{v.$opacity-level-semi-opaque * 100%},
+                transparent
+            ),
+    )
+);
+
+@use "bootstrap/scss/forms/floating-labels" with (
+    $form-floating-tokens: (
+        --form-floating-height: v.$form-floating-height,
+        --form-floating-line-height: v.$form-floating-line-height,
+        --form-floating-padding-x: v.$form-floating-padding-x,
+        --form-floating-padding-y: v.$form-floating-padding-y,
+        --form-floating-input-padding-t: v.$form-floating-input-padding-t,
+        --form-floating-input-padding-b: v.$form-floating-input-padding-b,
+        --form-floating-label-opacity: v.$form-floating-label-opacity * 100%,
+        --form-floating-label-transform: v.$form-floating-label-transform,
+    )
+);
+
+// Bootstrap 5 sized the checks with 1em, centered on the project line-height (Bootstrap 6 assumes 1.5)
+@use "bootstrap/scss/forms/check" with (
+    $check-tokens: (
+        --check-size: 1em,
+        --check-margin-block: (v.$line-height-base - 1) * 0.5em,
+    )
+);
+
+@use "bootstrap/scss/forms/radio" with (
+    $radio-tokens: (
+        --radio-size: 1em,
+        --radio-margin-block: (v.$line-height-base - 1) * 0.5em,
+    )
+);
+
+@use "bootstrap/scss/forms/switch" with (
+    $switch-tokens: (
+        --switch-height: 1em,
+        --switch-margin-block: (v.$line-height-base - 1) * 0.5em,
+    )
+);
+
+// Bootstrap 5 used `$gray-200` for the empty part of the progress and range (Bootstrap 6 `bg-2`/`bg-3` are too light here)
+@use "bootstrap/scss/progress" with (
+    $progress-tokens: (
+        --progress-bg: v.$gray-200,
+    )
+);
+
+@use "bootstrap/scss/forms/form-range" with (
+    $range-tokens: (
+        --range-track-bg: v.$gray-200,
+    )
+);
+
+// Project utilities change `$utilities` before the utilities API generates the classes
+@use "utilities";
+
+@use "bootstrap/scss/bootstrap";

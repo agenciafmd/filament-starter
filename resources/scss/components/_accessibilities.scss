@@ -1,4 +1,4 @@
-@import "../frontend/warnings";
+@use "../frontend/warnings" as *;
 
 a {
     &:not(.skip-warning) {

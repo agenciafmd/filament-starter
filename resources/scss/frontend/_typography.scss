@@ -1,3 +1,21 @@
+@use "variables" as *;
+@use "bootstrap/scss/layout/breakpoints" as *;
+
+// `.display-*` and `.lead` were removed in Bootstrap 6 and are kept as project classes
+@each $level, $size in $display-font-sizes {
+    .display-#{$level} {
+        font-size: $size;
+        font-family: $headings-font-family;
+        font-weight: $display-font-weight;
+        line-height: $display-line-height;
+    }
+}
+
+.lead {
+    font-size: $lead-font-size;
+    font-weight: $lead-font-weight;
+}
+
 %heading {
     text-transform: $headings-text-transform;
 

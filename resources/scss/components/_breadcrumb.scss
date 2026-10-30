@@ -1,5 +1,9 @@
-$link-color: $body-color;
-$link-dark-color: $white;
+@use "../frontend/variables" as *;
+@use "bootstrap/scss/functions" as *;
+@use "bootstrap/scss/layout/breakpoints" as *;
+
+$breadcrumb-link-color: $body-color;
+$breadcrumb-link-dark-color: $white;
 
 .breadcrumb {
     margin-block: 1.5rem;
@@ -22,8 +26,8 @@ $link-dark-color: $white;
         text-decoration: none;
         font-size: $font-size-sm;
         padding-block: 1rem;
-        --#{$prefix}link-color-rgb: #{to-rgb($link-color)};
-        --#{$prefix}breadcrumb-item-active-color: #{to-rgb($link-color)};
+        --bs-link-color: #{$breadcrumb-link-color};
+        --bs-breadcrumb-item-active-color: #{$breadcrumb-link-color};
 
         &.active {
             font-weight: $font-weight-bold;
@@ -54,21 +58,22 @@ $link-dark-color: $white;
 
         .ic-chevron-right {
             margin: 0 0.625rem 0 0.625rem;
-            color: var(--#{$prefix}primary);
+            color: var(--bs-primary-base);
         }
     }
 
     &-dark {
         .breadcrumb-item {
-            --#{$prefix}link-color-rgb: #{to-rgb($link-dark-color)};
-            --#{$prefix}breadcrumb-item-active-color: #{$link-dark-color};
-            --#{$prefix}breadcrumb-divider-color: #{$link-dark-color};
-            --#{$prefix}link-hover-color-rgb: #{to-rgb(
-                    shift-color($link-dark-color, $link-shade-percentage)
+            --bs-link-color: #{$breadcrumb-link-dark-color};
+            --bs-breadcrumb-item-active-color: #{$breadcrumb-link-dark-color};
+            --bs-breadcrumb-divider-color: #{$breadcrumb-link-dark-color};
+            --bs-link-hover-color: #{shift-color(
+                    $breadcrumb-link-dark-color,
+                    $link-shade-percentage
                 )};
 
             + .breadcrumb-item::before {
-                $form-select-indicator-color: $link-dark-color;
+                $form-select-indicator-color: $breadcrumb-link-dark-color;
                 $form-select-indicator: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><path fill='none' stroke='#{$form-select-indicator-color}' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/></svg>");
                 background: #{escape-svg($form-select-indicator)} no-repeat;
             }
