@@ -4,6 +4,7 @@ import purge from '@erbelion/vite-plugin-laravel-purgecss';
 import { join } from 'node:path';
 import PluginCritical from 'rollup-plugin-critical';
 import webfontDownload from 'vite-plugin-webfont-dl';
+import prefixCustomProperties from 'postcss-prefix-custom-properties';
 
 const { APP_URL } = {
   ...loadEnv(
@@ -23,9 +24,8 @@ const purgeCheckPaths = [
   'node_modules/swiper/**/*.js',
   'node_modules/glightbox/dist/js/*.js',
   'node_modules/sweetalert2/dist/*.js',
-  'node_modules/tom-select/dist/js/*.js',
   'node_modules/wow.js/dist/*.js',
-  'node_modules/bootstrap/dist/js/bootstrap.min.js',
+  'node_modules/bootstrap/js/dist/**/*.js',
 ]
     .map((path) => join(import.meta.dirname, path));
 
@@ -41,7 +41,6 @@ export default defineConfig({
     laravel({
       input: [
         'resources/scss/frontend.scss',
-        'resources/js/frontend-imports.js',
         'resources/js/frontend-imports.js',
         'resources/js/pages/theme.js',
         'resources/js/components/sliders/articles.js',
@@ -92,33 +91,48 @@ export default defineConfig({
     }),
     purge({
       paths: purgeCheckPaths,
+      // Bootstrap 6 uses prefixed classes (md:col-6, hover:opacity-50); keep the split words too
+      defaultExtractor: (content) => [
+        ...(content.match(/[\w:-]+/g) ?? []),
+        ...(content.match(/[\w-]+/g) ?? []),
+      ],
       // Include classes we don't have direct access
       safelist: {
         greedy: [
           /lang/,
           /plyr/,
+          // Bootstrap 6 datepicker (vanilla-calendar-pro renders the calendar at runtime)
+          /data-vc/,
         ],
         standard: [
           /^file-upload-button/,
           /^fmd-header-/,
           // GLightbox (glightbox, gslide, gclose...), without Bootstrap gutters (g-, gx-, gy-) and gap-
           /^g(?![xy]?-|ap-)/,
-          /^hs-/,
           /^js-/,
           /^swal2-/,
           /^swiper-/,
-          /^ts-/,
-          /^was-/,
         ],
       },
     }),
   ],
   css: {
+    postcss: {
+      plugins: [
+        // Bootstrap 6 Sass outputs unprefixed custom properties; the bs- prefix is added here
+        prefixCustomProperties({
+          prefix: 'bs-',
+          ignore: [
+            /^bs-/,
+            /^(swal2|swiper|plyr|loading)-/,
+            /^(glow|header)-/,
+          ],
+        }),
+      ],
+    },
     preprocessorOptions: {
       scss: {
-        // Bootstrap 5 does not support the Sass module system (@use) yet
         quietDeps: true,
-        silenceDeprecations: ['import'],
       },
     },
   },
