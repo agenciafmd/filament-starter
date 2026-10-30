@@ -9,8 +9,8 @@
         title="Ir para {{ $article->name }}"
         class="btn-link text-decoration-none"
     >
-        <span class="card-subtitle text-primary fs-base"> {{ $article->subtitle }} </span>
-        <h2 class="card-title text-body">{{ $article->name }}</h2>
-        <p class="fs-small text-body">{{ $article->date }}</p>
+        <span class="card-subtitle fg-primary fs-base"> {{ $article->subtitle }} </span>
+        <h2 class="card-title fg-body">{{ $article->name }}</h2>
+        <p class="fs-small fg-body">{{ $article->date }}</p>
     </x-frontend::link>
 </x-frontend::cards.card>

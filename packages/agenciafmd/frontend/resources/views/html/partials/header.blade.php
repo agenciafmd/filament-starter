@@ -1,5 +1,5 @@
 <header class="header fmd-header">
-    <nav class="navbar navbar-expand-md">
+    <nav class="navbar md:navbar-expand">
         <div class="container">
             <x-frontend::link
                 link="/html"
@@ -8,13 +8,16 @@
                 icon="logo-fmd"
                 class="navbar-brand icon-link-hover-none"
             />
-            <div
-                class="offcanvas offcanvas-end align-items-md-end"
-                tabindex="-1"
-                id="offcanvasNavbar"
-                aria-labelledby="offcanvasNavbarLabel"
+            <dialog
+                class="drawer drawer-end md:align-items-end"
+                id="navbarDrawer"
+                aria-labelledby="navbarDrawerLabel"
             >
-                <div class="offcanvas-body">
+                <div class="drawer-header">
+                    <h2 class="drawer-title fs-base" id="navbarDrawerLabel">Menu</h2>
+                    <button type="button" class="btn-close" data-bs-dismiss="drawer" aria-label="Fechar menu"></button>
+                </div>
+                <div class="drawer-body">
                     <ul class="navbar-nav">
                         <li class="nav-item">
                             <x-frontend::link
@@ -34,47 +37,41 @@
                                 class="nav-link"
                             />
                         </li>
-                        <li class="nav-item dropdown">
+                        <li class="nav-item menu-hover">
                             <x-frontend::link
                                 link="#"
                                 title="Ir para Contato"
                                 aria-label="Link para Contato"
                                 label="Produtos"
                                 role="button"
-                                data-bs-toggle="dropdown"
+                                data-bs-toggle="menu"
                                 data-bs-auto-close="outside"
                                 aria-expanded="false"
-                                class="nav-link dropdown-toggle"
+                                class="nav-link menu-toggle"
                             />
-                            <ul class="dropdown-menu">
-                                <li>
-                                    <x-frontend::link
+                            <div class="menu">
+                                <x-frontend::link
                                         link="/html/"
                                         title="Ir para Produto 1"
                                         aria-label="Link para Produto 1"
                                         label="Produto 1"
-                                        class="dropdown-item"
+                                        class="menu-item"
                                     />
-                                </li>
-                                <li>
-                                    <x-frontend::link
+                                <x-frontend::link
                                         link="/html/"
                                         title="Ir para Produto 2"
                                         aria-label="Link para Produto 2"
                                         label="Produto 2"
-                                        class="dropdown-item"
+                                        class="menu-item"
                                     />
-                                </li>
-                                <li>
-                                    <x-frontend::link
+                                <x-frontend::link
                                         link="/html/"
                                         title="Ir para Produto 3"
                                         aria-label="Link para Produto 3"
                                         label="Produto 3"
-                                        class="dropdown-item"
+                                        class="menu-item"
                                     />
-                                </li>
-                            </ul>
+                            </div>
                         </li>
                         <li class="nav-item">
                             <x-frontend::link
@@ -85,27 +82,27 @@
                                 class="nav-link"
                             />
                         </li>
-                        {{-- Exemplo para o modal
+                        {{-- Exemplo para o dialog
                         <li class="nav-item">
                           <x-frontend::link link="#"
-                                            data-bs-dismiss="offcanvas"
-                                            data-bs-target="#offcanvasNavbar"
-                                            title="Ir para Modal"
-                                            aria-label="Link para Modal"
-                                            label="Modal"
+                                            data-bs-dismiss="drawer"
+                                            data-bs-target="#navbarDrawer"
+                                            title="Ir para Dialog"
+                                            aria-label="Link para Dialog"
+                                            label="Dialog"
                                             class="nav-link js-scroll-top"/>
                         </li>
                         --}}
                     </ul>
                 </div>
-            </div>
+            </dialog>
             <button
                 class="navbar-toggler"
                 type="button"
                 title="Menu"
-                data-bs-toggle="offcanvas"
-                data-bs-target="#offcanvasNavbar"
-                aria-controls="offcanvasNavbar"
+                data-bs-toggle="drawer"
+                data-bs-target="#navbarDrawer"
+                aria-controls="navbarDrawer"
                 aria-label="Menu"
             >
                 <span class="navbar-toggler-icon"></span>

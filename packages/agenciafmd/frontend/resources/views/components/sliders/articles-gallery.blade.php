@@ -21,10 +21,10 @@
                     class="bg-gradient rounded"
                     title="{{ $video->name }}"
                     alt="Video: {{ $video->name }}"
-                    aspect-ratio="ratio ratio-1x1 ratio-md-16x9"
+                    aspect-ratio="ratio ratio-1x1 md:ratio-16x9"
                 />
 
-                <p class="fs-small text-dark mt-1 px-1">{{ $video->name }}</p>
+                <p class="fs-small fg-dark mt-1 px-1">{{ $video->name }}</p>
             </div>
 
         @endforeach
@@ -47,7 +47,7 @@
                         image="ratios/{{ $image->src }}.jpg"
                         title="{{ $image->name }}"
                         alt="Galeria de imagem: {{ $image->name }}"
-                        pictureClass="ratio ratio-1x1 ratio-md-16x9"
+                        pictureClass="ratio ratio-1x1 md:ratio-16x9"
                         class="bg-gradient img-cover rounded"
                         has-breakpoints="true"
                         breakpointDesktopWidth="1400px"
@@ -55,7 +55,7 @@
                         breakpointNotebookWidth="768px"
                         breakpointNotebookSuffix="lg"
                     />
-                    <p class="fs-small text-dark mt-1 px-1">{{ $image->name }}</p>
+                    <p class="fs-small fg-dark mt-1 px-1">{{ $image->name }}</p>
                 </x-frontend::glightbox.image>
             </div>
 

@@ -1,5 +1,5 @@
 @props([
-    'theme' => 'bg-primary',
+    'theme' => 'theme-primary',
     'label' => '',
     'icon' => false,
     'iconClass' => false,

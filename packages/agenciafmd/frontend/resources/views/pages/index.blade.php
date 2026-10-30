@@ -1,5 +1,5 @@
 @extends('frontend::master', [
-    'bodyClass' => 'greetings bg-black text-white vstack h-100vh',
+    'bodyClass' => 'greetings bg-black fg-white vstack h-100vh',
     'critical' => 'index.css',
 ])
 
@@ -17,7 +17,7 @@
 
 @section('content')
     <main class="vstack justify-content-around flex-grow-1">
-        <section class="text-opacity-75 py-md-1h text-light fs-xsmall fw-bold z-1 w-100 bg-black p-1 text-center">
+        <section class="fg-75 md:py-1h fg-light fs-xsmall fw-bold z-1 w-100 bg-black p-1 text-center">
             @php
                 $phrases = collect([
                     // Irineu
@@ -71,9 +71,9 @@
         <section class="mb-block-large justify-content-center text-center">
             <div class="container">
                 <div class="row justify-content-center">
-                    <div class="col-md-6">
+                    <div class="md:col-6">
                         <div class="mb-0h text-uppercase fs-xxsmall ls-1">mais uma produção do:</div>
-                        <x-icon name="frontend-logo-mdm" class="mb-block-small mb-md-block-large img-sanitize" />
+                        <x-icon name="frontend-logo-mdm" class="mb-block-small md:mb-block-large img-sanitize" />
 
                         <x-frontend::link link="/html/index" class="glowing-btn text-decoration-none">
                             <span class="glowing-txt">

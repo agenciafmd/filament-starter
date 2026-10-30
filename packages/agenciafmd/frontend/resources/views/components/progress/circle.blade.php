@@ -38,7 +38,7 @@
                 cx="{{ $radius + $strokeWidth }}"
                 cy="{{ $radius + $strokeWidth }}"
                 stroke="currentColor"
-                class="text-primary rounded"
+                class="fg-primary rounded"
                 stroke-width="{{ $strokeWidth }}"
                 stroke-linecap="round"
                 stroke-dashoffset="{{ $percentageCalculated }}"
@@ -46,7 +46,7 @@
                 stroke-dasharray="{{ $circumference }}"
             ></circle>
         </svg>
-        <p class="position-absolute text-primary fw-bold translate-middle fs-xlarge start-50 top-50">
+        <p class="position-absolute fg-primary fw-bold translate-middle fs-xlarge start-50 top-50">
             {{ (int)$percentage }}%
         </p>
     </div>

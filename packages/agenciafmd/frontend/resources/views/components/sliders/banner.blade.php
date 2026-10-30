@@ -4,7 +4,7 @@
 
 <section id="banner" class="banner-slider overflow-hidden">
     <div class="swiper-container">
-        <div id="js-slider-banners" class="swiper overflow-md-hidden overflow-visible">
+        <div id="js-slider-banners" class="swiper md:overflow-hidden overflow-visible">
             <div class="swiper-wrapper">
                 @foreach ($banners as $banner)
                     <div class="swiper-slide">
@@ -20,7 +20,7 @@
                                     image="{{ $banner->image->src }}"
                                     title="{{ $banner->image->name }}"
                                     alt="{{ $banner->image->name }}"
-                                    pictureClass="ratio ratio-2x3 ratio-md-21x9"
+                                    pictureClass="ratio ratio-2x3 md:ratio-21x9"
                                     class="img-cover"
                                     has-breakpoints="true"
                                     breakpointDesktopWidth="1400px"
@@ -35,30 +35,30 @@
                                     <div class="vstack justify-content-end flex-grow-1">
                                         <div class="container">
                                             <div class="row">
-                                                <div class="col-md-7 col-xl-6">
+                                                <div class="md:col-7 xl:col-6">
                                                     <div class="mb-block-small pe-auto">
-                                                        <h2 class="text-primary">{{ $banner->content->name }}</h2>
-                                                        <p class="mb-block-small text-primary">
+                                                        <h2 class="fg-primary">{{ $banner->content->name }}</h2>
+                                                        <p class="mb-block-small fg-primary">
                                                             {{ $banner->content->subtitle }}
                                                         </p>
                                                         @if (! empty($banner->content->details))
                                                             <div class="row gy-2 align-items-center">
-                                                                <div class="col-md-9">
+                                                                <div class="md:col-9">
                                                                     <x-frontend::list-icon
                                                                         sanitizeList
-                                                                        icon-class="ic-xxsm text-primary"
-                                                                        class="row gx-0 gy-1 fs-small text-primary mb-0"
-                                                                        list-class="col-md-6"
+                                                                        icon-class="ic-xxsm fg-primary"
+                                                                        class="row gx-0 gy-1 fs-small fg-primary mb-0"
+                                                                        list-class="md:col-6"
                                                                         :content="$banner->content->details"
                                                                     />
                                                                 </div>
-                                                                <div class="col-md-3">
+                                                                <div class="md:col-3">
                                                                     <x-frontend::link
                                                                         link="{{ $banner->content->route }}"
                                                                         label="Confira"
                                                                         title="Ir para {{ $banner->content->name }}"
                                                                         aria-label="Link para {{ $banner->content->name }}"
-                                                                        class="btn btn-primary"
+                                                                        class="btn btn-solid theme-primary"
                                                                     />
                                                                 </div>
                                                             </div>

@@ -10,7 +10,7 @@
     aria-label="Link para compartilhar"
     iconChangePosition
     icon="ic-ui-arrow-right"
-    class="btn btn-primary btn-lg justify-content-center w-100 js-btn-share {{ $shareClass }}"
+    class="btn btn-solid theme-primary btn-lg justify-content-center w-100 js-btn-share {{ $shareClass }}"
 />
 
 @push('scripts')

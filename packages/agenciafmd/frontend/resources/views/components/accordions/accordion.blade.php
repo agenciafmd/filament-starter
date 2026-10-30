@@ -6,29 +6,16 @@
 
 <div class="accordion {{ $accordionClass }}" id="{{ $id }}">
     @foreach ($accordions as $accordion)
-        <div class="accordion-item">
-            <h2 class="accordion-header" id="heading{{ $loop->iteration }}">
-                <button
-                    class="accordion-button {{ (!$loop->first ? 'collapsed' : '' ) }}"
-                    type="button"
-                    data-bs-toggle="collapse"
-                    data-bs-target="#collapse{{ $loop->iteration }}"
-                    aria-expanded="{{ ($loop->first ? 'true' : 'false' ) }}"
-                    aria-controls="collapse{{ $loop->iteration }}"
-                >
-                    {{ $accordion['title'] }}
-                </button>
-            </h2>
-            <div
-                id="collapse{{ $loop->iteration }}"
-                class="accordion-collapse collapse {{ ($loop->first ? 'show' : '' ) }}"
-                aria-labelledby="heading{{ $loop->iteration }}"
-                data-bs-parent="#{{ $id }}"
-            >
-                <div class="accordion-body">
-                    <p>{!! $accordion['description'] !!}</p>
-                </div>
+        <details class="accordion-item" name="{{ $id }}" @if ($loop->first) open @endif>
+            <summary class="accordion-header">
+                {{ $accordion['title'] }}
+                <svg class="accordion-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+                    <path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z" />
+                </svg>
+            </summary>
+            <div class="accordion-body">
+                <p>{!! $accordion['description'] !!}</p>
             </div>
-        </div>
+        </details>
     @endforeach
 </div>

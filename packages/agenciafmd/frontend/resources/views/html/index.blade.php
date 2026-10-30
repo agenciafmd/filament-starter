@@ -1,5 +1,5 @@
 @extends('frontend::html.master', [
-    'bodyClass' => 'greetings bg-black text-white vstack h-100vh -header-overlap',
+    'bodyClass' => 'greetings bg-black fg-white vstack h-100vh -header-overlap',
     'critical' => 'index.css',
 ])
 
@@ -17,7 +17,7 @@
 
 @section('content')
     <main class="vstack justify-content-around flex-grow-1">
-        <section class="text-opacity-75 py-md-1h text-light fs-xsmall fw-bold z-1 w-100 bg-black p-1 text-center">
+        <section class="fg-75 md:py-1h fg-light fs-xsmall fw-bold z-1 w-100 bg-black p-1 text-center">
             @php
                 $phrases = collect([
                     // Irineu
@@ -87,9 +87,9 @@
         <section class="mb-block-large justify-content-center text-center">
             <div class="container">
                 <div class="row justify-content-center">
-                    <div class="col-md-6">
+                    <div class="md:col-6">
                         <x-icon name="frontend-ic-cup-coffee" class="coffee ic mb-0h" />
-                        <p class="fw-bold fs-small fs-md-base mb-1">Que tal uma xícara de café enquanto aguarda?</p>
+                        <p class="fw-bold fs-small md:fs-base mb-1">Que tal uma xícara de café enquanto aguarda?</p>
                         <small class="text-uppercase ls-1 fs-xxsmall px-0h rounded-pill">
                             site em desenvolvimento
                         </small>

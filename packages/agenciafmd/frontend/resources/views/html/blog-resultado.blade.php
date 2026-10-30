@@ -8,11 +8,11 @@
 
 @section('content')
     <main>
-        <section class="pb-block-small pb-md-block">
+        <section class="pb-block-small md:pb-block">
             <div class="container">
                 <div class="mb-block-small">
                     <div class="row align-items-center">
-                        <div class="col-md">
+                        <div class="md:col">
                             @php
                                 $breadcrumb = [
                                     'Home' => '/html',
@@ -21,7 +21,7 @@
                                 ];
                             @endphp
 
-                            <x-frontend::breadcrumb :list="$breadcrumb" class="mb-0h my-md-0h" />
+                            <x-frontend::breadcrumb :list="$breadcrumb" class="mb-0h md:my-0h" />
                         </div>
                         <div class="col-12">
                             <h1 class="h3 text-break">Resultado de busca: “empreendimento”</h1>
@@ -116,14 +116,14 @@
                 @if (! count($articles))
                     <x-frontend::alert
                         message="Não foi encontrado nenhum artigo no momento"
-                        class="alert-primary hstack justify-content-center"
+                        class="theme-primary hstack justify-content-center"
                     />
 
                 @else
                     <div class="row gy-2h infinite-scroll">
                         @foreach ($articles as $article)
                             @if (! str(request()->getRequestUri())->startsWith('/html'))
-                                <div class="col-sm-6 col-md-4">
+                                <div class="sm:col-6 md:col-4">
                                     {{--
                                     Resolução das imagens para utilização:
                                     mobile: 360x270 - ratio 3x4
@@ -135,7 +135,7 @@
                                 </div>
 
                             @else
-                                <div class="col-sm-6 col-md-4">
+                                <div class="sm:col-6 md:col-4">
                                     {{--
                                     Resolução das imagens para utilização:
                                     mobile: 360x270 - ratio 3x4
@@ -157,7 +157,7 @@
                     {{-- para exemplo, isso já vem da partials.pagination acima --}}
                     <div class="page-load-status mx-auto">
                         <div class="infinite-scroll-request text-center">
-                            <x-icon name="frontend-ic-loading" class="animation-spin-right ic-xl text-primary" />
+                            <x-icon name="frontend-ic-loading" class="animation-spin-right ic-xl fg-primary" />
                         </div>
                         <p class="infinite-scroll-last"></p>
                         <p class="infinite-scroll-error"></p>

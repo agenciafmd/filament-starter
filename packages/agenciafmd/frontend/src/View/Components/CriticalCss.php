@@ -8,6 +8,13 @@ use Illuminate\View\Component;
 
 final class CriticalCss extends Component
 {
+    /**
+     * Ordem das cascade layers do Bootstrap 6 (`bootstrap/scss/_root.scss`).
+     * O minificador remove a declaração de ordem do CSS, e o CSS crítico só traz parte das layers;
+     * sem ela, as layers que faltam (ex.: `forms`) seriam criadas depois de `utilities` ao carregar o stylesheet.
+     */
+    private const string LAYER_ORDER = '@layer colors, config, root, reboot, layout, content, forms, components, custom, helpers, utilities;';
+
     public string $content;
 
     public function __construct(
@@ -21,6 +28,10 @@ final class CriticalCss extends Component
 
             return @file_get_contents(public_path('/css/critical/' . $criticalCss)) ?: '';
         });
+
+        if ($this->content) {
+            $this->content = self::LAYER_ORDER . $this->content;
+        }
     }
 
     /**

@@ -7,8 +7,8 @@
 
 @if (! $percentageEmbedded)
     <div class="hstack mb-0hq justify-content-between gap-1">
-        <p class="fs-small fs-xl-base mb-0">{{ $progress->name }}</p>
-        <p class="fs-small fs-xl-base fw-bold">{{ $progress->percentage }}</p>
+        <p class="fs-small xl:fs-base mb-0">{{ $progress->name }}</p>
+        <p class="fs-small xl:fs-base fw-bold">{{ $progress->percentage }}</p>
     </div>
 @endif
 <div

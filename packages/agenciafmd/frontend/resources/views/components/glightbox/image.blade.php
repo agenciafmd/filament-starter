@@ -12,7 +12,7 @@
     data-description="{{ $description }}"
     title="{{ $title ? $title : $description }}"
     aria-label="Link: {{ $title ? $title : $description }}"
-    {{ $attributes->merge(['class' => 'position-relative text-decoration-none glightbox text-primary text-secondary-hover']) }}
+    {{ $attributes->merge(['class' => 'position-relative text-decoration-none glightbox fg-primary hover:fg-secondary']) }}
 >
     {{ $slot }}
 

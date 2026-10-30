@@ -41,3 +41,14 @@ it('inlines the critical css and loads the stylesheet asynchronously when the cr
         ->assertSee('<link rel="stylesheet" href="http://vite.test/resources/scss/frontend.scss" media="print" onload="this.media=\'all\'"', false)
         ->assertSee('<noscript>', false);
 });
+
+it('declares the cascade layer order before the inlined critical css', function (): void {
+    File::put($this->criticalFile, '@layer reboot{body{margin:0}}');
+
+    $view = $this->blade('<x-frontend::critical-css critical="pest-critical-css.css" />');
+
+    $view->assertSeeInOrder([
+        '@layer colors, config, root, reboot, layout, content, forms, components, custom, helpers, utilities;',
+        '@layer reboot{body{margin:0}}',
+    ], false);
+});

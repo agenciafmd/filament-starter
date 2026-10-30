@@ -8,7 +8,7 @@
 
 @section('content')
     <main>
-        <section class="mb-block-small mb-md-block">
+        <section class="mb-block-small md:mb-block">
             <div class="container">
                 <div class="mb-block-small">
                     @php
@@ -23,14 +23,14 @@
                 </div>
 
                 <div class="row gy-block-small">
-                    <div class="col-md-5 col-xl-6 align-self-center">
+                    <div class="md:col-5 xl:col-6 align-self-center">
                         <div class="vstack">
-                            <span class="fw-semibold text-primary"> Categoria </span>
+                            <span class="fw-semibold fg-primary"> Categoria </span>
                             <h1 class="mb-block-small h2">Lorem ipsum dolor sit amet consectetur suspendisse lacus</h1>
-                            <p class="">01 de janeiro de 2025</p>
+                            <p>01 de janeiro de 2025</p>
                         </div>
                     </div>
-                    <div class="col-md-7 col-xl-6">
+                    <div class="md:col-7 xl:col-6">
                         {{--
                         Resolução das imagens para utilização:
                         mobile: 360x270 - ratio 3x2
@@ -55,10 +55,10 @@
             </div>
         </section>
 
-        <section class="mb-block-small mb-md-block">
+        <section class="mb-block-small md:mb-block">
             <div class="container">
-                <div class="row g-block-small gx-xl-block-large justify-content-between">
-                    <div class="col-md-7">
+                <div class="row g-block-small xl:gx-block-large justify-content-between">
+                    <div class="md:col-7">
                         <div class="mb-block-small wysiwyg">
                             <h2>Título grande</h2>
                             <p>
@@ -127,18 +127,18 @@
                                     :galleries="$gallery"
                                 />
 
-                                <div class="row gy-block-small gy-md-block-medium justify-content-between align-items-center">
-                                    <div class="col-md-auto order-md-2">
+                                <div class="row gy-block-small md:gy-block-medium justify-content-between align-items-center">
+                                    <div class="md:col-auto md:order-2">
                                         <x-frontend::swiper-buttons swiper-button-class="hstack gap-0h justify-content-end swiper-button-block" />
                                     </div>
-                                    <div class="col-md-auto order-md-1">
+                                    <div class="md:col-auto md:order-1">
                                         <x-frontend::link-share />
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="md:col-4">
                         @php
                             $articles = [
 

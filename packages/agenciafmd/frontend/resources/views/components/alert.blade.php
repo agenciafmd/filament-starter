@@ -4,14 +4,7 @@
     'iconClass' => null,
     'hasDismissible' => null,
 ])
-@php
-    $alertClasses = 'alert';
-    if ($hasDismissible) {
-        $alertClasses .= ' alert-dismissible';
-    }
-@endphp
-
-<div role="alert" {{ $attributes->merge(['class' => $alertClasses]) }}>
+<div role="alert" {{ $attributes->merge(['class' => 'alert']) }}>
     @if ($icon)
         <x-icon name="frontend-{{ $icon }}" class="bi flex-shrink-0 {{ $iconClass }}" />
     @endif
@@ -23,6 +16,7 @@
     {{ $slot }}
 
     @if ($hasDismissible)
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        {{-- Bootstrap 6: last flex item, pushed to the end and vertically centered --}}
+        <button type="button" class="btn-close ms-auto align-self-center" data-bs-dismiss="alert" aria-label="Fechar"></button>
     @endif
 </div>
