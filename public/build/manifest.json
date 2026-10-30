@@ -71,33 +71,44 @@
     "file": "assets/fonts/KFO7CnqEu92Fr1ME7kSn66aGLdTylUAMaxKUBGEe-B7iHSfaG.woff2",
     "src": "KFO7CnqEu92Fr1ME7kSn66aGLdTylUAMaxKUBGEe.woff2"
   },
-  "_frontend-CohvMK4M.js": {
-    "file": "assets/js/frontend-CohvMK4M.js",
+  "_frontend-wgCILObI.js": {
+    "file": "assets/js/frontend-wgCILObI.js",
     "name": "frontend",
     "dynamicImports": [
       "node_modules/infinite-scroll/js/index.js"
     ]
+  },
+  "_menu-DgtJsm1A.js": {
+    "file": "assets/js/menu-DgtJsm1A.js",
+    "name": "menu",
+    "imports": [
+      "_frontend-wgCILObI.js"
+    ]
+  },
+  "_share-min-CAGVUdif.js": {
+    "file": "assets/js/share-min-CAGVUdif.js",
+    "name": "share-min"
   },
   "_swiper-CfQmySiv.js": {
     "file": "assets/js/swiper-CfQmySiv.js",
     "name": "swiper"
   },
   "node_modules/glightbox/dist/js/glightbox.min.js": {
-    "file": "assets/js/glightbox.min-D6NmgAvh.js",
+    "file": "assets/js/glightbox.min-DqjNsUKA.js",
     "name": "glightbox.min",
     "src": "node_modules/glightbox/dist/js/glightbox.min.js",
     "isDynamicEntry": true,
     "imports": [
-      "_frontend-CohvMK4M.js"
+      "_frontend-wgCILObI.js"
     ]
   },
   "node_modules/infinite-scroll/js/index.js": {
-    "file": "assets/js/js-BDiBm9nI.js",
+    "file": "assets/js/js-CDm19SOO.js",
     "name": "js",
     "src": "node_modules/infinite-scroll/js/index.js",
     "isDynamicEntry": true,
     "imports": [
-      "_frontend-CohvMK4M.js"
+      "_frontend-wgCILObI.js"
     ]
   },
   "node_modules/plyr/dist/plyr.mjs": {
@@ -107,19 +118,13 @@
     "isDynamicEntry": true
   },
   "node_modules/sweetalert2/dist/sweetalert2.all.js": {
-    "file": "assets/js/sweetalert2.all-B53FOame.js",
+    "file": "assets/js/sweetalert2.all-vATwK9ml.js",
     "name": "sweetalert2.all",
     "src": "node_modules/sweetalert2/dist/sweetalert2.all.js",
     "isDynamicEntry": true,
     "imports": [
-      "_frontend-CohvMK4M.js"
+      "_frontend-wgCILObI.js"
     ]
-  },
-  "node_modules/tom-select/dist/esm/tom-select.complete.js": {
-    "file": "assets/js/tom-select.complete-CMsxsRkq.js",
-    "name": "tom-select.complete",
-    "src": "node_modules/tom-select/dist/esm/tom-select.complete.js",
-    "isDynamicEntry": true
   },
   "resources/fonts/Roboto-Bold.woff2": {
     "file": "assets/fonts/Roboto-Bold-B00cclMj.woff2",
@@ -646,21 +651,22 @@
     "src": "resources/images/video-film.webp"
   },
   "resources/js/components/share-api.js": {
-    "file": "assets/js/share-api-DgSG_rA9.js",
+    "file": "assets/js/share-api-DKdN33SA.js",
     "name": "share-api",
     "src": "resources/js/components/share-api.js",
     "isEntry": true,
     "imports": [
-      "_frontend-CohvMK4M.js"
+      "_frontend-wgCILObI.js",
+      "_share-min-CAGVUdif.js"
     ]
   },
   "resources/js/components/sliders/articles.js": {
-    "file": "assets/js/articles-DTAXtbuF.js",
+    "file": "assets/js/articles-vMEkXhUF.js",
     "name": "articles",
     "src": "resources/js/components/sliders/articles.js",
     "isEntry": true,
     "imports": [
-      "_frontend-CohvMK4M.js",
+      "_frontend-wgCILObI.js",
       "_swiper-CfQmySiv.js"
     ]
   },
@@ -674,31 +680,33 @@
     ]
   },
   "resources/js/frontend-imports.js": {
-    "file": "assets/js/frontend-imports-yIuy5KgQ.js",
+    "file": "assets/js/frontend-imports-iYIuXlTF.js",
     "name": "frontend-imports",
     "src": "resources/js/frontend-imports.js",
     "isEntry": true,
     "imports": [
-      "_frontend-CohvMK4M.js"
+      "_frontend-wgCILObI.js",
+      "_menu-DgtJsm1A.js"
     ],
     "dynamicImports": [
       "node_modules/sweetalert2/dist/sweetalert2.all.js",
       "node_modules/glightbox/dist/js/glightbox.min.js",
-      "node_modules/plyr/dist/plyr.mjs",
-      "node_modules/tom-select/dist/esm/tom-select.complete.js"
+      "node_modules/plyr/dist/plyr.mjs"
     ]
   },
   "resources/js/pages/theme.js": {
-    "file": "assets/js/theme-B1wF6Oe2.js",
+    "file": "assets/js/theme-CyFiQ3pY.js",
     "name": "theme",
     "src": "resources/js/pages/theme.js",
     "isEntry": true,
     "imports": [
-      "_frontend-CohvMK4M.js"
+      "_frontend-wgCILObI.js",
+      "_menu-DgtJsm1A.js",
+      "_share-min-CAGVUdif.js"
     ]
   },
   "resources/scss/frontend.scss": {
-    "file": "assets/css/frontend-DtzzFT0J.css",
+    "file": "assets/css/frontend-DuzksaCt.css",
     "name": "frontend",
     "names": [
       "frontend.css"
@@ -706,9 +714,6 @@
     "src": "resources/scss/frontend.scss",
     "isEntry": true,
     "assets": [
-      "assets/fonts/Roboto-Light-T3rV-QX9.woff2",
-      "assets/fonts/Roboto-Regular-BJClQQEq.woff2",
-      "assets/fonts/Roboto-Bold-B00cclMj.woff2",
       "assets/images/video-film-BmXcc39w.png"
     ]
   },
