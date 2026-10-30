@@ -185,13 +185,15 @@ export function guideUserToTheFirstError() {
     const currentScrollPosition = window.scrollY;
     const invalidInputsSelectors = [
         ".form-control:invalid",
-        ".form-select:invalid",
-        ".form-check-input:invalid",
-        ".form-range:invalid",
+        "select.form-control:invalid",
+        ".check:invalid",
+        ".radio:invalid",
+        ".form-range-input:invalid",
         ".form-control.is-invalid",
-        ".form-select.is-invalid",
-        ".form-check-input.is-invalid",
-        ".form-range.is-invalid",
+        "select.form-control.is-invalid",
+        ".check.is-invalid",
+        ".radio.is-invalid",
+        ".form-range-input.is-invalid",
     ];
 
     const invalidInputs = document.querySelectorAll(
@@ -211,8 +213,8 @@ export function guideUserToTheFirstError() {
         `.${scrollContainerClass}`,
     );
 
-    if (_isFormOnModal()) {
-        _scrollToError(".modal.show .modal-body");
+    if (_isFormOnDialog()) {
+        _scrollToError(".dialog[open] .dialog-body");
         return;
     }
 
@@ -239,8 +241,8 @@ export function guideUserToTheFirstError() {
         document.querySelector(container).scrollTo(animateConfig);
     }
 
-    function _isFormOnModal() {
-        return document.body.classList.contains("modal-open");
+    function _isFormOnDialog() {
+        return document.documentElement.classList.contains("dialog-open");
     }
 
     function _getStickyHeaderOffset() {

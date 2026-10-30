@@ -1,6 +1,6 @@
 import {
     setupSmoothScroll,
-    setupSmoothScrollInOffcanvas,
+    setupSmoothScrollInDrawer,
 } from "./components/smooth-scroll.js";
 import { CpfCnpjValidators } from "./helpers/cpf-cnpj-validators.js";
 import {
@@ -10,7 +10,9 @@ import {
 import { setupUtmHelpers } from "./helpers/utm-helper.js";
 import { setupFmdHeader } from "./components/fmd-header.js";
 import mask from "@alpinejs/mask";
-import { Modal, Popover, Tooltip, Toast } from "bootstrap";
+import Popover from "bootstrap/js/dist/popover.js";
+import Toast from "bootstrap/js/dist/toast.js";
+import Tooltip from "bootstrap/js/dist/tooltip.js";
 
 export function getThemeVariables() {
     const root = getComputedStyle(document.documentElement);
@@ -32,9 +34,6 @@ export function getThemeVariables() {
         xl: Number(
             root.getPropertyValue("--bs-breakpoint-xl").replace("px", ""),
         ),
-        xxl: Number(
-            root.getPropertyValue("--bs-breakpoint-xxl").replace("px", ""),
-        ),
     };
 
     function isWindowWidthUp(breakpoint) {
@@ -49,14 +48,14 @@ export function getThemeVariables() {
         breakpoints,
         collapseTransitionTime: 350, // In milliseconds
         colors: {
-            primary: root.getPropertyValue("--bs-primary"),
-            secondary: root.getPropertyValue("--bs-secondary"),
-            success: root.getPropertyValue("--bs-success"),
-            info: root.getPropertyValue("--bs-info"),
-            warning: root.getPropertyValue("--bs-warning"),
-            danger: root.getPropertyValue("--bs-danger"),
-            light: root.getPropertyValue("--bs-light"),
-            dark: root.getPropertyValue("--bs-dark"),
+            primary: root.getPropertyValue("--bs-primary-base"),
+            secondary: root.getPropertyValue("--bs-secondary-base"),
+            success: root.getPropertyValue("--bs-success-base"),
+            info: root.getPropertyValue("--bs-info-base"),
+            warning: root.getPropertyValue("--bs-warning-base"),
+            danger: root.getPropertyValue("--bs-danger-base"),
+            light: root.getPropertyValue("--bs-light-base"),
+            dark: root.getPropertyValue("--bs-dark-base"),
         },
         isWindowWidthUp,
         isWindowWidthDown,
@@ -126,6 +125,8 @@ function preventInvalidFormSubmit() {
 
                     guideUserToTheFirstError();
                     form.classList.add("was-validated");
+                    // Bootstrap 6 styles the invalid fields (`:user-invalid`) only inside `[data-bs-validate]`
+                    form.dataset.bsValidate = "";
                 }
             },
             false,
@@ -145,8 +146,8 @@ function preventInvalidFormSubmit() {
             element.setCustomValidity("needs validate");
 
             element.addEventListener("focusout", () => {
-                this.classList.remove("is-invalid");
-                this.setCustomValidity("");
+                element.classList.remove("is-invalid");
+                element.setCustomValidity("");
             });
         });
     }
@@ -466,14 +467,11 @@ async function setupClipboardJS() {
     });
 
     function showTooltip(targetElement) {
-        const successTooltip = bootstrap.Tooltip.getOrCreateInstance(
-            targetElement,
-            {
-                title: "Copiado para a área de transferência",
-                placement: "bottom",
-                trigger: "manual",
-            },
-        );
+        const successTooltip = Tooltip.getOrCreateInstance(targetElement, {
+            title: "Copiado para a área de transferência",
+            placement: "bottom",
+            trigger: "manual",
+        });
 
         successTooltip.show();
 
@@ -539,16 +537,6 @@ async function setupWOWJS() {
     new WOW().init();
 }
 
-function setupModalConfig() {
-    const modalElements = document.querySelectorAll(".modal");
-
-    modalElements.forEach((modalElement) => {
-        return new Modal(modalElement, {
-            focus: false,
-        });
-    });
-}
-
 (() => {
     preventInvalidFormSubmit();
 
@@ -556,7 +544,7 @@ function setupModalConfig() {
 
     setupSmoothScroll();
 
-    setupSmoothScrollInOffcanvas();
+    setupSmoothScrollInDrawer();
 
     // setupCepSearch();
 
@@ -587,8 +575,6 @@ function setupModalConfig() {
     setupUtmHelpers();
 
     // setupWOWJS();
-
-    setupModalConfig();
 
     // setupLightDarkModeController();
 })();

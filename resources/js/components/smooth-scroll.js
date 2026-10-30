@@ -22,27 +22,27 @@ function doScrollAnimate(targetSelector) {
     });
 }
 
-export function setupSmoothScrollInOffcanvas() {
-    const offcanvasElements = document.querySelectorAll(".offcanvas");
+export function setupSmoothScrollInDrawer() {
+    const drawerElements = document.querySelectorAll(".drawer");
 
-    offcanvasElements.forEach(function (offcanvas) {
-        const offcanvasScrollTriggerElements = offcanvas.querySelectorAll(
-            'a.js-scroll-top[data-bs-dismiss="offcanvas"]',
+    drawerElements.forEach(function (drawer) {
+        const drawerScrollTriggerElements = drawer.querySelectorAll(
+            'a.js-scroll-top[data-bs-dismiss="drawer"]',
         );
 
-        offcanvasScrollTriggerElements.forEach(function (triggerElement) {
+        drawerScrollTriggerElements.forEach(function (triggerElement) {
             const hiddenOffcanvasHandler = (event) => {
                 doScrollAnimate(triggerElement.hash);
-                offcanvas.removeEventListener(
-                    "hidden.bs.offcanvas",
+                drawer.removeEventListener(
+                    "hidden.bs.drawer",
                     hiddenOffcanvasHandler,
                 );
             };
 
             triggerElement.addEventListener("click", function (event) {
                 event.preventDefault();
-                offcanvas.addEventListener(
-                    "hidden.bs.offcanvas",
+                drawer.addEventListener(
+                    "hidden.bs.drawer",
                     hiddenOffcanvasHandler,
                 );
             });
@@ -51,10 +51,10 @@ export function setupSmoothScrollInOffcanvas() {
 }
 
 export function setupSmoothScroll() {
-    // This selector is needed because offcanvas animation blocks page scroll, so
+    // This selector is needed because drawer animation blocks page scroll, so
     // we need to handle each scroll separately.
     const scrollTriggerElements = document.querySelectorAll(
-        "*:not(.offcanvas) a.js-scroll-top",
+        "*:not(.drawer) a.js-scroll-top",
     );
 
     scrollTriggerElements.forEach(function (element) {
