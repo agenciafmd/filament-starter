@@ -10,7 +10,7 @@
     <div class="mb-2">
         <span class="card-subtitle fg-primary"> {{ $article->subtitle }} </span>
         <h2 class="card-title">{{ $article->name }}</h2>
-        <p class="fs-small fg-dark">{{ $article->date }}</p>
+        <p class="fs-small fg-body">{{ $article->date }}</p>
     </div>
     <x-frontend::link
         link="{{ $article->route }}"

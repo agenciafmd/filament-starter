@@ -9,7 +9,7 @@
 @section('content')
     <main>
         <section class="pb-block-small md:pb-block">
-            <div class="py-block-small md:py-block bg-light">
+            <div class="py-block-small md:py-block bg-3">
                 <div class="container">
                     <div class="row justify-content-center">
                         <div class="md:col-8">

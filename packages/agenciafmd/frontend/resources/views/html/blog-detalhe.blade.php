@@ -188,7 +188,7 @@
                         @endphp
 
                         <x-frontend::cards.card
-                            class="position-sticky top-0 h-auto bg-gray-100 shadow"
+                            class="position-sticky top-0 h-auto bg-3 shadow"
                             card-body-class="p-block-small"
                         >
                             <h5 class="fs-7 mb-2">Leia também:</h5>

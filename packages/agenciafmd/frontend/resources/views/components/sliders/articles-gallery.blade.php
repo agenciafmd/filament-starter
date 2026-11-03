@@ -24,7 +24,7 @@
                     aspect-ratio="ratio ratio-1x1 md:ratio-16x9"
                 />
 
-                <p class="fs-small fg-dark mt-1 px-1">{{ $video->name }}</p>
+                <p class="fs-small fg-body mt-1 px-1">{{ $video->name }}</p>
             </div>
 
         @endforeach
@@ -55,7 +55,7 @@
                         breakpointNotebookWidth="768px"
                         breakpointNotebookSuffix="lg"
                     />
-                    <p class="fs-small fg-dark mt-1 px-1">{{ $image->name }}</p>
+                    <p class="fs-small fg-body mt-1 px-1">{{ $image->name }}</p>
                 </x-frontend::glightbox.image>
             </div>
 

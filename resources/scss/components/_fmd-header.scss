@@ -1,35 +1,38 @@
 @use "../frontend/variables" as *;
 
-:root {
-    --header-height: 0px;
-}
-
-.fmd-header {
-    position: relative;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: $zindex-sticky;
-    margin-top: 0;
-    transition: $transition-base;
-
-    &-is-hidden {
-        margin-top: calc(var(--header-height) * -1);
+// Layer `custom`: beats the Bootstrap components, loses to helpers/utilities (see specs/bootstrap-6-migration.md, section 3 "Cascade layers")
+@layer custom {
+    :root {
+        --header-height: 0px;
     }
 
-    &-is-fixed {
-        background: $body-bg;
-    }
-}
+    .fmd-header {
+        position: relative;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: $zindex-sticky;
+        margin-top: 0;
+        transition: $transition-base;
 
-body {
-    &:not(.header-overlap) {
-        padding-top: var(--header-height);
+        &-is-hidden {
+            margin-top: calc(var(--header-height) * -1);
+        }
+
+        &-is-fixed {
+            background: var(--bs-bg-body);
+        }
     }
 
-    &.header-overlap {
-        .fmd-header {
-            position: absolute;
+    body {
+        &:not(.header-overlap) {
+            padding-top: var(--header-height);
+        }
+
+        &.header-overlap {
+            .fmd-header {
+                position: absolute;
+            }
         }
     }
 }

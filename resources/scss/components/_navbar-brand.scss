@@ -3,24 +3,30 @@ $navbar-brand-height: 3.5rem; // Height when header on page top
 $navbar-brand-is-fixed-width: 8.5rem; // Width when header is fixed on screen
 $navbar-brand-is-fixed-height: 2.5rem; // Height when header is fixed on screen
 
-// Loaded in the `helpers` layer: the logo is an `.icon-link`, and Bootstrap 6 sizes `.icon-link > .bi` there
-.navbar .navbar-brand {
-    svg,
-    img {
-        max-width: calc(100vw - 6rem);
-        width: $navbar-brand-width;
-        height: $navbar-brand-height;
-        transition:
-            width 0.25s,
-            height 0.25s,
-            all 0.25s ease-in-out;
-    }
+// Layer `helpers`: overrides a Bootstrap 6 helper, which would beat the `custom` layer (see specs/bootstrap-6-migration.md, section 3 "Cascade layers")
+@layer helpers {
+    // `helpers` layer: the logo is an `.icon-link`, and Bootstrap 6 sizes `.icon-link > .bi` there
+    .navbar .navbar-brand {
+        // The logo uses `currentColor`: black in the light theme, white in the dark one
+        color: light-dark(#000, #fff);
 
-    .fmd-header-is-fixed & {
         svg,
         img {
-            width: $navbar-brand-is-fixed-width;
-            height: $navbar-brand-is-fixed-height;
+            max-width: calc(100vw - 6rem);
+            width: $navbar-brand-width;
+            height: $navbar-brand-height;
+            transition:
+                width 0.25s,
+                height 0.25s,
+                all 0.25s ease-in-out;
+        }
+
+        .fmd-header-is-fixed & {
+            svg,
+            img {
+                width: $navbar-brand-is-fixed-width;
+                height: $navbar-brand-is-fixed-height;
+            }
         }
     }
 }

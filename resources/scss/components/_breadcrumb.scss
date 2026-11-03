@@ -2,84 +2,89 @@
 @use "bootstrap/scss/functions" as *;
 @use "bootstrap/scss/layout/breakpoints" as *;
 
-$breadcrumb-link-color: $body-color;
+$breadcrumb-link-color: var(--bs-fg-body);
 $breadcrumb-link-dark-color: $white;
 
-.breadcrumb {
-    margin-block: 1.5rem;
-    max-width: 100%;
-    display: inline-flex;
-    flex-wrap: nowrap;
-    align-items: center;
-    //flex-direction: row-reverse;
-    //direction: rtl;
+// Layer `custom`: beats the Bootstrap components, loses to helpers/utilities (see specs/bootstrap-6-migration.md, section 3 "Cascade layers")
+@layer custom {
+    .breadcrumb {
+        margin-block: 1.5rem;
+        max-width: 100%;
+        display: inline-flex;
+        flex-wrap: nowrap;
+        align-items: center;
+        //flex-direction: row-reverse;
+        //direction: rtl;
 
-    @include media-breakpoint-down(md) {
-        overflow-x: hidden;
-        margin-block: 0.5rem;
-    }
-
-    &-item {
-        flex: 0 1 auto;
-        white-space: nowrap;
-        text-overflow: ellipsis;
-        text-decoration: none;
-        font-size: $font-size-sm;
-        padding-block: 1rem;
-        --bs-link-color: #{$breadcrumb-link-color};
-        --bs-breadcrumb-item-active-color: #{$breadcrumb-link-color};
-
-        &.active {
-            font-weight: $font-weight-bold;
-            flex-shrink: 1;
+        @include media-breakpoint-down(md) {
+            overflow-x: hidden;
+            margin-block: 0.5rem;
         }
 
-        &:first-child,
-        &:nth-last-child(2) {
-            flex-shrink: 0;
-        }
+        &-item {
+            flex: 0 1 auto;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            text-decoration: none;
+            font-size: $font-size-sm;
+            padding-block: 1rem;
+            --bs-link-color: #{$breadcrumb-link-color};
+            --bs-breadcrumb-item-active-color: #{$breadcrumb-link-color};
 
-        &:last-child {
-            overflow: hidden;
-        }
+            // Bootstrap 6 has no `--breadcrumb-item-active-color` (its breadcrumb uses `.breadcrumb-link`)
+            &.active {
+                color: var(--bs-breadcrumb-item-active-color);
+                font-weight: $font-weight-bold;
+                flex-shrink: 1;
+            }
 
-        + .breadcrumb-item::before {
-            content: unset;
-            background: #{escape-svg($form-select-indicator)} no-repeat;
-            background-size: contain;
-            width: $spacer * 0.8;
-            height: $spacer * 0.8;
-            transform: rotate(-90deg);
-            margin-right: var(--bs-breadcrumb-item-padding-x);
-            display: inline-block;
-            vertical-align: middle;
-            float: unset;
-        }
+            &:first-child,
+            &:nth-last-child(2) {
+                flex-shrink: 0;
+            }
 
-        .ic-chevron-right {
-            margin: 0 0.625rem 0 0.625rem;
-            color: var(--bs-primary-base);
-        }
-    }
-
-    &-dark {
-        .breadcrumb-item {
-            --bs-link-color: #{$breadcrumb-link-dark-color};
-            --bs-breadcrumb-item-active-color: #{$breadcrumb-link-dark-color};
-            --bs-breadcrumb-divider-color: #{$breadcrumb-link-dark-color};
-            --bs-link-hover-color: #{shift-color(
-                    $breadcrumb-link-dark-color,
-                    $link-shade-percentage
-                )};
+            &:last-child {
+                overflow: hidden;
+            }
 
             + .breadcrumb-item::before {
-                $form-select-indicator-color: $breadcrumb-link-dark-color;
-                $form-select-indicator: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><path fill='none' stroke='#{$form-select-indicator-color}' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/></svg>");
+                content: unset;
                 background: #{escape-svg($form-select-indicator)} no-repeat;
+                background-size: contain;
+                width: $spacer * 0.8;
+                height: $spacer * 0.8;
+                transform: rotate(-90deg);
+                margin-right: var(--bs-breadcrumb-item-padding-x);
+                display: inline-block;
+                vertical-align: middle;
+                float: unset;
             }
 
             .ic-chevron-right {
-                filter: brightness(0) invert(1);
+                margin: 0 0.625rem 0 0.625rem;
+                color: var(--bs-primary-base);
+            }
+        }
+
+        &-dark {
+            .breadcrumb-item {
+                --bs-link-color: #{$breadcrumb-link-dark-color};
+                --bs-breadcrumb-item-active-color: #{$breadcrumb-link-dark-color};
+                --bs-breadcrumb-divider-color: #{$breadcrumb-link-dark-color};
+                --bs-link-hover-color: #{shift-color(
+                        $breadcrumb-link-dark-color,
+                        $link-shade-percentage
+                    )};
+
+                + .breadcrumb-item::before {
+                    $form-select-indicator-color: $breadcrumb-link-dark-color;
+                    $form-select-indicator: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><path fill='none' stroke='#{$form-select-indicator-color}' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/></svg>");
+                    background: #{escape-svg($form-select-indicator)} no-repeat;
+                }
+
+                .ic-chevron-right {
+                    filter: brightness(0) invert(1);
+                }
             }
         }
     }

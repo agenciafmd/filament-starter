@@ -1,5 +1,5 @@
 @extends('frontend::html.master', [
-    'bodyClass' => 'bg-white',
+    'bodyClass' => 'bg-body',
     'critical' => '',
 ])
 
@@ -757,7 +757,7 @@
                                                     </x-frontend::cards.card>
                                                 </div>
                                                 <div class="md:col-6">
-                                                    <x-frontend::cards.card has-shadow="true" class="vstack bg-light">
+                                                    <x-frontend::cards.card has-shadow="true" class="vstack bg-3">
                                                         <h5 class="card-title">Card title</h5>
                                                         <h6 class="card-subtitle fg-2 mb-2">
                                                             Card subtitle
@@ -788,7 +788,7 @@
                                                     <x-frontend::cards.card-picture
                                                         :image="$image"
                                                         cardBody="vstack pt-1"
-                                                        class="bg-light h-100 shadow"
+                                                        class="bg-3 h-100 shadow"
                                                     >
                                                         <p class="card-text">
                                                             Some quick example text to build on the card title and make up
@@ -1144,6 +1144,7 @@
                                                                 <a
                                                                     class="nav-link menu-toggle"
                                                                     data-bs-toggle="menu"
+                                                                    data-bs-display="static"
                                                                     href="#"
                                                                     role="button"
                                                                     aria-haspopup="true"
@@ -1220,6 +1221,7 @@
                                                                 <a
                                                                     class="nav-link menu-toggle"
                                                                     data-bs-toggle="menu"
+                                                                    data-bs-display="static"
                                                                     href="#"
                                                                     role="button"
                                                                     aria-haspopup="true"
@@ -1296,6 +1298,7 @@
                                                                 <a
                                                                     class="nav-link menu-toggle"
                                                                     data-bs-toggle="menu"
+                                                                    data-bs-display="static"
                                                                     href="#"
                                                                     role="button"
                                                                     aria-haspopup="true"
@@ -1548,6 +1551,7 @@
                                                         label="Produtos"
                                                         role="button"
                                                         data-bs-toggle="menu"
+                                                        data-bs-display="static"
                                                         aria-expanded="false"
                                                         class="nav-link menu-toggle"
                                                     />
@@ -1679,6 +1683,7 @@
                                                         label="Produtos"
                                                         role="button"
                                                         data-bs-toggle="menu"
+                                                        data-bs-display="static"
                                                         aria-expanded="false"
                                                         class="nav-link menu-toggle"
                                                     />
@@ -4428,9 +4433,11 @@ Disabled textarea with some text inside</textarea>
                                                     'ic-info',
                                                     'ic-information',
                                                     'ic-loading',
+                                                    'ic-moon',
                                                     'ic-search',
                                                     'ic-share',
                                                     'ic-shield',
+                                                    'ic-sun',
                                                     'ic-web-vitals-danger',
                                                     'ic-web-vitals-success',
                                                     'logo-fmd',
