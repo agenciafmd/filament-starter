@@ -9,6 +9,7 @@ import {
 } from "./helpers/form-helpers.js";
 import { setupUtmHelpers } from "./helpers/utm-helper.js";
 import { setupFmdHeader } from "./components/fmd-header.js";
+import { setupColorMode } from "./components/color-mode.js";
 import mask from "@alpinejs/mask";
 import Popover from "bootstrap/js/dist/popover.js";
 import Toast from "bootstrap/js/dist/toast.js";
@@ -576,7 +577,7 @@ async function setupWOWJS() {
 
     // setupWOWJS();
 
-    // setupLightDarkModeController();
+    setupColorMode();
 })();
 
 window.addEventListener("load", () => {

@@ -45,6 +45,7 @@
                                 label="Produtos"
                                 role="button"
                                 data-bs-toggle="menu"
+                                data-bs-display="static"
                                 data-bs-auto-close="outside"
                                 aria-expanded="false"
                                 class="nav-link menu-toggle"
@@ -96,6 +97,16 @@
                     </ul>
                 </div>
             </dialog>
+            <button
+                class="btn btn-text btn-icon color-mode-toggle ms-auto js-color-mode-toggle"
+                type="button"
+                title="Alternar tema"
+                aria-label="Ativar tema escuro"
+                aria-pressed="false"
+            >
+                <x-icon name="frontend-ic-moon" class="bi color-mode-icon-dark" />
+                <x-icon name="frontend-ic-sun" class="bi color-mode-icon-light" />
+            </button>
             <button
                 class="navbar-toggler"
                 type="button"

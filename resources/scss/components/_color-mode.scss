@@ -1,0 +1,8 @@
+// Layer `custom`: beats the Bootstrap components, loses to helpers/utilities (see specs/bootstrap-6-migration.md, section 3 "Cascade layers")
+@layer custom {
+    // Theme toggle (`resources/js/components/color-mode.js`): shows the moon in the light theme and the sun in the dark one
+    [data-bs-theme="dark"] .color-mode-icon-dark,
+    :root:not([data-bs-theme="dark"]) .color-mode-icon-light {
+        display: none;
+    }
+}
