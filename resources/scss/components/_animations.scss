@@ -1,17 +1,20 @@
 @use "../frontend/variables" as *;
 
-.transition-base {
-    transition: $transition-base;
-}
+// Layer `custom`: beats the Bootstrap components, loses to helpers/utilities (see specs/bootstrap-6-migration.md, section 3 "Cascade layers")
+@layer custom {
+    .transition-base {
+        transition: $transition-base;
+    }
 
-.animation {
-    &-spin-right {
-        animation: spin-right 3s linear infinite;
-        transform-origin: center;
+    .animation {
+        &-spin-right {
+            animation: spin-right 3s linear infinite;
+            transform-origin: center;
 
-        @keyframes spin-right {
-            to {
-                transform: rotate(1turn);
+            @keyframes spin-right {
+                to {
+                    transform: rotate(1turn);
+                }
             }
         }
     }

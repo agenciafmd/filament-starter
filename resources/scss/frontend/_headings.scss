@@ -1,7 +1,7 @@
 @use "variables" as *;
 
 // Bootstrap 6 sizes the headings with its own type scale; the project keeps the `$h*-font-size` tokens.
-// Loaded in the `reboot` layer (like Bootstrap's own `h1`-`h6`), so component headings such as
+// `reboot` layer (like Bootstrap's own `h1`-`h6`), so component headings such as
 // `.popover-header` (an `<h3>`) keep their own size, as in Bootstrap 5.
 $headings-font-sizes: (
     1: $h1-font-size,
@@ -12,9 +12,12 @@ $headings-font-sizes: (
     6: $h6-font-size,
 );
 
-@each $level, $size in $headings-font-sizes {
-    h#{$level},
-    .h#{$level} {
-        font-size: $size;
+// Layer `reboot`: element styles that must not beat the Bootstrap components (see specs/bootstrap-6-migration.md, section 3 "Cascade layers")
+@layer reboot {
+    @each $level, $size in $headings-font-sizes {
+        h#{$level},
+        .h#{$level} {
+            font-size: $size;
+        }
     }
 }

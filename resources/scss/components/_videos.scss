@@ -1,12 +1,15 @@
 @use "../frontend/variables" as *;
 
-.video {
-    &-film {
-        position: absolute;
-        background: rgba($black, 0.3) url("@images/video-film.png");
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
+// Layer `custom`: beats the Bootstrap components, loses to helpers/utilities (see specs/bootstrap-6-migration.md, section 3 "Cascade layers")
+@layer custom {
+    .video {
+        &-film {
+            position: absolute;
+            background: rgba($black, 0.3) url("@images/video-film.png");
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+        }
     }
 }

@@ -1,26 +1,29 @@
 @use "../frontend/variables" as *;
 @use "bootstrap/scss/layout/breakpoints" as *;
 
-.accordion {
-    @include media-breakpoint-up(md) {
-        --bs-accordion-btn-padding-y: #{$spacer};
-        --bs-accordion-btn-padding-x: #{$spacer};
-        --bs-accordion-body-padding-x: #{$spacer};
-    }
+// Layer `custom`: beats the Bootstrap components, loses to helpers/utilities (see specs/bootstrap-6-migration.md, section 3 "Cascade layers")
+@layer custom {
+    .accordion {
+        @include media-breakpoint-up(md) {
+            --bs-accordion-btn-padding-y: #{$spacer};
+            --bs-accordion-btn-padding-x: #{$spacer};
+            --bs-accordion-body-padding-x: #{$spacer};
+        }
 
-    &-header {
-        font-weight: $font-weight-bold;
-    }
+        &-header {
+            font-weight: $font-weight-bold;
+        }
 
-    &-item[open] > &-header {
-        background-color: unset;
-        box-shadow: unset;
-    }
+        &-item[open] > &-header {
+            background-color: unset;
+            box-shadow: unset;
+        }
 
-    &-body {
-        padding-top: 0;
-    }
+        &-body {
+            padding-top: 0;
+        }
 
-    &-item {
+        &-item {
+        }
     }
 }

@@ -1,14 +1,17 @@
 @use "../frontend/variables" as *;
 @use "../frontend/maps" as *;
 
-.badge {
-    line-height: $line-height-sm;
+// Layer `custom`: beats the Bootstrap components, loses to helpers/utilities (see specs/bootstrap-6-migration.md, section 3 "Cascade layers")
+@layer custom {
+    .badge {
+        line-height: $line-height-sm;
 
-    @each $color, $value in $theme-colors-map {
-        &.text-bg-outline-#{$color} {
-            color: $value;
-            background-color: transparent;
-            border: $border-width solid $value;
+        @each $color, $value in $theme-colors-map {
+            &.text-bg-outline-#{$color} {
+                color: $value;
+                background-color: transparent;
+                border: $border-width solid $value;
+            }
         }
     }
 }

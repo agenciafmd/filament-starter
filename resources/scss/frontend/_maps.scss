@@ -1,11 +1,16 @@
 @use "sass:map";
+@use "sass:meta";
 @use "variables" as *;
 @use "variables-dark" as *;
 
 // Theme palette plus the project's custom theme colors (Bootstrap 6 has no `*-rgb` maps)
 $theme-colors-map: map.merge($theme-colors, $custom-theme-colors);
 
-// Bootstrap 6 maps (passed to Bootstrap in `frontend/_bootstrap.scss`)
+// Project spacing scale for the spacing utilities (`frontend/_utilities.scss`). Bootstrap `config` also has a
+// `$spacers` (kept for the components), so the project scale is read with this name where both are loaded
+$spacers-map: $spacers;
+
+// Bootstrap 6 maps (passed to Bootstrap in `frontend.scss`)
 
 // Theme color map in the Bootstrap 6 format, built from the Bootstrap 5 light/dark values
 @function theme-color-tokens(
@@ -188,4 +193,195 @@ $font-weight-map: (
     extrabold: $font-weight-extra-bold,
     black: $font-weight-black,
     bolder: $font-weight-bolder,
+);
+
+// Bootstrap 6 component tokens (passed to each Bootstrap module with `@use ... with` in `frontend.scss`).
+// Bootstrap 6 has no per-component Sass variables (e.g. Bootstrap 5 `$dropdown-box-shadow`): each component
+// reads a `$<component>-tokens` map, merged with its defaults, so only the project changes are listed.
+$root-tokens: (
+    --body-font-family: meta.inspect($font-family-sans-serif),
+    --body-font-size: $font-size-base,
+    --body-line-height: $line-height-base,
+    --heading-color: $headings-color,
+    --link-color: light-dark($link-color, $link-color-dark),
+    --link-hover-color: light-dark($link-hover-color, $link-hover-color-dark),
+    --code-color: light-dark($code-color, $code-color-dark),
+    --border-color: light-dark($border-color, $border-color-dark),
+    --btn-input-line-height: $input-btn-line-height,
+    --btn-input-border-radius: $border-radius,
+    --btn-input-xs-border-radius: $border-radius-sm,
+    --btn-input-sm-border-radius: $border-radius-sm,
+    --btn-input-lg-border-radius: $border-radius-lg,
+);
+
+$type-tokens: (
+    --heading-margin-bottom: $headings-margin-bottom,
+    --heading-font-family: $headings-font-family,
+    --heading-font-weight: $headings-font-weight,
+    --heading-line-height: $headings-line-height,
+    --paragraph-margin-bottom: $paragraph-margin-bottom,
+);
+
+$button-tokens: (
+    --btn-white-space: $btn-white-space,
+);
+$button-variants: (
+    "outline": (
+        "base": (
+            "bg": "transparent",
+            "color": "fg",
+            "border-color": "bg",
+        ),
+        "hover": (
+            "bg": "bg",
+            "color": "contrast",
+            "border-color": "bg",
+        ),
+        "active": (
+            "bg": "bg",
+            "color": "contrast",
+            "border-color": "bg",
+        ),
+    ),
+);
+
+$card-tokens: (
+    --card-spacer-y: $spacer,
+    --card-spacer-x: $spacer,
+    --card-cap-padding-y: $spacer * 0.5,
+    --card-cap-padding-x: $spacer,
+    --card-height: 100%,
+);
+
+$badge-tokens: (
+    --badge-padding-x: 0.65em,
+    --badge-padding-y: 0.35em,
+    --badge-font-size: 0.75em,
+    --badge-font-weight: $font-weight-bold,
+    --badge-border-radius: $spacer * 0.25,
+);
+
+$dialog-tokens: (
+    --dialog-padding: $dialog-inner-padding,
+    --dialog-header-padding: $dialog-inner-padding,
+    --dialog-footer-padding: $dialog-inner-padding,
+    --dialog-header-border-width: 0,
+);
+
+// Bootstrap 6 defaults the menu to `box-shadow-lg` (tinted with `$ds-info` in the design tokens);
+// Bootstrap 5 dropdown used `$box-shadow`
+$menu-tokens: (
+    --menu-box-shadow: var(--box-shadow),
+);
+
+$tooltip-tokens: (
+    --tooltip-padding-x: $spacer * 0.5,
+    --tooltip-padding-y: $spacer * 0.25,
+    --tooltip-opacity: $opacity-level-semi-opaque,
+);
+
+$popover-tokens: (
+    --popover-border-radius: $border-radius-sm,
+    --popover-inner-border-radius: calc(
+            #{$border-radius-sm} - var(--border-width)
+        ),
+    --popover-header-padding-y: 0.5rem,
+);
+
+$toast-tokens: (
+    --toast-padding-x: 0.75rem,
+    --toast-padding-y: 0.5rem,
+    --toast-font-size: $font-size-sm,
+    --toast-bg: color-mix(
+            in oklch,
+            var(--bg-body) #{$opacity-level-semi-opaque * 100%},
+            transparent
+        ),
+    --toast-border-radius: $border-radius-sm,
+    --toast-header-bg: color-mix(
+            in oklch,
+            var(--bg-body) #{$opacity-level-semi-opaque * 100%},
+            transparent
+        ),
+);
+
+$form-floating-tokens: (
+    --form-floating-height: $form-floating-height,
+    --form-floating-line-height: $form-floating-line-height,
+    --form-floating-padding-x: $form-floating-padding-x,
+    --form-floating-padding-y: $form-floating-padding-y,
+    --form-floating-input-padding-t: $form-floating-input-padding-t,
+    --form-floating-input-padding-b: $form-floating-input-padding-b,
+    --form-floating-label-opacity: $form-floating-label-opacity * 100%,
+    --form-floating-label-transform: $form-floating-label-transform,
+);
+
+// Bootstrap 5 sized the checks with 1em, centered on the project line-height (Bootstrap 6 assumes 1.5)
+$checks-margin-block: ($line-height-base - 1) * 0.5em;
+
+$check-tokens: (
+    --check-size: 1em,
+    --check-margin-block: $checks-margin-block,
+);
+
+$radio-tokens: (
+    --radio-size: 1em,
+    --radio-margin-block: $checks-margin-block,
+);
+
+$switch-tokens: (
+    --switch-height: 1em,
+    --switch-margin-block: $checks-margin-block,
+);
+
+// Bootstrap 5 used `$gray-200` for the empty part of the progress and range (Bootstrap 6 `bg-2`/`bg-3` are too light here)
+$progress-tokens: (
+    --progress-bg: light-dark($gray-200, $gray-700),
+);
+
+$range-tokens: (
+    --range-track-bg: light-dark($gray-200, $gray-700),
+);
+
+// Bootstrap 6 configuration maps (passed to `bootstrap/scss/config` and `bootstrap/scss/theme` in `frontend.scss`)
+$bs-radii: (
+    7: $border-radius,
+);
+
+$bs-container-max-widths: map.merge(
+    $container-max-widths,
+    (
+        2xl: null,
+    )
+);
+
+$bs-border-widths: map.remove($border-widths, null);
+
+$bs-shadows: (
+    null: $box-shadow,
+    xs: $box-shadow-sm,
+    sm: $box-shadow-sm,
+    lg: $box-shadow-lg,
+    xl: $box-shadow-lg,
+    inset: $box-shadow-inset,
+);
+
+$bs-font-weights: (
+    semibold: $font-weight-semi-bold,
+    extrabold: $font-weight-extra-bold,
+    black: $font-weight-black,
+);
+
+$bs-theme-bgs: (
+    "body": light-dark($body-bg, $body-bg-dark),
+);
+
+$bs-theme-fgs: (
+    "body": light-dark($body-color, $body-color-dark),
+);
+
+// Bootstrap 5 opacity steps used by the project (`.fg-25`, `.fg-75`, `.bg-25`...)
+$bs-util-opacity: (
+    25: 0.25,
+    75: 0.75,
 );

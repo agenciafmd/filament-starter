@@ -5,102 +5,122 @@ $navbar-toggler-size: 2.5rem;
 $navbar-toggler-bar-width: 1.5rem;
 $navbar-toggler-bar-height: 3px;
 
-.navbar {
-    transition: $transition-base;
+// Layer `custom`: beats the Bootstrap components, loses to helpers/utilities (see specs/bootstrap-6-migration.md, section 3 "Cascade layers")
+@layer custom {
+    .navbar {
+        transition: $transition-base;
 
-    // The logo size lives in `components/_navbar-brand.scss` (`helpers` layer)
-    &-brand {
-        position: relative;
-        z-index: $zindex-drawer + 1;
-    }
-
-    &-toggler {
-        width: $navbar-toggler-size;
-        height: $navbar-toggler-size;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin: 0;
-        padding: 0;
-        color: inherit;
-        border: 0 !important;
-        box-shadow: none !important;
-        z-index: $zindex-drawer + 1;
-        transition: background 0.25s;
-
-        &:before,
-        span,
-        &:after {
-            content: "";
-            position: absolute;
-            top: 50%;
-            width: $navbar-toggler-bar-width;
-            height: $navbar-toggler-bar-height;
-            display: block;
-            background: currentColor;
-            // Bootstrap 6 draws `.navbar-toggler-icon` with a mask; the project draws the bars itself
-            mask-image: none;
-            border-radius: $border-radius;
-            transition: $transition-base;
-            transform: translate(0, -50%);
+        // The logo size lives in `components/_navbar-brand.scss` (`helpers` layer)
+        &-brand {
+            position: relative;
+            z-index: $zindex-drawer + 1;
         }
 
-        &:before {
-            margin-top: -0.5rem;
-        }
+        &-toggler {
+            width: $navbar-toggler-size;
+            height: $navbar-toggler-size;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0;
+            padding: 0;
+            color: inherit;
+            border: 0 !important;
+            box-shadow: none !important;
+            z-index: $zindex-drawer + 1;
+            transition: background 0.25s;
 
-        &:after {
-            margin-top: 0.5rem;
-        }
-    }
-
-    &-nav {
-        //--bs-nav-link-color: #{$body-color};
-        //--bs-nav-link-hover-color: #{rgba($primary, $opacity-level-semi-opaque)};
-        //--bs-nav-link-active-color: #{rgba($primary, $opacity-level-semi-opaque)};
-        //--bs-nav-link-font-weight: #{$font-weight-normal};
-        //--bs-nav-link-font-size: #{$font-size-base};
-        //--bs-nav-link-padding-y: #{$spacer};
-        //--bs-nav-link-padding-x: #{$spacer * 2.5};
-        //--bs-navbar-nav-link-padding-x: #{$spacer};
-        //--bs-navbar-active-color: #{rgba($primary, $opacity-level-semi-opaque)};
-    }
-
-    // The header menu is a Bootstrap 6 drawer (`<dialog class="drawer">`)
-    .drawer {
-        &[open] ~ .navbar-toggler {
-            &:before {
-                margin-top: 0;
-                transform: translate(0, -50%) rotate(45deg);
-                transform-origin: center;
+            &:before,
+            span,
+            &:after {
+                content: "";
+                position: absolute;
+                top: 50%;
+                width: $navbar-toggler-bar-width;
+                height: $navbar-toggler-bar-height;
+                display: block;
+                background: currentColor;
+                // Bootstrap 6 draws `.navbar-toggler-icon` with a mask; the project draws the bars itself
+                mask-image: none;
+                border-radius: $border-radius;
+                transition: $transition-base;
+                transform: translate(0, -50%);
             }
 
-            span {
-                transform-origin: center;
-                transform: translate(0, -50%) scaleX(0);
+            &:before {
+                margin-top: -0.5rem;
             }
 
             &:after {
-                margin-top: 0;
-                transform: translate(0, -50%) rotate(-45deg);
-                transform-origin: center;
+                margin-top: 0.5rem;
             }
         }
-    }
 
-    .menu {
-        transition: $transition-base;
-    }
-
-    .fmd-header-is-hidden & {
-        .menu {
-            opacity: 0;
-            visibility: hidden;
+        &-nav {
+            //--bs-nav-link-color: #{$body-color};
+            //--bs-nav-link-hover-color: #{rgba($primary, $opacity-level-semi-opaque)};
+            //--bs-nav-link-active-color: #{rgba($primary, $opacity-level-semi-opaque)};
+            //--bs-nav-link-font-weight: #{$font-weight-normal};
+            //--bs-nav-link-font-size: #{$font-size-base};
+            //--bs-nav-link-padding-y: #{$spacer};
+            //--bs-nav-link-padding-x: #{$spacer * 2.5};
+            //--bs-navbar-nav-link-padding-x: #{$spacer};
+            //--bs-navbar-active-color: #{rgba($primary, $opacity-level-semi-opaque)};
         }
-    }
 
-    .fmd-header-is-fixed & {
-        padding-top: $navbar-padding-y * 0.5;
-        padding-bottom: $navbar-padding-y * 0.5;
+        // The header menu is a Bootstrap 6 drawer (`<dialog class="drawer">`)
+        .drawer {
+            // Collapsed navbar: the menu opens below its toggle, in the flow, pushing the sibling items down
+            // (Bootstrap 6 `.nav-item` is a flex row, so the item is stacked)
+            &[open] .menu-hover {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            &[open] .menu {
+                position: static;
+                min-width: 0;
+                padding: 0 0 0 $spacer;
+                border: 0;
+                box-shadow: none;
+                background-color: transparent;
+                transform: none;
+            }
+
+            &[open] ~ .navbar-toggler {
+                &:before {
+                    margin-top: 0;
+                    transform: translate(0, -50%) rotate(45deg);
+                    transform-origin: center;
+                }
+
+                span {
+                    transform-origin: center;
+                    transform: translate(0, -50%) scaleX(0);
+                }
+
+                &:after {
+                    margin-top: 0;
+                    transform: translate(0, -50%) rotate(-45deg);
+                    transform-origin: center;
+                }
+            }
+        }
+
+        .menu {
+            transition: $transition-base;
+        }
+
+        .fmd-header-is-hidden & {
+            .menu {
+                opacity: 0;
+                visibility: hidden;
+            }
+        }
+
+        .fmd-header-is-fixed & {
+            padding-top: $navbar-padding-y * 0.5;
+            padding-bottom: $navbar-padding-y * 0.5;
+        }
     }
 }

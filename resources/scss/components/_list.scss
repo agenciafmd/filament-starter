@@ -1,10 +1,13 @@
 @use "../frontend/variables" as *;
 
-.list {
-    &-unstyled {
-        li {
-            display: flex;
-            gap: $spacer * 0.5;
+// Layer `custom`: beats the Bootstrap components, loses to helpers/utilities (see specs/bootstrap-6-migration.md, section 3 "Cascade layers")
+@layer custom {
+    .list {
+        &-unstyled {
+            li {
+                display: flex;
+                gap: $spacer * 0.5;
+            }
         }
     }
 }

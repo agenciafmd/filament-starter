@@ -1,15 +1,18 @@
 @use "sass:meta";
 
-// Vendors css
-@include meta.load-css("sweetalert2/dist/sweetalert2.min.css");
-//@include meta.load-css("wow.js/css/libs/animate.css");
-@include meta.load-css("swiper/swiper-bundle.css");
-@include meta.load-css("glightbox/dist/css/glightbox.min.css");
-@include meta.load-css("plyr/dist/plyr.css");
+// Layer `custom`: beats the Bootstrap components, loses to helpers/utilities (see specs/bootstrap-6-migration.md, section 3 "Cascade layers")
+@layer custom {
+    // Vendors css
+    @include meta.load-css("sweetalert2/dist/sweetalert2.min.css");
+    //@include meta.load-css("wow.js/css/libs/animate.css");
+    @include meta.load-css("swiper/swiper-bundle.css");
+    @include meta.load-css("glightbox/dist/css/glightbox.min.css");
+    @include meta.load-css("plyr/dist/plyr.css");
 
-// Overwriting vendors css with frontend css
-//@include meta.load-css("hubspot-form");
-@include meta.load-css("infinite-scroll");
-@include meta.load-css("sweetalert2/sweetalert2");
-@include meta.load-css("swiper");
-@include meta.load-css("glightbox");
+    // Overwriting vendors css with frontend css
+    //@include meta.load-css("hubspot-form");
+    @include meta.load-css("infinite-scroll");
+    @include meta.load-css("sweetalert2/sweetalert2");
+    @include meta.load-css("swiper");
+    @include meta.load-css("glightbox");
+}

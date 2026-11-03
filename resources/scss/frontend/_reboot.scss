@@ -1,40 +1,43 @@
 @use "variables" as *;
 @use "bootstrap/scss/layout/breakpoints" as *;
 
-section {
-    position: relative;
-}
-
-textarea {
-    resize: none;
-}
-
-p:last-child {
-    margin-bottom: 0;
-}
-
-a {
-    transition: $transition-base;
-
-    // Hides the outline on mouse/touch focus only; keyboard focus (`:focus-visible`) keeps it
-    &:focus:not(:focus-visible) {
-        outline: none;
+// Layer `custom`: beats the Bootstrap components, loses to helpers/utilities (see specs/bootstrap-6-migration.md, section 3 "Cascade layers")
+@layer custom {
+    section {
+        position: relative;
     }
-}
 
-.wysiwyg img {
-    max-width: 100%;
-    height: auto;
-}
+    textarea {
+        resize: none;
+    }
 
-.stretch {
-    &-on-mobile {
-        @include media-breakpoint-down(md) {
-            width: 100vw;
-            position: relative;
-            transform: translateX(-50%);
-            left: 50%;
-            padding-inline: $spacer;
+    p:last-child {
+        margin-bottom: 0;
+    }
+
+    a {
+        transition: $transition-base;
+
+        // Hides the outline on mouse/touch focus only; keyboard focus (`:focus-visible`) keeps it
+        &:focus:not(:focus-visible) {
+            outline: none;
+        }
+    }
+
+    .wysiwyg img {
+        max-width: 100%;
+        height: auto;
+    }
+
+    .stretch {
+        &-on-mobile {
+            @include media-breakpoint-down(md) {
+                width: 100vw;
+                position: relative;
+                transform: translateX(-50%);
+                left: 50%;
+                padding-inline: $spacer;
+            }
         }
     }
 }

@@ -1,5 +1,8 @@
-// Bootstrap 6 alpha colors the disabled radio label with `--secondary-fg` (the checkbox uses `--fg-3`);
-// the project `secondary` is the brand yellow, so the radio follows the checkbox.
-.radio:disabled ~ label {
-    color: var(--bs-fg-3);
+// Layer `custom`: beats the Bootstrap components, loses to helpers/utilities (see specs/bootstrap-6-migration.md, section 3 "Cascade layers")
+@layer custom {
+    // Bootstrap 6 alpha colors the disabled radio label with `--secondary-fg` (the checkbox uses `--fg-3`);
+    // the project `secondary` is the brand yellow, so the radio follows the checkbox.
+    .radio:disabled ~ label {
+        color: var(--bs-fg-3);
+    }
 }

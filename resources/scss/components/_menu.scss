@@ -1,55 +1,72 @@
 @use "../frontend/variables" as *;
 @use "bootstrap/scss/functions" as *;
-@use "bootstrap/scss/layout/breakpoints" as *;
 
-// Menu (`.menu`, `.menu-item`, was the Bootstrap 5 dropdown). Bootstrap 6 has no caret or wrapper:
-// `.menu-hover` (opens the menu on hover from lg, positioning context) and `.menu-toggle` (caret) are project classes.
-.menu-toggle {
-    $caret-color: $primary;
-    display: flex;
-    gap: $spacer * 0.5;
+// Layer `custom`: beats the Bootstrap components, loses to helpers/utilities (see specs/bootstrap-6-migration.md, section 3 "Cascade layers")
+@layer custom {
+    // Menu (`.menu`, `.menu-item`, was the Bootstrap 5 dropdown). Bootstrap 6 has no caret or wrapper:
+    // `.menu-hover` (opens the menu on hover, positioning context) and `.menu-toggle` (caret) are project classes.
+    // Toggles inside `.menu-hover` need `data-bs-display="static"`: Floating UI is skipped and the menu is placed
+    // by CSS (below the toggle when the navbar is expanded, in the flow inside the open drawer, see `_navbar.scss`).
+    .menu-toggle {
+        $caret-color: $primary;
+        display: flex;
+        gap: $spacer * 0.5;
 
-    &:after {
-        content: "";
-        width: $spacer * 0.75;
-        height: $spacer * 0.75;
-        display: unset;
-        margin-left: auto;
-        border: none;
-        position: relative;
-        top: $spacer * 0.375;
-        background: escape-svg(
-            url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><path fill='none' stroke='#{$caret-color}' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/></svg>")
-        );
-        transition: $transition-base;
+        &:after {
+            content: "";
+            width: $spacer * 0.75;
+            height: $spacer * 0.75;
+            display: unset;
+            margin-left: auto;
+            border: none;
+            position: relative;
+            top: $spacer * 0.375;
+            background: escape-svg(
+                url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><path fill='none' stroke='#{$caret-color}' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/></svg>")
+            );
+            transition: $transition-base;
+        }
+
+        &[aria-expanded="true"]:after {
+            transform: rotate(180deg);
+        }
     }
-}
 
-.menu-hover {
-    position: relative;
+    .menu-hover {
+        position: relative;
 
-    &:hover {
-        @include media-breakpoint-up(lg) {
-            // Opened by hover the menu is not positioned by Floating UI, so it is placed below the toggle
-            .menu:not(.show) {
-                display: flex;
-                top: 100%;
-                left: 0;
+        // Bootstrap only flags the menu with `data-bs-display="static"` on the first open, so the rule cannot rely on it
+        > .menu {
+            top: 100%;
+            left: 0;
+        }
+
+        // Hover only where there is a pointer, and never inside the open drawer (there the menu opens by click)
+        @media (hover: hover) and (pointer: fine) {
+            &:not(.drawer[open] .menu-hover):hover {
+                > .menu:not(.show) {
+                    display: flex;
+                    opacity: 1;
+                    transform: none;
+                }
+
+                > .menu-toggle:after {
+                    transform: rotate(180deg);
+                }
             }
         }
     }
-}
 
-.menu {
-    box-shadow: var(--bs-menu-box-shadow);
-    overflow: hidden;
+    .menu {
+        overflow: hidden;
 
-    // Bootstrap 6 menu items are direct children of `.menu` (no `<li>`, required by the keyboard navigation)
-    > .menu-item + .menu-item {
-        margin-top: $spacer * 0.375;
+        // Bootstrap 6 menu items are direct children of `.menu` (no `<li>`, required by the keyboard navigation)
+        > .menu-item + .menu-item {
+            margin-top: $spacer * 0.375;
+        }
     }
-}
 
-.menu-item {
-    font-size: $font-size-sm;
+    .menu-item {
+        font-size: $font-size-sm;
+    }
 }

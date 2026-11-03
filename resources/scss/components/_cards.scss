@@ -1,43 +1,46 @@
 @use "../frontend/variables" as *;
 @use "bootstrap/scss/layout/breakpoints" as *;
 
-.card {
-    &-title {
-        font-size: $font-size-xl;
-        line-height: $line-height-md;
-
-        @include media-breakpoint-up(xl) {
-            font-size: $h6-font-size;
-        }
-    }
-
-    &-subtitle {
-        font-size: $font-size-sm;
-        font-weight: $font-weight-semi-bold;
-        display: block;
-
-        @include media-breakpoint-up(xl) {
+// Layer `custom`: beats the Bootstrap components, loses to helpers/utilities (see specs/bootstrap-6-migration.md, section 3 "Cascade layers")
+@layer custom {
+    .card {
+        &-title {
             font-size: $font-size-xl;
+            line-height: $line-height-md;
+
+            @include media-breakpoint-up(xl) {
+                font-size: $h6-font-size;
+            }
+        }
+
+        &-subtitle {
+            font-size: $font-size-sm;
+            font-weight: $font-weight-semi-bold;
+            display: block;
+
+            @include media-breakpoint-up(xl) {
+                font-size: $font-size-xl;
+            }
+        }
+
+        &:not(.shadow) {
+            --bs-card-bg: none;
+        }
+
+        &.shadow {
+            --bs-card-border-width: none;
+            overflow: hidden;
         }
     }
 
-    &:not(.shadow) {
-        --bs-card-bg: none;
-    }
+    // `.card-link` was removed in Bootstrap 6 and is kept as a project class
+    .card-link {
+        &:hover {
+            text-decoration: none;
+        }
 
-    &.shadow {
-        --bs-card-border-width: none;
-        overflow: hidden;
-    }
-}
-
-// `.card-link` was removed in Bootstrap 6 and is kept as a project class
-.card-link {
-    &:hover {
-        text-decoration: none;
-    }
-
-    + .card-link {
-        margin-left: var(--bs-card-spacer-x);
+        + .card-link {
+            margin-left: var(--bs-card-spacer-x);
+        }
     }
 }

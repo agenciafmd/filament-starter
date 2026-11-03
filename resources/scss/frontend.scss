@@ -1,61 +1,178 @@
-@use "sass:meta";
+// Bootstrap 6 import stack
+//
+// Mirrors `node_modules/bootstrap/scss/bootstrap.scss` (compare it on every Bootstrap update), without the modules
+// the project doesn't use: `carousel` (Swiper is used instead) and `placeholder`. To bring one back, add its `@use`
+// at the position it has in `bootstrap.scss`.
+// Bootstrap 6 only supports the Sass module system: declaring a variable before loading Bootstrap no longer
+// overrides its `!default`, so the project values (`frontend/_variables.scss`, `frontend/_maps.scss`) are passed
+// with `@use ... with (...)` on the module that owns them. Each module can only be configured on its first load.
 
-// Bootstrap 6, configured with the project's variables (tokens, breakpoints, containers...)
-@use "frontend/bootstrap";
+@use "bootstrap/scss/banner";
+
+// Override variables and maps
+@use "frontend/variables" as *;
+@use "frontend/variables-dark" as *;
+@use "frontend/maps" as *;
+
+// Configuration
+@use "bootstrap/scss/config" with (
+    $enable-shadows: $enable-shadows,
+    $enable-gradients: $enable-gradients,
+    $enable-smooth-scroll: $enable-smooth-scroll,
+    $enable-cssgrid: $enable-cssgrid,
+    $color-mode-type: $color-mode-type,
+    $min-contrast-ratio: $min-contrast-ratio,
+    $spacer: $spacer,
+    $radius: $border-radius,
+    $radii: $bs-radii,
+    $breakpoints: $grid-breakpoints,
+    $container-max-widths: $bs-container-max-widths,
+    $grid-gutter-x: $grid-gutter-width,
+    $gutters: $spacers,
+    $gradient: $gradient,
+    $position-values: $position-values,
+    $border-width: $border-width,
+    $border-widths: $bs-border-widths,
+    $shadows: $bs-shadows,
+    $aspect-ratios: $aspect-ratios,
+    $font-weights: $bs-font-weights,
+    $font-sizes: $bs-font-sizes
+);
+
+@use "bootstrap/scss/colors" with (
+    $white: $white,
+    $black: $black,
+    $colors: $colors,
+    $color-tokens: $bs-gray-tokens
+);
+
+@use "bootstrap/scss/theme" with (
+    $theme-colors: $bs-theme-colors,
+    $theme-bgs: $bs-theme-bgs,
+    $util-opacity: $bs-util-opacity,
+    $theme-fgs: $bs-theme-fgs
+);
+
+// Project utilities change `$utilities` before the utilities API generates the classes. Loaded after the
+// configuration because it reads the default `$utilities` (https://getbootstrap.com/docs/6.0/utilities/api/)
+@use "frontend/utilities";
+
+// Global CSS variables, layer definitions, and configuration
+@use "bootstrap/scss/root" with (
+    $root-tokens: $root-tokens
+);
+
+// Subdir imports
+@use "bootstrap/scss/content" with (
+    $type-tokens: $type-tokens
+);
+@use "bootstrap/scss/layout";
+@use "bootstrap/scss/forms" with (
+    $form-floating-tokens: $form-floating-tokens,
+    $check-tokens: $check-tokens,
+    $radio-tokens: $radio-tokens,
+    $switch-tokens: $switch-tokens,
+    $range-tokens: $range-tokens
+);
+@use "bootstrap/scss/buttons" with (
+    $button-tokens: $button-tokens,
+    $button-variants: $button-variants
+);
+
+// Components
+@use "bootstrap/scss/accordion";
+@use "bootstrap/scss/alert";
+@use "bootstrap/scss/avatar";
+@use "bootstrap/scss/badge" with (
+    $badge-tokens: $badge-tokens
+);
+@use "bootstrap/scss/breadcrumb";
+@use "bootstrap/scss/chip";
+@use "bootstrap/scss/card" with (
+    $card-tokens: $card-tokens
+);
+@use "bootstrap/scss/datepicker";
+@use "bootstrap/scss/dialog" with (
+    $dialog-tokens: $dialog-tokens
+);
+@use "bootstrap/scss/menu" with (
+    $menu-tokens: $menu-tokens
+);
+@use "bootstrap/scss/list-group";
+@use "bootstrap/scss/nav";
+@use "bootstrap/scss/nav-overflow";
+@use "bootstrap/scss/navbar";
+@use "bootstrap/scss/drawer";
+@use "bootstrap/scss/pagination";
+@use "bootstrap/scss/popover" with (
+    $popover-tokens: $popover-tokens
+);
+@use "bootstrap/scss/progress" with (
+    $progress-tokens: $progress-tokens
+);
+@use "bootstrap/scss/spinner";
+@use "bootstrap/scss/stepper";
+@use "bootstrap/scss/toasts" with (
+    $toast-tokens: $toast-tokens
+);
+@use "bootstrap/scss/tooltip" with (
+    $tooltip-tokens: $tooltip-tokens
+);
+@use "bootstrap/scss/transitions";
+
+// Helpers
+@use "bootstrap/scss/helpers";
+
+// Utilities
+@use "bootstrap/scss/utilities/api";
 
 // Custom
 //
-// Bootstrap 6 outputs its CSS in cascade layers and reserves the `custom` layer (above `components`,
+// Each partial declares its own cascade layer. Bootstrap 6 reserves the `custom` layer (above `components`,
 // below `helpers` and `utilities`): the project styles override the components and the utilities still win,
-// as they did with the Bootstrap 5 `!important` utilities.
-@layer custom {
-    @include meta.load-css("vendors/vendors");
-    @include meta.load-css("frontend/reboot");
-    @include meta.load-css("frontend/typography");
-    @include meta.load-css("frontend/warnings");
-    @include meta.load-css("frontend/mixins");
-    @include meta.load-css("frontend/pseudo");
-    @include meta.load-css("components/animations");
-    @include meta.load-css("components/breadcrumb");
-    @include meta.load-css("components/buttons");
-    @include meta.load-css("components/checks");
-    @include meta.load-css("components/floating-labels");
-    @include meta.load-css("components/fmd-header");
-    @include meta.load-css("components/grid");
-    @include meta.load-css("components/icons");
-    @include meta.load-css("components/images");
-    @include meta.load-css("components/accessibilities");
-    @include meta.load-css("components/navbar");
-    @include meta.load-css("components/videos");
-    @include meta.load-css("components/badges");
-    @include meta.load-css("components/menu");
-    @include meta.load-css("components/alert");
-    @include meta.load-css("components/cards");
-    @include meta.load-css("components/list");
-    @include meta.load-css("components/accordion");
-    @include meta.load-css("components/dialog");
-    @include meta.load-css("styles");
+// as they did with the Bootstrap 5 `!important` utilities. The partials are loaded `as *` because some share
+// the namespace of a Bootstrap module (`menu`, `navbar`, `dialog`...).
+@use "vendors/vendors" as *;
+@use "frontend/reboot" as *;
+@use "frontend/typography" as *;
+@use "frontend/pseudo" as *;
+@use "components/animations" as *;
+@use "components/breadcrumb" as *;
+@use "components/buttons" as *;
+@use "components/checks" as *;
+@use "components/floating-labels" as *;
+@use "components/fmd-header" as *;
+@use "components/grid" as *;
+@use "components/icons" as *;
+@use "components/images" as *;
+@use "components/accessibilities" as *;
+@use "components/navbar" as *;
+@use "components/videos" as *;
+@use "components/badges" as *;
+@use "components/menu" as *;
+@use "components/alert" as *;
+@use "components/cards" as *;
+@use "components/list" as *;
+@use "components/accordion" as *;
+@use "components/dialog" as *;
+@use "components/color-mode" as *;
+@use "styles" as *;
 
-    // 5.3 Partial`s styles
-    @include meta.load-css("pages/partials/footer");
-    @include meta.load-css("pages/partials/header");
+// 5.3 Partial`s styles
+@use "pages/partials/footer" as *;
+@use "pages/partials/header" as *;
 
-    // 5.4 Pages`s styles
-    @include meta.load-css("pages/index");
-    @include meta.load-css("pages/greetings");
-    @include meta.load-css("pages/web-vitals");
-}
+// 5.4 Pages`s styles
+@use "pages/index" as *;
+@use "pages/greetings" as *;
+@use "pages/web-vitals" as *;
 
-// Project element defaults on top of the Bootstrap 6 reboot (below components)
-@layer reboot {
-    @include meta.load-css("frontend/headings");
-}
+// Project element defaults on top of the Bootstrap 6 reboot (`reboot` layer, below components)
+@use "frontend/headings" as *;
 
-// Overrides of Bootstrap 6 helpers (`helpers` layer is above `custom`)
-@layer helpers {
-    @include meta.load-css("components/icon-link");
-    @include meta.load-css("components/navbar-brand");
-}
+// Overrides of Bootstrap 6 helpers (`helpers` layer, above `custom`)
+@use "components/icon-link" as *;
+@use "components/navbar-brand" as *;
 
 // Outside the layers: Bootstrap 6 sets `color-scheme` on `:root` without a layer, so the project override must be unlayered too
-@include meta.load-css("frontend/root");
+@use "frontend/root" as *;

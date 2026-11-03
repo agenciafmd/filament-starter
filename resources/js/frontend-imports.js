@@ -5,6 +5,7 @@ import.meta.glob(["../images/**", "../fonts/**"]);
 // Bootstrap 6: only the plugins used across the site (each module registers its data API).
 // Catalog-only plugins (datepicker, chips, otp-input, strength, range, nav-overflow, toggler) are in pages/theme.js;
 // import the others the same way where a page needs them, e.g. `import "bootstrap/js/dist/carousel.js";`
+// (carousel and placeholder are also left out of `frontend.scss`: add their `@use` there too)
 import "bootstrap/js/dist/alert.js";
 import "bootstrap/js/dist/button.js";
 import "bootstrap/js/dist/collapse.js";

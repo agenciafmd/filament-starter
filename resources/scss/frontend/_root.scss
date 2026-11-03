@@ -1,5 +1,7 @@
 @use "variables" as *;
 
+// This file has no layer on purpose: Bootstrap 6 declares `:root { color-scheme }` outside the layers, so the
+// override must be too (see specs/bootstrap-6-migration.md, section 3 "Cascade layers")
 :root {
     --bs-border-width-md: #{$border-width-md};
     --bs-border-width-sm: #{$border-width-sm};

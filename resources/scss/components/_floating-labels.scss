@@ -1,49 +1,52 @@
 @use "../frontend/variables" as *;
 @use "bootstrap/scss/mixins/transition" as *;
 
-// Bootstrap 6 floating labels: the `<label>` comes before the control and reacts with `label:has(~ ...)`.
-// The project values are passed as tokens in `frontend/_bootstrap.scss`.
+// Layer `custom`: beats the Bootstrap components, loses to helpers/utilities (see specs/bootstrap-6-migration.md, section 3 "Cascade layers")
+@layer custom {
+    // Bootstrap 6 floating labels: the `<label>` comes before the control and reacts with `label:has(~ ...)`.
+    // The project values are passed as tokens in `frontend/_maps.scss`.
 
-.form-floating {
-    // Not a Bootstrap standard option
-    @if $enable-floating-label-over-the-line {
-        --bs-form-floating-padding-y: #{$input-padding-y};
-        --bs-form-floating-input-padding-t: #{$input-padding-y};
-        --bs-form-floating-input-padding-b: #{$input-padding-y};
-        --bs-form-floating-height: #{$input-height};
-        --bs-form-floating-line-height: #{$input-line-height};
-        --bs-form-floating-label-transform: scale(0.85)
-            translateY(calc(-0.5 * #{$input-height}))
-            translateX(0.15rem);
-        --bs-form-floating-transition-property: all;
-        --bs-form-floating-transition-duration: 0.2s;
-    }
-
-    // Not a Bootstrap standard option
-    > textarea {
-        &.form-control {
-            height: calc(#{$input-height} * 3);
-            border-radius: $border-radius;
+    .form-floating {
+        // Not a Bootstrap standard option
+        @if $enable-floating-label-over-the-line {
+            --bs-form-floating-padding-y: #{$input-padding-y};
+            --bs-form-floating-input-padding-t: #{$input-padding-y};
+            --bs-form-floating-input-padding-b: #{$input-padding-y};
+            --bs-form-floating-height: #{$input-height};
+            --bs-form-floating-line-height: #{$input-line-height};
+            --bs-form-floating-label-transform: scale(0.85)
+                translateY(calc(-0.5 * #{$input-height}))
+                translateX(0.15rem);
+            --bs-form-floating-transition-property: all;
+            --bs-form-floating-transition-duration: 0.2s;
         }
-    }
 
-    // The select label only floats once an option is chosen
-    > select.form-control {
-        @include transition(
-            var(--bs-form-floating-transition-property)
-                var(--bs-form-floating-transition-duration)
-        );
-    }
+        // Not a Bootstrap standard option
+        > textarea {
+            &.form-control {
+                height: calc(#{$input-height} * 3);
+                border-radius: $border-radius;
+            }
+        }
 
-    > label:has(~ select.form-control) {
-        transform: none;
-        transition: 0.125s ease-in;
-    }
+        // The select label only floats once an option is chosen
+        > select.form-control {
+            @include transition(
+                var(--bs-form-floating-transition-property)
+                    var(--bs-form-floating-transition-duration)
+            );
+        }
 
-    // A single `:has()` on the wrapper: `:has()` can't be nested (and an invalid selector drops the whole list)
-    &:has(> select.form-control:required:valid) > label,
-    &:has(> select.form-control option:not(:empty):checked) > label {
-        top: 0;
-        transform: var(--bs-form-floating-label-transform);
+        > label:has(~ select.form-control) {
+            transform: none;
+            transition: 0.125s ease-in;
+        }
+
+        // A single `:has()` on the wrapper: `:has()` can't be nested (and an invalid selector drops the whole list)
+        &:has(> select.form-control:required:valid) > label,
+        &:has(> select.form-control option:not(:empty):checked) > label {
+            top: 0;
+            transform: var(--bs-form-floating-label-transform);
+        }
     }
 }

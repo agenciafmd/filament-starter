@@ -1,7 +1,7 @@
 @use "sass:map";
 @use "variables" as *;
 @use "maps" as *;
-@use "bootstrap/scss/config" as bs;
+@use "bootstrap/scss/config" as *;
 // Loads the Bootstrap utilities, which fill `$utilities` (declared in `config`)
 @use "bootstrap/scss/utilities";
 
@@ -9,14 +9,14 @@
 // generated map (before `utilities/api` runs) instead of being passed with `@use ... with`.
 
 @function extend-utility($key, $changes) {
-    @return map.merge(map.get(bs.$utilities, $key), $changes);
+    @return map.merge(map.get($utilities, $key), $changes);
 }
 
 @function merge-utility-values($key, $values) {
-    @return map.merge(map.get(map.get(bs.$utilities, $key), "values"), $values);
+    @return map.merge(map.get(map.get($utilities, $key), "values"), $values);
 }
 
-// Spacing utilities keep the project scale (`$spacers`); Bootstrap components keep the Bootstrap 6 scale
+// Spacing utilities keep the project scale (`$spacers-map`); Bootstrap components keep the Bootstrap 6 scale
 $spacing-utilities: (
     "margin": true,
     "margin-x": true,
@@ -42,9 +42,9 @@ $spacing-utilities: (
 $project-utilities: ();
 
 @each $key, $has-auto in $spacing-utilities {
-    $values: map.get(map.get(bs.$utilities, $key), "values");
+    $values: map.get(map.get($utilities, $key), "values");
     $negative-values: ();
-    $spacing-values: $spacers;
+    $spacing-values: $spacers-map;
 
     @each $negative-key in ("-1", "-2") {
         @if map.has-key($values, $negative-key) {
@@ -257,4 +257,4 @@ $project-utilities: map.merge(
     )
 );
 
-bs.$utilities: map.merge(bs.$utilities, $project-utilities);
+$utilities: map.merge($utilities, $project-utilities);
