@@ -71,18 +71,18 @@
     "file": "assets/fonts/KFO7CnqEu92Fr1ME7kSn66aGLdTylUAMaxKUBGEe-B7iHSfaG.woff2",
     "src": "KFO7CnqEu92Fr1ME7kSn66aGLdTylUAMaxKUBGEe.woff2"
   },
-  "_frontend-wgCILObI.js": {
-    "file": "assets/js/frontend-wgCILObI.js",
+  "_frontend-BOKYeDgh.js": {
+    "file": "assets/js/frontend-BOKYeDgh.js",
     "name": "frontend",
     "dynamicImports": [
       "node_modules/infinite-scroll/js/index.js"
     ]
   },
-  "_menu-DgtJsm1A.js": {
-    "file": "assets/js/menu-DgtJsm1A.js",
+  "_menu-3U1X8W_n.js": {
+    "file": "assets/js/menu-3U1X8W_n.js",
     "name": "menu",
     "imports": [
-      "_frontend-wgCILObI.js"
+      "_frontend-BOKYeDgh.js"
     ]
   },
   "_share-min-CAGVUdif.js": {
@@ -94,21 +94,21 @@
     "name": "swiper"
   },
   "node_modules/glightbox/dist/js/glightbox.min.js": {
-    "file": "assets/js/glightbox.min-DqjNsUKA.js",
+    "file": "assets/js/glightbox.min-zKezR8wV.js",
     "name": "glightbox.min",
     "src": "node_modules/glightbox/dist/js/glightbox.min.js",
     "isDynamicEntry": true,
     "imports": [
-      "_frontend-wgCILObI.js"
+      "_frontend-BOKYeDgh.js"
     ]
   },
   "node_modules/infinite-scroll/js/index.js": {
-    "file": "assets/js/js-CDm19SOO.js",
+    "file": "assets/js/js-wo-ZasXs.js",
     "name": "js",
     "src": "node_modules/infinite-scroll/js/index.js",
     "isDynamicEntry": true,
     "imports": [
-      "_frontend-wgCILObI.js"
+      "_frontend-BOKYeDgh.js"
     ]
   },
   "node_modules/plyr/dist/plyr.mjs": {
@@ -118,12 +118,12 @@
     "isDynamicEntry": true
   },
   "node_modules/sweetalert2/dist/sweetalert2.all.js": {
-    "file": "assets/js/sweetalert2.all-vATwK9ml.js",
+    "file": "assets/js/sweetalert2.all-CDLkbnsj.js",
     "name": "sweetalert2.all",
     "src": "node_modules/sweetalert2/dist/sweetalert2.all.js",
     "isDynamicEntry": true,
     "imports": [
-      "_frontend-wgCILObI.js"
+      "_frontend-BOKYeDgh.js"
     ]
   },
   "resources/fonts/Roboto-Bold.woff2": {
@@ -651,22 +651,22 @@
     "src": "resources/images/video-film.webp"
   },
   "resources/js/components/share-api.js": {
-    "file": "assets/js/share-api-DKdN33SA.js",
+    "file": "assets/js/share-api-Drzv5xNq.js",
     "name": "share-api",
     "src": "resources/js/components/share-api.js",
     "isEntry": true,
     "imports": [
-      "_frontend-wgCILObI.js",
+      "_frontend-BOKYeDgh.js",
       "_share-min-CAGVUdif.js"
     ]
   },
   "resources/js/components/sliders/articles.js": {
-    "file": "assets/js/articles-vMEkXhUF.js",
+    "file": "assets/js/articles-Fdy4LZli.js",
     "name": "articles",
     "src": "resources/js/components/sliders/articles.js",
     "isEntry": true,
     "imports": [
-      "_frontend-wgCILObI.js",
+      "_frontend-BOKYeDgh.js",
       "_swiper-CfQmySiv.js"
     ]
   },
@@ -680,13 +680,13 @@
     ]
   },
   "resources/js/frontend-imports.js": {
-    "file": "assets/js/frontend-imports-iYIuXlTF.js",
+    "file": "assets/js/frontend-imports-Dd_FMk7t.js",
     "name": "frontend-imports",
     "src": "resources/js/frontend-imports.js",
     "isEntry": true,
     "imports": [
-      "_frontend-wgCILObI.js",
-      "_menu-DgtJsm1A.js"
+      "_frontend-BOKYeDgh.js",
+      "_menu-3U1X8W_n.js"
     ],
     "dynamicImports": [
       "node_modules/sweetalert2/dist/sweetalert2.all.js",
@@ -695,18 +695,18 @@
     ]
   },
   "resources/js/pages/theme.js": {
-    "file": "assets/js/theme-CyFiQ3pY.js",
+    "file": "assets/js/theme-ByuLVZTF.js",
     "name": "theme",
     "src": "resources/js/pages/theme.js",
     "isEntry": true,
     "imports": [
-      "_frontend-wgCILObI.js",
-      "_menu-DgtJsm1A.js",
+      "_frontend-BOKYeDgh.js",
+      "_menu-3U1X8W_n.js",
       "_share-min-CAGVUdif.js"
     ]
   },
   "resources/scss/frontend.scss": {
-    "file": "assets/css/frontend-DuzksaCt.css",
+    "file": "assets/css/frontend-CPtupvbT.css",
     "name": "frontend",
     "names": [
       "frontend.css"
