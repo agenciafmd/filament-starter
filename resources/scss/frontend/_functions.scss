@@ -1,7 +1,8 @@
 @use "sass:color";
 @use "sass:math";
 
-// Bootstrap 5 color helpers removed in Bootstrap 6, kept for the project's tokens and partials
+// Bootstrap 5 color helpers removed in Bootstrap 6, kept for the project's tokens and partials.
+// `color-contrast()` has to pick the color at compile time (CSS `contrast-color()` is not supported yet).
 
 // WCAG 2.2 relative luminance
 @function luminance($color) {
@@ -53,12 +54,14 @@
     @return $max-ratio-color;
 }
 
+// Bootstrap 5 tint/shade helpers as CSS `color-mix()` (same sRGB math as Sass `color.mix()`), like the Bootstrap 6
+// tokens. The result is a CSS value: use it in output (custom properties, `light-dark()`), not in Sass color math.
 @function tint-color($color, $weight) {
-    @return color.mix(white, $color, $weight);
+    @return color-mix(in srgb, #fff $weight, $color);
 }
 
 @function shade-color($color, $weight) {
-    @return color.mix(black, $color, $weight);
+    @return color-mix(in srgb, #000 $weight, $color);
 }
 
 @function shift-color($color, $weight) {

@@ -1,36 +1,31 @@
 @use "../frontend/variables" as *;
 @use "bootstrap/scss/layout/breakpoints" as *;
 
-// Dialog (`<dialog class="dialog">`, was the Bootstrap 5 modal)
-.dialog {
-    // Bootstrap 6 keeps the closed dialog laid out (`visibility: hidden`, for the exit animation); out of the
-    // flow it no longer stretches the page (a closed `<dialog>` is `position: absolute` by default)
-    &:not([open]) {
-        position: fixed;
-    }
-
-    $padding-md: $dialog-inner-padding-md;
-
-    &-header {
-        border-bottom: 0;
-    }
-
-    @include media-breakpoint-up(md) {
-        .btn-close {
-            --bs-btn-close-size: #{$btn-close-width * 1.5};
+// Layer `custom`: beats the Bootstrap components, loses to helpers/utilities (see specs/bootstrap-6-migration.md, section 3 "Cascade layers")
+@layer custom {
+    // Dialog (`<dialog class="dialog">`, was the Bootstrap 5 modal)
+    .dialog {
+        // Bootstrap 6 keeps the closed dialog laid out (`visibility: hidden`, for the exit animation); out of the
+        // flow it no longer stretches the page (a closed `<dialog>` is `position: absolute` by default)
+        &:not([open]) {
+            position: fixed;
         }
 
-        &-header {
-            padding: ($padding-md * 0.5) $padding-md 0 $padding-md;
+        $padding-md: $dialog-inner-padding-md;
 
-            &-container {
+        // Paddings through the Bootstrap 6 tokens (`--dialog-header-padding`, `--dialog-padding`)
+        @include media-breakpoint-up(md) {
+            --bs-dialog-header-padding: #{($padding-md * 0.5) $padding-md 0
+                $padding-md};
+            --bs-dialog-padding: #{($padding-md * 0.5) $padding-md};
+
+            .btn-close {
+                --bs-btn-close-size: #{$btn-close-width * 1.5};
+            }
+
+            &-header-container {
                 padding-left: $padding-md;
             }
-        }
-
-        &-body {
-            padding: ($padding-md * 0.5) $padding-md ($padding-md * 0.5)
-                $padding-md;
         }
     }
 }

@@ -12,7 +12,7 @@
 
 // Variables
 //
-// Project's design values. Bootstrap 6 is configured from these values in `frontend/_bootstrap.scss`,
+// Project's design values. Bootstrap 6 is configured from these values in `frontend.scss`,
 // and the project partials keep using them as Sass variables.
 
 // Color system
@@ -144,20 +144,13 @@ $min-contrast-ratio: 4.5 !default;
 
 // Options
 //
-// Quickly modify global styling by enabling or disabling optional features.
+// Only the options that differ from the Bootstrap 6 defaults (`bootstrap/scss/_config.scss`).
 
 // scss-docs-start global-variables
-$enable-rounded: true !default;
 $enable-shadows: false !default;
 $enable-gradients: false !default;
-$enable-transitions: true !default;
-$enable-reduced-motion: true !default;
 $enable-smooth-scroll: true !default;
-$enable-grid-classes: true !default;
-$enable-container-classes: true !default;
 $enable-cssgrid: false !default;
-$enable-button-pointers: true !default;
-$enable-deprecation-messages: true !default;
 $enable-floating-label-over-the-line: false !default; // Not a Bootstrap standard option
 
 $color-mode-type: data !default; // `data` or `media-query`
@@ -298,7 +291,6 @@ $grid-gutter-width: 2rem !default;
 
 // scss-docs-start border-variables
 $border-width: $ds-border-width-base !default;
-$border-width-base: $ds-border-width-base !default;
 $border-width-sm: $ds-border-width-sm !default;
 $border-width-md: $ds-border-width-md !default;
 $border-widths: (
@@ -445,17 +437,11 @@ $paragraph-margin-bottom: 1rem !default;
 
 // Z-index master list
 //
-// Same levels as Bootstrap 6 (`$zindex-levels`)
+// Levels used by the project partials (same values as Bootstrap 6 `$zindex-levels`)
 
 // scss-docs-start zindex-stack
-$zindex-menu: 1000 !default;
 $zindex-sticky: 1010 !default;
-$zindex-fixed: 1020 !default;
 $zindex-drawer: 1030 !default;
-$zindex-dialog: 1040 !default;
-$zindex-popover: 1050 !default;
-$zindex-tooltip: 1060 !default;
-$zindex-toast: 1070 !default;
 // scss-docs-end zindex-stack
 
 // Buttons + Forms
@@ -509,9 +495,6 @@ $form-floating-input-padding-b: 0.625rem !default;
 $form-floating-label-opacity: $opacity-level-intense !default;
 $form-floating-label-transform: scale(0.85) translateY(-0.5rem)
     translateX(0.15rem) !default;
-$form-floating-transition:
-    opacity 0.1s ease-in-out,
-    transform 0.1s ease-in-out !default;
 // scss-docs-end form-floating-variables
 
 // Navbar
