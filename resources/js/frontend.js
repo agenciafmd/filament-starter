@@ -340,47 +340,56 @@ function setupCepSearch() {
 
     zipcodeInputs.forEach((zipcodeInput) => {
         zipcodeInput.addEventListener("blur", () => {
-            const cep = zipcodeInput.value.replace("-", "");
+            const cep = zipcodeInput.value.replace(/\D/g, "");
 
-            if (cep.length === 8) {
-                fetch("https://viacep.com.br/ws/" + cep + "/json")
-                    .then((response) => response.json())
-                    .then((result) => {
-                        if (!result) {
-                            console.log(
-                                result.message || "Houve um erro desconhecido",
-                            );
-                            return;
-                        }
+            if (cep.length !== 8) {
+                return;
+            }
 
-                        const neighborhoodInput =
-                            document.querySelector(".js-neighborhood");
-                        const addressInput =
-                            document.querySelector(".js-address");
-                        const stateInput = document.querySelector(".js-state");
-                        const cityInput = document.querySelector(".js-city");
+            fetch(`https://viacep.com.br/ws/${cep}/json/`)
+                .then((response) => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP ${response.status}`);
+                    }
 
+                    return response.json();
+                })
+                .then((result) => {
+                    // ViaCEP answers 200 with `{ erro: true }` for an unknown CEP
+                    if (!result || result.erro) {
+                        console.warn("CEP não encontrado:", cep);
+                        return;
+                    }
+
+                    const neighborhoodInput =
+                        document.querySelector(".js-neighborhood");
+                    const addressInput = document.querySelector(".js-address");
+                    const stateInput = document.querySelector(".js-state");
+                    const cityInput = document.querySelector(".js-city");
+
+                    if (neighborhoodInput) {
                         neighborhoodInput.value = result.bairro;
+                    }
+
+                    if (addressInput) {
                         addressInput.value = result.logradouro;
+                    }
 
-                        if (stateInput.tagName === "INPUT") {
-                            stateInput.value = result.uf;
-                        }
-
-                        if (cityInput.tagName === "INPUT") {
-                            cityInput.value = result.localidade;
-                        }
+                    if (stateInput) {
+                        stateInput.value = result.uf;
 
                         if (stateInput.tagName === "SELECT") {
-                            stateInput.value = result.uf;
                             stateInput.dispatchEvent(new Event("change"));
-                            cityInput.value = result.localidade;
                         }
-                    })
-                    .catch((error) => {
-                        console.error("Erro:", error);
-                    });
-            }
+                    }
+
+                    if (cityInput) {
+                        cityInput.value = result.localidade;
+                    }
+                })
+                .catch((error) => {
+                    console.error("Erro ao buscar o CEP:", error);
+                });
         });
     });
 }
