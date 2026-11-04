@@ -34,6 +34,8 @@ const assetFolders = {
   fonts: /\.(woff2?|ttf|otf|eot)$/,
   svg: /\.svg$/,
   images: /\.(png|jpe?g|gif|webp|avif|ico|bmp)$/,
+  videos: /\.(mp4|webm|ogv|mov)$/,
+  pdf: /\.pdf$/,
 };
 
 export default defineConfig({
@@ -51,6 +53,8 @@ export default defineConfig({
       assets: [
         'resources/images/**',
         'resources/fonts/**',
+        'resources/videos/**',
+        'resources/pdf/**',
       ],
       refresh: true, // TODO add all paths to watch and refresh on change
     }),
@@ -146,6 +150,7 @@ export default defineConfig({
       '@svg': '/resources/svg',
       '@images': '/resources/images',
       '@videos': '/resources/videos',
+      '@pdf': '/resources/pdf',
     },
   },
 });
