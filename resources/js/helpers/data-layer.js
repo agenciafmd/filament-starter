@@ -59,12 +59,6 @@ function generateDataLayerEvent(options) {
  * @param {DataLayerEvent} dataToBePushed
  * */
 function updateDataLayer(dataToBePushed) {
-    const hasDataLayer = !!window.dataLayer && !!window.dataLayer.length;
-
-    if (hasDataLayer) {
-        window.dataLayer = [...window.dataLayer, dataToBePushed];
-        return;
-    }
-
-    window.dataLayer = [dataToBePushed];
+    // GTM replaces `push` on the original array: recreating it would hide the event from GTM
+    (window.dataLayer ??= []).push(dataToBePushed);
 }
