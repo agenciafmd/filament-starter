@@ -1,40 +1,4 @@
 {
-  "KFO5CnqEu92Fr1Mu53ZEC9_Vu3r1gIhOszmkAnkaWzU.woff2": {
-    "file": "assets/fonts/KFO5CnqEu92Fr1Mu53ZEC9_Vu3r1gIhOszmkAnkaWzU-C9vUoH1W.woff2",
-    "src": "KFO5CnqEu92Fr1Mu53ZEC9_Vu3r1gIhOszmkAnkaWzU.woff2"
-  },
-  "KFO5CnqEu92Fr1Mu53ZEC9_Vu3r1gIhOszmkBXkaWzU.woff2": {
-    "file": "assets/fonts/KFO5CnqEu92Fr1Mu53ZEC9_Vu3r1gIhOszmkBXkaWzU-VCNM9v6e.woff2",
-    "src": "KFO5CnqEu92Fr1Mu53ZEC9_Vu3r1gIhOszmkBXkaWzU.woff2"
-  },
-  "KFO5CnqEu92Fr1Mu53ZEC9_Vu3r1gIhOszmkBnka.woff2": {
-    "file": "assets/fonts/KFO5CnqEu92Fr1Mu53ZEC9_Vu3r1gIhOszmkBnka-BZYj8CJm.woff2",
-    "src": "KFO5CnqEu92Fr1Mu53ZEC9_Vu3r1gIhOszmkBnka.woff2"
-  },
-  "KFO5CnqEu92Fr1Mu53ZEC9_Vu3r1gIhOszmkC3kaWzU.woff2": {
-    "file": "assets/fonts/KFO5CnqEu92Fr1Mu53ZEC9_Vu3r1gIhOszmkC3kaWzU-CF6Mjs9W.woff2",
-    "src": "KFO5CnqEu92Fr1Mu53ZEC9_Vu3r1gIhOszmkC3kaWzU.woff2"
-  },
-  "KFO5CnqEu92Fr1Mu53ZEC9_Vu3r1gIhOszmkCHkaWzU.woff2": {
-    "file": "assets/fonts/KFO5CnqEu92Fr1Mu53ZEC9_Vu3r1gIhOszmkCHkaWzU-BdF9m8sc.woff2",
-    "src": "KFO5CnqEu92Fr1Mu53ZEC9_Vu3r1gIhOszmkCHkaWzU.woff2"
-  },
-  "KFO5CnqEu92Fr1Mu53ZEC9_Vu3r1gIhOszmkCXkaWzU.woff2": {
-    "file": "assets/fonts/KFO5CnqEu92Fr1Mu53ZEC9_Vu3r1gIhOszmkCXkaWzU-vkAhbFyB.woff2",
-    "src": "KFO5CnqEu92Fr1Mu53ZEC9_Vu3r1gIhOszmkCXkaWzU.woff2"
-  },
-  "KFO5CnqEu92Fr1Mu53ZEC9_Vu3r1gIhOszmkCnkaWzU.woff2": {
-    "file": "assets/fonts/KFO5CnqEu92Fr1Mu53ZEC9_Vu3r1gIhOszmkCnkaWzU-BN4prdd5.woff2",
-    "src": "KFO5CnqEu92Fr1Mu53ZEC9_Vu3r1gIhOszmkCnkaWzU.woff2"
-  },
-  "KFO5CnqEu92Fr1Mu53ZEC9_Vu3r1gIhOszmkaHkaWzU.woff2": {
-    "file": "assets/fonts/KFO5CnqEu92Fr1Mu53ZEC9_Vu3r1gIhOszmkaHkaWzU-Dld46tlZ.woff2",
-    "src": "KFO5CnqEu92Fr1Mu53ZEC9_Vu3r1gIhOszmkaHkaWzU.woff2"
-  },
-  "KFO5CnqEu92Fr1Mu53ZEC9_Vu3r1gIhOszmkenkaWzU.woff2": {
-    "file": "assets/fonts/KFO5CnqEu92Fr1Mu53ZEC9_Vu3r1gIhOszmkenkaWzU-qN-POhBq.woff2",
-    "src": "KFO5CnqEu92Fr1Mu53ZEC9_Vu3r1gIhOszmkenkaWzU.woff2"
-  },
   "KFO7CnqEu92Fr1ME7kSn66aGLdTylUAMa3-UBGEe.woff2": {
     "file": "assets/fonts/KFO7CnqEu92Fr1ME7kSn66aGLdTylUAMa3-UBGEe-DlT9XTxE.woff2",
     "src": "KFO7CnqEu92Fr1ME7kSn66aGLdTylUAMa3-UBGEe.woff2"
@@ -715,7 +679,7 @@
     ]
   },
   "webfonts.css": {
-    "file": "assets/css/webfonts-CBCVjPJg.css",
+    "file": "assets/css/webfonts-BARmzCE6.css",
     "src": "webfonts.css"
   }
 }
