@@ -1,19 +1,20 @@
-import fs, { writeFileSync, existsSync } from "fs";
+import { writeFileSync, existsSync } from "fs";
+import { compileString } from "sass";
 import { resolve } from "path";
 import { createRequire } from "module";
 
 async function generateManifest() {
     try {
         const viteManifest = getViteManifest();
-        const themeColorProject = await getThemeColor();
+        const themeColors = getThemeColors();
 
         const manifest = {
             name: "Starter",
             short_name: "Starter",
             start_url: "/",
             display: "standalone",
-            background_color: "#ffffff",
-            theme_color: themeColorProject,
+            background_color: themeColors.background,
+            theme_color: themeColors.theme,
             orientation: "portrait-primary",
             icons: generateIcons(viteManifest),
         };
@@ -49,38 +50,38 @@ function generateIcons(viteManifest) {
         {
             src: "resources/images/icons/mstile-150x150.webp",
             type: "image/webp",
-            sizes: "150x150",
-            purpose: "maskable any",
+            sizes: "270x270",
+            purpose: "any",
         },
         {
             src: "resources/images/icons/mstile-150x150.png",
             type: "image/png",
-            sizes: "150x150",
-            purpose: "maskable any",
+            sizes: "270x270",
+            purpose: "any",
         },
         {
             src: "resources/images/icons/icon-192x192.webp",
             type: "image/webp",
             sizes: "192x192",
-            purpose: "maskable any",
+            purpose: "any",
         },
         {
             src: "resources/images/icons/icon-192x192.png",
             type: "image/png",
             sizes: "192x192",
-            purpose: "maskable any",
+            purpose: "any",
         },
         {
             src: "resources/images/icons/icon-512x512.webp",
             type: "image/webp",
             sizes: "512x512",
-            purpose: "maskable any",
+            purpose: "any",
         },
         {
             src: "resources/images/icons/icon-512x512.png",
             type: "image/png",
             sizes: "512x512",
-            purpose: "maskable any",
+            purpose: "any",
         },
     ];
 
@@ -96,55 +97,25 @@ function generateIcons(viteManifest) {
     });
 }
 
-function getThemeColor() {
-    return new Promise((resolve) => {
-        const colorTokensFilePath =
-            "./resources/scss/frontend/tokens/_color-tokens.scss";
+/**
+ * PWA colors come from the theme tokens, compiled by Sass itself (variable references, functions...):
+ * `theme_color` (browser/app bar) = `$ds-primary`, `background_color` (splash screen) = `$ds-body-bg`.
+ * The `<meta name="theme-color">` in `<x-frontend::pwa />` reads `theme_color` from the generated manifest.
+ */
+function getThemeColors() {
+    const { css } = compileString(
+        `
+        @use "resources/scss/frontend/tokens/color-tokens" as color;
+        @use "resources/scss/frontend/tokens/design-tokens" as design;
+        :root { --theme: #{color.$ds-primary}; --background: #{design.$ds-body-bg}; }
+        `,
+        { loadPaths: [process.cwd()] },
+    );
 
-        fs.readFile(colorTokensFilePath, "utf8", (err, data) => {
-            if (err) {
-                console.error("Erro ao ler o arquivo:", err);
-                return;
-            }
-
-            const primaryColorVariableName = getStringInFile(
-                data,
-                "$ds-primary",
-                " $",
-                ";",
-            );
-            const primaryColorVariableHexadecimal = getStringInFile(
-                data,
-                primaryColorVariableName,
-                "#",
-                ";",
-            );
-
-            resolve(primaryColorVariableHexadecimal);
-        });
-    });
-}
-
-function getStringInFile(file, keyword, initialSelector, finalSelector) {
-    const lines = file.split("\n");
-
-    let occurrences = [];
-
-    lines.forEach((line) => {
-        if (line.includes(keyword)) {
-            const indexOfHexaInitial = line.indexOf(initialSelector);
-            const indexOfHexaEnd = line.indexOf(
-                finalSelector,
-                indexOfHexaInitial,
-            );
-
-            occurrences.push(
-                line.substring(indexOfHexaInitial, indexOfHexaEnd).trim(),
-            );
-        }
-    });
-
-    return occurrences[0];
+    return {
+        theme: css.match(/--theme: ([^;]+);/)[1],
+        background: css.match(/--background: ([^;]+);/)[1],
+    };
 }
 
 generateManifest();
