@@ -6,19 +6,20 @@ import PluginCritical from 'rollup-plugin-critical';
 import webfontDownload from 'vite-plugin-webfont-dl';
 import prefixCustomProperties from 'postcss-prefix-custom-properties';
 
-const { APP_URL } = {
-  ...loadEnv(
-      process.env.NODE_ENV,
-      process.cwd(),
-      ['VITE', 'APP'],
-  ),
-};
+const { APP_URL } = loadEnv(
+    process.env.NODE_ENV,
+    process.cwd(),
+    ['VITE', 'APP'],
+);
 
 const DEFAULT_URL = 'http://localhost';
 const url = APP_URL ? new URL(APP_URL) : new URL(DEFAULT_URL);
 // Without the port on purpose: the build runs inside the Sail container, where the app listens on port 80
 // (the APP_URL port, e.g. 8081, only exists on the host)
 const CRITICAL_URL = `${ url.protocol }//${ url.hostname }`;
+
+// Third-party libs: their classes survive the purge and their custom properties don't get the bs- prefix
+const vendorPrefixes = [/^swal2-/, /^swiper-/, /^plyr-/];
 
 const purgeCheckPaths = [
   'packages/agenciafmd/frontend/resources/views/**/*.php',
@@ -53,7 +54,13 @@ export default defineConfig({
         'resources/images/**',
         'resources/fonts/**',
       ],
-      refresh: true, // TODO add all paths to watch and refresh on change
+      refresh: [
+        'resources/views/**',
+        'routes/**',
+        'lang/**',
+        'packages/agenciafmd/**/resources/views/**',
+        'packages/agenciafmd/**/src/**/*.php',
+      ],
     }),
     webfontDownload([
       'https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap',
@@ -67,27 +74,13 @@ export default defineConfig({
         },
       ],
       criticalConfig: {
+        // One viewport per breakpoint of $grid-breakpoints (resources/scss/frontend/_variables.scss)
         dimensions: [
-          {
-            width: 375,
-            height: 667,
-          },
-          {
-            width: 1024,
-            height: 768,
-          },
-          {
-            width: 1280,
-            height: 720,
-          },
-          {
-            width: 1366,
-            height: 768,
-          },
-          {
-            width: 1920,
-            height: 1080,
-          },
+          { width: 375, height: 667 }, // xs
+          { width: 768, height: 1024 }, // sm
+          { width: 1024, height: 768 }, // md
+          { width: 1366, height: 768 }, // lg
+          { width: 1920, height: 1080 }, // xl
         ],
       },
     }),
@@ -101,19 +94,19 @@ export default defineConfig({
       // Include classes we don't have direct access
       safelist: {
         greedy: [
+          // Bootstrap 6 RTL rules for the drawer (:root:is(:lang(ar), ...) .drawer)
           /lang/,
           /plyr/,
           // Bootstrap 6 datepicker (vanilla-calendar-pro renders the calendar at runtime)
           /data-vc/,
         ],
         standard: [
+          ...vendorPrefixes,
           /^file-upload-button/,
           /^fmd-header-/,
           // GLightbox (glightbox, gslide, gclose...), without Bootstrap gutters (g-, gx-, gy-) and gap-
           /^g(?![xy]?-|ap-)/,
           /^js-/,
-          /^swal2-/,
-          /^swiper-/,
         ],
       },
     }),
@@ -126,8 +119,8 @@ export default defineConfig({
           prefix: 'bs-',
           ignore: [
             /^bs-/,
-            /^(swal2|swiper|plyr|loading)-/,
-            /^(glow|header)-/,
+            ...vendorPrefixes,
+            /^(loading|glow|header)-/,
           ],
         }),
       ],
