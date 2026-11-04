@@ -42,6 +42,31 @@ it('inlines the critical css and loads the stylesheet asynchronously when the cr
         ->assertSee('<noscript>', false);
 });
 
+it('inlines the new critical css after the file is regenerated, without clearing the cache', function (): void {
+    File::put($this->criticalFile, '.old-rule{color:red}');
+    touch($this->criticalFile, now()->subMinute()->getTimestamp());
+    $this->blade('<x-frontend::critical-css critical="pest-critical-css.css" />');
+
+    File::put($this->criticalFile, '.new-rule{color:blue}');
+    touch($this->criticalFile, now()->getTimestamp());
+    clearstatcache();
+
+    $view = $this->blade('<x-frontend::critical-css critical="pest-critical-css.css" />');
+
+    $view->assertSee('.new-rule{color:blue}', false)
+        ->assertDontSee('.old-rule{color:red}', false);
+});
+
+it('inlines the critical css generated after a request without it', function (): void {
+    $this->blade('<x-frontend::critical-css critical="pest-critical-css.css" />')
+        ->assertDontSee('<style>', false);
+
+    File::put($this->criticalFile, '.late-rule{color:red}');
+
+    $this->blade('<x-frontend::critical-css critical="pest-critical-css.css" />')
+        ->assertSee('.late-rule{color:red}', false);
+});
+
 it('declares the cascade layer order before the inlined critical css', function (): void {
     File::put($this->criticalFile, '@layer reboot{body{margin:0}}');
 

@@ -21,13 +21,7 @@ final class CriticalCss extends Component
         public ?string $critical = null,
         public string $stylesheet = 'resources/scss/frontend.scss',
     ) {
-        $this->content = cache()->rememberForever('critical-css-' . $critical, static function () use ($critical): string {
-            $criticalCss = str($critical)
-                ->beforeLast('.css')
-                ->append('_critical.min.css');
-
-            return @file_get_contents(public_path('/css/critical/' . $criticalCss)) ?: '';
-        });
+        $this->content = $this->loadCriticalCss($critical);
 
         if ($this->content) {
             $this->content = self::LAYER_ORDER . $this->content;
@@ -57,5 +51,35 @@ final class CriticalCss extends Component
             <link rel="stylesheet" href="{{ Vite::asset($stylesheet) }}" />
         </noscript>
         blade;
+    }
+
+    /**
+     * Lê o CSS crítico gerado pelo `rollup-plugin-critical` (`public/css/critical/{pagina}_critical.min.css`).
+     *
+     * Antes, o conteúdo ficava em `rememberForever` com a chave `critical-css-{pagina}`: depois de um novo build,
+     * o inline continuava com o CSS antigo (que podia divergir do stylesheet novo) até alguém rodar `cache:clear`;
+     * e, se a página fosse acessada antes do arquivo existir, a string vazia ficava cacheada para sempre.
+     *
+     * Agora:
+     * - a chave inclui o `filemtime` do arquivo: um novo build gera outra chave e o cache se renova sozinho;
+     * - sem arquivo, nada é cacheado: o CSS crítico passa a ser usado assim que for gerado.
+     *
+     * As chaves antigas ficam órfãs no cache (sem impacto além do espaço) e somem no próximo `cache:clear`.
+     */
+    private function loadCriticalCss(?string $critical): string
+    {
+        $criticalCssPath = public_path('css/critical/' . str($critical)
+            ->beforeLast('.css')
+            ->append('_critical.min.css')
+            ->toString());
+
+        if (! is_file($criticalCssPath)) {
+            return '';
+        }
+
+        return cache()->rememberForever(
+            'critical-css-' . $critical . '-' . filemtime($criticalCssPath),
+            static fn (): string => (string) file_get_contents($criticalCssPath),
+        );
     }
 }

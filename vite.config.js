@@ -16,6 +16,8 @@ const { APP_URL } = {
 
 const DEFAULT_URL = 'http://localhost';
 const url = APP_URL ? new URL(APP_URL) : new URL(DEFAULT_URL);
+// Without the port on purpose: the build runs inside the Sail container, where the app listens on port 80
+// (the APP_URL port, e.g. 8081, only exists on the host)
 const CRITICAL_URL = `${ url.protocol }//${ url.hostname }`;
 
 const purgeCheckPaths = [
