@@ -18,6 +18,14 @@ const url = APP_URL ? new URL(APP_URL) : new URL(DEFAULT_URL);
 // (the APP_URL port, e.g. 8081, only exists on the host)
 const CRITICAL_URL = `${ url.protocol }//${ url.hostname }`;
 
+// External font: vite-plugin-webfont-dl downloads it at build time and serves it from the build itself (webfonts.css).
+// To change the font: build the URL on fonts.google.com with only the weights in use, and update the
+// font-family of the maps in resources/scss/frontend/_fonts.scss.
+// To use only a local font: leave this list empty and turn on $should-use-local-font-face in _fonts.scss.
+const webfonts = [
+  'https://fonts.googleapis.com/css2?family=Roboto:wght@300..700&display=swap',
+];
+
 // Third-party libs: their classes survive the purge and their custom properties don't get the bs- prefix
 const vendorPrefixes = [/^swal2-/, /^swiper-/, /^plyr-/];
 
@@ -62,9 +70,7 @@ export default defineConfig({
         'packages/agenciafmd/**/src/**/*.php',
       ],
     }),
-    webfontDownload([
-      'https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap',
-    ]),
+    ...(webfonts.length ? [webfontDownload(webfonts)] : []),
     PluginCritical({
       criticalUrl: `${ CRITICAL_URL }/html/`,
       criticalBase: 'public/css/critical',
