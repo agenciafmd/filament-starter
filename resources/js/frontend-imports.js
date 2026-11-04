@@ -1,5 +1,3 @@
-import.meta.glob(["../images/**", "../fonts/**"]);
-
 // Vendors
 // import 'lax';
 // Bootstrap 6: only the plugins used across the site (each module registers its data API).
