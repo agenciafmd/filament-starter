@@ -1,5 +1,3 @@
-import.meta.glob(["../images/**", "../fonts/**"]);
-
 // Vendors
 // import 'lax';
 import "bootstrap";
