@@ -5,7 +5,7 @@
 ])
 
 <a
-    href="{{ asset('pdf/' . $name . '.pdf') }}"
+    href="{{ Vite::pdf($name . '.pdf') }}"
     @if ($download)
         download
     @else
