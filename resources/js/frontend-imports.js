@@ -19,9 +19,6 @@ import "bootstrap/js/dist/tab.js";
 import "bootstrap/js/dist/toast.js";
 import "bootstrap/js/dist/tooltip.js";
 
-// PWA
-import "/resources/js/pwa/pwa-manager.js";
-
 // Components
 // import '/resources/js/components/lax.js';
 import "/resources/js/components/swal.js";
