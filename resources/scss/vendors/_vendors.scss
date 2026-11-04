@@ -2,8 +2,7 @@
 
 // Layer `custom`: beats the Bootstrap components, loses to helpers/utilities (see specs/bootstrap-6-migration.md, section 3 "Cascade layers")
 @layer custom {
-    // Vendors css
-    @include meta.load-css("sweetalert2/dist/sweetalert2.min.css");
+    // Vendors css (SweetAlert2 is loaded on demand: vendors/sweetalert2/sweetalert2.scss)
     //@include meta.load-css("wow.js/css/libs/animate.css");
     @include meta.load-css("swiper/swiper-bundle.css");
     @include meta.load-css("glightbox/dist/css/glightbox.min.css");
@@ -12,7 +11,6 @@
     // Overwriting vendors css with frontend css
     //@include meta.load-css("hubspot-form");
     @include meta.load-css("infinite-scroll");
-    @include meta.load-css("sweetalert2/sweetalert2");
     @include meta.load-css("swiper");
     @include meta.load-css("glightbox");
 }

@@ -1,0 +1,25 @@
+@use "sass:meta";
+@use "variables" as swal2;
+
+// SweetAlert2 theme: entry loaded on demand together with the library (resources/js/components/swal.js).
+// It rebuilds the whole sweetalert2 stylesheet from the package source with the project variables (`_variables.scss`),
+// so the package's dist css is not needed.
+
+// Layer `custom`: beats the Bootstrap components, loses to helpers/utilities (see specs/bootstrap-6-migration.md, section 3 "Cascade layers")
+@layer custom {
+    @include meta.load-css(
+        "sweetalert2/src/sweetalert2",
+        $with: meta.module-variables("swal2")
+    );
+
+    .swal2 {
+        &-title {
+        }
+
+        &-actions {
+        }
+
+        &-content {
+        }
+    }
+}

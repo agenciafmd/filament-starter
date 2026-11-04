@@ -1,8 +1,9 @@
 @use "sass:color";
 @use "../../frontend/variables" as *;
 
-$swal2-white: #fff;
-$swal2-black: #000;
+// Every public variable here is passed to sweetalert2 (`$with` in sweetalert2.scss), so it must exist in the package
+// source (node_modules/sweetalert2/src/sweetalert2.scss) with `!default`.
+
 $swal2-outline-color: rgba(50, 100, 150, 0.4);
 
 // CONTAINER
@@ -13,7 +14,6 @@ $swal2-width: 32rem;
 $swal2-padding: $grid-gutter-width;
 $swal2-border: none;
 $swal2-border-radius: $border-radius;
-$swal2-box-shadow: #d9d9d9;
 
 // ANIMATIONS
 $swal2-show-animation: swal2-show 0.3s;
@@ -31,12 +31,10 @@ $swal2-font: $font-family-base;
 $swal2-font-size: 1rem;
 
 // BACKDROP
-$swal2-backdrop: rgba($swal2-black, 0.4);
+$swal2-backdrop: rgba($black, 0.4);
 $swal2-backdrop-transition: background-color 0.1s;
 
 // ICONS
-$swal2-icon-size: 5em;
-$swal2-icon-animations: true;
 $swal2-icon-margin: 1.25em auto 1.875em;
 $swal2-icon-zoom: null;
 $swal2-success: $success;
@@ -55,25 +53,14 @@ $swal2-title-margin: 0 0 0.4em;
 $swal2-title-color: $headings-color;
 $swal2-title-font-size: 1.7em;
 
-// CONTENT
-$swal2-content-justify-content: center;
-$swal2-content-margin: 0;
-$swal2-content-padding: 0;
-$swal2-content-color: $body-color;
-$swal2-content-font-size: 1rem;
-$swal2-content-font-weight: normal;
-$swal2-content-line-height: normal;
-$swal2-content-text-align: center;
-$swal2-content-word-wrap: break-word;
-
 // INPUT
 $swal2-input-margin: 1em auto;
 $swal2-input-width: 100%;
 $swal2-input-height: 2.625em;
 $swal2-input-padding: 0 0.75em;
-$swal2-input-border: 1px solid color.adjust($swal2-black, $lightness: 85%);
+$swal2-input-border: 1px solid color.adjust($black, $lightness: 85%);
 $swal2-input-border-radius: 0.1875em;
-$swal2-input-box-shadow: inset 0 1px 1px rgba($swal2-black, 0.06);
+$swal2-input-box-shadow: inset 0 1px 1px rgba($black, 0.06);
 $swal2-input-focus-border: 1px solid #b4dbed;
 $swal2-input-focus-outline: none;
 $swal2-input-focus-box-shadow: 0 0 3px #c4e6f5;
@@ -91,15 +78,12 @@ $swal2-textarea-padding: 0.75em;
 // VALIDATION MESSAGE
 $swal2-validation-message-justify-content: center;
 $swal2-validation-message-padding: 0.625em;
-$swal2-validation-message-background: color.adjust(
-    $swal2-black,
-    $lightness: 94%
-);
-$swal2-validation-message-color: color.adjust($swal2-black, $lightness: 40%);
+$swal2-validation-message-background: color.adjust($black, $lightness: 94%);
+$swal2-validation-message-color: color.adjust($black, $lightness: 40%);
 $swal2-validation-message-font-size: 1em;
 $swal2-validation-message-font-weight: 300;
 $swal2-validation-message-icon-background: $swal2-error;
-$swal2-validation-message-icon-color: $swal2-white;
+$swal2-validation-message-icon-color: $white;
 $swal2-validation-message-icon-zoom: null;
 
 // PROGRESS STEPS
@@ -108,29 +92,24 @@ $swal2-progress-steps-margin: 0 0 1.25em;
 $swal2-progress-steps-padding: 0;
 $swal2-progress-steps-font-weight: 600;
 $swal2-progress-steps-distance: 2.5em;
-$swal2-progress-step-width: 2em;
-$swal2-progress-step-height: 2em;
-$swal2-progress-step-border-radius: 2em;
 $swal2-progress-step-background: #add8e6;
-$swal2-progress-step-color: $swal2-white;
+$swal2-progress-step-color: $white;
 $swal2-active-step-background: #3085d6;
-$swal2-active-step-color: $swal2-white;
+$swal2-active-step-color: $white;
 
 // FOOTER
 $swal2-footer-margin: 1.25em 0 0;
 $swal2-footer-padding: 1em 0 0;
 $swal2-footer-border-color: #eee;
-$swal2-footer-color: color.adjust($swal2-black, $lightness: 33%);
+$swal2-footer-color: color.adjust($black, $lightness: 33%);
 $swal2-footer-font-size: 1em;
 
 // TIMER POGRESS BAR
-$swal2-timer-progress-bar-height: 0.25em;
-$swal2-timer-progress-bar-background: rgba($swal2-black, 0.2);
+$swal2-timer-progress-bar-background: rgba($black, 0.2);
 
 // CLOSE BUTTON
 $swal2-close-button-width: 1.2em;
 $swal2-close-button-height: 1.2em;
-$swal2-close-button-line-height: 1.2;
 $swal2-close-button-position: absolute;
 $swal2-close-button-gap: 0;
 $swal2-close-button-transition: color 0.1s ease-out;
@@ -158,45 +137,32 @@ $swal2-actions-margin: 1.25em auto 0;
 $swal2-confirm-button-border: 0;
 $swal2-confirm-button-border-radius: 0.25em;
 $swal2-confirm-button-background-color: $success;
-$swal2-confirm-button-color: $swal2-white;
+$swal2-confirm-button-color: $white;
 $swal2-confirm-button-font-size: 1.0625em;
 
 // CANCEL BUTTON
-$swal2-cancel-button-border: 0;
 $swal2-cancel-button-border-radius: 0.25em;
 $swal2-cancel-button-background-color: $danger;
-$swal2-cancel-button-color: $swal2-white;
+$swal2-cancel-button-color: $white;
 $swal2-cancel-button-font-size: 1.0625em;
 
 // COMMON VARIABLES FOR CONFIRM AND CANCEL BUTTONS
-$swal2-button-darken-hover: rgba($swal2-black, 0.1);
-$swal2-button-darken-active: rgba($swal2-black, 0.2);
-$swal2-button-focus-outline: none;
-$swal2-button-focus-background-color: null;
-$swal2-button-focus-box-shadow:
-    0 0 0 1px $swal2-background,
-    0 0 0 3px $swal2-outline-color;
 
 // TOASTS
 $swal2-toast-show-animation: swal2-toast-show 0.5s;
 $swal2-toast-hide-animation: swal2-toast-hide 0.1s forwards;
 $swal2-toast-border: none;
 $swal2-toast-box-shadow: 0 0 0.625em #d9d9d9;
-$swal2-toast-background: $swal2-white;
+$swal2-toast-background: $white;
 $swal2-toast-close-button-width: 0.8em;
 $swal2-toast-close-button-height: 0.8em;
-$swal2-toast-close-button-line-height: 0.8;
 $swal2-toast-width: auto;
 $swal2-toast-padding: 0.625em;
 $swal2-toast-title-margin: 0 0.6em;
 $swal2-toast-title-font-size: 1em;
-$swal2-toast-content-font-size: 1em;
 $swal2-toast-input-font-size: 1em;
 $swal2-toast-validation-font-size: 1em;
 $swal2-toast-buttons-font-size: 1em;
-$swal2-toast-button-focus-box-shadow:
-    0 0 0 1px $swal2-background,
-    0 0 0 3px $swal2-outline-color;
 $swal2-toast-footer-margin: 0.5em 0 0;
 $swal2-toast-footer-padding: 0.5em 0 0;
 $swal2-toast-footer-font-size: 0.8em;
