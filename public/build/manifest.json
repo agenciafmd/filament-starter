@@ -117,14 +117,11 @@
     "src": "node_modules/plyr/dist/plyr.mjs",
     "isDynamicEntry": true
   },
-  "node_modules/sweetalert2/dist/sweetalert2.all.js": {
-    "file": "assets/js/sweetalert2.all-CDLkbnsj.js",
-    "name": "sweetalert2.all",
-    "src": "node_modules/sweetalert2/dist/sweetalert2.all.js",
-    "isDynamicEntry": true,
-    "imports": [
-      "_frontend-BOKYeDgh.js"
-    ]
+  "node_modules/sweetalert2/dist/sweetalert2.esm.js": {
+    "file": "assets/js/sweetalert2.esm-CwREYJdw.js",
+    "name": "sweetalert2.esm",
+    "src": "node_modules/sweetalert2/dist/sweetalert2.esm.js",
+    "isDynamicEntry": true
   },
   "resources/fonts/Roboto-Bold.woff2": {
     "file": "assets/fonts/Roboto-Bold-B00cclMj.woff2",
@@ -680,7 +677,7 @@
     ]
   },
   "resources/js/frontend-imports.js": {
-    "file": "assets/js/frontend-imports-Dd_FMk7t.js",
+    "file": "assets/js/frontend-imports-1bE5n5j_.js",
     "name": "frontend-imports",
     "src": "resources/js/frontend-imports.js",
     "isEntry": true,
@@ -689,7 +686,7 @@
       "_menu-3U1X8W_n.js"
     ],
     "dynamicImports": [
-      "node_modules/sweetalert2/dist/sweetalert2.all.js",
+      "node_modules/sweetalert2/dist/sweetalert2.esm.js",
       "node_modules/glightbox/dist/js/glightbox.min.js",
       "node_modules/plyr/dist/plyr.mjs"
     ]

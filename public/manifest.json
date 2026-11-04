@@ -10,38 +10,38 @@
     {
       "src": "build/assets/images/mstile-150x150-B0nmQREE.webp",
       "type": "image/webp",
-      "sizes": "150x150",
-      "purpose": "maskable any"
+      "sizes": "270x270",
+      "purpose": "any"
     },
     {
       "src": "build/assets/images/mstile-150x150-CEcUQiH0.png",
       "type": "image/png",
-      "sizes": "150x150",
-      "purpose": "maskable any"
+      "sizes": "270x270",
+      "purpose": "any"
     },
     {
       "src": "build/assets/images/icon-192x192-DL56Vtcs.webp",
       "type": "image/webp",
       "sizes": "192x192",
-      "purpose": "maskable any"
+      "purpose": "any"
     },
     {
       "src": "build/assets/images/icon-192x192-BUflKfAP.png",
       "type": "image/png",
       "sizes": "192x192",
-      "purpose": "maskable any"
+      "purpose": "any"
     },
     {
       "src": "build/assets/images/icon-512x512-BEuahyzr.webp",
       "type": "image/webp",
       "sizes": "512x512",
-      "purpose": "maskable any"
+      "purpose": "any"
     },
     {
       "src": "build/assets/images/icon-512x512-AqRv5tjj.png",
       "type": "image/png",
       "sizes": "512x512",
-      "purpose": "maskable any"
+      "purpose": "any"
     }
   ]
 }
