@@ -4,9 +4,6 @@ import.meta.glob(["../images/**", "../fonts/**"]);
 // import 'lax';
 import "bootstrap";
 
-// PWA
-import "/resources/js/pwa/pwa-manager.js";
-
 // Components
 // import '/resources/js/components/lax.js';
 import "/resources/js/components/swal.js";
