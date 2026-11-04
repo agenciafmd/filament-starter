@@ -1,11 +1,14 @@
 let sweetAlertPromise;
 
 function loadSweetAlert() {
-    sweetAlertPromise ??= import("sweetalert2").then(({ default: Swal }) => {
-        window.Swal = Swal;
+    // ESM build without the bundled CSS: the styles come from `vendors/_vendors.scss`
+    sweetAlertPromise ??= import("sweetalert2/dist/sweetalert2.esm.js").then(
+        ({ default: Swal }) => {
+            window.Swal = Swal;
 
-        return Swal;
-    });
+            return Swal;
+        },
+    );
 
     return sweetAlertPromise;
 }
