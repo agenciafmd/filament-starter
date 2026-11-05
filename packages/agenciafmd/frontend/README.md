@@ -158,6 +158,53 @@ Valida `name` (com `HumanName`), `email` (`email:rfc,dns`), `phone` e `terms`, a
 
 > Sem um Postal com slug `contato`, o formulário exibe "Formulário de disparo não configurado.".
 
+### Limpeza do cache estático (`PageCacheEventSubscriber`)
+
+Quando as páginas usam a middleware `turbo` (pacote `agenciafmd/laravel-turbo`), o HTML fica gravado em `public/page-cache` e é servido direto pelo servidor web — sem passar pelo Laravel. Por isso, toda alteração feita no admix precisa apagar o arquivo da página afetada.
+
+O `Agenciafmd\Frontend\Listeners\PageCacheEventSubscriber` (registrado pelo `EventServiceProvider` do pacote) escuta os eventos `saved`, `deleted` e `restored` dos models (e `reordered`, das tabelas do Filament) e:
+
+1. apaga na hora o arquivo da página com `page-cache:clear`;
+2. depois que a resposta é enviada ao admin (`defer()`), faz um `GET` na URL para gerar o cache de novo (timeout de 5 segundos, uma vez por URL, mesmo em ações em massa).
+
+| Handler | O que limpa | Uso |
+|---|---|---|
+| `homeHandler` | Apenas a home (`pc__index__pc`) | Conteúdo exibido na home (ex.: banners, destaques) |
+| `urlHandler(string $url)` | Uma página específica, por path ou URL (ex.: `/contato`) | Chamado dentro de um handler do projeto, já que o `subscribe()` não passa argumentos |
+| `modelUrlHandler` | A página do model, a partir do atributo `url`; se o endereço mudou (troca de slug), também a página antiga | Páginas de detalhe (ex.: artigo) |
+| `clearAll` | Todo o `public/page-cache` | Conteúdo presente em várias páginas (ex.: menu, rodapé, listagens) |
+
+Os models monitorados ficam no `subscribe()` e **devem ser ajustados em cada projeto**. O padrão é:
+
+```php
+return [
+    ...$this->events(Banner::class, ['homeHandler']),
+    ...$this->events(Article::class, ['homeHandler', 'modelUrlHandler']),
+];
+```
+
+Para limpar uma página fixa quando um model muda, crie um handler no subscriber que chame o `urlHandler`:
+
+```php
+public function contactHandler(): void
+{
+    $this->urlHandler('/contato');
+}
+
+// no subscribe()
+...$this->events(Postal::class, ['contactHandler']),
+```
+
+Para um novo model, adicione uma linha com os handlers que fazem sentido. Model usado com `modelUrlHandler` precisa ter o atributo `url` com a URL absoluta da página (ex.: `route('frontend.articles.show', $slug)`). Se o model não existir no projeto (pacote não instalado), a linha não causa erro, mas pode ser removida.
+
+Pontos de atenção:
+
+- **Console não limpa o cache.** Em seeders, imports, comandos e jobs de fila o subscriber não é registrado. Depois de alterar dados por eles, rode `php artisan page-cache:clear`.
+- **Listagens não são limpas pelo `modelUrlHandler`.** Se o model aparece em uma listagem paginada (ex.: `/blog`), use `clearAll` ou limpe o diretório com `page-cache:clear blog --recursive`.
+- **Reordenação de tabelas.** O Filament grava a nova ordem com um `update` via query, que não dispara eventos do Eloquent. Por isso o `EventServiceProvider` do pacote registra um `afterReordering()` em todas as tabelas (`Table::configureUsing`) que dispara o evento `eloquent.reordered: {Model}` com a nova ordem (lista de chaves). O `events()` do subscriber já inclui o `reordered`, então todo model monitorado reage à reordenação com os mesmos handlers. O `modelUrlHandler` ignora esse evento, pois a ordem não muda a página de detalhe. Uma tabela que definir o próprio `afterReordering()` substitui esse callback; nesse caso, dispare o evento manualmente nele.
+- **Outros updates em massa via query** (`Article::query()->update(...)`) não disparam eventos do Eloquent e, portanto, não limpam o cache.
+- **Ambiente local:** com o `php artisan serve` de um único worker, o `GET` de aquecimento só é atendido depois da requisição atual; o timeout evita que ele trave. Falhas no aquecimento são ignoradas — o próximo visitante gera o cache. Falhas no `page-cache:clear` são reportadas no log.
+
 ## Testes
 
 Os testes ficam em `tests/` e usam o `Tests\TestCase` da aplicação, então são executados de dentro do projeto:

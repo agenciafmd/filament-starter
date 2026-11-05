@@ -26,6 +26,7 @@ final class FrontendServiceProvider extends ServiceProvider
     private function bootProviders(): void
     {
         $this->app->register(BladeServiceProvider::class);
+        $this->app->register(EventServiceProvider::class);
         $this->app->register(LivewireServiceProvider::class);
         $this->app->register(RouteServiceProvider::class);
     }

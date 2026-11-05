@@ -86,6 +86,16 @@ Limpe o cache com o comando abaixo:
 sail artisan cache:clear
 ```
 
+## Alterei no admix e o site não mudou?
+
+As páginas com a middleware `turbo` são gravadas em `public/page-cache` e servidas direto pelo servidor web. O `PageCacheEventSubscriber` do pacote `frontend` limpa as páginas quando um model é salvo, excluído, restaurado ou reordenado no admix — ajuste os models monitorados no `subscribe()` dele ao criar novos recursos ([ver mais](./packages/agenciafmd/frontend/README.md#limpeza-do-cache-estático-pagecacheeventsubscriber)).
+
+Alterações feitas pelo console (seeders, imports, filas) não limpam o cache. Nesse caso, rode:
+
+```bash
+sail artisan page-cache:clear
+```
+
 ## Vai codar front-end?
 
 Acesse a [documentação específica](./resources/README.md).
