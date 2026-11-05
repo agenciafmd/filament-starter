@@ -641,7 +641,7 @@
     ]
   },
   "resources/js/frontend-imports.js": {
-    "file": "assets/js/frontend-imports-0e1t3arm.js",
+    "file": "assets/js/frontend-imports-Cu81hIOs.js",
     "name": "frontend-imports",
     "src": "resources/js/frontend-imports.js",
     "isEntry": true,
@@ -667,7 +667,7 @@
     ]
   },
   "resources/scss/frontend.scss": {
-    "file": "assets/css/frontend-aFkSTGZQ.css",
+    "file": "assets/css/frontend-DI3Um_om.css",
     "name": "frontend",
     "names": [
       "frontend.css"
@@ -677,6 +677,10 @@
     "assets": [
       "assets/images/video-film-BmXcc39w.png"
     ]
+  },
+  "resources/scss/vendors/plyr/plyr.scss": {
+    "file": "assets/css/plyr-CHlF7Koj.css",
+    "src": "resources/scss/vendors/plyr/plyr.scss"
   },
   "resources/scss/vendors/sweetalert2/sweetalert2.scss": {
     "file": "assets/css/sweetalert2-B7S4d79S.css",
