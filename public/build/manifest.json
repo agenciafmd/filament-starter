@@ -641,7 +641,7 @@
     ]
   },
   "resources/js/frontend-imports.js": {
-    "file": "assets/js/frontend-imports-Cu81hIOs.js",
+    "file": "assets/js/frontend-imports-zq6YtleT.js",
     "name": "frontend-imports",
     "src": "resources/js/frontend-imports.js",
     "isEntry": true,
@@ -651,8 +651,8 @@
     ],
     "dynamicImports": [
       "node_modules/sweetalert2/dist/sweetalert2.esm.js",
-      "node_modules/glightbox/dist/js/glightbox.min.js",
-      "node_modules/plyr/dist/plyr.mjs"
+      "node_modules/plyr/dist/plyr.mjs",
+      "node_modules/glightbox/dist/js/glightbox.min.js"
     ]
   },
   "resources/js/pages/theme.js": {
@@ -667,7 +667,7 @@
     ]
   },
   "resources/scss/frontend.scss": {
-    "file": "assets/css/frontend-DI3Um_om.css",
+    "file": "assets/css/frontend-CpV-MvFB.css",
     "name": "frontend",
     "names": [
       "frontend.css"
@@ -677,6 +677,10 @@
     "assets": [
       "assets/images/video-film-BmXcc39w.png"
     ]
+  },
+  "resources/scss/vendors/glightbox/glightbox.scss": {
+    "file": "assets/css/glightbox-BEk4Vs5P.css",
+    "src": "resources/scss/vendors/glightbox/glightbox.scss"
   },
   "resources/scss/vendors/plyr/plyr.scss": {
     "file": "assets/css/plyr-CHlF7Koj.css",
