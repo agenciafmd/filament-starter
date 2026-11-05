@@ -116,6 +116,8 @@ export default defineConfig({
           /^fmd-header-/,
           // GLightbox (glightbox, gslide, gclose...), without Bootstrap gutters (g-, gx-, gy-) and gap-
           /^g(?![xy]?-|ap-)/,
+          // GLightbox description position, built at runtime ("desc-" + position, "description-" + position)
+          /^desc(ription)?-/,
           /^js-/,
         ],
       },

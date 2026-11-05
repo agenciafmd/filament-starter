@@ -1,0 +1,22 @@
+@use "sass:meta";
+@use "../../frontend/variables" as *;
+
+// GLightbox theme: entry loaded on demand together with the library (resources/js/components/glightbox.js).
+
+// Layer `custom`: beats the Bootstrap components, loses to helpers/utilities (see specs/bootstrap-6-migration.md, section 3 "Cascade layers")
+@layer custom {
+    @include meta.load-css("glightbox/dist/css/glightbox.min.css");
+
+    .glightbox {
+        &-clean .gslide-description {
+            background: unset;
+        }
+
+        &-clean .gdesc-inner {
+            padding: $spacer;
+            text-align: center;
+            color: $white;
+            font-size: $font-size-lg;
+        }
+    }
+}
