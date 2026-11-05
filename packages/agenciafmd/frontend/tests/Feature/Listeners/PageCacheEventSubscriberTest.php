@@ -4,13 +4,20 @@ declare(strict_types=1);
 
 namespace Agenciafmd\Frontend\Tests\Feature\Listeners;
 
+use Agenciafmd\Articles\Models\Article;
+use Agenciafmd\Banners\Models\Banner;
 use Agenciafmd\Frontend\Listeners\PageCacheEventSubscriber;
 use Agenciafmd\Frontend\Providers\EventServiceProvider;
 use Illuminate\Database\Eloquent\Casts\Attribute;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Client\ConnectionException;
+use Illuminate\Http\Client\Request;
+use Illuminate\Support\Facades\Event;
+use Illuminate\Support\Facades\Exceptions;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Http;
+use RuntimeException;
 use Silber\PageCache\Cache;
 use Tests\TestCase;
 use Throwable;
@@ -37,10 +44,26 @@ function cachePage(string $file): string
     return $path;
 }
 
+/**
+ * O subscriber não registra eventos no console (e os testes rodam no console).
+ */
+function subscribeAsWebRequest(): void
+{
+    (fn (): false => $this->isRunningInConsole = false)->call(app());
+
+    try {
+        Event::subscribe(PageCacheEventSubscriber::class);
+    } finally {
+        (fn (): true => $this->isRunningInConsole = true)->call(app());
+    }
+}
+
 function articleModel(string $slug): Model
 {
     $model = new class extends Model
     {
+        use HasFactory;
+
         /**
          * @return Attribute<string, never>
          */
@@ -93,7 +116,7 @@ it('clears the page of the model and of its previous url when the slug changes',
     expect($previous)->not->toBeFile()
         ->and($current)->not->toBeFile()
         ->and($other)->toBeFile();
-    Http::assertSent(static fn ($request): bool => $request->url() === url('blog/novo'));
+    Http::assertSent(static fn (Request $request): bool => $request->url() === url('blog/novo'));
 });
 
 it('does not clear the whole cache when the model url is the home page', function (): void {
@@ -102,6 +125,8 @@ it('does not clear the whole cache when the model url is the home page', functio
     $article = cachePage('blog/artigo.html');
     $model = new class extends Model
     {
+        use HasFactory;
+
         /**
          * @return Attribute<string, never>
          */
@@ -129,7 +154,7 @@ it('leaves the detail pages untouched when the table is reordered', function ():
 });
 
 it('keeps the admin flow working when the warm up request fails', function (): void {
-    Http::fake([url('/') => static fn () => throw new ConnectionException('timeout')]);
+    Http::fake([url('/') => static fn (): never => throw new ConnectionException('timeout')]);
 
     new PageCacheEventSubscriber()->homeHandler();
 
@@ -147,5 +172,102 @@ it('clears and warms up only the given page', function (): void {
 
     expect($contact)->not->toBeFile()
         ->and($home)->toBeFile();
-    Http::assertSent(static fn ($request): bool => $request->url() === url('contato'));
+    Http::assertSent(static fn (Request $request): bool => $request->url() === url('contato'));
+});
+
+it('does not subscribe to any event when running in the console', function (): void {
+    expect(new PageCacheEventSubscriber()->subscribe())->toBeEmpty();
+});
+
+it('clears the home page when a banner is saved, deleted, restored or reordered', function (string $event, mixed $payload): void {
+    Http::fake([url('/') => Http::response()]);
+    $home = cachePage('pc__index__pc.html');
+    subscribeAsWebRequest();
+
+    Event::dispatch("eloquent.{$event}: " . Banner::class, [$payload]);
+
+    expect($home)->not->toBeFile();
+})->with([
+    'saved' => ['saved', fn (): Model => articleModel('artigo')],
+    'deleted' => ['deleted', fn (): Model => articleModel('artigo')],
+    'restored' => ['restored', fn (): Model => articleModel('artigo')],
+    'reordered' => ['reordered', fn (): array => ['3', '1', '2']],
+]);
+
+it('clears the home and the article page when an article is saved', function (): void {
+    Http::fake([url('/') => Http::response(), url('blog/artigo') => Http::response()]);
+    $home = cachePage('pc__index__pc.html');
+    $article = cachePage('blog/artigo.html');
+    subscribeAsWebRequest();
+
+    Event::dispatch('eloquent.saved: ' . Article::class, [articleModel('artigo')]);
+
+    expect($home)->not->toBeFile()
+        ->and($article)->not->toBeFile();
+});
+
+it('clears the whole cache and warms up the home page', function (): void {
+    Http::preventStrayRequests();
+    Http::fake([url('/') => Http::response()]);
+    $home = cachePage('pc__index__pc.html');
+    $article = cachePage('blog/artigo.html');
+
+    new PageCacheEventSubscriber()->clearAll();
+    defer()->invoke();
+
+    expect($home)->not->toBeFile()
+        ->and($article)->not->toBeFile();
+    Http::assertSent(static fn (Request $request): bool => $request->url() === url('/'));
+});
+
+it('uses only the url path when the model url has another host', function (): void {
+    Http::fake(['https://www.example.com/*' => Http::response()]);
+    $article = cachePage('blog/artigo.html');
+    $model = new class extends Model
+    {
+        use HasFactory;
+
+        /**
+         * @return Attribute<string, never>
+         */
+        protected function url(): Attribute
+        {
+            return Attribute::get(static fn (): string => 'https://www.example.com/blog/artigo');
+        }
+    };
+
+    new PageCacheEventSubscriber()->modelUrlHandler($model);
+
+    expect($article)->not->toBeFile();
+});
+
+it('does nothing when the model has no url', function (): void {
+    Http::preventStrayRequests();
+    $home = cachePage('pc__index__pc.html');
+    $article = cachePage('blog/artigo.html');
+
+    new PageCacheEventSubscriber()->modelUrlHandler(new class extends Model
+    {
+        use HasFactory;
+    });
+    defer()->invoke();
+
+    expect($home)->toBeFile()
+        ->and($article)->toBeFile();
+    Http::assertNothingSent();
+});
+
+it('reports the failure to clear the cache and still warms up the page', function (): void {
+    Exceptions::fake();
+    Http::preventStrayRequests();
+    Http::fake([url('/') => Http::response()]);
+    $this->mock(Cache::class)
+        ->shouldReceive('forget')
+        ->andThrow(new RuntimeException('disk full'));
+
+    new PageCacheEventSubscriber()->homeHandler();
+    defer()->invoke();
+
+    Exceptions::assertReported(RuntimeException::class);
+    Http::assertSent(static fn (Request $request): bool => $request->url() === url('/'));
 });

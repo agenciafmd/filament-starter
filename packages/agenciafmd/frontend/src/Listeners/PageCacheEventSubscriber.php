@@ -91,14 +91,24 @@ final class PageCacheEventSubscriber
             return;
         }
 
-        $url = $model->getAttribute('url');
-        $previousUrl = (clone $model)->setRawAttributes($model->getRawOriginal())->getAttribute('url');
+        $url = $this->modelUrl($model);
+        $previousUrl = $this->modelUrl((clone $model)->setRawAttributes($model->getRawOriginal()));
 
         foreach (array_unique(array_filter([$url, $previousUrl])) as $pageUrl) {
             $this->forget($this->slugFromUrl($pageUrl));
         }
 
         $this->warmUp($url);
+    }
+
+    /**
+     * URL da página do model (atributo `url`); `null` quando o model não tem uma.
+     */
+    private function modelUrl(Model $model): ?string
+    {
+        $url = $model->getAttribute('url');
+
+        return is_string($url) && $url !== '' ? $url : null;
     }
 
     /**

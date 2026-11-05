@@ -6,22 +6,15 @@ namespace Agenciafmd\Frontend\Providers;
 
 use Agenciafmd\Frontend\Listeners\PageCacheEventSubscriber;
 use Filament\Tables\Table;
-use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
-use Override;
+use Illuminate\Support\Facades\Event;
+use Illuminate\Support\ServiceProvider;
 
 final class EventServiceProvider extends ServiceProvider
 {
-    protected $listen = [
-        //
-    ];
-
-    protected $subscribe = [
-        PageCacheEventSubscriber::class,
-    ];
-
-    #[Override]
     public function boot(): void
     {
+        Event::subscribe(PageCacheEventSubscriber::class);
+
         $this->bootReorderEvents();
     }
 
