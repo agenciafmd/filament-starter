@@ -667,12 +667,24 @@
     ]
   },
   "resources/scss/frontend.scss": {
-    "file": "assets/css/frontend-CpV-MvFB.css",
+    "file": "assets/css/frontend-B0Fa_lbY.css",
     "name": "frontend",
     "names": [
       "frontend.css"
     ],
     "src": "resources/scss/frontend.scss",
+    "isEntry": true,
+    "assets": [
+      "assets/images/video-film-BmXcc39w.png"
+    ]
+  },
+  "resources/scss/pages/theme.scss": {
+    "file": "assets/css/theme-CpV-MvFB.css",
+    "name": "theme",
+    "names": [
+      "theme.css"
+    ],
+    "src": "resources/scss/pages/theme.scss",
     "isEntry": true,
     "assets": [
       "assets/images/video-film-BmXcc39w.png"
