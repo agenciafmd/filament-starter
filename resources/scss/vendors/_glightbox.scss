@@ -1,9 +1,5 @@
 @use "../frontend/variables" as *;
 
-:root {
-    --plyr-color-main: #{$primary};
-}
-
 .glightbox {
     &-clean .gslide-description {
         background: unset;

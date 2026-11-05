@@ -2,11 +2,10 @@
 
 // Layer `custom`: beats the Bootstrap components, loses to helpers/utilities (see specs/bootstrap-6-migration.md, section 3 "Cascade layers")
 @layer custom {
-    // Vendors css (SweetAlert2 is loaded on demand: vendors/sweetalert2/sweetalert2.scss)
+    // Vendors css (SweetAlert2 and Plyr are loaded on demand: vendors/<lib>/<lib>.scss)
     //@include meta.load-css("wow.js/css/libs/animate.css");
     @include meta.load-css("swiper/swiper-bundle.css");
     @include meta.load-css("glightbox/dist/css/glightbox.min.css");
-    @include meta.load-css("plyr/dist/plyr.css");
 
     // Overwriting vendors css with frontend css
     //@include meta.load-css("hubspot-form");

@@ -1,0 +1,13 @@
+@use "sass:meta";
+@use "../../frontend/variables" as *;
+
+// Plyr theme: entry loaded on demand together with the library (resources/js/components/plyr.js).
+
+// Layer `custom`: beats the Bootstrap components, loses to helpers/utilities (see specs/bootstrap-6-migration.md, section 3 "Cascade layers")
+@layer custom {
+    @include meta.load-css("plyr/dist/plyr.css");
+
+    :root {
+        --plyr-color-main: #{$primary};
+    }
+}
