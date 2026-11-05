@@ -1,0 +1,8 @@
+// Page styles: scoped by the body class (`'bodyClass' => 'blog ...'` in html/blog.blade.php).
+// To use it, uncomment `@use "pages/blog" as *;` in resources/scss/frontend.scss.
+
+// Layer `custom`: beats the Bootstrap components, loses to helpers/utilities (see specs/bootstrap-6-migration.md, section 3 "Cascade layers")
+@layer custom {
+    .blog {
+    }
+}

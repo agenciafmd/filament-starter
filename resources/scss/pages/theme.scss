@@ -1,0 +1,7 @@
+// Component catalog (/html/tema): the same stylesheet as frontend.scss, purged against every view,
+// the catalog included. frontend.scss is purged WITHOUT the catalog, so the global css only keeps
+// what the real pages use (see the purge in vite.config.js).
+@use "../frontend";
+
+// Catalog only styles
+@use "web-vitals" as *;

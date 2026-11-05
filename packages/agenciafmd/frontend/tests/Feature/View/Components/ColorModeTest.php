@@ -35,7 +35,7 @@ it('applies the saved theme or the system theme to the html element', function (
 });
 
 it('applies the theme before loading the stylesheet on the html pages', function (): void {
-    $response = get('/html/tema');
+    $response = get('/html/');
 
     $response->assertOk()
         ->assertSeeInOrder([

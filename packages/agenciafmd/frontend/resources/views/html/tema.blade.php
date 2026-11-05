@@ -1,6 +1,7 @@
 @extends('frontend::html.master', [
     'bodyClass' => 'bg-body',
     'critical' => '',
+    'stylesheet' => 'resources/scss/pages/theme.scss',
 ])
 
 @section('title', 'Tema')

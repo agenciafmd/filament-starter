@@ -24,7 +24,7 @@
     <x-frontend::fonts-preload />
     <x-frontend::site-verification />
     <x-frontend::color-mode />
-    <x-frontend::critical-css :$critical stylesheet="resources/scss/frontend.scss" />
+    <x-frontend::critical-css :$critical :stylesheet="$stylesheet ?? 'resources/scss/frontend.scss'" />
 
     <livewire:styles />
 

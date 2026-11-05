@@ -40,6 +40,60 @@ const purgeCheckPaths = [
 ]
     .map((path) => join(import.meta.dirname, path));
 
+// Component catalog (/html/tema): it shows every component, so it stays out of the global purge and
+// loads its own stylesheet (resources/scss/pages/theme.scss). New pages are purged as usual.
+const catalogView = 'packages/agenciafmd/frontend/resources/views/html/tema.blade.php';
+
+const isCatalogCss = (file) => file.includes('/theme-');
+
+const purgeOptions = {
+  paths: purgeCheckPaths,
+  // Bootstrap 6 uses prefixed classes (md:col-6, hover:opacity-50); keep the split words too
+  defaultExtractor: (content) => [
+    ...(content.match(/[\w:-]+/g) ?? []),
+    ...(content.match(/[\w-]+/g) ?? []),
+  ],
+  // Include classes we don't have direct access
+  safelist: {
+    greedy: [
+      // Bootstrap 6 RTL rules for the drawer (:root:is(:lang(ar), ...) .drawer)
+      /lang/,
+      /plyr/,
+      // Bootstrap 6 datepicker (vanilla-calendar-pro renders the calendar at runtime)
+      /data-vc/,
+    ],
+    standard: [
+      ...vendorPrefixes,
+      /^file-upload-button/,
+      /^fmd-header-/,
+      // GLightbox (glightbox, gslide, gclose...), without Bootstrap gutters (g-, gx-, gy-) and gap-
+      /^g(?![xy]?-|ap-)/,
+      // GLightbox description position, built at runtime ("desc-" + position, "description-" + position)
+      /^desc(ription)?-/,
+      /^js-/,
+      // Bootstrap 6 avatar sizes and status, built in components/avatar.blade.php ("avatar-{$size}", "status-{$status}")
+      /^avatar-/,
+      /^status-/,
+      // HTML from the database (admix rich editor) never shows up in the views
+      /^(table|thead|tbody|tfoot|tr|th|td|caption|figure|figcaption|blockquote|kbd|abbr|code|pre|mark|dl|dt|dd|hr|sub|sup)$/,
+    ],
+  },
+};
+
+// The purge plugin handles every css file of the build: this runs it only on the files accepted by `filter`
+const purgeOnly = (filter, options) => {
+  const plugin = purge(options);
+  const { generateBundle } = plugin;
+
+  plugin.generateBundle = function (outputOptions, bundle) {
+    const files = Object.entries(bundle).filter(([file]) => filter(file));
+
+    return generateBundle.call(this, outputOptions, Object.fromEntries(files));
+  };
+
+  return plugin;
+};
+
 const assetFolders = {
   css: /\.css$/,
   fonts: /\.(woff2?|ttf|otf|eot)$/,
@@ -54,6 +108,7 @@ export default defineConfig({
     laravel({
       input: [
         'resources/scss/frontend.scss',
+        'resources/scss/pages/theme.scss',
         'resources/js/frontend-imports.js',
         'resources/js/pages/theme.js',
         'resources/js/components/sliders/articles.js',
@@ -94,34 +149,14 @@ export default defineConfig({
         ],
       },
     }),
-    purge({
-      paths: purgeCheckPaths,
-      // Bootstrap 6 uses prefixed classes (md:col-6, hover:opacity-50); keep the split words too
-      defaultExtractor: (content) => [
-        ...(content.match(/[\w:-]+/g) ?? []),
-        ...(content.match(/[\w-]+/g) ?? []),
-      ],
-      // Include classes we don't have direct access
-      safelist: {
-        greedy: [
-          // Bootstrap 6 RTL rules for the drawer (:root:is(:lang(ar), ...) .drawer)
-          /lang/,
-          /plyr/,
-          // Bootstrap 6 datepicker (vanilla-calendar-pro renders the calendar at runtime)
-          /data-vc/,
-        ],
-        standard: [
-          ...vendorPrefixes,
-          /^file-upload-button/,
-          /^fmd-header-/,
-          // GLightbox (glightbox, gslide, gclose...), without Bootstrap gutters (g-, gx-, gy-) and gap-
-          /^g(?![xy]?-|ap-)/,
-          // GLightbox description position, built at runtime ("desc-" + position, "description-" + position)
-          /^desc(ription)?-/,
-          /^js-/,
-        ],
-      },
+    // Every css file but the catalog's (frontend.css and the lazy vendor chunks)
+    purgeOnly((file) => !isCatalogCss(file), {
+      ...purgeOptions,
+      // The catalog would keep every component in the global css
+      skippedContentGlobs: [join(import.meta.dirname, catalogView)],
     }),
+    // The catalog's css, purged against every view (the catalog included)
+    purgeOnly(isCatalogCss, purgeOptions),
   ],
   css: {
     postcss: {
