@@ -18,6 +18,7 @@ Também utilizados pelo código, mas não declarados no `composer.json` do pacot
 - agenciafmd/laravel-social-meta (componente `<x-social-meta>` no `master`)
 - agenciafmd/laravel-support (regra `HumanName` e trait `FormRateLimiter`)
 - agenciafmd/filament-postal (envio do formulário de contato)
+- agenciafmd/filament-settings (Google Tag Manager, Google Analytics, verificação do Search Console, Pixel da Meta e scripts do header/footer no `master`)
 
 ## Instalação
 
@@ -43,17 +44,9 @@ O service provider é registrado automaticamente (package discovery).
 
 ## Configuração
 
-```dotenv
-GOOGLE_TAGMANAGER=GTM-XXXXXXX
-GOOGLE_SITE_VERIFICATION=
-```
+O pacote não tem config nem publica arquivos (views ou assets); as views são carregadas com o namespace `frontend::`.
 
-| Variável | Config | Descrição |
-|---|---|---|
-| `GOOGLE_TAGMANAGER` | `frontend.google.tagmanager` | ID do GTM; os componentes `gtm-head` / `gtm-body` só renderizam quando preenchido |
-| `GOOGLE_SITE_VERIFICATION` | `frontend.google.site_verification` | Token do Google Search Console (`google-site-verification`) |
-
-O pacote não publica arquivos (config, views ou assets); as views são carregadas com o namespace `frontend::`.
+O Google Tag Manager, o Google Analytics, a verificação do Google Search Console, o Pixel da Meta e os scripts do header/footer são configurados no admix, pelo pacote `agenciafmd/filament-settings` (menu Configurações), e impressos no `master` pelos componentes `<x-filament-settings::...>`.
 
 ### Arquivos esperados na aplicação
 
@@ -127,7 +120,7 @@ Todos disponíveis como `<x-frontend::nome>`:
 
 | Grupo | Componentes |
 |---|---|
-| Head / tracking | `gtm-head`, `gtm-body`, `site-verification`, `pwa`, `fonts-preload`, `critical-css` |
+| Head | `pwa`, `fonts-preload`, `critical-css` |
 | Imagens | `image`, `picture`, `sources`, `single-source` (WebP + `@2x` via `Vite::image()`) |
 | Navegação | `link`, `link-share`, `breadcrumb`, `social-network`, `privacy-policy-link`, `privacy-terms-message` |
 | Conteúdo | `alert`, `badge`, `list-icon`, `pdf`, `cards.card`, `cards.card-picture`, `articles.item`, `articles.item-no-image` |

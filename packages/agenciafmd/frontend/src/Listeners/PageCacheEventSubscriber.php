@@ -9,6 +9,7 @@ use Agenciafmd\Banners\Models\Banner;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Http;
+use Spatie\LaravelSettings\Events\SettingsSaved;
 
 use function Illuminate\Support\defer;
 
@@ -44,6 +45,8 @@ final class PageCacheEventSubscriber
         return [
             ...$this->events(Banner::class, ['homeHandler']),
             ...$this->events(Article::class, ['homeHandler', 'modelUrlHandler']),
+            /* settings do admix (GTM, Analytics, scripts) aparecem em todas as páginas */
+            SettingsSaved::class => ['clearAll'],
         ];
     }
 
