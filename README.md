@@ -11,7 +11,7 @@ Este é o esqueleto de desenvolvimento dos nossos sites e apps.
 
 ## Requisitos
 
-Usamos Docker com as imagens [serversideup/php](https://serversideup.net/open-source/docker-php/docs/getting-started) (NGINX + PHP-FPM) para desenvolvimento. Você precisa do Docker com o Docker Compose v2 (`docker compose`).
+Usamos Docker com as imagens [serversideup/php](https://serversideup.net/open-source/docker-php/docs/getting-started) (NGINX + PHP-FPM), tanto no desenvolvimento quanto na imagem de produção. Você precisa do Docker com o Docker Compose 2.24 ou mais novo (`docker compose`).
 
 Não é preciso PHP nem Node no host. Todos os comandos PHP, Artisan, Composer e Node rodam dentro do container `app`, com `docker compose exec app ...`.
 
@@ -132,6 +132,48 @@ docker compose exec app php artisan cache:clear
 
 Acesse a [documentação específica](./resources/README.md).
 
+## Imagem de produção
+
+O `Dockerfile` tem dois targets:
+
+- `development`: usado pelo `compose.yaml`, com Node, xdebug e as dependências do Playwright. O código entra por bind mount.
+- `production`: sem Node, npm, xdebug, pacotes de dev nem Composer. O código e o `vendor/` (instalado com `--no-dev`) ficam dentro da imagem. É o target padrão: um `docker build` sem `--target` gera a imagem de produção.
+
+Os assets do frontend **não** são compilados no build. A imagem usa os arquivos commitados em `public/build`, `public/css/critical` e `public/filament-admix`. Antes de gerar a imagem, rode no ambiente de desenvolvimento e commite o resultado:
+
+```bash
+docker compose exec app npm run build
+docker compose exec app npm run build:filament
+```
+
+Gere a imagem a partir de um clone limpo do repositório. O contexto do build é a pasta, não o Git, então arquivos fora do Git (como pacotes locais em `packages/`) também entrariam na imagem.
+
+```bash
+docker build --target production -t nome-do-projeto:producao .
+```
+
+### Testando a imagem de produção localmente
+
+O `compose.production.yaml` troca o serviço `app` pela imagem de produção, sem bind mount, e reaproveita o MySQL, o Redis e o Mailpit do ambiente de desenvolvimento. A configuração vem do `.env` quando o container sobe, com `APP_ENV=production` e `APP_DEBUG=false`. O `.env` nunca é copiado para a imagem.
+
+```bash
+docker compose -f compose.yaml -f compose.production.yaml up -d --build --wait
+```
+
+Enquanto a produção estiver no ar, o `docker compose exec app ...` roda no container de produção, que não tem Node nem Composer. Para voltar ao desenvolvimento:
+
+```bash
+docker compose up -d --build --wait
+```
+
+### Configuração em runtime
+
+Na imagem de produção, toda a configuração vem de variáveis de ambiente (`APP_KEY`, banco, cache etc.). Ao subir, o container cria o link do `storage` e roda o `php artisan optimize`, que gera os caches de config, rotas, views, eventos e do Filament.
+
+As migrações **não** rodam automaticamente. Para ligar, defina `AUTORUN_LARAVEL_MIGRATION=true`.
+
+O `storage/` do container é efêmero: uploads e logs se perdem quando o container é recriado.
+
 ## Agentes de IA (Laravel Boost)
 
 O `AGENTS.md` e as skills em `.claude/skills` e `.github/skills` são gerados pelo Laravel Boost já com os comandos `docker compose exec app ...`. Os arquivos que controlam isso são versionados:
@@ -164,14 +206,15 @@ O MCP do Boost roda dentro do container, então os serviços precisam estar no a
 
 Para um projeto que já rodava com o Laravel Sail:
 
-1. Pare os containers antigos, já com o novo `compose.yaml`. O `--remove-orphans` remove o antigo serviço `selenium`. Os volumes do MySQL e do Redis são mantidos.
+1. Pare os containers antigos, já com o novo `compose.yaml`. O `--remove-orphans` remove o antigo serviço `selenium`. Os volumes antigos do MySQL e do Redis não são apagados.
 
     ```bash
     docker compose down --remove-orphans
     ```
 
 2. No `.env`, remova `WWWUSER`, `WWWGROUP` e `SAIL_XDEBUG_*`. Adicione `USER_ID`, `GROUP_ID`, `XDEBUG_MODE` e `XDEBUG_CONFIG` como no `.env.example`.
-3. Suba o ambiente e atualize as dependências:
+3. Copie os dados para os volumes novos, como em [Volumes do MySQL e do Redis](#volumes-do-mysql-e-do-redis).
+4. Suba o ambiente e atualize as dependências:
 
     ```bash
     docker compose up -d --build --wait
@@ -181,6 +224,33 @@ Para um projeto que já rodava com o Laravel Sail:
     ```
 
 A imagem antiga `sail-8.4/app` é compartilhada por todos os projetos que ainda usam o Sail nessa máquina. Só remova (`docker image rm sail-8.4/app`) se nenhum outro projeto precisar dela.
+
+## Volumes do MySQL e do Redis
+
+Os dados ficam nos volumes `mysql-data` e `redis-data`. Projetos criados antes dessa mudança usavam `sail-mysql` e `sail-redis`. Se o seu projeto ainda tem esses volumes, copie os dados **antes** de subir o ambiente. Se o `docker compose up` rodar antes da cópia, o MySQL é inicializado vazio no volume novo.
+
+```bash
+# veja o prefixo dos volumes antigos (normalmente o nome da pasta do projeto)
+docker volume ls --filter name=sail-
+
+PROJETO=nome-do-projeto
+
+docker compose down
+docker compose create mysql redis
+docker run --rm -v ${PROJETO}_sail-mysql:/from:ro -v ${PROJETO}_mysql-data:/to --entrypoint sh redis:alpine -c 'cp -a /from/. /to/'
+docker run --rm -v ${PROJETO}_sail-redis:/from:ro -v ${PROJETO}_redis-data:/to --entrypoint sh redis:alpine -c 'cp -a /from/. /to/'
+docker compose up -d --wait
+```
+
+O `docker compose create` cria os volumes novos sem iniciar o MySQL. A cópia preserva dono e permissões dos arquivos, e os volumes antigos não são alterados.
+
+Se o ambiente já subiu com os volumes novos vazios, rode `docker compose down`, remova os volumes novos (`docker volume rm ${PROJETO}_mysql-data ${PROJETO}_redis-data`) e repita os comandos acima.
+
+Depois de conferir que os dados estão lá, remova os volumes antigos:
+
+```bash
+docker volume rm ${PROJETO}_sail-mysql ${PROJETO}_sail-redis
+```
 
 ## Conheça nossa família
 

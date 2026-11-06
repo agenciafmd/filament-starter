@@ -1,0 +1,25 @@
+# Segredos e controle de versão
+.env*
+.git
+
+# Dependências do host: a imagem de produção instala as próprias
+vendor
+node_modules
+
+# Estado local do desenvolvimento
+bootstrap/cache/*
+public/hot
+public/storage
+public/page-cache
+storage/logs/*
+storage/framework/cache/*
+storage/framework/sessions/*
+storage/framework/testing/*
+storage/framework/views/*
+storage/app/public/*
+storage/app/private/*
+storage/clockwork/*
+
+# Mantém a estrutura de diretórios versionada
+!bootstrap/cache/.gitignore
+!storage/**/.gitignore
