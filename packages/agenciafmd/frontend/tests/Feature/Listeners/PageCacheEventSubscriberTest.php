@@ -8,6 +8,7 @@ use Agenciafmd\Articles\Models\Article;
 use Agenciafmd\Banners\Models\Banner;
 use Agenciafmd\Frontend\Listeners\PageCacheEventSubscriber;
 use Agenciafmd\Frontend\Providers\EventServiceProvider;
+use Agenciafmd\Settings\Settings\ScriptsSettings;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -19,6 +20,7 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Http;
 use RuntimeException;
 use Silber\PageCache\Cache;
+use Spatie\LaravelSettings\Events\SettingsSaved;
 use Tests\TestCase;
 use Throwable;
 
@@ -270,4 +272,16 @@ it('reports the failure to clear the cache and still warms up the page', functio
 
     Exceptions::assertReported(RuntimeException::class);
     Http::assertSent(static fn (Request $request): bool => $request->url() === url('/'));
+});
+
+it('clears the whole cache when the admix settings are saved', function (): void {
+    Http::fake([url('/') => Http::response()]);
+    $home = cachePage('pc__index__pc.html');
+    $article = cachePage('blog/artigo.html');
+    subscribeAsWebRequest();
+
+    Event::dispatch(new SettingsSaved(new ScriptsSettings()));
+
+    expect($home)->not->toBeFile()
+        ->and($article)->not->toBeFile();
 });

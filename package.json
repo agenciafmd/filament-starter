@@ -13,11 +13,11 @@
     },
     "devDependencies": {
         "@erbelion/vite-plugin-laravel-purgecss": "^0.4.8",
-        "@tailwindcss/vite": "^4.3.3",
+        "@tailwindcss/vite": "^4.3.4",
         "concurrently": "^10.0.6",
         "imagemin": "^9.0.1",
         "imagemin-webp": "^8.0.0",
-        "laravel-vite-plugin": "^3.2.0",
+        "laravel-vite-plugin": "^3.2.1",
         "npm-check-updates": "^23.1.1",
         "playwright": "^1.64.1",
         "prettier": "^3.9.10",
@@ -25,8 +25,8 @@
         "prettier-plugin-organize-imports": "^4.3.0",
         "prettier-plugin-tailwindcss": "^0.8.1",
         "rollup-plugin-critical": "^1.0.18",
-        "sass": "^1.106.1",
-        "vite": "^8.3.5",
+        "sass": "^1.107.1",
+        "vite": "^8.3.6",
         "vite-plugin-webfont-dl": "^3.13.1"
     },
     "dependencies": {
@@ -39,7 +39,7 @@
         "plyr": "^3.8.5",
         "share-api-polyfill": "^1.1.1",
         "sweetalert2": "^11.26.25",
-        "swiper": "^14.3.0",
+        "swiper": "^14.4.0",
         "tom-select": "^2.6.2",
         "wow.js": "^1.2.2"
     }

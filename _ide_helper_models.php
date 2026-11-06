@@ -201,6 +201,7 @@ namespace Agenciafmd\Banners\Models{
  * @property string|null $notebook
  * @property string|null $mobile
  * @property string|null $video
+ * @property string|null $mobile_video
  * @property string $slug
  * @property \Carbon\CarbonImmutable|null $created_at
  * @property \Carbon\CarbonImmutable|null $updated_at
@@ -223,6 +224,7 @@ namespace Agenciafmd\Banners\Models{
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Banner whereLocation($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Banner whereMeta($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Banner whereMobile($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Banner whereMobileVideo($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Banner whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Banner whereNotebook($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Banner wherePublishedAt($value)
