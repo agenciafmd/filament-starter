@@ -2,11 +2,11 @@
 
 ## Generate Migrations with Artisan
 
-Use `vendor/bin/sail artisan make:migration` to generate the timestamped filename and migration structure.
+Use `docker compose exec app php artisan make:migration` to generate the timestamped filename and migration structure.
 
 ```bash
-vendor/bin/sail artisan make:migration create_posts_table
-vendor/bin/sail artisan make:migration add_slug_to_posts_table
+docker compose exec app php artisan make:migration create_posts_table
+docker compose exec app php artisan make:migration add_slug_to_posts_table
 ```
 
 ## Define Foreign-Key Constraints Deliberately

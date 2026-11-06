@@ -5,7 +5,7 @@ import { join } from 'node:path';
 import PluginCritical from 'rollup-plugin-critical';
 import webfontDownload from 'vite-plugin-webfont-dl';
 
-const { APP_URL } = {
+const { APP_URL, VITE_PORT } = {
   ...loadEnv(
       process.env.NODE_ENV,
       process.cwd(),
@@ -14,8 +14,10 @@ const { APP_URL } = {
 };
 
 const DEFAULT_URL = 'http://localhost';
+const DEFAULT_VITE_PORT = 5181;
 const url = APP_URL ? new URL(APP_URL) : new URL(DEFAULT_URL);
-const CRITICAL_URL = `${ url.protocol }//${ url.hostname }`;
+// inside the container nginx listens on 8080, so compose.yaml sets CRITICAL_URL
+const CRITICAL_URL = process.env.CRITICAL_URL ?? `${ url.protocol }//${ url.hostname }`;
 
 const purgeCheckPaths = [
   'packages/agenciafmd/frontend/resources/views/**/*.php',
@@ -37,6 +39,14 @@ const assetFolders = {
 };
 
 export default defineConfig({
+  server: {
+    host: '0.0.0.0',
+    port: Number(VITE_PORT ?? DEFAULT_VITE_PORT),
+    strictPort: true,
+    hmr: {
+      host: 'localhost',
+    },
+  },
   plugins: [
     laravel({
       input: [

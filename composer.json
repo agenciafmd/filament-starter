@@ -43,7 +43,6 @@
         "laravel/pail": "^1.2.7",
         "laravel/pao": "^1.1.5",
         "laravel/pint": "^1.32.1",
-        "laravel/sail": "^1.69",
         "mockery/mockery": "^1.6.15",
         "nunomaduro/collision": "^8.9.5",
         "pestphp/pest": "^5.3.4",
@@ -100,10 +99,7 @@
             "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
         ],
         "post-create-project-cmd": [
-            "Composer\\Config::disableProcessTimeout",
-            "@php artisan key:generate --ansi",
-            "./vendor/bin/sail up -d --wait",
-            "./vendor/bin/sail artisan migrate --graceful --ansi"
+            "@php artisan key:generate --ansi"
         ],
         "pre-package-uninstall": [
             "Illuminate\\Foundation\\ComposerScripts::prePackageUninstall"
