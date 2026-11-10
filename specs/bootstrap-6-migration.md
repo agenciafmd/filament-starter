@@ -104,6 +104,7 @@ Ordem completa: `colors, config, root, reboot, layout, content, forms, component
 | Onde | Para quê | Exemplos |
 | --- | --- | --- |
 | `@layer custom` | Padrão do projeto. Vence os componentes e perde para helpers/utilities (como o `!important` das utilities do v5) | Quase todos os parciais e o CSS dos vendors |
+| `@layer custom.<lib>` (sub-layer) | CSS de lib dividido entre o global e um arquivo carregado sob demanda, com ajustes do projeto no global. As regras soltas em `custom` vencem as da sub-layer, então os ajustes ganham independente da ordem em que os arquivos chegam | Swiper: núcleo em `vendors/_vendors.scss`, módulos em `vendors/swiper/swiper-modules.scss`, ajustes em `vendors/swiper/_swiper.scss` |
 | `@layer reboot` | Estilos de elemento que não podem vencer componentes | `frontend/_headings.scss` (o `.popover-header` é um `<h3>`) |
 | `@layer helpers` | Override de helpers do v6 (`icon-link`, `stretched-link`, `vstack`, `ratio`…) | `components/_icon-link.scss`, `components/_navbar-brand.scss` |
 | Sem layer | Override de algo que o v6 declara fora de layer | `frontend/_root.scss` (`color-scheme`) |
@@ -111,6 +112,7 @@ Ordem completa: `colors, config, root, reboot, layout, content, forms, component
 **Regras dos parciais:**
 - Os `@use`, as variáveis e os mixins ficam fora do bloco `@layer`.
 - O `@use` não pode ficar dentro de `@layer`, e o `@import` aninhado está deprecated.
+- **CSS de terceiros dentro de layer:** `@include meta.load-css("pacote/arquivo.css")` dentro do bloco `@layer` ([documentação](https://sass-lang.com/documentation/modules/meta/#load-css)). Não use `@import url(...) layer(...)`: no CSS global, a Sass leva o `@import` para o topo do arquivo, antes da ordem das layers do Bootstrap, e a `custom` passaria a ser a camada mais fraca. Ele também não compila Sass nem aceita `$with:`.
 - **`as *`:** tira o namespace (não é alias). É necessário porque vários parciais teriam o mesmo namespace de um módulo do Bootstrap (`menu`, `navbar`, `dialog`…).
 - O `@use` emite o CSS na primeira carga. Se um parcial que gera CSS tiver mixins que outros usam, separe os mixins em outro arquivo (ex.: `components/_icon-sizes.scss`, `frontend/_mixins.scss`).
 
@@ -352,7 +354,11 @@ O CSS final passa pelo PurgeCSS, então só ficam no build as classes que aparec
 - **Prettier em mapas Sass:** dentro de um mapa, `(expr) * 0.5em` vira a lista `(expr,) * 0.5em` e o Sass falha (*Undefined operation*). Calcule em uma variável fora do mapa (ex.: `$checks-margin-block`).
 - **O Prettier do projeto só formata `resources/`.**
 - **Classes passadas por props ou arrays** (`bodyClass`, `icon-class`, `'class' =>`, `@class`, strings no JS) não são pegas por busca em `class="..."`.
-- **Bibliotecas de terceiros:** `meta.load-css("pacote/arquivo.css")` dentro do `@layer custom` de `vendors/_vendors.scss`. O `.css` explícito é obrigatório (campo `exports` dos pacotes). O sweetalert2 recebe `$with` só com as variáveis `!default` que aceita.
+- **Bibliotecas de terceiros:** `meta.load-css(...)` dentro do `@layer custom`, sempre pelo caminho que o pacote exporta (campo `exports`; ex.: `swiper/css/navigation`, e não `swiper/modules/navigation.css`).
+  - **CSS global** (o que precisa existir antes do JS): `vendors/_vendors.scss`.
+  - **CSS sob demanda:** entrada própria `vendors/<lib>/<lib>.scss` (sem `_`), importada pelo JS da lib antes de ela iniciar (swal, plyr e glightbox no `Promise.all` com o `import()` da lib; módulos do swiper no `createSlider()`).
+  - **Lib dividida entre os dois** (swiper): a parte da lib vai na sub-layer `custom.<lib>` (ver "Qual camada usar").
+  - O sweetalert2 recebe `$with` só com as variáveis `!default` que aceita.
 - **HTML gerado em tempo de execução** (`[data-vc]`) precisa estar no safelist do PurgeCSS.
 - **Testes do pacote `agenciafmd/frontend`** (incluindo o `CriticalCssTest`) não estão no `phpunit.xml`. Rode com `vendor/bin/sail bin pest packages/agenciafmd/frontend/tests`.
 - **`vendors/_hubspot-form.scss`** tem código BS4 e não é compilado. É anterior à migração.
