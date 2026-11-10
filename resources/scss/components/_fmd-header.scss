@@ -12,11 +12,16 @@
         left: 0;
         right: 0;
         z-index: $zindex-sticky;
-        margin-top: 0;
-        transition: $transition-base;
+        // Only what changes: hiding (transform) and the fixed state's background.
+        // A single duration on purpose: fmd-header.js reads transition-duration as one number.
+        transition-property: transform, background-color;
+        transition-duration: 0.2s;
+        transition-timing-function: ease-in-out;
 
+        // Visible state without transform: a transform would make the header the containing block
+        // of its position: fixed children
         &-is-hidden {
-            margin-top: calc(var(--header-height) * -1);
+            transform: translateY(-100%);
         }
 
         &-is-fixed {
