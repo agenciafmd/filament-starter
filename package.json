@@ -9,7 +9,8 @@
         "pwa": "node resources/js/utilities/create-manifest.js",
         "lint": "prettier --write resources/",
         "test:lint": "prettier --check resources/",
-        "build:filament": "vite build --config vite.admix.config.js"
+        "build:filament": "vite build --config vite.admix.config.js",
+        "postinstall": "playwright install chromium"
     },
     "devDependencies": {
         "@erbelion/vite-plugin-laravel-purgecss": "^0.4.8",
