@@ -1,1 +1,0 @@
-import{r as e}from"./frontend-BOKYeDgh.js";import"./share-min-CAGVUdif.js";e();
