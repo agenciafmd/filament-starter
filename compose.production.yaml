@@ -1,17 +1,13 @@
-# Roda a imagem de produção localmente, só para validação, com os serviços de apoio do compose.yaml.
-#   docker compose -f compose.yaml -f compose.production.yaml up -d --build --wait
-# Para voltar ao desenvolvimento:
-#   docker compose up -d --build --wait
 services:
     app:
         build:
             target: production
         env_file:
-            - path: .env
-              required: true
+            -   path: .env
+                required: true
         environment: !override
             APP_ENV: production
             APP_DEBUG: 'false'
-        volumes: !reset []
+        volumes: !reset [ ]
         ports: !override
             - '${APP_PORT:-8081}:8080'
