@@ -2,9 +2,9 @@ import { defineConfig, loadEnv } from 'vite';
 import laravel from 'laravel-vite-plugin';
 import purge from '@erbelion/vite-plugin-laravel-purgecss';
 import { join } from 'node:path';
-import PluginCritical from 'rollup-plugin-critical';
 import webfontDownload from 'vite-plugin-webfont-dl';
 import prefixCustomProperties from 'postcss-prefix-custom-properties';
+import critical from './resources/js/utilities/critical.js';
 
 const { APP_URL } = loadEnv(
     process.env.NODE_ENV,
@@ -130,25 +130,8 @@ export default defineConfig({
       ],
     }),
     ...(webfonts.length ? [webfontDownload(webfonts)] : []),
-    PluginCritical({
-      criticalUrl: `${ CRITICAL_URL }/html/`,
-      criticalBase: 'public/css/critical',
-      criticalPages: [
-        {
-          uri: '', template: 'index',
-        },
-      ],
-      criticalConfig: {
-        // One viewport per breakpoint of $grid-breakpoints (resources/scss/frontend/_variables.scss)
-        dimensions: [
-          { width: 375, height: 667 }, // xs
-          { width: 768, height: 1024 }, // sm
-          { width: 1024, height: 768 }, // md
-          { width: 1366, height: 768 }, // lg
-          { width: 1920, height: 1080 }, // xl
-        ],
-      },
-    }),
+    // Critical css of every page of views/html (resources/js/utilities/critical.js)
+    critical(`${ CRITICAL_URL }/html/`),
     // Every css file but the catalog's (frontend.css and the lazy vendor chunks)
     purgeOnly((file) => !isCatalogCss(file), {
       ...purgeOptions,

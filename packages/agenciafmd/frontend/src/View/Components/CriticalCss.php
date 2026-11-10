@@ -54,7 +54,8 @@ final class CriticalCss extends Component
     }
 
     /**
-     * Lê o CSS crítico gerado pelo `rollup-plugin-critical` (`public/css/critical/{pagina}_critical.min.css`).
+     * Lê o CSS crítico gerado no build pelo `rollup-plugin-critical` (`public/css/critical/{pagina}_critical.min.css`).
+     * As páginas saem de `views/html` (`resources/js/utilities/critical.js`), renderizadas no Chromium do Playwright.
      *
      * Antes, o conteúdo ficava em `rememberForever` com a chave `critical-css-{pagina}`: depois de um novo build,
      * o inline continuava com o CSS antigo (que podia divergir do stylesheet novo) até alguém rodar `cache:clear`;
