@@ -219,6 +219,18 @@ O tema é o atributo `data-bs-theme` no `<html>`. Com `$color-mode-type: data` (
 - **Usado só em uma página:** no JS da página (ex.: `resources/js/pages/theme.js`).
 - Os plugins se registram pelo data API e não precisam de código.
 
+### JS de um componente Blade
+
+- **Entrada própria** em `resources/js/components/` (ex.: `sliders/articles.js`), listada no `input` do `vite.config.js`.
+- **No Blade do componente:**
+  ```blade
+  @pushOnce('scripts')
+      @vite('resources/js/components/sliders/articles.js')
+  @endPushOnce
+  ```
+- **Por que `@vite`, e não `<script src="{{ Vite::asset(...) }}">`:** o `@vite` gera o `<link rel="modulepreload">` dos chunks que a entrada importa (swiper, frontend…), e o navegador baixa tudo em paralelo. Com o `Vite::asset` ele só descobre as dependências depois de baixar a entrada.
+- **Por que `@pushOnce`:** o componente pode aparecer mais de uma vez na página; a tag sai uma vez só.
+
 ## 5. JavaScript
 
 - **O v6 é só ESM:** não existe `window.bootstrap`.

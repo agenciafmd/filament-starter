@@ -13,7 +13,6 @@
     class="btn btn-solid theme-primary btn-lg justify-content-center w-100 js-btn-share {{ $shareClass }}"
 />
 
-@push('scripts')
-    <script type="module" src="{{ Vite::asset('resources/js/components/share-api.js') }}"></script>
-
-@endpush
+@pushOnce('scripts')
+    @vite('resources/js/components/share-api.js')
+@endPushOnce
