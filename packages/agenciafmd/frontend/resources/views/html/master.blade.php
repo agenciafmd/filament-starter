@@ -22,7 +22,10 @@
     <x-frontend::fonts-preload />
 
     <x-frontend::color-mode />
-    @vite($stylesheet ?? 'resources/scss/frontend.scss')
+    <x-frontend::critical-css
+        :critical="$critical ?? null"
+        :stylesheet="$stylesheet ?? 'resources/scss/frontend.scss'"
+    />
 
     <livewire:styles />
 
