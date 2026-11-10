@@ -4,10 +4,17 @@
 @layer custom {
     // Vendors css (SweetAlert2, Plyr and GLightbox are loaded on demand: vendors/<lib>/<lib>.scss)
     //@include meta.load-css("wow.js/css/libs/animate.css");
-    @include meta.load-css("swiper/swiper-bundle.css");
+
+    // Swiper core: the slides' layout before the JS. Its modules (navigation, pagination, fade) come
+    // with the slider: vendors/swiper/swiper-modules.scss.
+    // Sub-layer custom.swiper: the project's overrides (vendors/swiper/_swiper.scss, directly in
+    // `custom`) always win over the library, whatever css loads first.
+    @layer swiper {
+        @include meta.load-css("swiper/swiper.css");
+    }
 
     // Overwriting vendors css with frontend css
     //@include meta.load-css("hubspot-form");
     @include meta.load-css("infinite-scroll");
-    @include meta.load-css("swiper");
+    @include meta.load-css("swiper/swiper");
 }

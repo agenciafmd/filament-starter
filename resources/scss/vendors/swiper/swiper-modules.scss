@@ -1,0 +1,15 @@
+@use "sass:meta";
+
+// Css of the Swiper modules registered in createSlider() (resources/js/components/swiper.js):
+// entry loaded on demand together with the slider. A module added there needs its css here.
+// The core (slides' layout) and the project's overrides (_swiper.scss) are in the global css.
+
+// Sub-layer custom.swiper: the project's overrides (directly in `custom`) always win over the
+// library, even though this file loads after the global css.
+@layer custom {
+    @layer swiper {
+        @include meta.load-css("swiper/css/navigation");
+        @include meta.load-css("swiper/css/pagination");
+        @include meta.load-css("swiper/css/effect-fade");
+    }
+}
