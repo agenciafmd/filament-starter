@@ -11,23 +11,35 @@ use Tests\TestCase;
 
 pest()->extend(TestCase::class)->use(RefreshDatabase::class);
 
+// A built project (manifest, no hot file): the critical css only applies outside `npm run dev`
 beforeEach(function (): void {
     $this->hotFile = storage_path('framework/testing/critical-css.hot');
     File::ensureDirectoryExists(dirname($this->hotFile));
-    File::put($this->hotFile, 'http://vite.test');
     Vite::useHotFile($this->hotFile);
+
+    $this->buildDirectory = 'pest-critical-css-build';
+    File::ensureDirectoryExists(public_path($this->buildDirectory));
+    File::put(public_path("{$this->buildDirectory}/manifest.json"), json_encode([
+        'resources/scss/frontend.scss' => [
+            'file' => 'assets/css/frontend-pest.css',
+            'src' => 'resources/scss/frontend.scss',
+            'isEntry' => true,
+        ],
+    ]));
+    Vite::useBuildDirectory($this->buildDirectory);
 
     $this->criticalFile = public_path('css/critical/pest-critical-css_critical.min.css');
 });
 
 afterEach(function (): void {
     File::delete([$this->hotFile, $this->criticalFile]);
+    File::deleteDirectory(public_path($this->buildDirectory));
 });
 
 it('loads the stylesheet as render blocking when the critical css file does not exist', function (): void {
     $view = $this->blade('<x-frontend::critical-css critical="arquivo-inexistente.css" />');
 
-    $view->assertSee('<link rel="stylesheet" href="http://vite.test/resources/scss/frontend.scss"', false)
+    $view->assertSee('rel="stylesheet" href="' . asset("{$this->buildDirectory}/assets/css/frontend-pest.css") . '"', false)
         ->assertDontSee('<style>', false)
         ->assertDontSee('media="print"', false);
 });
@@ -38,8 +50,20 @@ it('inlines the critical css and loads the stylesheet asynchronously when the cr
     $view = $this->blade('<x-frontend::critical-css critical="pest-critical-css.css" />');
 
     $view->assertSee('.critical-rule{color:red}', false)
-        ->assertSee('<link rel="stylesheet" href="http://vite.test/resources/scss/frontend.scss" media="print" onload="this.media=\'all\'"', false)
+        ->assertSee('<link rel="stylesheet" href="' . asset("{$this->buildDirectory}/assets/css/frontend-pest.css") . '" media="print" onload="this.media=\'all\'"', false)
         ->assertSee('<noscript>', false);
+});
+
+it('skips the critical css and loads the stylesheet with vite while npm run dev is running', function (): void {
+    File::put($this->hotFile, 'http://vite.test');
+    File::put($this->criticalFile, '.stale-rule{color:red}');
+
+    $view = $this->blade('<x-frontend::critical-css critical="pest-critical-css.css" />');
+
+    $view->assertSee('<link rel="stylesheet" href="http://vite.test/resources/scss/frontend.scss"', false)
+        ->assertSee('<script type="module" src="http://vite.test/@vite/client"', false)
+        ->assertDontSee('.stale-rule{color:red}', false)
+        ->assertDontSee('media="print"', false);
 });
 
 it('inlines the new critical css after the file is regenerated, without clearing the cache', function (): void {

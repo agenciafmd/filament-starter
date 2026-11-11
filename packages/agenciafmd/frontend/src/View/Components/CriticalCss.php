@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Agenciafmd\Frontend\View\Components;
 
+use Illuminate\Foundation\Vite;
 use Illuminate\View\Component;
 
 final class CriticalCss extends Component
@@ -21,7 +22,7 @@ final class CriticalCss extends Component
         public ?string $critical = null,
         public string $stylesheet = 'resources/scss/frontend.scss',
     ) {
-        $this->content = $this->loadCriticalCss($critical);
+        $this->content = $this->isViteRunningHot() ? '' : $this->loadCriticalCss($critical);
 
         if ($this->content) {
             $this->content = self::LAYER_ORDER . $this->content;
@@ -51,6 +52,16 @@ final class CriticalCss extends Component
             <link rel="stylesheet" href="{{ Vite::asset($stylesheet) }}" />
         </noscript>
         blade;
+    }
+
+    /**
+     * Com o `npm run dev` rodando (arquivo `public/hot`), o CSS crítico do último build ficaria no `<head>`
+     * por cima do SCSS que está sendo editado (uma propriedade apagada continuaria valendo), e o stylesheet
+     * assíncrono não teria HMR. Nesse caso o componente carrega o stylesheet com o `@vite` normal.
+     */
+    private function isViteRunningHot(): bool
+    {
+        return resolve(Vite::class)->isRunningHot();
     }
 
     /**
