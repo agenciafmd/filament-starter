@@ -181,7 +181,11 @@ export function setValidInput({ input }) {
     input.classList.remove("is-invalid");
 }
 
-export function guideUserToTheFirstError() {
+/**
+ * Scrolls to the first invalid field of `form`. Without it, the whole page is searched: with two forms
+ * on the page, the submit of the second one would scroll to the empty required fields of the first.
+ */
+export function guideUserToTheFirstError(form = document) {
     const currentScrollPosition = window.scrollY;
     const invalidInputsSelectors = [
         ".form-control:invalid",
@@ -196,7 +200,7 @@ export function guideUserToTheFirstError() {
         ".form-range-input.is-invalid",
     ];
 
-    const invalidInputs = document.querySelectorAll(
+    const invalidInputs = form.querySelectorAll(
         invalidInputsSelectors.join(", "),
     );
 

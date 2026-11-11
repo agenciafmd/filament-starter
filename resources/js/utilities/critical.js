@@ -195,6 +195,9 @@ async function isAppReady(criticalUrl, pages) {
             return false;
         }
 
+        // Only the status is used: an unread body left open makes Node crash when the build ends
+        await response.body?.cancel();
+
         if (response.status !== 200) {
             throw new Error(
                 `CSS crítico: ${url} respondeu ${response.status} em vez de 200 (3xx: APP_ENV=production redireciona /html/; 5xx: erro na view).`,

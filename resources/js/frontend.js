@@ -63,6 +63,17 @@ export function getThemeVariables() {
     };
 }
 
+// Downloaded once and shared by the state/city selects and the CEP search
+let statesRequest;
+
+function loadStates() {
+    statesRequest ??= fetch("/json/estados-cidades.json").then((response) =>
+        response.json(),
+    );
+
+    return statesRequest;
+}
+
 function setupStateCityOptions() {
     const stateSelect = document.querySelector(".js-state");
     const citySelect = document.querySelector(".js-city");
@@ -71,8 +82,7 @@ function setupStateCityOptions() {
         return;
     }
 
-    fetch("/json/estados-cidades.json")
-        .then((response) => response.json())
+    loadStates()
         .then((data) => {
             let stateOptions = '<option value="">-</option>';
 
@@ -115,8 +125,9 @@ function setupStateCityOptions() {
 }
 
 function preventInvalidFormSubmit() {
-    const forms = document.getElementsByClassName("needs-validation");
-    const validation = Array.prototype.filter.call(forms, function (form) {
+    const forms = document.querySelectorAll(".needs-validation");
+
+    forms.forEach((form) => {
         form.addEventListener(
             "submit",
             function (event) {
@@ -124,7 +135,7 @@ function preventInvalidFormSubmit() {
                     event.preventDefault();
                     event.stopPropagation();
 
-                    guideUserToTheFirstError();
+                    guideUserToTheFirstError(form);
                     form.classList.add("was-validated");
                     // Bootstrap 6 styles the invalid fields (`:user-invalid`) only inside `[data-bs-validate]`
                     form.dataset.bsValidate = "";
@@ -138,10 +149,6 @@ function preventInvalidFormSubmit() {
 
     function setupInvalidElements() {
         const invalidElements = document.querySelectorAll(".is-invalid");
-
-        if (!invalidElements) {
-            return;
-        }
 
         invalidElements.forEach((element) => {
             element.setCustomValidity("needs validate");
@@ -226,9 +233,7 @@ function onChangeSelectLink() {
     //</select>
 
     const selects = document.querySelectorAll(".js-onchange");
-    if (!selects) {
-        return;
-    }
+
     selects.forEach((select) => {
         select.addEventListener("change", function () {
             window.location = select.value;
@@ -334,10 +339,6 @@ function setupInputMasks() {
 function setupCepSearch() {
     const zipcodeInputs = document.querySelectorAll(".js-zipcode");
 
-    if (!zipcodeInputs) {
-        return;
-    }
-
     zipcodeInputs.forEach((zipcodeInput) => {
         zipcodeInput.addEventListener("blur", () => {
             const cep = zipcodeInput.value.replace(/\D/g, "");
@@ -354,7 +355,7 @@ function setupCepSearch() {
 
                     return response.json();
                 })
-                .then((result) => {
+                .then(async (result) => {
                     // ViaCEP answers 200 with `{ erro: true }` for an unknown CEP
                     if (!result || result.erro) {
                         console.warn("CEP não encontrado:", cep);
@@ -375,12 +376,18 @@ function setupCepSearch() {
                         addressInput.value = result.logradouro;
                     }
 
-                    if (stateInput) {
-                        stateInput.value = result.uf;
+                    if (stateInput?.tagName === "SELECT") {
+                        // ViaCEP answers the UF ("SP"); the options of setupStateCityOptions use the name ("São Paulo")
+                        const states = await loadStates();
+                        const state = states.find(
+                            ({ sigla }) => sigla === result.uf,
+                        );
 
-                        if (stateInput.tagName === "SELECT") {
-                            stateInput.dispatchEvent(new Event("change"));
-                        }
+                        stateInput.value = state?.nome ?? "";
+                        // Builds the city options before the city is set below
+                        stateInput.dispatchEvent(new Event("change"));
+                    } else if (stateInput) {
+                        stateInput.value = result.uf;
                     }
 
                     if (cityInput) {
@@ -431,9 +438,6 @@ export function setupToast() {
 function setupAnchorReloadPrevention() {
     const targetClickLinkElements = document.querySelectorAll('a[href="#"]');
 
-    if (!targetClickLinkElements) {
-        return;
-    }
     targetClickLinkElements.forEach(function (linkElement) {
         linkElement.addEventListener("click", function (clickEvent) {
             clickEvent.preventDefault();

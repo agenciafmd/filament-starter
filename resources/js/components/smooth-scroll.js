@@ -51,10 +51,10 @@ export function setupSmoothScrollInDrawer() {
 }
 
 export function setupSmoothScroll() {
-    // This selector is needed because drawer animation blocks page scroll, so
-    // we need to handle each scroll separately.
+    // The links inside a drawer are left to setupSmoothScrollInDrawer: the drawer animation
+    // blocks the page scroll, so they scroll only after it closes
     const scrollTriggerElements = document.querySelectorAll(
-        "*:not(.drawer) a.js-scroll-top",
+        "a.js-scroll-top:not(.drawer a)",
     );
 
     scrollTriggerElements.forEach(function (element) {
