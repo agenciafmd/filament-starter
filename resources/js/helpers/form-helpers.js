@@ -1,33 +1,24 @@
-function setupCustomFormFieldsVisibility() {
-    HTMLElement.prototype.disableFormFields = function () {
-        this.querySelectorAll("select").forEach(function (select) {
-            select.disabled = true;
-        });
+/**
+ * Hides a block of the form and disables its fields, so they are not validated nor submitted.
+ *
+ * import { disableFormFields, enableFormFields } from "../helpers/form-helpers.js";
+ * disableFormFields(document.querySelector(".js-company-fields"));
+ */
+export function disableFormFields(element) {
+    toggleFormFields(element, false);
+}
 
-        this.querySelectorAll("input").forEach(function (input) {
-            input.disabled = true;
-        });
+export function enableFormFields(element) {
+    toggleFormFields(element, true);
+}
 
-        // Bootstrap styles required
-        this.classList.add("d-none");
-    };
+function toggleFormFields(element, isEnabled) {
+    element.querySelectorAll("input, select, textarea").forEach((field) => {
+        field.disabled = !isEnabled;
+    });
 
-    HTMLElement.prototype.enableFormFields = function () {
-        const selects = this.querySelectorAll("select");
-
-        selects.forEach(function (select) {
-            select.disabled = false;
-        });
-
-        const inputs = this.querySelectorAll("input");
-
-        inputs.forEach(function (input) {
-            input.disabled = false;
-        });
-
-        // Bootstrap styles required
-        this.classList.remove("d-none");
-    };
+    // Bootstrap styles required
+    element.classList.toggle("d-none", !isEnabled);
 }
 
 function getFieldValue({ name, type }) {
@@ -262,7 +253,6 @@ export function guideUserToTheFirstError(form = document) {
 export function initializeFormHelpers() {
     // Form usability
     setCustomFileLabel();
-    setupCustomFormFieldsVisibility();
 
     // Validators
     setupFullNameValidate();
