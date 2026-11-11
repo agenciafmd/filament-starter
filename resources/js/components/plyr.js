@@ -51,26 +51,23 @@ function setupEmbedVideo() {
 
     ctaVideos.forEach((ctaVideo) => {
         ctaVideo.addEventListener("click", (event) => {
-            const provider = ctaVideo.dataset.plyrProvider;
-            const embed = ctaVideo.dataset.plyrEmbedId;
-            const id = ctaVideo.id;
-
             event.preventDefault();
 
-            ctaVideo.closest(".js-player-embed-container").innerHTML =
-                templateVideo({ props: { provider, embed, id } });
+            // Built with the DOM API: the embed id comes from the admin and is never parsed as html
+            const player = document.createElement("div");
+
+            player.id = ctaVideo.id;
+            player.className = "js-player-embed";
+            player.dataset.plyrProvider = ctaVideo.dataset.plyrProvider;
+            player.dataset.plyrEmbedId = ctaVideo.dataset.plyrEmbedId;
+
+            ctaVideo
+                .closest(".js-player-embed-container")
+                .replaceChildren(player);
 
             setupPlyr();
         });
     });
-
-    function templateVideo({ props }) {
-        return `<div id="${props.id}"
-                   data-plyr-provider="${props.provider}"
-                   data-plyr-embed-id="${props.embed}"
-                   class="js-player-embed">
-              </div>`;
-    }
 }
 
 (() => {
