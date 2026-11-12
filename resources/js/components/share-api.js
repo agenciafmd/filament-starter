@@ -1,5 +1,5 @@
 import "share-api-polyfill";
-import { setupShareAPI } from "../frontend.js";
+import { setupShareAPI } from "./share.js";
 
 (() => {
     setupShareAPI();

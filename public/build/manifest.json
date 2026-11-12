@@ -35,29 +35,16 @@
     "file": "assets/fonts/KFO7CnqEu92Fr1ME7kSn66aGLdTylUAMaxKUBGEe-B7iHSfaG.woff2",
     "src": "KFO7CnqEu92Fr1ME7kSn66aGLdTylUAMaxKUBGEe.woff2"
   },
-  "_frontend-CAyzac4c.js": {
-    "file": "assets/js/frontend-CAyzac4c.js",
-    "name": "frontend",
-    "imports": [
-      "_preload-helper-Cwmi1B0x.js"
-    ],
-    "dynamicImports": [
-      "node_modules/infinite-scroll/js/index.js"
-    ]
-  },
-  "_menu-DNeP2FL7.js": {
-    "file": "assets/js/menu-DNeP2FL7.js",
-    "name": "menu",
-    "imports": [
-      "_frontend-CAyzac4c.js"
-    ]
+  "_bootstrap-helpers-B2uT3-Va.js": {
+    "file": "assets/js/bootstrap-helpers-B2uT3-Va.js",
+    "name": "bootstrap-helpers"
   },
   "_preload-helper-Cwmi1B0x.js": {
     "file": "assets/js/preload-helper-Cwmi1B0x.js",
     "name": "preload-helper"
   },
-  "_share-min-CAGVUdif.js": {
-    "file": "assets/js/share-min-CAGVUdif.js",
+  "_share-min-qJIVePUb.js": {
+    "file": "assets/js/share-min-qJIVePUb.js",
     "name": "share-min"
   },
   "_swiper-HKZ7LyPV.js": {
@@ -68,21 +55,21 @@
     ]
   },
   "node_modules/glightbox/dist/js/glightbox.min.js": {
-    "file": "assets/js/glightbox.min-ptrXTaPW.js",
+    "file": "assets/js/glightbox.min-3vgHxeu8.js",
     "name": "glightbox.min",
     "src": "node_modules/glightbox/dist/js/glightbox.min.js",
     "isDynamicEntry": true,
     "imports": [
-      "_frontend-CAyzac4c.js"
+      "resources/js/frontend-imports.js"
     ]
   },
   "node_modules/infinite-scroll/js/index.js": {
-    "file": "assets/js/js-lDr2aNXK.js",
+    "file": "assets/js/js-BFbydIiw.js",
     "name": "js",
     "src": "node_modules/infinite-scroll/js/index.js",
     "isDynamicEntry": true,
     "imports": [
-      "_frontend-CAyzac4c.js"
+      "resources/js/frontend-imports.js"
     ]
   },
   "node_modules/plyr/dist/plyr.mjs": {
@@ -622,22 +609,20 @@
     "src": "resources/images/video-film.webp"
   },
   "resources/js/components/share-api.js": {
-    "file": "assets/js/share-api-DN3pV4fH.js",
+    "file": "assets/js/share-api-Svc4oBTv.js",
     "name": "share-api",
     "src": "resources/js/components/share-api.js",
     "isEntry": true,
     "imports": [
-      "_frontend-CAyzac4c.js",
-      "_share-min-CAGVUdif.js"
+      "_share-min-qJIVePUb.js"
     ]
   },
   "resources/js/components/sliders/articles.js": {
-    "file": "assets/js/articles-BPFr7mi_.js",
+    "file": "assets/js/articles-BEh4Qdnb.js",
     "name": "articles",
     "src": "resources/js/components/sliders/articles.js",
     "isEntry": true,
     "imports": [
-      "_frontend-CAyzac4c.js",
       "_swiper-HKZ7LyPV.js"
     ]
   },
@@ -651,30 +636,29 @@
     ]
   },
   "resources/js/frontend-imports.js": {
-    "file": "assets/js/frontend-imports-C8TZ2hhc.js",
+    "file": "assets/js/frontend-imports-DYaRwbv3.js",
     "name": "frontend-imports",
     "src": "resources/js/frontend-imports.js",
     "isEntry": true,
     "imports": [
-      "_frontend-CAyzac4c.js",
-      "_menu-DNeP2FL7.js",
+      "_bootstrap-helpers-B2uT3-Va.js",
       "_preload-helper-Cwmi1B0x.js"
     ],
     "dynamicImports": [
       "node_modules/sweetalert2/dist/sweetalert2.esm.js",
       "node_modules/plyr/dist/plyr.mjs",
-      "node_modules/glightbox/dist/js/glightbox.min.js"
+      "node_modules/glightbox/dist/js/glightbox.min.js",
+      "node_modules/infinite-scroll/js/index.js"
     ]
   },
   "resources/js/pages/theme.js": {
-    "file": "assets/js/theme-Cpr89AaF.js",
+    "file": "assets/js/theme-CnExYGMV.js",
     "name": "theme",
     "src": "resources/js/pages/theme.js",
     "isEntry": true,
     "imports": [
-      "_frontend-CAyzac4c.js",
-      "_menu-DNeP2FL7.js",
-      "_share-min-CAGVUdif.js"
+      "_bootstrap-helpers-B2uT3-Va.js",
+      "_share-min-qJIVePUb.js"
     ]
   },
   "resources/scss/frontend.scss": {

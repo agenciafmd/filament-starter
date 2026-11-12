@@ -10,10 +10,10 @@ import "bootstrap/js/dist/toggler.js";
 
 import {
     setupPopover,
-    setupShareAPI,
     setupToast,
     setupTooltip,
-} from "../frontend.js";
+} from "../components/bootstrap-helpers.js";
+import { setupShareAPI } from "../components/share.js";
 
 (function () {
     setupShareAPI();

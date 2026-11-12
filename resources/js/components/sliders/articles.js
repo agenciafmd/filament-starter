@@ -1,5 +1,5 @@
 import { createSlider } from "../swiper.js";
-import { getThemeVariables } from "../../frontend.js";
+import { getThemeVariables } from "../../helpers/theme-variables.js";
 
 (() => {
     const sliderArticlesGalleries = document.querySelectorAll(
