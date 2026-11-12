@@ -60,66 +60,69 @@ export function setupStateCityOptions() {
 }
 
 export function setupCepSearch() {
-    const zipcodeInputs = document.querySelectorAll(".js-zipcode");
+    // Delegated (focusout bubbles, blur does not): also works for fields added after the load (Livewire)
+    document.addEventListener("focusout", (event) => {
+        const zipcodeInput = event.target.closest(".js-zipcode");
 
-    zipcodeInputs.forEach((zipcodeInput) => {
-        zipcodeInput.addEventListener("blur", () => {
-            const cep = zipcodeInput.value.replace(/\D/g, "");
+        if (!zipcodeInput) {
+            return;
+        }
 
-            if (cep.length !== 8) {
-                return;
-            }
+        const cep = zipcodeInput.value.replace(/\D/g, "");
 
-            fetch(`https://viacep.com.br/ws/${cep}/json/`)
-                .then((response) => {
-                    if (!response.ok) {
-                        throw new Error(`HTTP ${response.status}`);
-                    }
+        if (cep.length !== 8) {
+            return;
+        }
 
-                    return response.json();
-                })
-                .then(async (result) => {
-                    // ViaCEP answers 200 with `{ erro: true }` for an unknown CEP
-                    if (!result || result.erro) {
-                        console.warn("CEP não encontrado:", cep);
-                        return;
-                    }
+        fetch(`https://viacep.com.br/ws/${cep}/json/`)
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}`);
+                }
 
-                    const neighborhoodInput =
-                        document.querySelector(".js-neighborhood");
-                    const addressInput = document.querySelector(".js-address");
-                    const stateInput = document.querySelector(".js-state");
-                    const cityInput = document.querySelector(".js-city");
+                return response.json();
+            })
+            .then(async (result) => {
+                // ViaCEP answers 200 with `{ erro: true }` for an unknown CEP
+                if (!result || result.erro) {
+                    console.warn("CEP não encontrado:", cep);
+                    return;
+                }
 
-                    if (neighborhoodInput) {
-                        neighborhoodInput.value = result.bairro;
-                    }
+                const neighborhoodInput =
+                    document.querySelector(".js-neighborhood");
+                const addressInput = document.querySelector(".js-address");
+                const stateInput = document.querySelector(".js-state");
+                const cityInput = document.querySelector(".js-city");
 
-                    if (addressInput) {
-                        addressInput.value = result.logradouro;
-                    }
+                if (neighborhoodInput) {
+                    neighborhoodInput.value = result.bairro;
+                }
 
-                    if (stateInput?.tagName === "SELECT") {
-                        // ViaCEP answers the UF ("SP"); the options of setupStateCityOptions use the name ("São Paulo")
-                        const states = await loadStates();
-                        const state = states.find(
-                            ({ sigla }) => sigla === result.uf,
-                        );
+                if (addressInput) {
+                    addressInput.value = result.logradouro;
+                }
 
-                        stateInput.value = state?.nome ?? "";
-                        // Builds the city options before the city is set below
-                        stateInput.dispatchEvent(new Event("change"));
-                    } else if (stateInput) {
-                        stateInput.value = result.uf;
-                    }
+                if (stateInput?.tagName === "SELECT") {
+                    // ViaCEP answers the UF ("SP"); the options of setupStateCityOptions use the name ("São Paulo")
+                    const states = await loadStates();
+                    const state = states.find(
+                        ({ sigla }) => sigla === result.uf,
+                    );
 
-                    if (cityInput) {
-                        cityInput.value = result.localidade;
-                    }
-                })
-                .catch((error) => {
-                    console.error("Erro ao buscar o CEP:", error);
-                });
-        });
+                    stateInput.value = state?.nome ?? "";
+                    // Builds the city options before the city is set below
+                    stateInput.dispatchEvent(new Event("change"));
+                } else if (stateInput) {
+                    stateInput.value = result.uf;
+                }
+
+                if (cityInput) {
+                    cityInput.value = result.localidade;
+                }
+            })
+            .catch((error) => {
+                console.error("Erro ao buscar o CEP:", error);
+            });
     });
 }

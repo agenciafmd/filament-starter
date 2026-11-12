@@ -45,21 +45,23 @@ function getFieldValue({ name, type }) {
 }
 
 function setCustomFileLabel() {
-    const inputFile = document.querySelector(".js-custom-file-input");
-    const fileLabel = document.querySelector(".js-custom-file-label");
+    // Delegated: also works for fields added after the load (Livewire)
+    document.addEventListener("change", function (event) {
+        const inputFile = event.target.closest(".js-custom-file-input");
 
-    if (!inputFile) {
-        return;
-    }
+        if (!inputFile) {
+            return;
+        }
 
-    inputFile.addEventListener("change", function () {
+        const fileLabel = document.querySelector(".js-custom-file-label");
+
         if (!fileLabel) {
             throw new Error(
                 `Adiciona classe '.js-custom-file-label' ao label do input file.`,
             );
         }
 
-        const file = this.files[0].name;
+        const file = inputFile.files[0].name;
         fileLabel.textContent = file;
     });
 }
@@ -85,20 +87,18 @@ function validateFullName({ fullNameElement, invalidMessage }) {
 }
 
 function setupFullNameValidate() {
-    const fullNameElements = document.querySelectorAll(".js-full-name");
-
-    if (!fullNameElements.length) {
-        return;
-    }
-
-    fullNameElements.forEach((fullNameElement) => {
-        // Execute as soon as it's found
+    // Execute as soon as it's found (fields already filled on the load)
+    document.querySelectorAll(".js-full-name").forEach((fullNameElement) => {
         fullNameValidateHandler({ fullNameElement });
+    });
 
-        fullNameElement.addEventListener("blur", function () {
-            // Execute on every blur event propagation
+    // Delegated: also works for fields added after the load (Livewire)
+    document.addEventListener("focusout", (event) => {
+        const fullNameElement = event.target.closest(".js-full-name");
+
+        if (fullNameElement) {
             fullNameValidateHandler({ fullNameElement });
-        });
+        }
     });
 
     function fullNameValidateHandler({ fullNameElement }) {
@@ -113,20 +113,23 @@ function setupFullNameValidate() {
 }
 
 function setupBrazilianCellphoneValidate() {
-    const phoneInputs = document.querySelectorAll(".js-cellphone-validate");
+    // Delegated: also works for fields added after the load (Livewire)
+    document.addEventListener("focusout", (event) => {
+        const phoneInput = event.target.closest(".js-cellphone-validate");
 
-    phoneInputs.forEach((phoneInput) => {
-        phoneInput.addEventListener("blur", function () {
-            if (!isValidPhone(phoneInput)) {
-                setInvalidInput({
-                    input: phoneInput,
-                    message: "Por favor, insira um número de celular válido",
-                });
-                return;
-            }
+        if (!phoneInput) {
+            return;
+        }
 
-            setValidInput({ input: phoneInput });
-        });
+        if (!isValidPhone(phoneInput)) {
+            setInvalidInput({
+                input: phoneInput,
+                message: "Por favor, insira um número de celular válido",
+            });
+            return;
+        }
+
+        setValidInput({ input: phoneInput });
     });
 
     function isValidPhone(phoneValue) {
@@ -138,20 +141,23 @@ function setupBrazilianCellphoneValidate() {
 }
 
 function setupBrazilianPhoneValidate() {
-    const phoneInputs = document.querySelectorAll(".js-phone-validate");
+    // Delegated: also works for fields added after the load (Livewire)
+    document.addEventListener("focusout", (event) => {
+        const phoneInput = event.target.closest(".js-phone-validate");
 
-    phoneInputs.forEach((phoneInput) => {
-        phoneInput.addEventListener("blur", function () {
-            if (!isValidPhone(phoneInput)) {
-                setInvalidInput({
-                    input: phoneInput,
-                    message: "Por favor, insira um número de telefone válido",
-                });
-                return;
-            }
+        if (!phoneInput) {
+            return;
+        }
 
-            setValidInput({ input: phoneInput });
-        });
+        if (!isValidPhone(phoneInput)) {
+            setInvalidInput({
+                input: phoneInput,
+                message: "Por favor, insira um número de telefone válido",
+            });
+            return;
+        }
+
+        setValidInput({ input: phoneInput });
     });
 
     function isValidPhone(phoneValue) {

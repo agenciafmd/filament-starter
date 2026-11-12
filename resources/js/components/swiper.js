@@ -56,26 +56,6 @@ export async function createSlider(options) {
     });
 }
 
-export function setupDefaultSlider() {
-    const defaultSliderSelector = ".js-slider";
-
-    if (!document.querySelectorAll(defaultSliderSelector).length) {
-        return;
-    }
-
-    document
-        .querySelectorAll(defaultSliderSelector)
-        .forEach(function createDefaultSlider(defaultSliderContainerElement) {
-            createSlider({
-                container: defaultSliderContainerElement,
-                navigation: {
-                    prevEl: `${defaultSliderSelector} .swiper-button-prev`,
-                    nextEl: `${defaultSliderSelector} .swiper-button-next`,
-                },
-            });
-        });
-}
-
 /* Example of a swiper constructor with most common options */
 
 // createSlider({

@@ -9,11 +9,14 @@ export function onChangeSelectLink() {
     //   <option class="" value="/html/tema">FAQ</option>
     //</select>
 
-    const selects = document.querySelectorAll(".js-onchange");
+    // Delegated: also works for selects added after the load (Livewire, infinite scroll)
+    document.addEventListener("change", (event) => {
+        const select = event.target.closest(".js-onchange");
 
-    selects.forEach((select) => {
-        select.addEventListener("change", function () {
-            window.location = select.value;
-        });
+        if (!select) {
+            return;
+        }
+
+        window.location = select.value;
     });
 }

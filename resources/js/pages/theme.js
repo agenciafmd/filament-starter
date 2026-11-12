@@ -7,20 +7,3 @@ import "bootstrap/js/dist/otp-input.js";
 import "bootstrap/js/dist/range.js";
 import "bootstrap/js/dist/strength.js";
 import "bootstrap/js/dist/toggler.js";
-
-import {
-    setupPopover,
-    setupToast,
-    setupTooltip,
-} from "../components/bootstrap-helpers.js";
-import { setupShareAPI } from "../components/share.js";
-
-(function () {
-    setupShareAPI();
-
-    setupPopover();
-
-    setupTooltip();
-
-    setupToast();
-})();

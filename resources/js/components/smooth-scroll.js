@@ -21,25 +21,30 @@ function doScrollAnimate(targetSelector) {
 }
 
 export function setupSmoothScroll() {
-    document.querySelectorAll("a.js-scroll-top").forEach((link) => {
-        link.addEventListener("click", (event) => {
-            event.preventDefault();
+    // Delegated: also works for links added after the load (Livewire, infinite scroll)
+    document.addEventListener("click", (event) => {
+        const link = event.target.closest("a.js-scroll-top");
 
-            // An open drawer (mobile) blocks the page scroll: scrolls after it closes (the link needs
-            // data-bs-dismiss="drawer"). On desktop the navbar drawer is not open, so it scrolls right away
-            const openDrawer = link.closest("dialog.drawer[open]");
+        if (!link) {
+            return;
+        }
 
-            if (openDrawer) {
-                openDrawer.addEventListener(
-                    "hidden.bs.drawer",
-                    () => doScrollAnimate(link.hash),
-                    { once: true },
-                );
+        event.preventDefault();
 
-                return;
-            }
+        // An open drawer (mobile) blocks the page scroll: scrolls after it closes (the link needs
+        // data-bs-dismiss="drawer"). On desktop the navbar drawer is not open, so it scrolls right away
+        const openDrawer = link.closest("dialog.drawer[open]");
 
-            doScrollAnimate(link.hash);
-        });
+        if (openDrawer) {
+            openDrawer.addEventListener(
+                "hidden.bs.drawer",
+                () => doScrollAnimate(link.hash),
+                { once: true },
+            );
+
+            return;
+        }
+
+        doScrollAnimate(link.hash);
     });
 }

@@ -13,29 +13,27 @@
  * */
 
 export function setupDataLayerEventClickButton() {
-    const buttons = document.querySelectorAll(".js-btn-data-layer");
+    // Delegated: also works for buttons added after the load (Livewire, infinite scroll)
+    document.addEventListener("click", (clickEvent) => {
+        const button = clickEvent.target.closest(".js-btn-data-layer");
 
-    if (!buttons.length) {
-        return;
-    }
+        if (!button) {
+            return;
+        }
 
-    buttons.forEach((button) => {
-        button.addEventListener("click", (clickEvent) => {
-            const nameDataLayerAction = "data-fmd-datalayer-action";
-            const linkDataLayerAction =
-                clickEvent.currentTarget.getAttribute(nameDataLayerAction);
+        const nameDataLayerAction = "data-fmd-datalayer-action";
+        const linkDataLayerAction = button.getAttribute(nameDataLayerAction);
 
-            if (!linkDataLayerAction) {
-                throw new Error(
-                    `Adicione atributo ${nameDataLayerAction} com seu valor`,
-                );
-            }
+        if (!linkDataLayerAction) {
+            throw new Error(
+                `Adicione atributo ${nameDataLayerAction} com seu valor`,
+            );
+        }
 
-            const dataLayerClickEvent = generateDataLayerEvent({
-                action: linkDataLayerAction,
-            });
-            updateDataLayer(dataLayerClickEvent);
+        const dataLayerClickEvent = generateDataLayerEvent({
+            action: linkDataLayerAction,
         });
+        updateDataLayer(dataLayerClickEvent);
     });
 }
 

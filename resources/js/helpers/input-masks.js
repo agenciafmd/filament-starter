@@ -62,18 +62,15 @@ export function setupInputMasks() {
     });
 
     const cpfCnpjValidators = new CpfCnpjValidators();
-    const cpfInput = document.querySelector(cpfCnpjValidators.selectors.cpf);
-    const cnpjInput = document.querySelector(cpfCnpjValidators.selectors.cnpj);
 
-    if (cpfInput) {
-        cpfInput.addEventListener("blur", function (event) {
+    // Delegated: validates every cpf/cnpj field, also the ones added after the load (Livewire)
+    document.addEventListener("focusout", (event) => {
+        if (event.target.closest(cpfCnpjValidators.selectors.cpf)) {
             cpfCnpjValidators.checkCPF(event.target);
-        });
-    }
+        }
 
-    if (cnpjInput) {
-        cnpjInput.addEventListener("blur", function (event) {
+        if (event.target.closest(cpfCnpjValidators.selectors.cnpj)) {
             cpfCnpjValidators.checkCNPJ(event.target);
-        });
-    }
+        }
+    });
 }
