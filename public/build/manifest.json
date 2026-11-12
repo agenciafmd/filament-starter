@@ -35,8 +35,8 @@
     "file": "assets/fonts/KFO7CnqEu92Fr1ME7kSn66aGLdTylUAMaxKUBGEe-B7iHSfaG.woff2",
     "src": "KFO7CnqEu92Fr1ME7kSn66aGLdTylUAMaxKUBGEe.woff2"
   },
-  "_frontend-BmjrhX1i.js": {
-    "file": "assets/js/frontend-BmjrhX1i.js",
+  "_frontend-CAyzac4c.js": {
+    "file": "assets/js/frontend-CAyzac4c.js",
     "name": "frontend",
     "imports": [
       "_preload-helper-Cwmi1B0x.js"
@@ -45,11 +45,11 @@
       "node_modules/infinite-scroll/js/index.js"
     ]
   },
-  "_menu-Cq_bOzkt.js": {
-    "file": "assets/js/menu-Cq_bOzkt.js",
+  "_menu-DNeP2FL7.js": {
+    "file": "assets/js/menu-DNeP2FL7.js",
     "name": "menu",
     "imports": [
-      "_frontend-BmjrhX1i.js"
+      "_frontend-CAyzac4c.js"
     ]
   },
   "_preload-helper-Cwmi1B0x.js": {
@@ -68,21 +68,21 @@
     ]
   },
   "node_modules/glightbox/dist/js/glightbox.min.js": {
-    "file": "assets/js/glightbox.min-CpS0YvCE.js",
+    "file": "assets/js/glightbox.min-ptrXTaPW.js",
     "name": "glightbox.min",
     "src": "node_modules/glightbox/dist/js/glightbox.min.js",
     "isDynamicEntry": true,
     "imports": [
-      "_frontend-BmjrhX1i.js"
+      "_frontend-CAyzac4c.js"
     ]
   },
   "node_modules/infinite-scroll/js/index.js": {
-    "file": "assets/js/js-DdX1yXvw.js",
+    "file": "assets/js/js-lDr2aNXK.js",
     "name": "js",
     "src": "node_modules/infinite-scroll/js/index.js",
     "isDynamicEntry": true,
     "imports": [
-      "_frontend-BmjrhX1i.js"
+      "_frontend-CAyzac4c.js"
     ]
   },
   "node_modules/plyr/dist/plyr.mjs": {
@@ -622,22 +622,22 @@
     "src": "resources/images/video-film.webp"
   },
   "resources/js/components/share-api.js": {
-    "file": "assets/js/share-api-C97iO9_G.js",
+    "file": "assets/js/share-api-DN3pV4fH.js",
     "name": "share-api",
     "src": "resources/js/components/share-api.js",
     "isEntry": true,
     "imports": [
-      "_frontend-BmjrhX1i.js",
+      "_frontend-CAyzac4c.js",
       "_share-min-CAGVUdif.js"
     ]
   },
   "resources/js/components/sliders/articles.js": {
-    "file": "assets/js/articles-DS8US8va.js",
+    "file": "assets/js/articles-BPFr7mi_.js",
     "name": "articles",
     "src": "resources/js/components/sliders/articles.js",
     "isEntry": true,
     "imports": [
-      "_frontend-BmjrhX1i.js",
+      "_frontend-CAyzac4c.js",
       "_swiper-HKZ7LyPV.js"
     ]
   },
@@ -651,13 +651,13 @@
     ]
   },
   "resources/js/frontend-imports.js": {
-    "file": "assets/js/frontend-imports-BEMTP7_o.js",
+    "file": "assets/js/frontend-imports-C8TZ2hhc.js",
     "name": "frontend-imports",
     "src": "resources/js/frontend-imports.js",
     "isEntry": true,
     "imports": [
-      "_frontend-BmjrhX1i.js",
-      "_menu-Cq_bOzkt.js",
+      "_frontend-CAyzac4c.js",
+      "_menu-DNeP2FL7.js",
       "_preload-helper-Cwmi1B0x.js"
     ],
     "dynamicImports": [
@@ -667,13 +667,13 @@
     ]
   },
   "resources/js/pages/theme.js": {
-    "file": "assets/js/theme-DZG3iITa.js",
+    "file": "assets/js/theme-Cpr89AaF.js",
     "name": "theme",
     "src": "resources/js/pages/theme.js",
     "isEntry": true,
     "imports": [
-      "_frontend-BmjrhX1i.js",
-      "_menu-Cq_bOzkt.js",
+      "_frontend-CAyzac4c.js",
+      "_menu-DNeP2FL7.js",
       "_share-min-CAGVUdif.js"
     ]
   },

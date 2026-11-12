@@ -4,7 +4,7 @@ export function setupFmdHeader() {
     function getOffsetTop(selector) {
         return (
             document.getElementsByClassName(selector)[0].getBoundingClientRect()
-                .top + window.pageYOffset
+                .top + window.scrollY
         );
     }
 
@@ -77,7 +77,7 @@ export function setupFmdHeader() {
     }
 
     // Initialize variables
-    let didScroll;
+    let isFrameScheduled = false;
     let lastScrollTop = 0;
     let fixedTimer;
     const delta = 5; // Minimum scroll value
@@ -104,15 +104,20 @@ export function setupFmdHeader() {
             getComputedStyle(header)["transition-duration"].replace("s", ""),
         ) * 1000;
 
+    // Read on each scroll, not once on load: the page grows later (lazy images, infinite scroll, Livewire)
     // Start target where header will be fixed | Default: Window Height (100vh)
-    const startTarget = isElementSet(startTargetClass)
-        ? getOffsetTop(startTargetClass)
-        : window.outerHeight;
+    function getStartTarget() {
+        return isElementSet(startTargetClass)
+            ? getOffsetTop(startTargetClass)
+            : window.outerHeight;
+    }
 
     // End target where header will be shown | Default: The page bottom
-    const endTarget = isElementSet(endTargetClass)
-        ? getOffsetTop(endTargetClass)
-        : document.body.scrollHeight;
+    function getEndTarget() {
+        return isElementSet(endTargetClass)
+            ? getOffsetTop(endTargetClass)
+            : document.body.scrollHeight;
+    }
 
     // Set variable that is used to apply padding-top to the body
     header.style.position = "absolute";
@@ -121,22 +126,27 @@ export function setupFmdHeader() {
 
     setupResizeScreenHeader();
 
-    // Scroll event listener
-    window.addEventListener("scroll", function () {
-        didScroll = true;
-    });
+    // Handles the scroll at most once per frame, and only while the page scrolls
+    window.addEventListener(
+        "scroll",
+        () => {
+            if (isFrameScheduled) {
+                return;
+            }
 
-    // Watcher that calls function if the window was scrolled
-    setInterval(function () {
-        if (didScroll) {
-            hasScrolled();
-            didScroll = false;
-        }
-    }, headerTransition);
+            isFrameScheduled = true;
+
+            requestAnimationFrame(() => {
+                isFrameScheduled = false;
+                hasScrolled();
+            });
+        },
+        { passive: true },
+    );
 
     // When window gets scrolled
     function hasScrolled() {
-        const st = window.pageYOffset;
+        const st = window.scrollY;
 
         // Update last scroll top
         function updateLastScroll() {
@@ -151,14 +161,34 @@ export function setupFmdHeader() {
         setHeaderTransition(headerTransition);
 
         // If the window bottom reaches end target
-        if (st + window.outerHeight >= endTarget) {
+        if (st + window.outerHeight >= getEndTarget()) {
+            // A fast scroll reaches the end before the fixed timer: fixes the header while it is hidden
+            // (the logo shrinks out of sight), then slides it in, instead of popping it in with the large logo
+            if (
+                !header.classList.contains(fixedClass) &&
+                st > getStartTarget()
+            ) {
+                window.clearTimeout(fixedTimer);
+                setHeaderTransition(0);
+                hideHeader();
+                setStickyHeader();
+
+                fixedTimer = window.setTimeout(function () {
+                    setHeaderTransition(headerTransition);
+                    showHeader();
+                }, headerTransition);
+
+                updateLastScroll();
+                return;
+            }
+
             showHeader();
             updateLastScroll();
             return;
         }
 
         // If scroll down and passes start target
-        if (st > lastScrollTop && st > startTarget) {
+        if (st > lastScrollTop && st > getStartTarget()) {
             window.clearTimeout(fixedTimer);
 
             fixedTimer = window.setTimeout(function () {
