@@ -7,7 +7,7 @@
         link="{{ $article->route }}"
         aria-label="Link para {{ $article->name }}"
         title="Ir para {{ $article->name }}"
-        class="btn-link text-decoration-none"
+        class="d-block text-decoration-none"
     >
         <span class="card-subtitle fg-primary fs-base"> {{ $article->subtitle }} </span>
         <h2 class="card-title fg-body">{{ $article->name }}</h2>
