@@ -4831,55 +4831,6 @@ Disabled textarea with some text inside</textarea>
     </main>
 @endsection
 
-@push('head')
-    <style>
-        .bd-example {
-            padding: 1.5rem;
-            border: var(--bs-border-width-sm) solid var(--bs-border-color);
-            border-radius: var(--bs-radius-5);
-        }
-
-        .bd-example-code {
-            padding: 1rem;
-            border-radius: 1rem;
-            background: var(--bs-bg-1);
-        }
-
-        .bd-section {
-            scroll-margin-top: calc(var(--header-height) + 1rem);
-        }
-
-        .bd-anchor {
-            opacity: 0;
-            transition: opacity 0.15s;
-        }
-
-        .bd-section h2:hover .bd-anchor,
-        .bd-anchor:focus-visible {
-            opacity: 1;
-        }
-
-        /*
-         * Bootstrap 6 ScrollSpy appends a sentinel (inline styles) at the end of the container to detect the
-         * end of the page; it must stay there, so a negative margin cancels the gap it adds (gap-block-small / md:gap-block)
-         */
-        [data-bs-spy="scroll"] > div[aria-hidden="true"]:last-child {
-            margin-top: -2rem !important;
-        }
-
-        @media (width >= 992px) {
-            [data-bs-spy="scroll"] > div[aria-hidden="true"]:last-child {
-                margin-top: -4rem !important;
-            }
-        }
-
-        .bd-sidebar .nav-link.active {
-            font-weight: 600;
-            background-color: var(--bs-bg-2);
-        }
-    </style>
-@endpush
-
 @push('footer')
     <x-frontend::dialogs.dialog-base></x-frontend::dialogs.dialog-base>
 @endpush

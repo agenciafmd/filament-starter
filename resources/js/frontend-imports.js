@@ -18,7 +18,6 @@ import "bootstrap/js/dist/toast.js";
 import "bootstrap/js/dist/tooltip.js";
 
 // Components
-// import '/resources/js/components/lax.js';
 import "/resources/js/components/swal.js";
 import "/resources/js/components/glightbox.js";
 import "/resources/js/components/plyr.js";
