@@ -1,64 +1,54 @@
 import mask from "@alpinejs/mask";
 import { CpfCnpjValidators } from "./cpf-cnpj-validators.js";
 
-export function setupAlpine() {
-    Alpine.plugin(mask);
+// Class of the field → x-mask:dynamic expression (@alpinejs/mask)
+const masks = {
+    ".js-mask-phone":
+        "$input.length <= 14 ? '(99) 9999-9999' : '(99) 99999-9999'",
+    ".js-mask-cpf": "'999.999.999-99'",
+    ".js-mask-cnpj": "'99.999.999/9999-99'",
+    ".js-mask-cpfcnpj":
+        "$input.replace(/\\D/g,'').length <= 11 ? '999.999.999-99' : '99.999.999/9999-99'",
+    ".js-mask-rg":
+        "$input.endsWith('x') ? '99.999.999-x' : ($input.endsWith('X') ? '99.999.999-X' : '99.999.999-9')",
+    ".js-mask-cep": "'99999-999'",
+    ".js-mask-money": "'R$ ' + $money($input, ',')",
+    ".js-mask-date": "'99/99/9999'",
+};
 
-    window.Alpine = Alpine;
+function setMaskAttribute(element) {
+    if (element.hasAttribute("x-mask:dynamic")) {
+        return;
+    }
+
+    const selector = Object.keys(masks).find((maskSelector) =>
+        element.matches(maskSelector),
+    );
+
+    if (selector) {
+        element.setAttribute("x-mask:dynamic", masks[selector]);
+    }
 }
 
 export function setupInputMasks() {
-    function setMaskToAllElements(elements, maskExpression) {
-        elements.forEach((element) => {
-            element.setAttribute("x-mask:dynamic", maskExpression);
+    // Alpine comes from <livewire:scripts /> and fires alpine:init when it starts: without it, no mask and no error
+    document.addEventListener("alpine:init", () => {
+        window.Alpine.plugin(mask);
 
-            if (window.Alpine) {
-                Alpine.initTree(element);
+        // Alpine only walks its components on start: also walk the masked fields outside them
+        window.Alpine.addInitSelector(() => Object.keys(masks).join(", "));
+
+        // Runs before the directives of every element Alpine inits, also the ones added later (Alpine watches the DOM)
+        window.Alpine.interceptInit(setMaskAttribute);
+    });
+
+    // A Livewire re-render (morph) drops the attribute the server html does not have: puts it back
+    document.addEventListener("livewire:init", () => {
+        window.Livewire.hook("morph.updated", ({ el }) => {
+            if (el instanceof Element) {
+                setMaskAttribute(el);
             }
         });
-    }
-
-    // PHONE (dynamic mask)
-    setMaskToAllElements(
-        document.querySelectorAll(".js-mask-phone"),
-        "$input.length <= 14 ? '(99) 9999-9999' : '(99) 99999-9999'",
-    );
-
-    // CPF
-    setMaskToAllElements(document.querySelectorAll(".js-mask-cpf"), () => {
-        return "999.999.999-99";
-    });
-
-    // CNPJ
-    setMaskToAllElements(document.querySelectorAll(".js-mask-cnpj"), () => {
-        return "99.999.999/9999-99";
-    });
-
-    // CPF or CNPJ (dynamic)
-    setMaskToAllElements(
-        document.querySelectorAll(".js-mask-cpfcnpj"),
-        "$input.replace(/\\D/g,'').length <= 11 ? '999.999.999-99' : '99.999.999/9999-99'",
-    );
-
-    // RG
-    setMaskToAllElements(
-        document.querySelectorAll(".js-mask-rg"),
-        "$input.endsWith('x') ? '99.999.999-x' : ($input.endsWith('X') ? '99.999.999-X' : '99.999.999-9')",
-    );
-
-    // CEP
-    setMaskToAllElements(document.querySelectorAll(".js-mask-cep"), () => {
-        return "99999-999";
-    });
-
-    setMaskToAllElements(
-        document.querySelectorAll(".js-mask-money"),
-        "'R$ ' + $money($input, ',')",
-    );
-
-    // DATE
-    setMaskToAllElements(document.querySelectorAll(".js-mask-date"), () => {
-        return "99/99/9999";
     });
 
     const cpfCnpjValidators = new CpfCnpjValidators();

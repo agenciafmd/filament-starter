@@ -13,7 +13,7 @@ import { setupCepSearch, setupStateCityOptions } from "./helpers/address.js";
 import { setupDataLayerEventClickButton } from "./helpers/data-layer.js";
 import { initializeFormHelpers } from "./helpers/form-helpers.js";
 import { preventInvalidFormSubmit } from "./helpers/form-validation.js";
-import { setupAlpine, setupInputMasks } from "./helpers/input-masks.js";
+import { setupInputMasks } from "./helpers/input-masks.js";
 import { setupUtmHelpers } from "./helpers/utm-helper.js";
 
 // Each helper acts only where its class is on the page. The light ones are always on and delegated on the
@@ -26,9 +26,7 @@ import { setupUtmHelpers } from "./helpers/utm-helper.js";
 
     onChangeSelectLink(); // .js-onchange
 
-    setupAlpine();
-
-    setupInputMasks(); // .js-mask-*, cpf/cnpj validation
+    setupInputMasks(); // .js-mask-* (registered on alpine:init), cpf/cnpj validation
 
     initializeFormHelpers(); // .js-full-name, .js-cellphone-validate, .js-phone-validate, .js-custom-file-input
 
