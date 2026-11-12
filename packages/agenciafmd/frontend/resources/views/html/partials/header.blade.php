@@ -26,6 +26,7 @@
                                 aria-label="Link para Home"
                                 label="Home"
                                 class="nav-link active"
+                                data-bs-dismiss="drawer"
                             />
                         </li>
                         <li class="nav-item">

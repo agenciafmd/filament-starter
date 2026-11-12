@@ -8,59 +8,38 @@ function doScrollAnimate(targetSelector) {
         return;
     }
 
-    const additionalOffset =
-        Number(target.getAttribute("data-scroll-offset")) || 0;
+    // data-scroll-offset moves the stop point: negative leaves more room above the target, positive scrolls further
+    const extraOffset = Number(target.dataset.scrollOffset) || 0;
 
-    const scrollTop =
-        target.getBoundingClientRect().top +
-        document.body.scrollTop +
-        additionalOffset;
+    target.style.scrollMarginTop = extraOffset
+        ? `calc(var(--header-height) + ${-extraOffset}px)`
+        : "";
 
-    window.scrollBy({
-        top: scrollTop,
-        behavior: "smooth",
-    });
-}
-
-export function setupSmoothScrollInDrawer() {
-    const drawerElements = document.querySelectorAll(".drawer");
-
-    drawerElements.forEach(function (drawer) {
-        const drawerScrollTriggerElements = drawer.querySelectorAll(
-            'a.js-scroll-top[data-bs-dismiss="drawer"]',
-        );
-
-        drawerScrollTriggerElements.forEach(function (triggerElement) {
-            const hiddenOffcanvasHandler = (event) => {
-                doScrollAnimate(triggerElement.hash);
-                drawer.removeEventListener(
-                    "hidden.bs.drawer",
-                    hiddenOffcanvasHandler,
-                );
-            };
-
-            triggerElement.addEventListener("click", function (event) {
-                event.preventDefault();
-                drawer.addEventListener(
-                    "hidden.bs.drawer",
-                    hiddenOffcanvasHandler,
-                );
-            });
-        });
-    });
+    // No behavior: the root's scroll-behavior (Bootstrap reboot) animates it, except with prefers-reduced-motion.
+    // The header is discounted by the global scroll-margin-top (_fmd-header.scss)
+    target.scrollIntoView();
 }
 
 export function setupSmoothScroll() {
-    // The links inside a drawer are left to setupSmoothScrollInDrawer: the drawer animation
-    // blocks the page scroll, so they scroll only after it closes
-    const scrollTriggerElements = document.querySelectorAll(
-        "a.js-scroll-top:not(.drawer a)",
-    );
-
-    scrollTriggerElements.forEach(function (element) {
-        element.addEventListener("click", function (event) {
+    document.querySelectorAll("a.js-scroll-top").forEach((link) => {
+        link.addEventListener("click", (event) => {
             event.preventDefault();
-            doScrollAnimate(this.hash);
+
+            // An open drawer (mobile) blocks the page scroll: scrolls after it closes (the link needs
+            // data-bs-dismiss="drawer"). On desktop the navbar drawer is not open, so it scrolls right away
+            const openDrawer = link.closest("dialog.drawer[open]");
+
+            if (openDrawer) {
+                openDrawer.addEventListener(
+                    "hidden.bs.drawer",
+                    () => doScrollAnimate(link.hash),
+                    { once: true },
+                );
+
+                return;
+            }
+
+            doScrollAnimate(link.hash);
         });
     });
 }

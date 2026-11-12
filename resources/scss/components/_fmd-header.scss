@@ -6,6 +6,11 @@
         --header-height: 0px;
     }
 
+    // Anchor targets (smooth scroll and #hash in the url) stop below the header
+    [id] {
+        scroll-margin-top: var(--header-height);
+    }
+
     .fmd-header {
         position: relative;
         top: 0;

@@ -1,7 +1,4 @@
-import {
-    setupSmoothScroll,
-    setupSmoothScrollInDrawer,
-} from "./components/smooth-scroll.js";
+import { setupSmoothScroll } from "./components/smooth-scroll.js";
 import { CpfCnpjValidators } from "./helpers/cpf-cnpj-validators.js";
 import {
     guideUserToTheFirstError,
@@ -557,8 +554,6 @@ async function setupWOWJS() {
     verifyUserAgent();
 
     setupSmoothScroll();
-
-    setupSmoothScrollInDrawer();
 
     // setupCepSearch();
 
