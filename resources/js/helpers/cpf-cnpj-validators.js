@@ -34,20 +34,10 @@ export class CpfCnpjValidators {
 
         if (!cnpj.number.full || cnpj.number.full.length !== this.sizes.cnpj) {
             setInvalidInput({ input: cnpjInput });
+            return;
         }
 
-        if (
-            cnpj.number.full === "00000000000000" ||
-            cnpj.number.full === "11111111111111" ||
-            cnpj.number.full === "22222222222222" ||
-            cnpj.number.full === "33333333333333" ||
-            cnpj.number.full === "44444444444444" ||
-            cnpj.number.full === "55555555555555" ||
-            cnpj.number.full === "66666666666666" ||
-            cnpj.number.full === "77777777777777" ||
-            cnpj.number.full === "88888888888888" ||
-            cnpj.number.full === "99999999999999"
-        ) {
+        if (/^(\d)\1+$/.test(cnpj.number.full)) {
             setInvalidInput({ input: cnpjInput });
             return;
         }
@@ -98,8 +88,8 @@ export class CpfCnpjValidators {
 
         const cpf = {
             fullNumber: sanitizedCpf,
-            prefix: sanitizedCpf.substr(0, 9),
-            suffix: sanitizedCpf.substr(9, 2),
+            prefix: sanitizedCpf.slice(0, 9),
+            suffix: sanitizedCpf.slice(9, 11),
         };
 
         if (!cpf.fullNumber || cpf.fullNumber.length !== this.sizes.cpf) {
@@ -107,18 +97,7 @@ export class CpfCnpjValidators {
             return;
         }
 
-        if (
-            cpf.fullNumber === "00000000000" ||
-            cpf.fullNumber === "11111111111" ||
-            cpf.fullNumber === "22222222222" ||
-            cpf.fullNumber === "33333333333" ||
-            cpf.fullNumber === "44444444444" ||
-            cpf.fullNumber === "55555555555" ||
-            cpf.fullNumber === "66666666666" ||
-            cpf.fullNumber === "77777777777" ||
-            cpf.fullNumber === "88888888888" ||
-            cpf.fullNumber === "99999999999"
-        ) {
+        if (/^(\d)\1+$/.test(cpf.fullNumber)) {
             setInvalidInput({ input: cpfInput });
             return;
         }
