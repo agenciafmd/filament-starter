@@ -4609,6 +4609,8 @@ Disabled textarea with some text inside</textarea>
                                                     <x-frontend::cards.card card-body-class="vstack bd-example-code align-items-center gap-1">
                                                         <x-frontend::image
                                                             image="icons/favicon.ico"
+                                                            width="48"
+                                                            height="48"
                                                             is-single-image="true"
                                                             title="48x48 - favicon.ico"
                                                             alt="48x48 - favicon.ico"
@@ -4645,12 +4647,14 @@ Disabled textarea with some text inside</textarea>
                                                     <x-frontend::cards.card card-body-class="vstack bd-example-code align-items-center gap-1">
                                                         <x-frontend::image
                                                             image="icons/safari-pinned-tab.svg"
+                                                            width="512"
+                                                            height="512"
                                                             is-single-image="true"
-                                                            title="192x192 - safari-pinned-tab.svg"
-                                                            alt="192x192 - safari-pinned-tab.svg"
+                                                            title="512x512 - safari-pinned-tab.svg"
+                                                            alt="512x512 - safari-pinned-tab.svg"
                                                             class="img-sanitize"
                                                         />
-                                                        <small class="text-center"> 192x192 - safari-pinned-tab.svg </small>
+                                                        <small class="text-center"> 512x512 - safari-pinned-tab.svg </small>
                                                     </x-frontend::cards.card>
                                                 </div>
                                                 <div class="md:col-6">
@@ -4658,11 +4662,11 @@ Disabled textarea with some text inside</textarea>
                                                         <x-frontend::image
                                                             image="icons/apple-touch-icon.png"
                                                             is-single-image="true"
-                                                            title="192x192 - apple-touch-icon.png"
-                                                            alt="192x192 - apple-touch-icon.png"
+                                                            title="180x180 - apple-touch-icon.png"
+                                                            alt="180x180 - apple-touch-icon.png"
                                                             class="img-sanitize"
                                                         />
-                                                        <small class="text-center"> 192x192 - apple-touch-icon.png </small>
+                                                        <small class="text-center"> 180x180 - apple-touch-icon.png </small>
                                                     </x-frontend::cards.card>
                                                 </div>
                                                 <div class="md:col-6">

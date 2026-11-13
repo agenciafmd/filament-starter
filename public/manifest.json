@@ -8,15 +8,15 @@
   "orientation": "portrait-primary",
   "icons": [
     {
-      "src": "build/assets/images/mstile-150x150-B0nmQREE.webp",
+      "src": "build/assets/images/mstile-150x150-ls4-UQTS.webp",
       "type": "image/webp",
-      "sizes": "270x270",
+      "sizes": "150x150",
       "purpose": "any"
     },
     {
-      "src": "build/assets/images/mstile-150x150-CEcUQiH0.png",
+      "src": "build/assets/images/mstile-150x150-D0oFO21I.png",
       "type": "image/png",
-      "sizes": "270x270",
+      "sizes": "150x150",
       "purpose": "any"
     },
     {

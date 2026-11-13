@@ -50,13 +50,13 @@ function generateIcons(viteManifest) {
         {
             src: "resources/images/icons/mstile-150x150.webp",
             type: "image/webp",
-            sizes: "270x270",
+            sizes: "150x150",
             purpose: "any",
         },
         {
             src: "resources/images/icons/mstile-150x150.png",
             type: "image/png",
-            sizes: "270x270",
+            sizes: "150x150",
             purpose: "any",
         },
         {
