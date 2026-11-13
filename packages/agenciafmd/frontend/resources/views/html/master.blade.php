@@ -5,6 +5,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5.0" />
 
+    {{-- canonical e og:url: endereço sem query string (utm, fbclid). Páginas com filtro ou paginação definem @section('canonical') --}}
+    @php
+        $canonicalUrl = $__env->yieldContent('canonical', url()->current());
+    @endphp
     <title>
         @yield('title', '')
         | {{ config('app.name') }}
@@ -13,10 +17,11 @@
     <meta name="author" content="@yield('author', 'F&MD')" />
 
     <meta property="og:title" content="@yield('title', '') | {{ config('app.name') }}" />
-    <meta property="og:url" content="@yield('url', request()->fullUrl())" />
+    <meta property="og:url" content="{{ $canonicalUrl }}" />
     <meta property="og:image" content="@yield('image', url('/images/logo.png'))" />
     <meta property="og:site_name" content="{{ config('app.name') }}" />
     <meta name="csrf-token" content="{{ csrf_token() }}" />
+    <link rel="canonical" href="{{ $canonicalUrl }}" />
 
     <x-frontend::pwa />
     <x-frontend::fonts-preload />

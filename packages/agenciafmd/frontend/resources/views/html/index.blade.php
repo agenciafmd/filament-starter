@@ -10,13 +10,13 @@
     <style>
         :root {
             --glow-color: #e9ff00;
-            --bs-dark-rgb: 0, 0, 0;
         }
     </style>
 @endpush
 
 @section('content')
     <main class="vstack justify-content-around flex-grow-1">
+        <h1 class="visually-hidden">{{ config('app.name') }}: site em desenvolvimento</h1>
         <section class="fg-75 md:py-1h fg-light fs-xsmall fw-bold z-1 w-100 bg-black p-1 text-center">
             @php
                 $phrases = collect([
