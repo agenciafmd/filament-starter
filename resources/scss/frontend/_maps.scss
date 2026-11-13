@@ -261,6 +261,16 @@ $badge-tokens: (
     --badge-border-radius: $spacer * 0.25,
 );
 
+// Subtle badge text in the darker shade (`fg-emphasis`): the base color on the light background fails the
+// 4.5:1 contrast at badge size (success: 3.8:1)
+$badge-variants: (
+    "subtle": (
+        "color": "fg-emphasis",
+        "bg": "bg-subtle",
+        "border-color": "transparent",
+    ),
+);
+
 $dialog-tokens: (
     --dialog-padding: $dialog-inner-padding,
     --dialog-header-padding: $dialog-inner-padding,

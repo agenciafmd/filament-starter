@@ -84,7 +84,8 @@
 @use "bootstrap/scss/alert";
 @use "bootstrap/scss/avatar";
 @use "bootstrap/scss/badge" with (
-    $badge-tokens: $badge-tokens
+    $badge-tokens: $badge-tokens,
+    $badge-variants: $badge-variants
 );
 @use "bootstrap/scss/breadcrumb";
 @use "bootstrap/scss/chip";

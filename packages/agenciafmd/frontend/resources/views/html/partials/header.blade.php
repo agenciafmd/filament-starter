@@ -1,3 +1,8 @@
+{{-- drawerId: id do drawer do menu. Mude quando o header aparecer mais de uma vez na página (ex.: catálogo) --}}
+@php
+    $drawerId ??= 'navbarDrawer';
+@endphp
+
 <header class="header fmd-header">
     <nav class="navbar md:navbar-expand">
         <div class="container">
@@ -10,11 +15,11 @@
             />
             <dialog
                 class="drawer drawer-end md:align-items-end"
-                id="navbarDrawer"
-                aria-labelledby="navbarDrawerLabel"
+                id="{{ $drawerId }}"
+                aria-labelledby="{{ $drawerId }}Label"
             >
                 <div class="drawer-header">
-                    <h2 class="drawer-title fs-base" id="navbarDrawerLabel">Menu</h2>
+                    <h2 class="drawer-title fs-base" id="{{ $drawerId }}Label">Menu</h2>
                     <button type="button" class="btn-close" data-bs-dismiss="drawer" aria-label="Fechar menu"></button>
                 </div>
                 <div class="drawer-body">
@@ -39,18 +44,16 @@
                             />
                         </li>
                         <li class="nav-item menu-hover">
-                            <x-frontend::link
-                                link="#"
-                                title="Ir para Contato"
-                                aria-label="Link para Contato"
-                                label="Produtos"
-                                role="button"
+                            <button
+                                type="button"
                                 data-bs-toggle="menu"
                                 data-bs-display="static"
                                 data-bs-auto-close="outside"
                                 aria-expanded="false"
                                 class="nav-link menu-toggle"
-                            />
+                            >
+                                Produtos
+                            </button>
                             <div class="menu">
                                 <x-frontend::link
                                         link="/html/"
@@ -88,7 +91,7 @@
                         <li class="nav-item">
                           <x-frontend::link link="#"
                                             data-bs-dismiss="drawer"
-                                            data-bs-target="#navbarDrawer"
+                                            data-bs-target="#{{ $drawerId }}"
                                             title="Ir para Dialog"
                                             aria-label="Link para Dialog"
                                             label="Dialog"
@@ -113,8 +116,8 @@
                 type="button"
                 title="Menu"
                 data-bs-toggle="drawer"
-                data-bs-target="#navbarDrawer"
-                aria-controls="navbarDrawer"
+                data-bs-target="#{{ $drawerId }}"
+                aria-controls="{{ $drawerId }}"
                 aria-label="Menu"
             >
                 <span class="navbar-toggler-icon"></span>

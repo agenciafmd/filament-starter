@@ -71,7 +71,6 @@
                                         type="submit"
                                         wire:loading.attr="disabled"
                                         wire:target="submit"
-                                        aria-label="enviar formulário"
                                         class="me-0q btn btn-solid theme-primary position-absolute translate-middle-y end-0 top-50 z-1"
                                     >
                                         <span wire:loading.remove wire:target="submit">Buscar </span>

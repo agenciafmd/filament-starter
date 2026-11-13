@@ -8,7 +8,12 @@
                 @include accessibility-warning;
             }
 
-            &:has(img):not([aria-label]):not([aria-labelledby]) {
+            // Link with an image and no name: no aria-label and no image alt to read (text next to the image can't be seen by CSS)
+            &:has(img):not(
+                    [aria-label],
+                    [aria-labelledby],
+                    :has(img[alt]:not([alt=""]))
+                ) {
                 @include accessibility-warning;
             }
         }

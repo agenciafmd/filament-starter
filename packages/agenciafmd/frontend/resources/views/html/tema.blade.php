@@ -310,7 +310,7 @@
                                             <x-frontend::alert has-dismissible="true" class="theme-primary hstack align-items-center gap-1">
                                                 <x-icon name="frontend-ic-info" class="bi ic-sm flex-shrink-0" />
                                                 <div>
-                                                    <h4 class="mb-0">Title alert</h4>
+                                                    <h3 class="h4 mb-0">Title alert</h3>
                                                     <p class="mb-0">
                                                         An example alert primary with
                                                         <x-frontend::link link="#" class="alert-heading" label="link" />
@@ -746,10 +746,10 @@
                                             <div class="row g-1">
                                                 <div class="md:col-6">
                                                     <x-frontend::cards.card>
-                                                        <h5 class="card-title">Card title</h5>
-                                                        <h6 class="card-subtitle fg-2 mb-2">
+                                                        <h3 class="h5 card-title">Card title</h3>
+                                                        <p class="h6 card-subtitle fg-2 mb-2">
                                                             Card subtitle
-                                                        </h6>
+                                                        </p>
                                                         <p class="card-text">
                                                             Some quick example text to build on the card title and make up
                                                             the bulk of the card's content.
@@ -759,10 +759,10 @@
                                                 </div>
                                                 <div class="md:col-6">
                                                     <x-frontend::cards.card has-shadow="true" class="vstack bg-3">
-                                                        <h5 class="card-title">Card title</h5>
-                                                        <h6 class="card-subtitle fg-2 mb-2">
+                                                        <h3 class="h5 card-title">Card title</h3>
+                                                        <p class="h6 card-subtitle fg-2 mb-2">
                                                             Card subtitle
-                                                        </h6>
+                                                        </p>
                                                         <p class="card-text">
                                                             Some quick example text to build on the card title and make up
                                                             the bulk of the card's content.
@@ -1099,7 +1099,7 @@
                                 </h2>
                                 <div class="bd-example">
                                     <div class="vstack gap-1">
-                                        @include('frontend::html.partials.header')
+                                        @include('frontend::html.partials.header', ['drawerId' => 'navbarDrawerExample'])
 
                                         <div>
                                             <hr />
@@ -1142,16 +1142,15 @@
                                                                 <a class="nav-link" href="#">About </a>
                                                             </li>
                                                             <li class="nav-item menu-hover">
-                                                                <a
+                                                                <button
+                                                                    type="button"
                                                                     class="nav-link menu-toggle"
                                                                     data-bs-toggle="menu"
                                                                     data-bs-display="static"
-                                                                    href="#"
-                                                                    role="button"
-                                                                    aria-haspopup="true"
                                                                     aria-expanded="false"
-                                                                    >Dropdown
-                                                                </a>
+                                                                >
+                                                                    Dropdown
+                                                                </button>
                                                                 <div class="menu">
                                                                     <a class="menu-item" href="#">Action </a>
                                                                     <a class="menu-item" href="#">Another action </a>
@@ -1166,8 +1165,9 @@
                                                         <form class="d-flex">
                                                             <input
                                                                 class="form-control sm:me-2"
-                                                                type="text"
+                                                                type="search"
                                                                 placeholder="Search"
+                                                                aria-label="Buscar"
                                                             />
                                                             <button class="btn btn-solid theme-secondary sm:my-0 my-2" type="submit">
                                                                 Search
@@ -1219,16 +1219,15 @@
                                                                 <a class="nav-link" href="#">About </a>
                                                             </li>
                                                             <li class="nav-item menu-hover">
-                                                                <a
+                                                                <button
+                                                                    type="button"
                                                                     class="nav-link menu-toggle"
                                                                     data-bs-toggle="menu"
                                                                     data-bs-display="static"
-                                                                    href="#"
-                                                                    role="button"
-                                                                    aria-haspopup="true"
                                                                     aria-expanded="false"
-                                                                    >Dropdown
-                                                                </a>
+                                                                >
+                                                                    Dropdown
+                                                                </button>
                                                                 <div class="menu">
                                                                     <a class="menu-item" href="#">Action </a>
                                                                     <a class="menu-item" href="#">Another action </a>
@@ -1243,8 +1242,9 @@
                                                         <form class="d-flex">
                                                             <input
                                                                 class="form-control sm:me-2"
-                                                                type="text"
+                                                                type="search"
                                                                 placeholder="Search"
+                                                                aria-label="Buscar"
                                                             />
                                                             <button class="btn btn-solid theme-secondary sm:my-0 my-2" type="submit">
                                                                 Search
@@ -1296,16 +1296,15 @@
                                                                 <a class="nav-link" href="#">About </a>
                                                             </li>
                                                             <li class="nav-item menu-hover">
-                                                                <a
+                                                                <button
+                                                                    type="button"
                                                                     class="nav-link menu-toggle"
                                                                     data-bs-toggle="menu"
                                                                     data-bs-display="static"
-                                                                    href="#"
-                                                                    role="button"
-                                                                    aria-haspopup="true"
                                                                     aria-expanded="false"
-                                                                    >Dropdown
-                                                                </a>
+                                                                >
+                                                                    Dropdown
+                                                                </button>
                                                                 <div class="menu">
                                                                     <a class="menu-item" href="#">Action </a>
                                                                     <a class="menu-item" href="#">Another action </a>
@@ -1320,8 +1319,9 @@
                                                         <form class="d-flex">
                                                             <input
                                                                 class="form-control sm:me-2"
-                                                                type="text"
+                                                                type="search"
                                                                 placeholder="Search"
+                                                                aria-label="Buscar"
                                                             />
                                                             <button class="btn btn-solid theme-secondary sm:my-0 my-2" type="submit">
                                                                 Search
@@ -1545,17 +1545,15 @@
                                                     />
                                                 </li>
                                                 <li class="nav-item menu-hover">
-                                                    <x-frontend::link
-                                                        link="#"
-                                                        title="Ir para Contato"
-                                                        aria-label="Link para Contato"
-                                                        label="Produtos"
-                                                        role="button"
+                                                    <button
+                                                        type="button"
                                                         data-bs-toggle="menu"
                                                         data-bs-display="static"
                                                         aria-expanded="false"
                                                         class="nav-link menu-toggle"
-                                                    />
+                                                    >
+                                                        Produtos
+                                                    </button>
                                                     <div class="menu">
                                                         <x-frontend::link
                                                                 link="/html/"
@@ -1677,17 +1675,15 @@
                                                     />
                                                 </li>
                                                 <li class="nav-item menu-hover">
-                                                    <x-frontend::link
-                                                        link="#"
-                                                        title="Ir para Contato"
-                                                        aria-label="Link para Contato"
-                                                        label="Produtos"
-                                                        role="button"
+                                                    <button
+                                                        type="button"
                                                         data-bs-toggle="menu"
                                                         data-bs-display="static"
                                                         aria-expanded="false"
                                                         class="nav-link menu-toggle"
-                                                    />
+                                                    >
+                                                        Produtos
+                                                    </button>
                                                     <div class="menu">
                                                         <x-frontend::link
                                                                 link="/html/"

@@ -17,6 +17,7 @@
 <div class="d-flex justify-content-end align-items-center flex-row-reverse gap-1">
     <div class="position-relative mb-1h">
         <svg
+            aria-hidden="true"
             class="stroke-secondary d-block mx-auto"
             width="{{ $size }}"
             height="{{ $size }}"

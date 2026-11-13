@@ -192,10 +192,10 @@
                             class="position-sticky top-0 h-auto bg-3 shadow"
                             card-body-class="p-block-small"
                         >
-                            <h5 class="fs-7 mb-2">Leia também:</h5>
+                            <h2 class="fs-7 mb-2">Leia também:</h2>
 
                             @foreach ($articles as $article)
-                                <x-frontend::articles.item-no-image :article="$article" />
+                                <x-frontend::articles.item-no-image :article="$article" heading-tag="h3" />
 
                                 @if (! $loop->last)
                                     <hr class="my-1h" />

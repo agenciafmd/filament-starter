@@ -1,5 +1,6 @@
 @props([
     'banners' => [],
+    'headingTag' => 'h2',
     'priority' => true,
 ])
 
@@ -40,7 +41,7 @@
                                             <div class="row">
                                                 <div class="md:col-7 xl:col-6">
                                                     <div class="mb-block-small pe-auto">
-                                                        <h2 class="fg-primary">{{ $banner->content->name }}</h2>
+                                                        <{{ $headingTag }} class="h2 fg-primary">{{ $banner->content->name }}</{{ $headingTag }}>
                                                         <p class="mb-block-small fg-primary">
                                                             {{ $banner->content->subtitle }}
                                                         </p>

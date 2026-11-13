@@ -64,9 +64,14 @@ final class BladeServiceProvider extends ServiceProvider
     private function registerIconSet(): void
     {
         $this->callAfterResolving(Factory::class, function (Factory $factory): void {
+            // Icons are decorative by default (the text next to them carries the meaning). For an icon that is the only
+            // content, pass aria-hidden="false" with role="img" and aria-label
             $factory->add('frontend', [
                 'path' => resource_path('svg'),
                 'prefix' => 'frontend',
+                'attributes' => [
+                    'aria-hidden' => 'true',
+                ],
             ]);
         });
     }

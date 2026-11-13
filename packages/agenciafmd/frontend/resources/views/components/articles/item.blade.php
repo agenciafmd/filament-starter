@@ -1,6 +1,7 @@
 @props([
     'article' => [],
     'priority' => false,
+    'headingTag' => 'h2',
 ])
 <x-frontend::cards.card-picture
     :image="$article->image"
@@ -11,14 +12,15 @@
 >
     <div class="mb-2">
         <span class="card-subtitle fg-primary"> {{ $article->subtitle }} </span>
-        <h2 class="card-title">{{ $article->name }}</h2>
+        <{{ $headingTag }} class="card-title">{{ $article->name }}</{{ $headingTag }}>
         <p class="fs-small fg-body">{{ $article->date }}</p>
     </div>
     <x-frontend::link
         link="{{ $article->route }}"
-        aria-label="Link para {{ $article->name }}"
         title="Ir para {{ $article->name }}"
         label="Leia mais"
         class="btn btn-solid theme-primary btn-lg stretched-link mt-auto w-100"
-    />
+    >
+        <span class="visually-hidden">: {{ $article->name }}</span>
+    </x-frontend::link>
 </x-frontend::cards.card-picture>
