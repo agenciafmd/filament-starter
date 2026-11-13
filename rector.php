@@ -5,6 +5,7 @@ declare(strict_types=1);
 use Pest\Rector\Set\PestSetList;
 use Rector\Caching\ValueObject\Storage\FileCacheStorage;
 use Rector\Config\RectorConfig;
+use Rector\Privatization\Rector\ClassMethod\PrivatizeFinalClassMethodRector;
 use RectorLaravel\Set\LaravelSetList;
 
 return RectorConfig::configure()
@@ -39,6 +40,9 @@ return RectorConfig::configure()
     ->withImportNames()
     ->withSkip([
         '*/resources/boost/*',
+        PrivatizeFinalClassMethodRector::class => [
+            '*/Resources/*/Pages/*',
+        ],
     ])
     ->withPreparedSets(
         deadCode: true,
