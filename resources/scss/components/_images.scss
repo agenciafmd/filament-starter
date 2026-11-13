@@ -19,13 +19,8 @@
     }
 
     .img {
-        &-fluid {
-            width: auto;
-        }
-
         &-sanitize {
             max-width: 100%;
-            width: auto;
             height: auto;
             display: block;
             margin-right: auto;

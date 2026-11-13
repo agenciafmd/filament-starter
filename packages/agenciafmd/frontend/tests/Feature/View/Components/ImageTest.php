@@ -38,3 +38,28 @@ it('loads the image eagerly with high priority when it is a priority image', fun
         ->assertSee('src="http://vite.test/resources/images/banner.jpg"', false)
         ->assertDontSee('loading="lazy"', false);
 });
+
+it('reserves the space of the image with its real size', function (): void {
+    $view = $this->blade('<x-frontend::image image="logo.png" title="Logo" is-single-image />');
+
+    $view->assertSee('width="200"', false)
+        ->assertSee('height="70"', false);
+});
+
+it('uses the size passed to the image', function (): void {
+    $view = $this->blade('<x-frontend::image image="logo.png" title="Logo" width="100" height="34" is-single-image />');
+
+    $view->assertSee('width="100"', false)
+        ->assertSee('height="34"', false)
+        ->assertDontSee('width="200"', false);
+});
+
+it('leaves the size out when it cannot read the image', function (string $image): void {
+    $view = $this->blade('<x-frontend::image :image="$image" title="Imagem" is-single-image />', ['image' => $image]);
+
+    $view->assertDontSee('width=', false)
+        ->assertDontSee('height=', false);
+})->with([
+    'svg' => 'icons/safari-pinned-tab.svg',
+    'missing file' => 'missing.png',
+]);

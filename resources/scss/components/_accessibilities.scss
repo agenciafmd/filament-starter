@@ -19,6 +19,11 @@
             &:not([alt], [loading="lazy"], .fslightbox-source, .wysiwyg img) {
                 @include accessibility-warning;
             }
+
+            // No width/height: the page jumps when the image loads (x-frontend::image reads them from the file)
+            &:not([width][height], .fslightbox-source, .wysiwyg img) {
+                @include accessibility-warning;
+            }
         }
     }
 }
