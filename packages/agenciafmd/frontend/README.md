@@ -62,9 +62,11 @@ O pacote não publica arquivos (config, views ou assets); as views são carregad
 | `resources/scss/frontend.scss` e `resources/js/frontend-imports.js` | Entradas do Vite carregadas no `master` |
 | `resources/images/` | Imagens usadas por `Vite::image()` e pelo `<x-img>` |
 | `resources/fonts/` | Fontes usadas por `Vite::font()` |
+| `resources/videos/` e `resources/pdf/` | Arquivos usados por `Vite::video()` e `Vite::pdf()` |
 | `resources/svg/` | Ícones do icon set `frontend` (`<x-icon name="frontend-...">`) |
 | `resources/views/errors/` | Registrado como namespace `errors::` |
-| `public/css/critical/{nome}_critical.min.css` | CSS crítico lido pelo `<x-frontend::critical-css>` |
+| `public/css/critical/{nome}_critical.min.css` | CSS crítico lido pelo `<x-frontend::critical-css>`, gerado no build (`resources/js/utilities/critical.js`) |
+| `public/manifest.json` | Manifest do PWA, gerado no build (`resources/js/utilities/create-manifest.js`) |
 
 ## Uso
 
@@ -100,7 +102,11 @@ Seções e stacks disponíveis: `@section('header')`, `@section('content')`, `@s
 ```blade
 <img src="{{ Vite::image('logo.png') }}" alt="Logo" />   {{-- resources/images/logo.png --}}
 <link rel="preload" href="{{ Vite::font('Roboto-Regular.woff2') }}" as="font" crossorigin />
+<video src="{{ Vite::video('institucional.mp4') }}" controls></video>   {{-- resources/videos/institucional.mp4 --}}
+<a href="{{ Vite::pdf('regulamento.pdf') }}" target="_blank">Regulamento</a>   {{-- resources/pdf/regulamento.pdf --}}
 ```
+
+Os arquivos passam pelo build: o nome ganha um hash, e o cache do navegador se renova a cada versão.
 
 ### Imagem responsiva (`<x-img>`)
 
@@ -113,13 +119,44 @@ Gera, na primeira renderização, as versões redimensionadas da imagem (da larg
 
 O `src` é procurado no disco padrão do Storage e em `resources/images/`.
 
+### Imagem principal da página (`priority`)
+
+Por padrão, o `<x-frontend::image>` e o `<x-frontend::picture>` carregam a imagem com `loading="lazy"`. Na imagem principal da primeira dobra (ex.: primeiro slide do banner), use `priority`: ela é baixada de imediato e com `fetchpriority="high"`, o que melhora o LCP.
+
+```blade
+<x-frontend::picture image="banners/home.jpg" title="Banner" has-breakpoints :priority="$loop->first" />
+```
+
+Use em uma imagem por página. Prioridade em todas é o mesmo que nenhuma.
+
+### Tamanho das imagens (`width`/`height`)
+
+Com `width` e `height` no `<img>`, o navegador reserva o espaço da imagem antes de ela carregar. Sem eles, a imagem lazy ocupa 0 px e empurra a página quando chega (layout shift, que piora o CLS e faz âncoras pararem no lugar errado).
+
+O `<x-frontend::image>` (e o `picture`, que usa ele) preenche o tamanho sozinho em **PNG e JPG**, lendo o arquivo em `resources/images/`. Com breakpoints (`has-breakpoints`), vale o tamanho da imagem base, a do mobile: as variantes `-lg`/`-xl` devem manter a proporção, ou a imagem fica dentro de um `.ratio`.
+
+Nos outros casos (SVG, ICO, URL externa e `<img>` escrito à mão), passe `width` e `height`:
+
+```blade
+<x-frontend::image image="icons/safari-pinned-tab.svg" width="512" height="512" title="Safari pinned tab" />
+```
+
+**Aviso no navegador:** todo `<img>` sem `width` e `height` ganha o mesmo contorno vermelho do aviso de imagem sem `alt` (`resources/scss/components/_accessibilities.scss`). Ficam de fora:
+- imagens dentro de `.wysiwyg`, que vêm do admin;
+- `.fslightbox-source`;
+- imagens com a classe `skip-warning`, para quando o tamanho realmente não pode ser informado.
+
 ### CSS crítico
 
 ```blade
 <x-frontend::critical-css critical="index.css" />
 ```
 
-Lê `public/css/critical/index_critical.min.css` (em cache permanente) e imprime dentro de `<style>`. Não renderiza nada se o arquivo não existir.
+Lê `public/css/critical/index_critical.min.css` e imprime dentro de `<style>`. Os arquivos são gerados no `npm run build` por `resources/js/utilities/critical.js`: cada página de `views/html` (menos os layouts e o catálogo `tema`) é aberta num navegador real. A aplicação precisa estar rodando. Se não estiver, o build mantém o CSS crítico anterior.
+
+- **Cache:** a chave inclui a data de modificação do arquivo, então um novo build renova o cache sozinho, sem `cache:clear`.
+- **Sem arquivo:** não renderiza nada e não guarda cache. O CSS crítico passa a valer assim que o arquivo for gerado.
+- **Com o `vite dev` rodando:** não renderiza nada, para o CSS antigo do build não brigar com o do dev server.
 
 ### Componentes Blade
 
@@ -127,11 +164,11 @@ Todos disponíveis como `<x-frontend::nome>`:
 
 | Grupo | Componentes |
 |---|---|
-| Head / tracking | `gtm-head`, `gtm-body`, `site-verification`, `pwa`, `fonts-preload`, `critical-css` |
-| Imagens | `image`, `picture`, `sources`, `single-source` (WebP + `@2x` via `Vite::image()`) |
+| Head / tracking | `gtm-head`, `gtm-body`, `site-verification`, `pwa`, `fonts-preload`, `critical-css`, `color-mode` |
+| Imagens | `image`, `picture`, `sources`, `single-source` (WebP + `@2x` via `Vite::image()`), `avatar` |
 | Navegação | `link`, `link-share`, `breadcrumb`, `social-network`, `privacy-policy-link`, `privacy-terms-message` |
 | Conteúdo | `alert`, `badge`, `list-icon`, `pdf`, `cards.card`, `cards.card-picture`, `articles.item`, `articles.item-no-image` |
-| Interação | `accordions.accordion`, `accordions.accordion-faq`, `modals.modal`, `modals.modal-base` |
+| Interação | `accordions.accordion`, `accordions.accordion-faq`, `dialogs.dialog`, `dialogs.dialog-base` |
 | Mídia | `glightbox.image`, `glightbox.video`, `glightbox.player-embed` |
 | Sliders | `sliders.banner`, `sliders.articles-gallery`, `swiper-buttons` |
 | Progresso | `progress.bar`, `progress.circle` |
@@ -143,10 +180,35 @@ Exemplos:
 
 <x-frontend::link link="/html/index" label="Ver protótipos" icon="ic-ui-chevron-right" />
 
-<x-frontend::modals.modal id="modalContato" title="Fale conosco">
+<x-frontend::dialogs.dialog id="dialogContato" title="Fale conosco">
     ...
-</x-frontend::modals.modal>
+</x-frontend::dialogs.dialog>
+<button type="button" class="btn" data-bs-toggle="dialog" data-bs-target="#dialogContato">Abrir</button>
 ```
+
+**`color-mode`** (dark mode): fica no `<head>`, antes do CSS, e o `frontend::master` já inclui. Aplica o tema salvo pelo botão de tema ou, sem escolha, o tema do sistema, para a página não piscar no tema claro.
+
+### JS e CSS dos componentes
+
+Componentes que precisam de JS ou CSS próprio (`sliders.banner`, `sliders.articles-gallery`, `link-share`) carregam esses arquivos sozinhos, só nas páginas em que aparecem:
+
+```blade
+@pushOnce('scripts')
+    @vite('resources/js/components/sliders/banners.js')
+@endPushOnce
+```
+
+- O `@vite` gera o `modulepreload` dos chunks importados, e o navegador baixa tudo em paralelo.
+- O `@pushOnce` imprime a tag uma vez só, mesmo com o componente repetido na página.
+- O layout precisa do `@stack('scripts')`. O `frontend::master` já inclui.
+
+Ao criar um componente com JS, siga o mesmo padrão e liste a entrada no `input` do `vite.config.js`.
+
+### PWA
+
+O `<x-frontend::pwa>` liga o `public/manifest.json` e os ícones (`apple-touch-icon`, `favicon`, `mask-icon`). Não há service worker: o site fica instalável, mas sem cache offline.
+
+A `theme_color` vem dos tokens do tema. O build a grava no manifest (`create-manifest.js`), e o componente usa a mesma cor nas metas `theme-color` e `msapplication-TileColor`.
 
 ### Formulário de contato (Livewire)
 
