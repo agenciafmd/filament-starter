@@ -14,11 +14,18 @@
     if ((! $width || ! $height) && preg_match('/\.(png|jpe?g)$/i', $image) && is_file($file)) {
         [$width, $height] = getimagesize($file) ?: [null, null];
     }
+
+    $isHighPriority = $priority && ! request()->attributes->get('frontend.image.high-priority');
+
+    if ($isHighPriority) {
+        request()->attributes->set('frontend.image.high-priority', true);
+    }
 @endphp
 
 {{--
-    priority: use na imagem principal da primeira dobra (ex.: primeiro slide do banner).
-    Ela é baixada de imediato e com prioridade alta, melhorando o LCP.
+    priority: use nas imagens da primeira dobra (ex.: primeiro slide do banner, primeira linha de cards).
+    Elas são baixadas de imediato (eager); a primeira da página também ganha fetchpriority="high",
+    melhorando o LCP. As outras não disputam a banda com ela.
 
     width/height: em PNG e JPG, vêm do arquivo em resources/images. Com o tamanho no html, o navegador
     reserva o espaço antes da imagem lazy carregar (sem layout shift). Nos outros formatos (SVG, ICO, URL
@@ -28,7 +35,9 @@
 <img
     @if ($priority)
         loading="eager"
-        fetchpriority="high"
+        @if ($isHighPriority)
+            fetchpriority="high"
+        @endif
         src="{{ Vite::image($image) }}"
     @else
         loading="lazy"

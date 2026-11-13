@@ -235,7 +235,7 @@
                                     desktop: 475x356 - ratio 3x4
                                     --}}
 
-                                    <x-frontend::articles.item :article="$article" />
+                                    <x-frontend::articles.item :article="$article" :priority="$loop->index < 3" />
                                 </div>
 
                             @else
@@ -247,7 +247,7 @@
                                     desktop: 475x356 - ratio 3x4
                                     --}}
 
-                                    <x-frontend::articles.item :article="$article" />
+                                    <x-frontend::articles.item :article="$article" :priority="$loop->index < 3" />
                                 </div>
 
                             @endif

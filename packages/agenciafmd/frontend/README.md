@@ -121,13 +121,16 @@ O `src` é procurado no disco padrão do Storage e em `resources/images/`.
 
 ### Imagem principal da página (`priority`)
 
-Por padrão, o `<x-frontend::image>` e o `<x-frontend::picture>` carregam a imagem com `loading="lazy"`. Na imagem principal da primeira dobra (ex.: primeiro slide do banner), use `priority`: ela é baixada de imediato e com `fetchpriority="high"`, o que melhora o LCP.
+Por padrão, o `<x-frontend::image>` e o `<x-frontend::picture>` carregam a imagem com `loading="lazy"`. Nas imagens da primeira dobra, use `priority`: elas são baixadas de imediato (`loading="eager"`), o que melhora o LCP.
 
 ```blade
 <x-frontend::picture image="banners/home.jpg" title="Banner" has-breakpoints :priority="$loop->first" />
+
+{{-- grade de cards: a primeira linha (3 colunas no desktop), qualquer que seja a quantidade de itens --}}
+<x-frontend::articles.item :article="$article" :priority="$loop->index < 3" />
 ```
 
-Use em uma imagem por página. Prioridade em todas é o mesmo que nenhuma.
+A **primeira** imagem com `priority` da página também ganha `fetchpriority="high"`. As outras ficam só `eager`, para não disputar a banda com ela. Isso é automático: o componente guarda no request que a prioridade alta já foi usada.
 
 ### Tamanho das imagens (`width`/`height`)
 

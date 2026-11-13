@@ -1,8 +1,10 @@
 @props([
     'article' => [],
+    'priority' => false,
 ])
 <x-frontend::cards.card-picture
     :image="$article->image"
+    :priority="$priority"
     :has-shadow="true"
     card-body-class="vstack"
     class="vstack overflow-hidden"

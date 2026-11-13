@@ -1,6 +1,9 @@
 @props([
     'banners' => [],
+    'priority' => true,
 ])
+
+{{-- priority: o primeiro slide é baixado de imediato (LCP). Passe false quando o banner não estiver na primeira dobra --}}
 
 <section id="banner" class="banner-slider overflow-hidden">
     <div class="swiper-container">
@@ -27,7 +30,7 @@
                                     breakpointDesktopSuffix="xl"
                                     breakpointNotebookWidth="768px"
                                     breakpointNotebookSuffix="lg"
-                                    :priority="$loop->first"
+                                    :priority="$priority && $loop->first"
                                 />
                             </div>
                             @if ($banner->content)
