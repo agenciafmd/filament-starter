@@ -16,10 +16,14 @@ import { preventInvalidFormSubmit } from "./helpers/form-validation.js";
 import { setupInputMasks } from "./helpers/input-masks.js";
 import { setupUtmHelpers } from "./helpers/utm-helper.js";
 
-// Each helper acts only where its class is on the page. The light ones are always on and delegated on the
-// document, so they also work on html added after the load (Livewire, infinite scroll).
+// Each helper acts only where its class is on the page.
 // Popovers and tooltips need nothing here: Bootstrap 6 starts them by `data-bs-toggle`.
 (() => {
+    // =========================================================================================
+    // ALWAYS ON: light helpers, delegated on the document (they also work on html added after
+    // the load, like Livewire and infinite scroll)
+    // =========================================================================================
+
     preventInvalidFormSubmit();
 
     setupSmoothScroll(); // a.js-scroll-top
@@ -34,13 +38,15 @@ import { setupUtmHelpers } from "./helpers/utm-helper.js";
 
     setupShareAPI(); // .js-btn-share (the link-share component loads the polyfill)
 
-    // setupDataLayerEventClickButton(); // .js-btn-data-layer
-
     setupUtmHelpers();
 
     setupColorMode();
 
-    // Opt-in: uncomment what the project uses
+    // =========================================================================================
+    // OPT-IN: uncomment what the project uses
+    // =========================================================================================
+
+    // setupDataLayerEventClickButton(); // .js-btn-data-layer
 
     // setupCepSearch(); // .js-zipcode (ViaCEP)
 
@@ -56,11 +62,8 @@ import { setupUtmHelpers } from "./helpers/utm-helper.js";
     // setupAnchorReloadPrevention();
 })();
 
+// After the load: the header reads the page and header sizes, which only settle once images and fonts load
 window.addEventListener("load", () => {
-    /**
-     * Usually the header triggers after the first section which has the
-     * height defined as 100vh. We need the starting function here because
-     * vh/vw are calculated after all resources loaded*/
     setupFmdHeader();
 
     setupInfiniteScroll(); // .infinite-scroll

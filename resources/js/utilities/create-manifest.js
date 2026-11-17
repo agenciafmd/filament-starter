@@ -3,19 +3,58 @@ import { compileString } from "sass";
 import { resolve } from "path";
 import { createRequire } from "module";
 
+/**
+ * PWA manifest (public/manifest.json): name, colors and icons used when the site is installed
+ * (home screen, app list). Runs after `npm run build` (or alone with `npm run pwa`).
+ */
+
+// =============================================================================================
+// PROJECT SETTINGS: adjust them for each project
+// =============================================================================================
+
+// Name shown when the site is installed. Change it in every project
+const app = {
+    name: "Starter",
+    // Under the icon on the home screen: keep it short (up to ~12 characters)
+    shortName: "Starter",
+    startUrl: "/",
+    display: "standalone",
+    orientation: "portrait-primary",
+};
+
+// Icons of resources/images/icons, each one in webp and png (sizes = the size of the file)
+const icons = [
+    { file: "mstile-150x150", sizes: "150x150" },
+    { file: "icon-192x192", sizes: "192x192" },
+    { file: "icon-512x512", sizes: "512x512" },
+];
+
+// The colors come from the theme tokens (see getThemeColors below)
+
+// =============================================================================================
+// BUILD INFRASTRUCTURE: no need to change it
+// =============================================================================================
+
+const iconsFolder = "resources/images/icons";
+
+const iconFormats = [
+    { extension: "webp", type: "image/webp" },
+    { extension: "png", type: "image/png" },
+];
+
 async function generateManifest() {
     try {
         const viteManifest = getViteManifest();
         const themeColors = getThemeColors();
 
         const manifest = {
-            name: "Starter",
-            short_name: "Starter",
-            start_url: "/",
-            display: "standalone",
+            name: app.name,
+            short_name: app.shortName,
+            start_url: app.startUrl,
+            display: app.display,
             background_color: themeColors.background,
             theme_color: themeColors.theme,
-            orientation: "portrait-primary",
+            orientation: app.orientation,
             icons: generateIcons(viteManifest),
         };
 
@@ -45,56 +84,23 @@ function getViteManifest() {
     return require(manifestPath);
 }
 
+/**
+ * Each icon in webp and png (webp first), pointing to the hashed file of the build
+ */
 function generateIcons(viteManifest) {
-    const icons = [
-        {
-            src: "resources/images/icons/mstile-150x150.webp",
-            type: "image/webp",
-            sizes: "150x150",
-            purpose: "any",
-        },
-        {
-            src: "resources/images/icons/mstile-150x150.png",
-            type: "image/png",
-            sizes: "150x150",
-            purpose: "any",
-        },
-        {
-            src: "resources/images/icons/icon-192x192.webp",
-            type: "image/webp",
-            sizes: "192x192",
-            purpose: "any",
-        },
-        {
-            src: "resources/images/icons/icon-192x192.png",
-            type: "image/png",
-            sizes: "192x192",
-            purpose: "any",
-        },
-        {
-            src: "resources/images/icons/icon-512x512.webp",
-            type: "image/webp",
-            sizes: "512x512",
-            purpose: "any",
-        },
-        {
-            src: "resources/images/icons/icon-512x512.png",
-            type: "image/png",
-            sizes: "512x512",
-            purpose: "any",
-        },
-    ];
+    return icons.flatMap(({ file, sizes }) =>
+        iconFormats.map(({ extension, type }) => {
+            const source = `${iconsFolder}/${file}.${extension}`;
+            const hashedFile = viteManifest[source];
 
-    return icons.map((icon) => {
-        const fileName = icon.src.split("/").pop();
-        const hashedFile = viteManifest[`resources/images/icons/${fileName}`];
-
-        if (hashedFile) {
-            icon.src = `build/${hashedFile.file}`;
-        }
-
-        return icon;
-    });
+            return {
+                src: hashedFile ? `build/${hashedFile.file}` : source,
+                type,
+                sizes,
+                purpose: "any",
+            };
+        }),
+    );
 }
 
 /**

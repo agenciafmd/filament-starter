@@ -14,22 +14,17 @@ import { chromium } from "playwright";
 import postcss from "postcss";
 import PluginCritical from "rollup-plugin-critical";
 
-// ---------------------------------------------------------------------------------------------
-// Settings
-// ---------------------------------------------------------------------------------------------
+// =============================================================================================
+// PROJECT SETTINGS: adjust them for each project
+// =============================================================================================
 
-const criticalFolder = "public/css/critical";
-
-const htmlViewsFolder = join(
-    import.meta.dirname,
-    "../../../packages/agenciafmd/frontend/resources/views/html",
-);
-
-// Every page of views/html gets a critical css, except these (layouts and the component catalog)
+// Every page of views/html gets a critical css, except these (layouts and the component catalog).
+// Add a page of views/html that isn't a real page (a layout, a partial at the root of the folder)
 const ignoredPages = ["internal", "master", "tema"];
 
 // Rules always kept: they depend on states the browser doesn't reach when it opens the page
-// (scroll, slider running), but they show up in the first fold
+// (scroll, slider running), but they show up in the first fold.
+// Add a rule when something in the first fold only gets its style after the JS runs or the page scrolls
 const alwaysIncludedRules = [
     // Color mode, set on <html> by color-mode.blade.php
     /data-bs-theme/,
@@ -41,7 +36,8 @@ const alwaysIncludedRules = [
     /\[class\*=ratio-\]/,
 ];
 
-// One viewport per breakpoint of $grid-breakpoints (resources/scss/frontend/_variables.scss)
+// One viewport per breakpoint of $grid-breakpoints (resources/scss/frontend/_variables.scss).
+// Update it when the breakpoints change
 const viewports = [
     { width: 375, height: 667 }, // xs
     { width: 768, height: 1024 }, // sm
@@ -50,8 +46,21 @@ const viewports = [
     { width: 1920, height: 1080 }, // xl
 ];
 
-// Time (ms) the page's JS gets to run (slider, header, color mode) before the fold is read
+// Time (ms) the page's JS gets to run (slider, header, color mode) before the fold is read.
+// Raise it when the first fold is still being built (slider, header) when the css is read
 const waitForJsTime = 500;
+
+// =============================================================================================
+// BUILD INFRASTRUCTURE: no need to change it
+// =============================================================================================
+
+// Read by <x-frontend::critical-css>
+const criticalFolder = "public/css/critical";
+
+const htmlViewsFolder = join(
+    import.meta.dirname,
+    "../../../packages/agenciafmd/frontend/resources/views/html",
+);
 
 // ---------------------------------------------------------------------------------------------
 // Vite plugin (used in vite.config.js)

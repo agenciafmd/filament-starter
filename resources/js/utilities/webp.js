@@ -1,8 +1,30 @@
+/**
+ * WebP copies of the images: every .jpg/.png of resources/images gets a .webp next to it, read by
+ * <x-frontend::picture> (<source type="image/webp">).
+ *
+ * Runs before `npm run dev` and `npm run build` (or alone with `npm run webp`). An image whose .webp
+ * is newer than it is skipped, so only new or changed images are converted.
+ */
 import fs from "fs/promises";
 import path from "path";
 import sharp from "sharp";
 
-const SOURCE_PATTERN = /\.(jpg|png)$/;
+// =============================================================================================
+// PROJECT SETTINGS: adjust them for each project
+// =============================================================================================
+
+// Folder of the images: its files and its direct subfolders are converted (one level deep)
+const imagesFolder = "./resources/images";
+
+// Files converted to webp
+const sourcePattern = /\.(jpg|png)$/;
+
+// sharp options: quality (0–100) and effort (0–6, slower gives a smaller file)
+const webpOptions = { quality: 90, effort: 4 };
+
+// =============================================================================================
+// BUILD INFRASTRUCTURE: no need to change it
+// =============================================================================================
 
 const getWebpPath = (filePath) => {
     const { dir, name } = path.parse(filePath);
@@ -30,9 +52,7 @@ const convertImage = async (sourcePath) => {
         return false;
     }
 
-    await sharp(sourcePath)
-        .webp({ quality: 90, effort: 4 })
-        .toFile(destinationPath);
+    await sharp(sourcePath).webp(webpOptions).toFile(destinationPath);
 
     return true;
 };
@@ -41,9 +61,7 @@ const convertImages = async (sourceDir) => {
     try {
         const entries = await fs.readdir(sourceDir, { withFileTypes: true });
         const files = entries
-            .filter(
-                (entry) => entry.isFile() && SOURCE_PATTERN.test(entry.name),
-            )
+            .filter((entry) => entry.isFile() && sourcePattern.test(entry.name))
             .map((entry) => path.join(sourceDir, entry.name));
 
         const results = await Promise.allSettled(files.map(convertImage));
@@ -82,11 +100,9 @@ const getDirectories = async (sourceDir) => {
 };
 
 const processDirectories = async () => {
-    const baseDir = "./resources/images";
+    await convertImages(imagesFolder);
 
-    await convertImages(baseDir);
-
-    const directories = await getDirectories(baseDir);
+    const directories = await getDirectories(imagesFolder);
 
     for (const dir of directories) {
         await convertImages(dir);

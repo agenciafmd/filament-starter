@@ -1,5 +1,4 @@
 // Vendors
-// import 'lax';
 // Bootstrap 6: only the plugins used across the site (each module registers its data API).
 // Catalog-only plugins (datepicker, chips, otp-input, strength, range, nav-overflow, toggler) are in pages/theme.js;
 // import the others the same way where a page needs them, e.g. `import "bootstrap/js/dist/carousel.js";`
@@ -26,4 +25,5 @@ import "/resources/js/components/combobox.js";
 // Global usages
 import "/resources/js/frontend.js";
 
-// Pages
+// Pages and components with their own JS don't go here: they load it in the view with @vite(...)
+// (e.g. components/link-share.blade.php), after adding the file to `entries` in vite.config.js
