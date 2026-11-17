@@ -49,7 +49,7 @@
                                             link="#{{ str($link->name)->slug() }}"
                                             aria-label="{{ $link->name }}"
                                             title="Ir para {{ $link->name }}"
-                                            class="nav-link js-scroll-top hstack gap-0q align-items-center justify-content-start py-0q px-0h rounded-1 fs-small"
+                                            class="nav-link js-scroll-top hstack flex-wrap gap-0q align-items-center justify-content-start py-0q px-0h rounded-1 fs-small"
                                         >
                                             <span class="text-wrap min-w-0">{{ $link->name }}</span>
                                             @if ($link->new ?? false)
@@ -78,7 +78,7 @@
                                             link="#{{ str($link->name)->slug() }}"
                                             aria-label="{{ $link->name }}"
                                             title="Ir para {{ $link->name }}"
-                                            class="nav-link js-scroll-top hstack gap-0q align-items-center justify-content-start py-0q px-0h rounded-1 fs-small"
+                                            class="nav-link js-scroll-top hstack flex-wrap gap-0q align-items-center justify-content-start py-0q px-0h rounded-1 fs-small"
                                         >
                                             <span class="text-wrap min-w-0">{{ $link->name }}</span>
                                             @if ($link->new ?? false)
@@ -120,7 +120,7 @@
                                             link="#{{ str($link->name)->slug() }}"
                                             aria-label="{{ $link->name }}"
                                             title="Ir para {{ $link->name }}"
-                                            class="nav-link js-scroll-top hstack gap-0q align-items-center justify-content-start py-0q px-0h rounded-1 fs-small"
+                                            class="nav-link js-scroll-top hstack flex-wrap gap-0q align-items-center justify-content-start py-0q px-0h rounded-1 fs-small"
                                         >
                                             <span class="text-wrap min-w-0">{{ $link->name }}</span>
                                             @if ($link->new ?? false)
@@ -157,7 +157,7 @@
                                             link="#{{ str($link->name)->slug() }}"
                                             aria-label="{{ $link->name }}"
                                             title="Ir para {{ $link->name }}"
-                                            class="nav-link js-scroll-top hstack gap-0q align-items-center justify-content-start py-0q px-0h rounded-1 fs-small"
+                                            class="nav-link js-scroll-top hstack flex-wrap gap-0q align-items-center justify-content-start py-0q px-0h rounded-1 fs-small"
                                         >
                                             <span class="text-wrap min-w-0">{{ $link->name }}</span>
                                             @if ($link->new ?? false)
@@ -600,7 +600,7 @@
                                 </h2>
                                 <div class="bd-example">
                                     <div class="vstack gap-1">
-                                        <div>
+                                        <div class="overflow-x-auto p-0q">
                                             <div
                                                 class="btn-group"
                                                 role="group"
@@ -634,7 +634,7 @@
                                             </div>
                                         </div>
 
-                                        <div>
+                                        <div class="overflow-x-auto p-0q">
                                             <div
                                                 class="btn-group"
                                                 role="group"
@@ -2577,78 +2577,80 @@
                                 </h2>
                                 <div class="bd-example">
                                     <div class="vstack gap-1">
-                                        <table class="table-hover table">
-                                            <thead>
-                                                <tr>
-                                                    <th scope="col">Type</th>
-                                                    <th scope="col">Column heading</th>
-                                                    <th scope="col">Column heading</th>
-                                                    <th scope="col">Column heading</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr class="table-active">
-                                                    <th scope="row">Active</th>
-                                                    <td>Column content</td>
-                                                    <td>Column content</td>
-                                                    <td>Column content</td>
-                                                </tr>
-                                                <tr>
-                                                    <th scope="row">Default</th>
-                                                    <td>Column content</td>
-                                                    <td>Column content</td>
-                                                    <td>Column content</td>
-                                                </tr>
-                                                <tr class="theme-primary">
-                                                    <th scope="row">Primary</th>
-                                                    <td>Column content</td>
-                                                    <td>Column content</td>
-                                                    <td>Column content</td>
-                                                </tr>
-                                                <tr class="theme-secondary">
-                                                    <th scope="row">Secondary</th>
-                                                    <td>Column content</td>
-                                                    <td>Column content</td>
-                                                    <td>Column content</td>
-                                                </tr>
-                                                <tr class="theme-success">
-                                                    <th scope="row">Success</th>
-                                                    <td>Column content</td>
-                                                    <td>Column content</td>
-                                                    <td>Column content</td>
-                                                </tr>
-                                                <tr class="theme-danger">
-                                                    <th scope="row">Danger</th>
-                                                    <td>Column content</td>
-                                                    <td>Column content</td>
-                                                    <td>Column content</td>
-                                                </tr>
-                                                <tr class="theme-warning">
-                                                    <th scope="row">Warning</th>
-                                                    <td>Column content</td>
-                                                    <td>Column content</td>
-                                                    <td>Column content</td>
-                                                </tr>
-                                                <tr class="theme-info">
-                                                    <th scope="row">Info</th>
-                                                    <td>Column content</td>
-                                                    <td>Column content</td>
-                                                    <td>Column content</td>
-                                                </tr>
-                                                <tr class="theme-light">
-                                                    <th scope="row">Light</th>
-                                                    <td>Column content</td>
-                                                    <td>Column content</td>
-                                                    <td>Column content</td>
-                                                </tr>
-                                                <tr class="theme-dark">
-                                                    <th scope="row">Dark</th>
-                                                    <td>Column content</td>
-                                                    <td>Column content</td>
-                                                    <td>Column content</td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
+                                        <div class="overflow-x-auto">
+                                            <table class="table-hover table">
+                                                <thead>
+                                                    <tr>
+                                                        <th scope="col">Type</th>
+                                                        <th scope="col">Column heading</th>
+                                                        <th scope="col">Column heading</th>
+                                                        <th scope="col">Column heading</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr class="table-active">
+                                                        <th scope="row">Active</th>
+                                                        <td>Column content</td>
+                                                        <td>Column content</td>
+                                                        <td>Column content</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th scope="row">Default</th>
+                                                        <td>Column content</td>
+                                                        <td>Column content</td>
+                                                        <td>Column content</td>
+                                                    </tr>
+                                                    <tr class="theme-primary">
+                                                        <th scope="row">Primary</th>
+                                                        <td>Column content</td>
+                                                        <td>Column content</td>
+                                                        <td>Column content</td>
+                                                    </tr>
+                                                    <tr class="theme-secondary">
+                                                        <th scope="row">Secondary</th>
+                                                        <td>Column content</td>
+                                                        <td>Column content</td>
+                                                        <td>Column content</td>
+                                                    </tr>
+                                                    <tr class="theme-success">
+                                                        <th scope="row">Success</th>
+                                                        <td>Column content</td>
+                                                        <td>Column content</td>
+                                                        <td>Column content</td>
+                                                    </tr>
+                                                    <tr class="theme-danger">
+                                                        <th scope="row">Danger</th>
+                                                        <td>Column content</td>
+                                                        <td>Column content</td>
+                                                        <td>Column content</td>
+                                                    </tr>
+                                                    <tr class="theme-warning">
+                                                        <th scope="row">Warning</th>
+                                                        <td>Column content</td>
+                                                        <td>Column content</td>
+                                                        <td>Column content</td>
+                                                    </tr>
+                                                    <tr class="theme-info">
+                                                        <th scope="row">Info</th>
+                                                        <td>Column content</td>
+                                                        <td>Column content</td>
+                                                        <td>Column content</td>
+                                                    </tr>
+                                                    <tr class="theme-light">
+                                                        <th scope="row">Light</th>
+                                                        <td>Column content</td>
+                                                        <td>Column content</td>
+                                                        <td>Column content</td>
+                                                    </tr>
+                                                    <tr class="theme-dark">
+                                                        <th scope="row">Dark</th>
+                                                        <td>Column content</td>
+                                                        <td>Column content</td>
+                                                        <td>Column content</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
                                     </div>
                                 </div>
                             </section>
@@ -4109,8 +4111,10 @@ Disabled textarea with some text inside</textarea>
                                     <a href="#otp-input" class="bd-anchor fg-2 text-decoration-none" aria-label="Link para OTP input Novo">#</a>
                                 </h2>
                                 <div class="bd-example">
-                                    <div class="otp" data-bs-otp>
-                                        <input type="text" class="otp-input" maxlength="6" aria-label="Código de verificação" />
+                                    <div class="overflow-x-auto p-0q">
+                                        <div class="otp" data-bs-otp>
+                                            <input type="text" class="otp-input" maxlength="6" aria-label="Código de verificação" />
+                                        </div>
                                     </div>
                                 </div>
                             </section>
