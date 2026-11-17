@@ -1,5 +1,8 @@
+# Os dois targets rodam no FrankenPHP (Caddy + PHP) no modo clássico,
+# em que cada requisição carrega o Laravel do zero.
+
 # Desenvolvimento: código via bind mount, Node, Playwright e xdebug
-FROM serversideup/php:8.4-fpm-nginx-v5.1.1 AS development
+FROM serversideup/php:8.4-frankenphp-v5.1.1 AS development
 
 ARG USER_ID=1000
 ARG GROUP_ID=1000
@@ -29,7 +32,7 @@ USER www-data
 
 # Produção: código e dependências dentro da imagem, sem Node, xdebug, pacotes de dev nem Composer.
 # É o target padrão do `docker build`.
-FROM serversideup/php:8.4-fpm-nginx-v5.1.1 AS production
+FROM serversideup/php:8.4-frankenphp-v5.1.1 AS production
 
 ENV HEALTHCHECK_PATH=/up \
     PHP_OPCACHE_ENABLE=1 \

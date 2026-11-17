@@ -11,7 +11,7 @@ Este é o esqueleto de desenvolvimento dos nossos sites e apps.
 
 ## Requisitos
 
-Usamos Docker com as imagens [serversideup/php](https://serversideup.net/open-source/docker-php/docs/getting-started) (NGINX + PHP-FPM), tanto no desenvolvimento quanto na imagem de produção. Você precisa do Docker com o Docker Compose 2.24 ou mais novo (`docker compose`).
+Usamos Docker com as imagens [serversideup/php](https://serversideup.net/open-source/docker-php/docs/getting-started) na variante FrankenPHP (Caddy + PHP), tanto no desenvolvimento quanto na imagem de produção. Você precisa do Docker com o Docker Compose 2.24 ou mais novo (`docker compose`).
 
 Não é preciso PHP nem Node no host. Todos os comandos PHP, Artisan, Composer e Node rodam dentro do container `app`, com `docker compose exec app ...`.
 
@@ -173,6 +173,18 @@ Na imagem de produção, toda a configuração vem de variáveis de ambiente (`A
 As migrações **não** rodam automaticamente. Para ligar, defina `AUTORUN_LARAVEL_MIGRATION=true`.
 
 O `storage/` do container é efêmero: uploads e logs se perdem quando o container é recriado.
+
+## FrankenPHP
+
+Os dois targets usam a variante `frankenphp` da serversideup no modo clássico: cada requisição carrega o Laravel do zero, como no PHP-FPM. O Caddy responde em HTTP na porta 8080. Com `SSL_MODE=full` ou `SSL_MODE=mixed`, ele também responde em HTTPS na porta 8443, com HTTP/2 e HTTP/3 (veja a [configuração de SSL da serversideup](https://serversideup.net/open-source/docker-php/docs/deployment-and-production/configuring-ssl)). No desenvolvimento, o `compose.yaml` usa `SSL_MODE=off`.
+
+O PHP dessa imagem roda em threads (ZTS), então toda extensão nova precisa ser thread-safe.
+
+Para migrar para o [Laravel Octane](https://laravel.com/docs/octane), o código precisa estar pronto para o modo worker, sem estado que passe de uma requisição para outra. Depois:
+
+1. instale o `laravel/octane` e rode `php artisan octane:install --server=frankenphp`;
+2. versione o `public/frankenphp-worker.php` (o instalador o coloca no `.gitignore`);
+3. troque o comando do container por `php artisan octane:start --server=frankenphp --port=8080 --caddyfile=/etc/frankenphp/Caddyfile`. No desenvolvimento, acrescente `--watch` para o worker recarregar quando o código mudar (precisa do pacote `chokidar` no npm).
 
 ## Agentes de IA (Laravel Boost)
 

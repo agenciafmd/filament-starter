@@ -16,7 +16,7 @@ const { APP_URL, VITE_PORT } = {
 const DEFAULT_URL = 'http://localhost';
 const DEFAULT_VITE_PORT = 5181;
 const url = APP_URL ? new URL(APP_URL) : new URL(DEFAULT_URL);
-// inside the container nginx listens on 8080, so compose.yaml sets CRITICAL_URL
+// inside the container Caddy (FrankenPHP) listens on 8080, so compose.yaml sets CRITICAL_URL
 const CRITICAL_URL = process.env.CRITICAL_URL ?? `${ url.protocol }//${ url.hostname }`;
 
 const purgeCheckPaths = [
