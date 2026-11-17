@@ -9,6 +9,8 @@
 ])
 
 @php
+    $isExternal = str($image)->startsWith(['http://', 'https://', '//']);
+    $src = $isExternal ? $image : Vite::image($image);
     $file = resource_path("images/{$image}");
 
     if ((! $width || ! $height) && preg_match('/\.(png|jpe?g)$/i', $image) && is_file($file)) {
@@ -38,13 +40,13 @@
         @if ($isHighPriority)
             fetchpriority="high"
         @endif
-        src="{{ Vite::image($image) }}"
+        src="{{ $src }}"
     @else
         loading="lazy"
         src="data:image/gif;base64,R0lGODlhAQABAIAAAMLCwgAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=="
     @endif
     decoding="async"
-    srcset="{{ Vite::image($image).($isSingleImage ? '' : ', '. Vite::image(str($image)->replaceLast('.', '@2x.')->toString()) .' 2x') }}"
+    srcset="{{ $src.($isSingleImage || $isExternal ? '' : ', '. Vite::image(str($image)->replaceLast('.', '@2x.')->toString()) .' 2x') }}"
     alt="{{ $alt ?? $title }}"
     title="{{ $title }}"
     @if ($width && $height)

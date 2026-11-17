@@ -4750,6 +4750,15 @@ Disabled textarea with some text inside</textarea>
                                                     aspect-ratio="-h-100 ratio ratio-1x1 md:ratio-16x9"
                                                 />
                                             </div>
+
+                                            <div class="md:col-6">
+                                                <h2 class="fs-xlarge">Embedded video without image (YouTube thumbnail)</h2>
+                                                <x-frontend::glightbox.player-embed
+                                                    id="youtube-thumb-video"
+                                                    link="https://youtu.be/lG7o0r-7coo?si=a8uCcwaD_hsqgQM3"
+                                                    aspect-ratio="ratio ratio-16x9"
+                                                />
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

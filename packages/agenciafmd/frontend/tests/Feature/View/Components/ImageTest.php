@@ -63,3 +63,33 @@ it('leaves the size out when it cannot read the image', function (string $image)
     'svg' => 'icons/safari-pinned-tab.svg',
     'missing file' => 'missing.png',
 ]);
+
+it('uses an external image as it is', function (): void {
+    $view = $this->blade('<x-frontend::image image="https://example.com/thumb.jpg" title="Thumb" :priority="true" />');
+
+    $view->assertSee('src="https://example.com/thumb.jpg"', false)
+        ->assertSee('srcset="https://example.com/thumb.jpg"', false)
+        ->assertDontSee('vite.test', false)
+        ->assertDontSee('@2x', false);
+});
+
+it('falls back to the youtube thumbnail when the player embed has no image', function (): void {
+    $view = $this->blade('<x-frontend::glightbox.player-embed id="video" link="https://www.youtube.com/watch?v=dQw4w9WgXcQ" />');
+
+    $view->assertSee('srcset="https://i.ytimg.com/vi/dQw4w9WgXcQ/hqdefault.jpg"', false)
+        ->assertSee('width="480"', false)
+        ->assertSee('height="360"', false);
+});
+
+it('adds the 2x image to the srcset by default', function (): void {
+    $view = $this->blade('<x-frontend::image image="logo.png" title="Logo" />');
+
+    $view->assertSee('srcset="http://vite.test/resources/images/logo.png, http://vite.test/resources/images/logo@2x.png 2x"', false);
+});
+
+it('leaves the 2x image out of the srcset when it is a single image', function (): void {
+    $view = $this->blade('<x-frontend::image image="logo.png" title="Logo" is-single-image />');
+
+    $view->assertSee('srcset="http://vite.test/resources/images/logo.png"', false)
+        ->assertDontSee('@2x', false);
+});
