@@ -126,8 +126,17 @@ const catalogView = 'packages/agenciafmd/frontend/resources/views/html/tema.blad
 
 const isCatalogCss = (file) => file.includes('/theme-');
 
+// Node scripts under resources/js that never run in the page: their strings (e.g. the checklist report's
+// css) would keep unused classes in the build
+const purgeSkippedScripts = [
+  'resources/js/utilities/checklist-frontend.js',
+  'resources/js/utilities/checklist/**',
+]
+    .map((path) => join(import.meta.dirname, path));
+
 const purgeOptions = {
   paths: purgeCheckPaths,
+  skippedContentGlobs: purgeSkippedScripts,
   // Bootstrap 6 uses prefixed classes (md:col-6, hover:opacity-50); keep the split words too
   defaultExtractor: (content) => [
     ...(content.match(/[\w:-]+/g) ?? []),
@@ -173,7 +182,7 @@ export default defineConfig({
     purgeOnly((file) => !isCatalogCss(file), {
       ...purgeOptions,
       // The catalog would keep every component in the global css
-      skippedContentGlobs: [join(import.meta.dirname, catalogView)],
+      skippedContentGlobs: [...purgeSkippedScripts, join(import.meta.dirname, catalogView)],
     }),
     // The catalog's css, purged against every view (the catalog included)
     purgeOnly(isCatalogCss, purgeOptions),

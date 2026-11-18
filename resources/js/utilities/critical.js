@@ -20,7 +20,7 @@ import PluginCritical from "rollup-plugin-critical";
 
 // Every page of views/html gets a critical css, except these (layouts and the component catalog).
 // Add a page of views/html that isn't a real page (a layout, a partial at the root of the folder)
-const ignoredPages = ["internal", "master", "tema"];
+export const ignoredPages = ["internal", "master", "tema"];
 
 // Rules always kept: they depend on states the browser doesn't reach when it opens the page
 // (scroll, slider running), but they show up in the first fold.
@@ -38,7 +38,7 @@ const alwaysIncludedRules = [
 
 // One viewport per breakpoint of $grid-breakpoints (resources/scss/frontend/_variables.scss).
 // Update it when the breakpoints change
-const viewports = [
+export const viewports = [
     { width: 375, height: 667 }, // xs
     { width: 768, height: 1024 }, // sm
     { width: 1024, height: 768 }, // md
@@ -136,8 +136,9 @@ export default function critical(criticalUrl) {
 /**
  * One item per page of views/html: blog.blade.php → { uri: "blog", template: "blog" }.
  * The template must match the `critical` the page passes ('critical' => 'blog.css').
+ * Also read by the frontend checklist (checklist-frontend.js).
  */
-function listPages() {
+export function listPages() {
     const pages = [];
 
     for (const file of readdirSync(htmlViewsFolder)) {

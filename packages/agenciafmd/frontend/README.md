@@ -223,6 +223,65 @@ Valida `name` (com `HumanName`), `email` (`email:rfc,dns`), `phone` e `terms`, a
 
 > Sem um Postal com slug `contato`, o formulário exibe "Formulário de disparo não configurado.".
 
+## Checklist de frontend
+
+```bash
+vendor/bin/sail npm run build
+vendor/bin/sail npm run checklist-frontend
+```
+
+Verifica os itens revisados antes de entregar o site. Ele confere as páginas de `views/html`, a mesma lista do CSS crítico. Precisa do app no ar e de um build, e não roda com o `npm run dev` ligado. Na primeira execução, instala o Firefox e o WebKit (o motor do Safari) do Playwright.
+
+| Item | O que verifica |
+| --- | --- |
+| PWA e favicon | Ícones do manifest e do `<x-frontend::pwa>` existem, com o tamanho certo; `/favicon.ico` não está vazio. Avisa se o ícone ou o nome do app ainda são os do starter |
+| Fontes | Todo `@font-face` carrega, as fontes vêm do build, e a fonte do `body` é uma web font carregada |
+| Critical CSS | Cada página tem o seu arquivo, gerado no último build, e a página o injeta |
+| Política de privacidade | Há um link de política/termos (ou o `privacyPolicyUrl`) que leva a uma página que responde 200, e não a `#` |
+| Navegadores | Sem erro de JS e sem requisição 4xx/5xx no Chromium, no Firefox e no WebKit |
+| Breakpoints | Sem rolagem horizontal em cada viewport do `critical.js`, nos três navegadores, com os elementos que passam da borda |
+| Lighthouse | Nota mínima em performance, acessibilidade, boas práticas e SEO. Performance abaixo do mínimo só avisa, porque o servidor local não comprime |
+
+### Resultado e relatório
+
+- **Terminal:** `✓` ok, `⚠` aviso (não reprova), `✗` falha. O comando sai com código 1 se houver `✗`.
+- **Relatório:** o terminal termina com o link, que abre com Ctrl+clique (ex.: `http://localhost:8081/checklist-frontend/index.html`, com a porta do `APP_URL`). O arquivo fica em `public/checklist-frontend/`, fora do git, e é refeito a cada execução. Traz os detalhes, o screenshot de cada página por navegador e breakpoint (borda vermelha = rolagem horizontal) e o relatório completo do Lighthouse de cada página.
+- **Revisão manual:** a quebra visual (sobreposição, texto cortado, espaçamento) é conferida nos screenshots.
+
+### Como resolver
+
+| Mensagem | Correção |
+| --- | --- |
+| `public/favicon.ico: arquivo vazio` / `é diferente de` | Copie `resources/images/icons/favicon.ico` para `public/favicon.ico` |
+| `ainda é o ícone do starter` / `ainda é "Starter"` (⚠) | Troque os ícones de `resources/images/icons` e o `app` de `resources/js/utilities/create-manifest.js`, depois `npm run build` |
+| `não existe ou está vazio` / `mais antigo que o último build` (critical) | Rode `npm run build` com o app no ar |
+| `a página não injeta o css crítico` | Confira o `'critical' => '<página>.css'` no `@extends` da view |
+| `nenhum link com o texto` | Coloque o `<x-frontend::privacy-policy-link />` na página (o footer de `views/html` já tem) |
+| `o link não aponta para uma página` / `respondeu 301 → …` | Aponte o `link` do `privacy-policy-link` para a rota real da política. `/html/*` redireciona para a home em produção |
+| `rolagem horizontal de Npx` | Corrija o elemento listado. "conteúdo de X passa da borda" indica um filho com `100vw`, `transform` ou `left/right` |
+| `console.error` / `erro de JS` / `404` | Corrija o erro. Bug conhecido de biblioteca entra em `ignoredConsoleErrors`, com o motivo |
+| Nota do Lighthouse abaixo do mínimo | Abra o relatório do Lighthouse da página no relatório do checklist e siga as oportunidades |
+
+### Ajustes por projeto
+
+Bloco "PROJECT SETTINGS" de `resources/js/utilities/checklist-frontend.js`:
+
+- `extraUrls`: rotas reais além de `views/html` (ex.: `"/"`, `"/contato"`);
+- `ignoredConsoleErrors`: erros conhecidos que não reprovam;
+- `lighthouseThresholds` e `performanceFailsBelowThreshold`: notas mínimas e se performance baixa reprova;
+- `privacyPolicyUrl`: url fixa da política, no lugar da busca pelo link;
+- `browsers`: navegadores testados.
+
+### Lighthouse: checklist × Chrome × produção
+
+As notas variam entre execuções e entre ambientes, então a do checklist pode diferir da do DevTools:
+
+- o checklist roda no container, num Chromium limpo, direto na porta 80;
+- o DevTools roda no seu Chrome, pela porta do Docker, com extensões, outras abas e o próprio DevTools disputando CPU (compare numa janela anônima, com "Simulated throttling" marcado);
+- localmente nada é comprimido e o `livewire.js` é o de debug.
+
+A referência final é o [PageSpeed Insights](https://pagespeed.web.dev/) em staging ou produção.
+
 ## Testes
 
 Os testes ficam em `tests/` e usam o `Tests\TestCase` da aplicação, então são executados de dentro do projeto:
