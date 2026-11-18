@@ -29,7 +29,10 @@ parameters:
     ignoreErrors:
         -
             identifier: trait.unused
-            path: packages/agenciafmd/laravel-support/src/Traits/SeederSupport.php
+            paths:
+                - packages/agenciafmd/laravel-support/src/Traits/SeederSupport.php
+                - packages/agenciafmd/filament-admix/src/Testing/WithTenancy.php
+                - packages/agenciafmd/filament-admix/src/Traits/BelongsToOrganization.php
 
     databaseMigrationsPath:
         - database/migrations
