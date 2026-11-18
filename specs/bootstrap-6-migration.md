@@ -1,13 +1,18 @@
 # Bootstrap 6 no frontend: guia de consulta
 
-> Bootstrap `6.0.0-alpha.1` na branch `feat/update-bs6`. Última atualização: 2026-11-03.
+> Bootstrap `6.0.0-alpha.1` na branch `feat/update-bs6`. Última atualização: 2026-11-18.
 
 ## 1. Resumo
 
 - O frontend (Laravel + Vite + Sass) saiu do Bootstrap 5.3.8 (`@import`) para o 6.0 alpha (`@use` e cascade layers).
 - A arquitetura, os tokens do tema (`resources/scss/frontend/tokens/*`), os breakpoints, os containers e as classes do projeto foram mantidos.
-- **Estado:** alpha. A branch fica isolada, sem merge em `develop`/`master`, até o v6 estável. Reavaliar este guia a cada alpha/beta.
+- **Estado:** alpha. Reavaliar este guia a cada alpha/beta.
+- **Merge em `develop` (planejado):**
+  - o merge leva o código-fonte, mas não os arquivos gerados (`public/build/**`, `public/css/critical/*` e `public/manifest.json`). Os assets do Filament em `public/js` e `public/css` vêm do `develop`;
+  - o build roda numa branch de integração antes do merge, para o `develop` não ficar com fonte do BS6 e assets do BS5. O critical CSS precisa do Sail no ar;
+  - até lá, o `develop` entra na branch de tempos em tempos. Conflito em `public/build` se resolve com rebuild.
 - **Rota de teste:** http://localhost:8081/html/tema (catálogo) e as páginas reais em `/html/*`.
+- **Outras melhorias da branch** (CSS e JS sob demanda, critical CSS, build, imagens, SEO, acessibilidade, PWA): [frontend-melhorias.md](frontend-melhorias.md).
 - **Fontes da verdade:**
   - [guia de migração](https://getbootstrap.com/docs/6.0/guides/migration/), [Customize › Sass](https://getbootstrap.com/docs/6.0/customize/sass/), [Utilities API](https://getbootstrap.com/docs/6.0/utilities/api/);
   - o código instalado: `node_modules/bootstrap/scss` e `node_modules/bootstrap/js/src`;
@@ -30,7 +35,7 @@
   - lê `node_modules/bootstrap/js/dist/**/*.js`;
   - safelist `/data-vc/` para o calendário do Datepicker, que é montado em tempo de execução.
 - **Sass:** sem `silenceDeprecations`, porque não existe mais `@import`.
-- **Critical CSS:** `rollup-plugin-critical` gera `public/css/critical/*_critical.min.css`, que o `<x-frontend::critical-css>` injeta no `master.blade.php` (ver armadilhas).
+- **Critical CSS:** `rollup-plugin-critical`, configurado em `resources/js/utilities/critical.js`, gera `public/css/critical/*_critical.min.css`, que o `<x-frontend::critical-css>` injeta no `master.blade.php` (ver armadilhas).
 
 ## 3. Estrutura do SCSS
 
@@ -392,7 +397,7 @@ O CSS final passa pelo PurgeCSS, então só ficam no build as classes que aparec
 | Dark mode | Botão de tema no header: sem escolha salva, segue o sistema; com escolha, ela vale. Corpo do texto escuro em `$gray-500` e sombra dos cards com brilho `$ds-info` mantidos (opções de design em aberto) |
 | `$bs-theme-colors` | Mapa completo por cor (os padrões do v6 usam a paleta azul) |
 | Ajustes finos do BS5 (cerca de 60 variáveis) | Seguem o padrão do v6. Ajustar sob demanda |
-| CSS separado para o catálogo | Não aplicado. Reduziria 15% do CSS gzip, mas exige trocar o plugin de purge |
+| CSS separado para o catálogo | Aplicado: o catálogo usa a entrada `pages/theme.scss`, fora do purge global (helper `purgeOnly()` no `vite.config.js`). Ver [frontend-melhorias.md](frontend-melhorias.md#2-css-sob-demanda-e-purge) |
 | Navegadores | Chrome/Edge 130, Firefox 132, Safari 18 (requisito do v6) |
 
 **Pendentes ou monitorar**
