@@ -1,7 +1,13 @@
+{{-- Troque o link padrão pela rota real da política: /html/* redireciona para a home em produção --}}
+@props([
+    'link' => '/html/politica-de-privacidade',
+    'isExtern' => false,
+])
+
 <x-frontend::link
-    link="#"
-    label="Termos e Condições"
-    aria-label="Link Termos e Condições"
-    title="Termos e Condições"
-    class="fg-reset text-decoration-none"
+    :link="$link"
+    :is-extern="$isExtern"
+    label="Política de Privacidade"
+    title="Política de Privacidade"
+    :attributes="$attributes->merge(['class' => 'fg-reset text-decoration-none'])"
 />

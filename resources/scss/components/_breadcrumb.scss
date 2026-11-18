@@ -43,7 +43,9 @@ $breadcrumb-link-dark-color: $white;
                 flex-shrink: 0;
             }
 
+            // Block, not the Bootstrap 6 `display: flex`: text-overflow doesn't apply to a flex container
             &:last-child {
+                display: block;
                 overflow: hidden;
             }
 

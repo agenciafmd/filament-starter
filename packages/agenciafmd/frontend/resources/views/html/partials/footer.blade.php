@@ -9,4 +9,7 @@
             label="Desenvolvido por F&MD"
         />
     </p>
+    <p>
+        <x-frontend::privacy-policy-link />
+    </p>
 </footer>
