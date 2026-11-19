@@ -2,26 +2,9 @@
 @include bsBanner("");
 
 // scss-docs-start import-stack
-// Configuration
-@import "bootstrap/scss/functions";
+// Configuration (functions, project variables and maps, mixins)
+@import "frontend/config";
 
-// Custom fonts
-@import "frontend/fonts";
-
-// Override variables
-@import "frontend/tokens/color-tokens";
-@import "frontend/tokens/design-tokens";
-@import "frontend/tokens/font-tokens";
-@import "frontend/variables";
-@import "frontend/variables-dark";
-@import "bootstrap/scss/variables";
-@import "bootstrap/scss/variables-dark";
-
-// Override maps
-@import "frontend/maps";
-@import "bootstrap/scss/maps";
-
-@import "bootstrap/scss/mixins";
 @import "bootstrap/scss/utilities";
 @import "frontend/utilities";
 

@@ -1,0 +1,22 @@
+// Bootstrap 5 configuration with the project overrides: no css output, only functions, variables, maps and mixins.
+// Imported by frontend.scss and by the standalone entries that need the project variables
+// (e.g. the vendors loaded on demand: resources/scss/vendors/<lib>/<lib>.scss).
+@import "bootstrap/scss/functions";
+
+// Custom fonts (font maps used by the tokens; @font-face only with $should-use-local-font-face)
+@import "fonts";
+
+// Override variables
+@import "tokens/color-tokens";
+@import "tokens/design-tokens";
+@import "tokens/font-tokens";
+@import "variables";
+@import "variables-dark";
+@import "bootstrap/scss/variables";
+@import "bootstrap/scss/variables-dark";
+
+// Override maps
+@import "maps";
+@import "bootstrap/scss/maps";
+
+@import "bootstrap/scss/mixins";

@@ -1,6 +1,7 @@
-:root {
-    --plyr-color-main: #{$primary};
-}
+@import "../../frontend/config";
+
+// GLightbox theme: entry loaded on demand together with the library (resources/js/components/glightbox.js).
+@import "glightbox/dist/css/glightbox.min.css";
 
 .glightbox {
     &-clean .gslide-description {

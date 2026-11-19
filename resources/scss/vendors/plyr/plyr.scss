@@ -1,0 +1,8 @@
+@import "../../frontend/config";
+
+// Plyr theme: entry loaded on demand together with the library (resources/js/components/plyr.js).
+@import "plyr/dist/plyr.css";
+
+:root {
+    --plyr-color-main: #{$primary};
+}
