@@ -111,11 +111,12 @@ function generateIcons(viteManifest) {
 function getThemeColors() {
     const { css } = compileString(
         `
-        @use "resources/scss/frontend/tokens/color-tokens" as color;
-        @use "resources/scss/frontend/tokens/design-tokens" as design;
-        :root { --theme: #{color.$ds-primary}; --background: #{design.$ds-body-bg}; }
+        @import "resources/scss/frontend/tokens/color-tokens";
+        @import "resources/scss/frontend/tokens/design-tokens";
+        :root { --theme: #{$ds-primary}; --background: #{$ds-body-bg}; }
         `,
-        { loadPaths: [process.cwd()] },
+        // Bootstrap 5 tokens rely on globals (@import), not on the module system
+        { loadPaths: [process.cwd()], silenceDeprecations: ["import"] },
     );
 
     return {

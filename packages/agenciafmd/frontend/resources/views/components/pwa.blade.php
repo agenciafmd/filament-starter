@@ -9,7 +9,7 @@
     @endphp
     <link rel="manifest" href="{{ asset('/manifest.json') }}" />
 @endif
-<link rel="apple-touch-icon" sizes="192x192" href="{{ Vite::image('icons/apple-touch-icon.png') }}" />
+<link rel="apple-touch-icon" sizes="180x180" href="{{ Vite::image('icons/apple-touch-icon.png') }}" />
 <link rel="shortcut icon" href="{{ Vite::image('icons/favicon.ico') }}" type="image/x-icon" />
 <link rel="mask-icon" href="{{ Vite::image('icons/safari-pinned-tab.svg') }}" color="{{ $themeColor }}" />
 <meta name="msapplication-TileColor" content="{{ $themeColor }}" />
