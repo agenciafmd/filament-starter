@@ -121,13 +121,16 @@ O `src` é procurado no disco padrão do Storage e em `resources/images/`.
 
 ### Imagem principal da página (`priority`)
 
-Por padrão, o `<x-frontend::image>` e o `<x-frontend::picture>` carregam a imagem com `loading="lazy"`. Na imagem principal da primeira dobra (ex.: primeiro slide do banner), use `priority`: ela é baixada de imediato e com `fetchpriority="high"`, o que melhora o LCP.
+Por padrão, o `<x-frontend::image>` e o `<x-frontend::picture>` carregam a imagem com `loading="lazy"`. Nas imagens da primeira dobra, use `priority`: elas são baixadas de imediato (`loading="eager"`), o que melhora o LCP.
 
 ```blade
 <x-frontend::picture image="banners/home.jpg" title="Banner" has-breakpoints :priority="$loop->first" />
+
+{{-- grade de cards: a primeira linha (3 colunas no desktop), qualquer que seja a quantidade de itens --}}
+<x-frontend::articles.item :article="$article" :priority="$loop->index < 3" />
 ```
 
-Use em uma imagem por página. Prioridade em todas é o mesmo que nenhuma.
+A **primeira** imagem com `priority` da página também ganha `fetchpriority="high"`. As outras ficam só `eager`, para não disputar a banda com ela. Isso é automático: o componente guarda no request que a prioridade alta já foi usada.
 
 ### Tamanho das imagens (`width`/`height`)
 
@@ -164,11 +167,11 @@ Todos disponíveis como `<x-frontend::nome>`:
 
 | Grupo | Componentes |
 |---|---|
-| Head / tracking | `gtm-head`, `gtm-body`, `site-verification`, `pwa`, `fonts-preload`, `critical-css`, `color-mode` |
-| Imagens | `image`, `picture`, `sources`, `single-source` (WebP + `@2x` via `Vite::image()`), `avatar` |
+| Head / tracking | `gtm-head`, `gtm-body`, `site-verification`, `pwa`, `fonts-preload`, `critical-css` |
+| Imagens | `image`, `picture`, `sources`, `single-source` (WebP + `@2x` via `Vite::image()`) |
 | Navegação | `link`, `link-share`, `breadcrumb`, `social-network`, `privacy-policy-link`, `privacy-terms-message` |
 | Conteúdo | `alert`, `badge`, `list-icon`, `pdf`, `cards.card`, `cards.card-picture`, `articles.item`, `articles.item-no-image` |
-| Interação | `accordions.accordion`, `accordions.accordion-faq`, `dialogs.dialog`, `dialogs.dialog-base` |
+| Interação | `accordions.accordion`, `accordions.accordion-faq`, `modals.modal`, `modals.modal-base` |
 | Mídia | `glightbox.image`, `glightbox.video`, `glightbox.player-embed` |
 | Sliders | `sliders.banner`, `sliders.articles-gallery`, `swiper-buttons` |
 | Progresso | `progress.bar`, `progress.circle` |
@@ -180,13 +183,11 @@ Exemplos:
 
 <x-frontend::link link="/html/index" label="Ver protótipos" icon="ic-ui-chevron-right" />
 
-<x-frontend::dialogs.dialog id="dialogContato" title="Fale conosco">
+<x-frontend::modals.modal id="modalContato" title="Fale conosco">
     ...
-</x-frontend::dialogs.dialog>
-<button type="button" class="btn" data-bs-toggle="dialog" data-bs-target="#dialogContato">Abrir</button>
+</x-frontend::modals.modal>
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalContato">Abrir</button>
 ```
-
-**`color-mode`** (dark mode): fica no `<head>`, antes do CSS, e o `frontend::master` já inclui. Aplica o tema salvo pelo botão de tema ou, sem escolha, o tema do sistema, para a página não piscar no tema claro.
 
 ### JS e CSS dos componentes
 
@@ -266,6 +267,65 @@ Pontos de atenção:
 - **Reordenação de tabelas.** O Filament grava a nova ordem com um `update` via query, que não dispara eventos do Eloquent. Por isso o `EventServiceProvider` do pacote registra um `afterReordering()` em todas as tabelas (`Table::configureUsing`) que dispara o evento `eloquent.reordered: {Model}` com a nova ordem (lista de chaves). O `events()` do subscriber já inclui o `reordered`, então todo model monitorado reage à reordenação com os mesmos handlers. O `modelUrlHandler` ignora esse evento, pois a ordem não muda a página de detalhe. Uma tabela que definir o próprio `afterReordering()` substitui esse callback; nesse caso, dispare o evento manualmente nele.
 - **Outros updates em massa via query** (`Article::query()->update(...)`) não disparam eventos do Eloquent e, portanto, não limpam o cache.
 - **Ambiente local:** com o `php artisan serve` de um único worker, o `GET` de aquecimento só é atendido depois da requisição atual; o timeout evita que ele trave. Falhas no aquecimento são ignoradas — o próximo visitante gera o cache. Falhas no `page-cache:clear` são reportadas no log.
+
+## Checklist de frontend
+
+```bash
+vendor/bin/sail npm run build
+vendor/bin/sail npm run checklist-frontend
+```
+
+Verifica os itens revisados antes de entregar o site. Ele confere as páginas de `views/html`, a mesma lista do CSS crítico. Precisa do app no ar e de um build, e não roda com o `npm run dev` ligado. Na primeira execução, instala o Firefox e o WebKit (o motor do Safari) do Playwright.
+
+| Item | O que verifica |
+| --- | --- |
+| PWA e favicon | Ícones do manifest e do `<x-frontend::pwa>` existem, com o tamanho certo; `/favicon.ico` não está vazio. Avisa se o ícone ou o nome do app ainda são os do starter |
+| Fontes | Todo `@font-face` carrega, as fontes vêm do build, e a fonte do `body` é uma web font carregada |
+| Critical CSS | Cada página tem o seu arquivo, gerado no último build, e a página o injeta |
+| Política de privacidade | Há um link de política/termos (ou o `privacyPolicyUrl`) que leva a uma página que responde 200, e não a `#` |
+| Navegadores | Sem erro de JS e sem requisição 4xx/5xx no Chromium, no Firefox e no WebKit |
+| Breakpoints | Sem rolagem horizontal em cada viewport do `critical.js`, nos três navegadores, com os elementos que passam da borda |
+| Lighthouse | Nota mínima em performance, acessibilidade, boas práticas e SEO. Performance abaixo do mínimo só avisa, porque o servidor local não comprime |
+
+### Resultado e relatório
+
+- **Terminal:** `✓` ok, `⚠` aviso (não reprova), `✗` falha. O comando sai com código 1 se houver `✗`.
+- **Relatório:** o terminal termina com o link, que abre com Ctrl+clique (ex.: `http://localhost:8081/checklist-frontend/index.html`, com a porta do `APP_URL`). O arquivo fica em `public/checklist-frontend/`, fora do git, e é refeito a cada execução. Traz os detalhes, o screenshot de cada página por navegador e breakpoint (borda vermelha = rolagem horizontal) e o relatório completo do Lighthouse de cada página.
+- **Revisão manual:** a quebra visual (sobreposição, texto cortado, espaçamento) é conferida nos screenshots.
+
+### Como resolver
+
+| Mensagem | Correção |
+| --- | --- |
+| `public/favicon.ico: arquivo vazio` / `é diferente de` | Copie `resources/images/icons/favicon.ico` para `public/favicon.ico` |
+| `ainda é o ícone do starter` / `ainda é "Starter"` (⚠) | Troque os ícones de `resources/images/icons` e o `app` de `resources/js/utilities/create-manifest.js`, depois `npm run build` |
+| `não existe ou está vazio` / `mais antigo que o último build` (critical) | Rode `npm run build` com o app no ar |
+| `a página não injeta o css crítico` | Confira o `'critical' => '<página>.css'` no `@extends` da view |
+| `nenhum link com o texto` | Coloque o `<x-frontend::privacy-policy-link />` na página (o footer de `views/html` já tem) |
+| `o link não aponta para uma página` / `respondeu 301 → …` | Aponte o `link` do `privacy-policy-link` para a rota real da política. `/html/*` redireciona para a home em produção |
+| `rolagem horizontal de Npx` | Corrija o elemento listado. "conteúdo de X passa da borda" indica um filho com `100vw`, `transform` ou `left/right` |
+| `console.error` / `erro de JS` / `404` | Corrija o erro. Bug conhecido de biblioteca entra em `ignoredConsoleErrors`, com o motivo |
+| Nota do Lighthouse abaixo do mínimo | Abra o relatório do Lighthouse da página no relatório do checklist e siga as oportunidades |
+
+### Ajustes por projeto
+
+Bloco "PROJECT SETTINGS" de `resources/js/utilities/checklist-frontend.js`:
+
+- `extraUrls`: rotas reais além de `views/html` (ex.: `"/"`, `"/contato"`);
+- `ignoredConsoleErrors`: erros conhecidos que não reprovam;
+- `lighthouseThresholds` e `performanceFailsBelowThreshold`: notas mínimas e se performance baixa reprova;
+- `privacyPolicyUrl`: url fixa da política, no lugar da busca pelo link;
+- `browsers`: navegadores testados.
+
+### Lighthouse: checklist × Chrome × produção
+
+As notas variam entre execuções e entre ambientes, então a do checklist pode diferir da do DevTools:
+
+- o checklist roda no container, num Chromium limpo, direto na porta 80;
+- o DevTools roda no seu Chrome, pela porta do Docker, com extensões, outras abas e o próprio DevTools disputando CPU (compare numa janela anônima, com "Simulated throttling" marcado);
+- localmente nada é comprimido e o `livewire.js` é o de debug.
+
+A referência final é o [PageSpeed Insights](https://pagespeed.web.dev/) em staging ou produção.
 
 ## Testes
 

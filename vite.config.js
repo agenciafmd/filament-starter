@@ -113,6 +113,14 @@ const purgeCheckPaths = [
 ]
     .map((path) => join(import.meta.dirname, path));
 
+// Node scripts under resources/js that never run in the page: their strings (e.g. the checklist report's
+// css) would keep unused classes in the build
+const purgeSkippedScripts = [
+  'resources/js/utilities/checklist-frontend.js',
+  'resources/js/utilities/checklist/**',
+]
+    .map((path) => join(import.meta.dirname, path));
+
 // Component catalog (/html/tema): it shows every component, so it stays out of the global purge and
 // loads its own stylesheet (resources/scss/pages/theme.scss). New pages are purged as usual.
 const catalogView = 'packages/agenciafmd/frontend/resources/views/html/tema.blade.php';
@@ -121,6 +129,7 @@ const isCatalogCss = (file) => file.includes('/theme-');
 
 const purgeOptions = {
   paths: purgeCheckPaths,
+  skippedContentGlobs: purgeSkippedScripts,
   safelist,
 };
 
@@ -161,7 +170,7 @@ export default defineConfig({
     purgeOnly((file) => !isCatalogCss(file), {
       ...purgeOptions,
       // The catalog would keep every component in the global css
-      skippedContentGlobs: [join(import.meta.dirname, catalogView)],
+      skippedContentGlobs: [...purgeSkippedScripts, join(import.meta.dirname, catalogView)],
     }),
     // The catalog's css, purged against every view (the catalog included)
     purgeOnly(isCatalogCss, purgeOptions),
