@@ -23,6 +23,7 @@
                                 aria-label="Link para Home"
                                 label="Home"
                                 class="nav-link active"
+                                data-bs-dismiss="offcanvas"
                             />
                         </li>
                         <li class="nav-item">
