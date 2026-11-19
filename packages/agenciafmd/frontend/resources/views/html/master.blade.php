@@ -21,7 +21,7 @@
     <x-frontend::pwa />
     <x-frontend::fonts-preload />
 
-    @vite('resources/scss/frontend.scss')
+    @vite($stylesheet ?? 'resources/scss/frontend.scss')
 
     <livewire:styles />
 

@@ -20,6 +20,7 @@ const webfonts = [
 // Build entries: add a page or component that loads its own js/scss (@vite in the view)
 const entries = [
   'resources/scss/frontend.scss',
+  'resources/scss/pages/theme.scss',
   'resources/js/frontend-imports.js',
   'resources/js/pages/theme.js',
   'resources/js/components/sliders/articles.js',
@@ -112,9 +113,29 @@ const purgeCheckPaths = [
 ]
     .map((path) => join(import.meta.dirname, path));
 
+// Component catalog (/html/tema): it shows every component, so it stays out of the global purge and
+// loads its own stylesheet (resources/scss/pages/theme.scss). New pages are purged as usual.
+const catalogView = 'packages/agenciafmd/frontend/resources/views/html/tema.blade.php';
+
+const isCatalogCss = (file) => file.includes('/theme-');
+
 const purgeOptions = {
   paths: purgeCheckPaths,
   safelist,
+};
+
+// The purge plugin handles every css file of the build: this runs it only on the files accepted by `filter`
+const purgeOnly = (filter, options) => {
+  const plugin = purge(options);
+  const { generateBundle } = plugin;
+
+  plugin.generateBundle = function (outputOptions, bundle) {
+    const files = Object.entries(bundle).filter(([file]) => filter(file));
+
+    return generateBundle.call(this, outputOptions, Object.fromEntries(files));
+  };
+
+  return plugin;
 };
 
 const assetFolders = {
@@ -136,7 +157,14 @@ export default defineConfig({
     ...(webfonts.length ? [webfontDownload(webfonts)] : []),
     // Critical css of every page of views/html (resources/js/utilities/critical.js)
     critical(`${ CRITICAL_URL }/html/`),
-    purge(purgeOptions),
+    // Every css file but the catalog's (frontend.css and the lazy vendor chunks)
+    purgeOnly((file) => !isCatalogCss(file), {
+      ...purgeOptions,
+      // The catalog would keep every component in the global css
+      skippedContentGlobs: [join(import.meta.dirname, catalogView)],
+    }),
+    // The catalog's css, purged against every view (the catalog included)
+    purgeOnly(isCatalogCss, purgeOptions),
   ],
   css: {
     preprocessorOptions: {

@@ -1,6 +1,7 @@
 @extends('frontend::html.master', [
     'bodyClass' => 'bg-white',
     'critical' => '',
+    'stylesheet' => 'resources/scss/pages/theme.scss',
 ])
 
 @section('title', 'Tema')
@@ -4057,22 +4058,6 @@ Disabled textarea with some text inside</textarea>
         </div>
     </main>
 @endsection
-
-@push('head')
-    <style>
-        .bd-example {
-            padding: 1rem;
-            border: 1px solid #dee2e6;
-            border-radius: 0.375rem;
-        }
-
-        .bd-example-code {
-            padding: 1rem;
-            border-radius: 1rem;
-            background: #f8f9fa;
-        }
-    </style>
-@endpush
 
 @push('footer')
     <x-frontend::modals.modal-base></x-frontend::modals.modal-base>
