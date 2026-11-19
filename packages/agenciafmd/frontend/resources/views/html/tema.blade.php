@@ -4046,7 +4046,7 @@ Disabled textarea with some text inside</textarea>
                                                 ];
                                             @endphp
 
-                                            <x-frontend::sliders.banner :banners="$banners" />
+                                            <x-frontend::sliders.banner :banners="$banners" :priority="false" />
                                         </div>
                                     </div>
                                 </div>

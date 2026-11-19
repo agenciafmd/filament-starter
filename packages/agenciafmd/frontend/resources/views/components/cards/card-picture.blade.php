@@ -6,6 +6,7 @@
     'image' => [],
     'hasShadow' => null,
     'badge' => [],
+    'priority' => false,
 ])
 
 <div id="{{ $id }}" {{ $attributes->merge(['class' => 'card ' . ($hasShadow ? 'shadow' : '' )]) }}>
@@ -42,6 +43,7 @@
             breakpointDesktopSuffix="xl"
             breakpointNotebookWidth="768px"
             breakpointNotebookSuffix="lg"
+            :priority="$priority"
         />
     @endif
 

@@ -29,10 +29,11 @@
         />
     @elseif ($link)
         <x-frontend::image
-            is-single-image="true"
-            image="https://i3.ytimg.com/vi/{{ \Agenciafmd\Support\Helper::youtubeId($link) }}/maxresdefault.jpg"
+            image="https://i.ytimg.com/vi/{{ \Agenciafmd\Support\Helper::youtubeId($link) }}/hqdefault.jpg"
             alt="Thumb do vídeo"
             title="Thumb do vídeo"
+            width="480"
+            height="360"
             class="img-cover rounded-1"
         />
     @endif

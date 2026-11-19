@@ -1,3 +1,8 @@
+{{-- offcanvasId: id do offcanvas do menu. Mude quando o header aparecer mais de uma vez na página (ex.: catálogo) --}}
+@php
+    $offcanvasId ??= 'offcanvasNavbar';
+@endphp
+
 <header class="header fmd-header">
     <nav class="navbar navbar-expand-md">
         <div class="container">
@@ -11,8 +16,8 @@
             <div
                 class="offcanvas offcanvas-end align-items-md-end"
                 tabindex="-1"
-                id="offcanvasNavbar"
-                aria-labelledby="offcanvasNavbarLabel"
+                id="{{ $offcanvasId }}"
+                aria-labelledby="{{ $offcanvasId }}Label"
             >
                 <div class="offcanvas-body">
                     <ul class="navbar-nav">
@@ -36,17 +41,15 @@
                             />
                         </li>
                         <li class="nav-item dropdown">
-                            <x-frontend::link
-                                link="#"
-                                title="Ir para Contato"
-                                aria-label="Link para Contato"
-                                label="Produtos"
-                                role="button"
+                            <button
+                                type="button"
                                 data-bs-toggle="dropdown"
                                 data-bs-auto-close="outside"
                                 aria-expanded="false"
                                 class="nav-link dropdown-toggle"
-                            />
+                            >
+                                Produtos
+                            </button>
                             <ul class="dropdown-menu">
                                 <li>
                                     <x-frontend::link
@@ -90,7 +93,7 @@
                         <li class="nav-item">
                           <x-frontend::link link="#"
                                             data-bs-dismiss="offcanvas"
-                                            data-bs-target="#offcanvasNavbar"
+                                            data-bs-target="#{{ $offcanvasId }}"
                                             title="Ir para Modal"
                                             aria-label="Link para Modal"
                                             label="Modal"
@@ -105,8 +108,8 @@
                 type="button"
                 title="Menu"
                 data-bs-toggle="offcanvas"
-                data-bs-target="#offcanvasNavbar"
-                aria-controls="offcanvasNavbar"
+                data-bs-target="#{{ $offcanvasId }}"
+                aria-controls="{{ $offcanvasId }}"
                 aria-label="Menu"
             >
                 <span class="navbar-toggler-icon"></span>

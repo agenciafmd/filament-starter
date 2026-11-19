@@ -23,8 +23,6 @@
     <img
         src="data:image/gif;base64,R0lGODlhAQABAIAAAMLCwgAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=="
         loading="lazy"
-        width="1"
-        height="1"
         alt="{{ $alt }}"
         title="{{ ($title) ?? $file }}"
         class="img-sanitize {{ ($classes) ?? '' }}"

@@ -20,6 +20,8 @@
         title="{{ $__env->yieldContent('title', 'A cultura come a estratégia no café da manhã') }} | {{ config('app.name') }}"
         description="{{ $__env->yieldContent('description') }}"
     />
+    {{-- canonical: endereço sem query string. Páginas com filtro ou paginação definem @section('canonical') --}}
+    <link rel="canonical" href="@yield('canonical', url()->current())" />
     <x-frontend::pwa />
     <x-frontend::fonts-preload />
     <x-frontend::site-verification />

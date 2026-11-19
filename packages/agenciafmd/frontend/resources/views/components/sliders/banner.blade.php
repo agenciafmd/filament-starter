@@ -1,6 +1,10 @@
 @props([
     'banners' => [],
+    'headingTag' => 'h2',
+    'priority' => true,
 ])
+
+{{-- priority: o primeiro slide é baixado de imediato (LCP). Passe false quando o banner não estiver na primeira dobra --}}
 
 <section id="banner" class="banner-slider overflow-hidden">
     <div class="swiper-container">
@@ -27,7 +31,7 @@
                                     breakpointDesktopSuffix="xl"
                                     breakpointNotebookWidth="768px"
                                     breakpointNotebookSuffix="lg"
-                                    :priority="$loop->first"
+                                    :priority="$priority && $loop->first"
                                 />
                             </div>
                             @if ($banner->content)
@@ -37,7 +41,7 @@
                                             <div class="row">
                                                 <div class="col-md-7 col-xl-6">
                                                     <div class="mb-block-small pe-auto">
-                                                        <h2 class="text-primary">{{ $banner->content->name }}</h2>
+                                                        <{{ $headingTag }} class="h2 text-primary">{{ $banner->content->name }}</{{ $headingTag }}>
                                                         <p class="mb-block-small text-primary">
                                                             {{ $banner->content->subtitle }}
                                                         </p>
@@ -87,7 +91,6 @@
     </div>
 </section>
 
-@push('scripts')
-    <script type="module" src="{{ Vite::asset('resources/js/components/sliders/banners.js') }}"></script>
-
-@endpush
+@pushOnce('scripts')
+    @vite('resources/js/components/sliders/banners.js')
+@endPushOnce
