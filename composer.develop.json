@@ -1,0 +1,310 @@
+{
+    "$schema": "https://getcomposer.org/schema.json",
+    "name": "agenciafmd/filament-starter",
+    "type": "project",
+    "description": "The skeleton application for the Laravel framework.",
+    "keywords": [
+        "laravel",
+        "framework",
+        "filament",
+        "starter",
+        "agenciafmd"
+    ],
+    "license": "MIT",
+    "repositories": [
+        {
+            "name": "agenciafmd/frontend",
+            "type": "path",
+            "url": "packages/agenciafmd/frontend",
+            "options": {
+                "symlink": true
+            }
+        },
+        {
+            "name": "agenciafmd/filament-admix",
+            "type": "path",
+            "url": "packages/agenciafmd/filament-admix",
+            "options": {
+                "symlink": true
+            }
+        },
+        {
+            "name": "agenciafmd/filament-articles",
+            "type": "path",
+            "url": "packages/agenciafmd/filament-articles",
+            "options": {
+                "symlink": true
+            }
+        },
+        {
+            "name": "agenciafmd/filament-banners",
+            "type": "path",
+            "url": "packages/agenciafmd/filament-banners",
+            "options": {
+                "symlink": true
+            }
+        },
+        {
+            "name": "agenciafmd/filament-big-numbers",
+            "type": "path",
+            "url": "packages/agenciafmd/filament-big-numbers",
+            "options": {
+                "symlink": true
+            }
+        },
+        {
+            "name": "agenciafmd/filament-faqs",
+            "type": "path",
+            "url": "packages/agenciafmd/filament-faqs",
+            "options": {
+                "symlink": true
+            }
+        },
+        {
+            "name": "agenciafmd/filament-http-logs",
+            "type": "path",
+            "url": "packages/agenciafmd/filament-http-logs",
+            "options": {
+                "symlink": true
+            }
+        },
+        {
+            "name": "agenciafmd/filament-instagram",
+            "type": "path",
+            "url": "packages/agenciafmd/filament-instagram",
+            "options": {
+                "symlink": true
+            }
+        },
+        {
+            "name": "agenciafmd/filament-leads",
+            "type": "path",
+            "url": "packages/agenciafmd/filament-leads",
+            "options": {
+                "symlink": true
+            }
+        },
+        {
+            "name": "agenciafmd/filament-partners",
+            "type": "path",
+            "url": "packages/agenciafmd/filament-partners",
+            "options": {
+                "symlink": true
+            }
+        },
+        {
+            "name": "agenciafmd/filament-postal",
+            "type": "path",
+            "url": "packages/agenciafmd/filament-postal",
+            "options": {
+                "symlink": true
+            }
+        },
+        {
+            "name": "agenciafmd/filament-redirects",
+            "type": "path",
+            "url": "packages/agenciafmd/filament-redirects",
+            "options": {
+                "symlink": true
+            }
+        },
+        {
+            "name": "agenciafmd/filament-settings",
+            "type": "path",
+            "url": "packages/agenciafmd/filament-settings",
+            "options": {
+                "symlink": true
+            }
+        },
+        {
+            "name": "agenciafmd/filament-testimonials",
+            "type": "path",
+            "url": "packages/agenciafmd/filament-testimonials",
+            "options": {
+                "symlink": true
+            }
+        },
+        {
+            "name": "agenciafmd/laravel-rdstation",
+            "type": "path",
+            "url": "packages/agenciafmd/laravel-rdstation",
+            "options": {
+                "symlink": true
+            }
+        },
+        {
+            "name": "agenciafmd/laravel-sitemap",
+            "type": "path",
+            "url": "packages/agenciafmd/laravel-sitemap",
+            "options": {
+                "symlink": true
+            }
+        },
+        {
+            "name": "agenciafmd/laravel-social-meta",
+            "type": "path",
+            "url": "packages/agenciafmd/laravel-social-meta",
+            "options": {
+                "symlink": true
+            }
+        },
+        {
+            "name": "agenciafmd/laravel-support",
+            "type": "path",
+            "url": "packages/agenciafmd/laravel-support",
+            "options": {
+                "symlink": true
+            }
+        },
+        {
+            "name": "agenciafmd/laravel-turbo",
+            "type": "path",
+            "url": "packages/agenciafmd/laravel-turbo",
+            "options": {
+                "symlink": true
+            }
+        }
+    ],
+    "require": {
+        "php": "^8.5",
+        "agenciafmd/filament-admix": "*",
+        "agenciafmd/filament-articles": "*",
+        "agenciafmd/filament-banners": "*",
+        "agenciafmd/filament-big-numbers": "*",
+        "agenciafmd/filament-faqs": "*",
+        "agenciafmd/filament-http-logs": "*",
+        "agenciafmd/filament-instagram": "*",
+        "agenciafmd/filament-leads": "*",
+        "agenciafmd/filament-partners": "*",
+        "agenciafmd/filament-postal": "*",
+        "agenciafmd/filament-redirects": "*",
+        "agenciafmd/filament-settings": "*",
+        "agenciafmd/filament-testimonials": "*",
+        "agenciafmd/frontend": "*",
+        "agenciafmd/laravel-rdstation": "*",
+        "agenciafmd/laravel-sitemap": "*",
+        "agenciafmd/laravel-social-meta": "*",
+        "agenciafmd/laravel-support": "*",
+        "agenciafmd/laravel-turbo": "*",
+        "filament/filament": "^5.11.2",
+        "laravel/framework": "^13.42.0",
+        "laravel/tinker": "^3.1.0"
+    },
+    "require-dev": {
+        "barryvdh/laravel-ide-helper": "^3.8.0",
+        "driftingly/rector-laravel": "^2.7.3",
+        "fakerphp/faker": "^1.24.1",
+        "larastan/larastan": "^3.15.0",
+        "laravel/boost": "^2.10.4",
+        "laravel/pail": "^1.3.0",
+        "laravel/pao": "^1.1.5",
+        "laravel/pint": "^1.32.3",
+        "laravel/sail": "^1.70",
+        "mockery/mockery": "^1.6.15",
+        "nunomaduro/collision": "^8.9.6",
+        "pestphp/pest": "^5.3.5",
+        "pestphp/pest-plugin-browser": "^5.2.0",
+        "pestphp/pest-plugin-laravel": "^5.0.1",
+        "pestphp/pest-plugin-rector": "^5.0.6",
+        "pestphp/pest-plugin-type-coverage": "^5.1.0",
+        "phpstan/extension-installer": "^1.4.3"
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "app/",
+            "Database\\Factories\\": "database/factories/",
+            "Database\\Seeders\\": "database/seeders/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
+        }
+    },
+    "scripts": {
+        "setup": [
+            "composer install",
+            "@php -r \"file_exists('.env') || copy('.env.example', '.env');\"",
+            "@php artisan key:generate",
+            "@php artisan migrate --force",
+            "npm install",
+            "npm run build"
+        ],
+        "dev": [
+            "Composer\\Config::disableProcessTimeout",
+            "npx concurrently -c \"#93c5fd,#c4b5fd,#fb7185,#fdba74\" \"php artisan serve\" \"php artisan queue:listen --tries=1\" \"php artisan pail --timeout=0\" \"npm run dev\" --names=server,queue,logs,vite --kill-others"
+        ],
+        "post-autoload-dump": [
+            "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
+            "@php artisan package:discover --ansi",
+            "@php artisan filament:upgrade",
+            "@php artisan filament:optimize"
+        ],
+        "post-update-cmd": [
+            "@php artisan vendor:publish --tag=laravel-assets --ansi --force",
+            "@php artisan vendor:publish --tag=filament-postal:images --ansi --force",
+            "@php artisan vendor:publish --tag=filament-admix:theme --ansi --force",
+            "@php artisan ide-helper:generate",
+            "@php artisan ide-helper:meta",
+            "@php artisan ide-helper:models --dir='packages/agenciafmd/*/src/Models' --nowrite",
+            "@php artisan clear",
+            "@php artisan filament:optimize-clear",
+            "@update:requirements",
+            "@php artisan boost:update --ansi"
+        ],
+        "post-root-package-install": [
+            "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
+        ],
+        "post-create-project-cmd": [
+            "Composer\\Config::disableProcessTimeout",
+            "@php artisan key:generate --ansi",
+            "./vendor/bin/sail up -d --wait",
+            "./vendor/bin/sail artisan migrate --graceful --ansi"
+        ],
+        "pre-package-uninstall": [
+            "Illuminate\\Foundation\\ComposerScripts::prePackageUninstall"
+        ],
+        "update:requirements": [
+            "composer bump",
+            "npx npm-check-updates -u"
+        ],
+        "lint": [
+            "rector",
+            "pint --parallel --blade",
+            "npm run lint"
+        ],
+        "test:type-coverage": "pest --type-coverage --min=100",
+        "test:lint": [
+            "rector --dry-run",
+            "pint --parallel --blade --test",
+            "npm run test:lint"
+        ],
+        "test:unit": "pest --parallel --tia",
+        "test:unit:baseline": "pest --parallel --tia --fresh",
+        "test:types": "phpstan",
+        "test": [
+            "@php artisan config:clear --ansi",
+            "@test:type-coverage",
+            "@test:unit",
+            "@test:lint",
+            "@test:types"
+        ]
+    },
+    "extra": {
+        "laravel": {
+            "dont-discover": []
+        }
+    },
+    "config": {
+        "optimize-autoloader": true,
+        "preferred-install": "dist",
+        "sort-packages": true,
+        "allow-plugins": {
+            "pestphp/pest-plugin": true,
+            "php-http/discovery": true,
+            "phpstan/extension-installer": true
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}

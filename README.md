@@ -96,6 +96,10 @@ Alterações feitas pelo console (seeders, imports, filas) não limpam o cache. 
 sail artisan page-cache:clear
 ```
 
+## Onde configuro o GTM, o Analytics, o Search Console, o Pixel da Meta e os scripts?
+
+No admix, menu **Configurações** (somente administradores), pelo pacote [`filament-settings`](./packages/agenciafmd/filament-settings/README.md). O `GOOGLE_TAGMANAGER` e o `GOOGLE_SITE_VERIFICATION` do `.env` não são mais usados.
+
 ## Vai codar front-end?
 
 Acesse a [documentação específica](./resources/README.md).

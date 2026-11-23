@@ -5,7 +5,7 @@
 
 ## Foundational Context
 
-This application is a Laravel application running on PHP 8.4. Always use the APIs that match the installed major version of each package — do not assume a version.
+This application is a Laravel application running on PHP 8.5. Always use the APIs that match the installed major version of each package — do not assume a version.
 
 Before relying on a package's API, confirm its installed version:
 - PHP packages: run `vendor/bin/sail composer show --direct` to list direct dependencies with versions, or `vendor/bin/sail composer show <vendor/package>` for a single package.
@@ -181,6 +181,7 @@ A ideia principal é facilitar os CRUDS dos recursos mais comuns em aplicações
 - Usuários: cria usuários para acesso ao painel administrativo (admix).
 - Auditoria: registra ações realizadas no sistema, permitindo a restauração dos dados.
 - Grupos: controle de permissões automático por Resource (usuário sem grupo é administrador); nenhum pacote precisa de Policy ou config para isso.
+- Organizações (opcional, `filament-admix.tenancy.enabled`): cada usuário vê só as suas organizações; administradores veem todas. Models de pacote usam o trait `BelongsToOrganization` (detalhes na skill `filament-admix-permissions`).
 
 ### Estrutura para criação de novos recursos / pacotes
 

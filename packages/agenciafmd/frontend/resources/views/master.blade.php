@@ -1,7 +1,9 @@
 <!doctype html>
 <html lang="{{ strtolower(str_replace('_', '-', app()->getLocale())) }}">
 <head>
-    <x-frontend::gtm-head />
+    <x-filament-settings::gtm-head />
+    <x-filament-settings::google-analytics />
+    <x-filament-settings::meta-pixel />
 
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -24,15 +26,17 @@
     <link rel="canonical" href="@yield('canonical', url()->current())" />
     <x-frontend::pwa />
     <x-frontend::fonts-preload />
-    <x-frontend::site-verification />
+    <x-filament-settings::site-verification />
     <x-frontend::critical-css :$critical :stylesheet="$stylesheet ?? 'resources/scss/frontend.scss'" />
 
     <livewire:styles />
 
     @stack('head')
+
+    <x-filament-settings::header-scripts />
 </head>
 <body class="{{ ($bodyClass) ?? '' }}">
-    <x-frontend::gtm-body />
+    <x-filament-settings::gtm-body />
 
     @stack('header')
 
@@ -51,5 +55,7 @@
     @include('frontend::partials.message')
 
     @stack('scripts')
+
+    <x-filament-settings::footer-scripts />
 </body>
 </html>

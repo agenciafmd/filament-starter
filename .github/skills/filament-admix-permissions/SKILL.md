@@ -59,7 +59,8 @@ RelationManager que lista os filhos no Resource pai só aparece com a permissão
 - colunas editáveis (`ToggleColumn`, `SelectColumn`, `TextInputColumn`, `CheckboxColumn`) ignoram policies no
   Filament; o admix as desabilita globalmente com `Gate::denies('update', $record)`. Se a tabela chamar `->disabled()`
   na coluna, isso sobrescreve o padrão — inclua a checagem de `update` na sua condição
-- somente administradores alteram/excluem administradores e deixam alguém sem grupo; ninguém troca o próprio grupo
+- somente administradores alteram/excluem administradores e veem o campo de grupo no formulário de Usuários; quem não
+  é administrador cria usuários com o próprio grupo e não altera o grupo de ninguém; ninguém troca o próprio grupo
 
 ## Permissões extras: `getExtraPermissions()`
 
@@ -102,6 +103,58 @@ Regras:
 - o label é traduzido com `__()` em minúsculas (ex.: `"send": "enviar"` no `lang/pt_BR.json` do pacote), seguindo o
   padrão "pode {label}" das abilities padrão
 - a action continua usando `->visible()`/`->hidden()` para regras de negócio; `->authorize()` é só para permissão
+
+## Resource só para administradores: `isAdministratorsOnly()`
+
+O Resource que declara `public static function isAdministratorsOnly(): bool` retornando `true` fica restrito aos
+administradores e sai da matriz de permissões dos Grupos. O admix usa isso em `OrganizationResource` (sempre) e em
+`RoleResource` (com a tenancy ligada).
+
+## Acessar como (impersonate)
+
+A action `Agenciafmd\Admix\Resources\Users\Actions\ImpersonateAction` (na tabela e na edição de Usuários) deixa o
+administrador entrar no painel como outro usuário, para ver o que ele vê:
+- fica desligada por padrão; ligue com `filament-admix.impersonate` (env `ADMIX_IMPERSONATE`);
+- só administradores usam, e só com usuários com grupo, ativos e com acesso ao painel (`$user->canImpersonate($target)`);
+- o id do administrador fica na sessão; `User::isImpersonating()` diz se a sessão é de impersonate;
+- um banner no topo do painel tem o botão "Voltar para minha conta" (rota `filament.admix.impersonation.leave`), que
+  volta para o administrador; se ele perdeu o acesso de administrador, a sessão é encerrada.
+
+## Organizações (tenancy)
+
+A tenancy usa a tenancy nativa do Filament e vem desligada (`filament-admix.tenancy.enabled`, env `ADMIX_TENANCY`).
+Com ela desligada, nada muda. Ligada:
+
+- **URLs:** ficam `/admix/{organization:slug}/...`; o model é `Agenciafmd\Admix\Models\Organization` e o vínculo é muitos-para-muitos
+  (`organization_user`, `$user->organizations()`);
+- **administrador** (sem grupo) acessa todas as organizações e gerencia Organizações e Grupos;
+- **demais usuários:** acessam só as suas organizações ativas, sempre com um grupo, que vale em todas as organizações dele.
+  Sem organização ativa, não entram no painel;
+- **Usuários:**
+  - a lista mostra os usuários da organização atual;
+  - criar com um e-mail existente vincula esse usuário à organização;
+  - quem não é administrador não altera um usuário que está em outras organizações;
+  - deletar remove o usuário da organização e só o exclui quando ele não tem mais nenhuma organização;
+- **models de pacote** que pertencem a uma organização:
+  - recebem a coluna `organization_id` (`foreignId('organization_id')->constrained('organizations')->cascadeOnDelete()`) e o trait
+    `Agenciafmd\Admix\Traits\BelongsToOrganization`;
+  - o trait cria a relação `organization()`, filtra as consultas pela organização atual (`Filament::getTenant()`) e preenche o
+    `organization_id` ao criar;
+  - fora do painel (jobs, exports, rotas públicas), defina a organização com `Filament::setTenant($organization)` antes das consultas;
+- **slug da organização:** também é o subdomínio dela, então só aceita minúsculas, números e hífen, e não pode usar os
+  nomes de `filament-admix.tenancy.reserved_slugs` (`Organization::reservedSlugs()`);
+- **host do painel:** `filament-admix.domain` (env `ADMIX_DOMAIN`) restringe o painel a um host; vazio, ele responde
+  em qualquer host;
+- **Resource sem organização** (dado global): declare `protected static bool $isScopedToTenant = false;`;
+- **regras `unique`/`exists`:** ignoram os escopos do Eloquent. Num model com organização, use `scopedUnique()` /
+  `scopedExists()` do Filament;
+- a `ResourcePolicy` também confere a organização: quem não é administrador só acessa registros com `organization_id` de uma
+  organização sua, mesmo fora do escopo do painel (callbacks, jobs);
+- **exportações** rodam num job, sem a organização atual: filtre a organização explicitamente no `modifyQuery()` do Exporter;
+- **rotas públicas** não têm organização atual: grave o `organization_id` a partir do registro de origem (ex.: o lead herda a
+  organização da página);
+- **testes com a tenancy ligada:** a config precisa valer antes do boot (as rotas mudam). Use o trait
+  `Agenciafmd\Admix\Testing\WithTenancy` no teste (`pest()->use(WithTenancy::class)`).
 
 ## Policy própria
 

@@ -18,11 +18,6 @@ final class FrontendServiceProvider extends ServiceProvider
         $this->bootPublish();
     }
 
-    public function register(): void
-    {
-        $this->registerConfigs();
-    }
-
     private function bootProviders(): void
     {
         $this->app->register(BladeServiceProvider::class);
@@ -42,10 +37,5 @@ final class FrontendServiceProvider extends ServiceProvider
         Vite::macro('font', static fn (string $asset): string => Vite::asset("resources/fonts/{$asset}"));
         Vite::macro('video', static fn (string $asset): string => Vite::asset("resources/videos/{$asset}"));
         Vite::macro('pdf', static fn (string $asset): string => Vite::asset("resources/pdf/{$asset}"));
-    }
-
-    private function registerConfigs(): void
-    {
-        $this->mergeConfigFrom(__DIR__ . '/../../config/frontend.php', 'frontend');
     }
 }
