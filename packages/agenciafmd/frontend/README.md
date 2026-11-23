@@ -144,10 +144,30 @@ Nos outros casos (SVG, ICO, URL externa e `<img>` escrito à mão), passe `width
 <x-frontend::image image="icons/safari-pinned-tab.svg" width="512" height="512" title="Safari pinned tab" />
 ```
 
-**Aviso no navegador:** todo `<img>` sem `width` e `height` ganha o mesmo contorno vermelho do aviso de imagem sem `alt` (`resources/scss/components/_accessibilities.scss`). Ficam de fora:
+**Aviso no navegador:** todo `<img>` sem `width` e `height` ganha o mesmo contorno vermelho do aviso de imagem sem `alt` (`resources/scss/components/_accessibilities.scss`). O aviso vale em qualquer ambiente, inclusive produção. Ficam de fora:
 - imagens dentro de `.wysiwyg`, que vêm do admin;
+- a imagem aberta no GLightbox (`.gslide-image img`), que fica por cima da página e não desloca nada;
 - `.fslightbox-source`;
 - imagens com a classe `skip-warning`, para quando o tamanho realmente não pode ser informado.
+
+### Conteúdo do admix (`.wysiwyg`)
+
+O rich editor do admix (`RichEditorWithDefault`) salva o corpo inteiro como um único HTML, só com tags. Na view, coloque esse conteúdo inteiro em **um** `.wysiwyg`:
+
+```blade
+<div class="wysiwyg">
+    {!! $article->content !!}
+</div>
+```
+
+O `.wysiwyg` (`resources/scss/components/_wysiwyg.scss`) estiliza o que o editor gera:
+
+- espaço antes de cada título (`h2`, `h3`…), separando as seções; por isso não divida o conteúdo em vários `.wysiwyg`;
+- imagem com a largura do conteúdo e altura proporcional (uma imagem redimensionada no editor mantém o tamanho escolhido, que vem no `style`);
+- citação com borda lateral e tabela no padrão `.table` do Bootstrap;
+- colunas da ferramenta `grid` (`.grid-layout`): lado a lado a partir do `lg`, empilhadas antes.
+
+O purge não enxerga esse HTML, que vem do banco. As tags e as classes `grid-layout`/`grid-layout-col` ficam no safelist do `vite.config.js`. Se um projeto ligar outra ferramenta no editor que escreva classes, adicione-as ao safelist e ao `_wysiwyg.scss`.
 
 ### CSS crítico
 
