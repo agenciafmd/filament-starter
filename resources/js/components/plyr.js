@@ -61,9 +61,17 @@ function setupEmbedVideo() {
             player.dataset.plyrProvider = ctaVideo.dataset.plyrProvider;
             player.dataset.plyrEmbedId = ctaVideo.dataset.plyrEmbedId;
 
-            ctaVideo
-                .closest(".js-player-embed-container")
-                .replaceChildren(player);
+            const container = ctaVideo.closest(".js-player-embed-container");
+            const thumb = container.querySelector("img");
+
+            // The player takes the thumb's place: the box keeps the thumb's rounded corners
+            if (thumb) {
+                container.style.borderRadius =
+                    getComputedStyle(thumb).borderRadius;
+                container.style.overflow = "hidden";
+            }
+
+            container.replaceChildren(player);
 
             setupPlyr();
         });

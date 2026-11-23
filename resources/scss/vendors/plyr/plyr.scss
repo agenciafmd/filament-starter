@@ -6,3 +6,9 @@
 :root {
     --plyr-color-main: #{$primary};
 }
+
+// Inside a .ratio (ex.: x-frontend::glightbox.player-embed) the player fills the box like any other child:
+// this file loads after the global css, so .plyr { position: relative } would beat .ratio > * { position: absolute }
+.ratio > .plyr {
+    position: absolute;
+}
