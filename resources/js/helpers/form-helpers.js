@@ -212,8 +212,10 @@ export function guideUserToTheFirstError(form = document) {
         `.${scrollContainerClass}`,
     );
 
-    if (_isFormOnModal()) {
-        _scrollToError(".modal.show .modal-body");
+    const modal = form instanceof Element ? form.closest(".modal") : null;
+
+    if (modal) {
+        _scrollModalToError(modal);
         return;
     }
 
@@ -240,8 +242,21 @@ export function guideUserToTheFirstError(form = document) {
         document.querySelector(container).scrollTo(animateConfig);
     }
 
-    function _isFormOnModal() {
-        return document.body.classList.contains("modal-open");
+    // The .modal-body only scrolls with .modal-dialog-scrollable; otherwise the .modal itself scrolls
+    function _scrollModalToError(modal) {
+        const modalBody = modal.querySelector(".modal-body");
+        const container =
+            modalBody && modalBody.scrollHeight > modalBody.clientHeight
+                ? modalBody
+                : modal;
+
+        container.scrollTo({
+            top:
+                container.scrollTop +
+                firstInvalidInputOffsetTop -
+                container.getBoundingClientRect().top,
+            behavior: "smooth",
+        });
     }
 
     function _getStickyHeaderOffset() {
