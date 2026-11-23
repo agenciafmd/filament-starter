@@ -18,9 +18,8 @@
     <x-frontend::link
         link="{{ $article->route }}"
         title="Ir para {{ $article->name }}"
-        label="Leia mais"
         class="btn btn-primary btn-lg stretched-link mt-auto w-100"
     >
-        <span class="visually-hidden">: {{ $article->name }}</span>
+        Leia mais<span class="visually-hidden">: {{ $article->name }}</span>
     </x-frontend::link>
 </x-frontend::cards.card-picture>

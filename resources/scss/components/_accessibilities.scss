@@ -23,8 +23,14 @@ img {
             @include accessibility-warning;
         }
 
-        // No width/height: the page jumps when the image loads (x-frontend::image reads them from the file)
-        &:not([width][height], .fslightbox-source, .wysiwyg img) {
+        // No width/height: the page jumps when the image loads (x-frontend::image reads them from the file).
+        // The GLightbox slide is skipped: it opens over the page and sizes its own image
+        &:not(
+            [width][height],
+            .fslightbox-source,
+            .gslide-image img,
+            .wysiwyg img
+        ) {
             @include accessibility-warning;
         }
     }
