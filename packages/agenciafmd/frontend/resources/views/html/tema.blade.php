@@ -1553,7 +1553,7 @@
                                 <h2 class="mb-block-small h6">Pagination</h2>
                                 <div class="vstack gap-1">
                                     <div>
-                                        <nav aria-label="Page navigation example">
+                                        <nav aria-label="Paginação de exemplo">
                                             <ul class="pagination">
                                                 <li class="page-item">
                                                     <x-frontend::link link="#" label="Previous" class="page-link" />
@@ -1578,10 +1578,10 @@
                                         <hr />
                                         <h2 class="fs-xlarge">Example of small pagination</h2>
 
-                                        <nav aria-label="Page navigation example">
+                                        <nav aria-label="Paginação de exemplo">
                                             <ul class="pagination pagination-sm">
                                                 <li class="page-item">
-                                                    <x-frontend::link link="#" aria-label="Previous" class="page-link">
+                                                    <x-frontend::link link="#" aria-label="Página anterior" class="page-link">
                                                         <span aria-hidden="true">&laquo;</span>
                                                     </x-frontend::link>
                                                 </li>
@@ -1595,7 +1595,7 @@
                                                     <x-frontend::link link="#" label="3" class="page-link" />
                                                 </li>
                                                 <li class="page-item">
-                                                    <x-frontend::link link="#" aria-label="Next" class="page-link">
+                                                    <x-frontend::link link="#" aria-label="Próxima página" class="page-link">
                                                         <span aria-hidden="true">&raquo;</span>
                                                     </x-frontend::link>
                                                 </li>
@@ -1607,10 +1607,10 @@
                                         <hr />
                                         <h2 class="fs-xlarge">Example of large pagination</h2>
 
-                                        <nav aria-label="Page navigation example">
+                                        <nav aria-label="Paginação de exemplo">
                                             <ul class="pagination pagination-lg">
                                                 <li class="page-item">
-                                                    <x-frontend::link link="#" aria-label="Previous" class="page-link">
+                                                    <x-frontend::link link="#" aria-label="Página anterior" class="page-link">
                                                         <span aria-hidden="true">&laquo;</span>
                                                     </x-frontend::link>
                                                 </li>
@@ -1624,7 +1624,7 @@
                                                     <x-frontend::link link="#" label="3" class="page-link" />
                                                 </li>
                                                 <li class="page-item">
-                                                    <x-frontend::link link="#" aria-label="Next" class="page-link">
+                                                    <x-frontend::link link="#" aria-label="Próxima página" class="page-link">
                                                         <span aria-hidden="true">&raquo;</span>
                                                     </x-frontend::link>
                                                 </li>
@@ -1636,10 +1636,10 @@
                                         <hr />
                                         <h2 class="fs-xlarge">Example of pagination with an icon</h2>
 
-                                        <nav aria-label="Page navigation example">
+                                        <nav aria-label="Paginação de exemplo">
                                             <ul class="pagination">
                                                 <li class="page-item">
-                                                    <x-frontend::link link="#" aria-label="Previous" class="page-link">
+                                                    <x-frontend::link link="#" aria-label="Página anterior" class="page-link">
                                                         <span aria-hidden="true">&laquo;</span>
                                                     </x-frontend::link>
                                                 </li>
@@ -1653,7 +1653,7 @@
                                                     <x-frontend::link link="#" label="3" class="page-link" />
                                                 </li>
                                                 <li class="page-item">
-                                                    <x-frontend::link link="#" aria-label="Next" class="page-link">
+                                                    <x-frontend::link link="#" aria-label="Próxima página" class="page-link">
                                                         <span aria-hidden="true">&raquo;</span>
                                                     </x-frontend::link>
                                                 </li>
@@ -1665,10 +1665,10 @@
                                         <hr />
                                         <h2 class="fs-xlarge">Example of pagination with disabled and active states</h2>
 
-                                        <nav aria-label="Page navigation example">
+                                        <nav aria-label="Paginação de exemplo">
                                             <ul class="pagination">
                                                 <li class="page-item disabled">
-                                                    <x-frontend::link link="#" aria-label="Previous" class="page-link">
+                                                    <x-frontend::link link="#" aria-label="Página anterior" class="page-link">
                                                         <span aria-hidden="true">&laquo;</span>
                                                     </x-frontend::link>
                                                 </li>
@@ -1682,7 +1682,7 @@
                                                     <x-frontend::link link="#" label="3" class="page-link" />
                                                 </li>
                                                 <li class="page-item">
-                                                    <x-frontend::link link="#" aria-label="Next" class="page-link">
+                                                    <x-frontend::link link="#" aria-label="Próxima página" class="page-link">
                                                         <span aria-hidden="true">&raquo;</span>
                                                     </x-frontend::link>
                                                 </li>
@@ -3866,6 +3866,8 @@ Disabled textarea with some text inside</textarea>
                                                 <x-frontend::cards.card card-body-class="vstack bd-example-code align-items-center gap-1">
                                                     <x-frontend::image
                                                         image="icons/favicon.ico"
+                                                        width="48"
+                                                        height="48"
                                                         is-single-image="true"
                                                         title="48x48 - favicon.ico"
                                                         alt="48x48 - favicon.ico"
@@ -3902,12 +3904,14 @@ Disabled textarea with some text inside</textarea>
                                                 <x-frontend::cards.card card-body-class="vstack bd-example-code align-items-center gap-1">
                                                     <x-frontend::image
                                                         image="icons/safari-pinned-tab.svg"
+                                                        width="512"
+                                                        height="512"
                                                         is-single-image="true"
-                                                        title="192x192 - safari-pinned-tab.svg"
-                                                        alt="192x192 - safari-pinned-tab.svg"
+                                                        title="512x512 - safari-pinned-tab.svg"
+                                                        alt="512x512 - safari-pinned-tab.svg"
                                                         class="img-sanitize"
                                                     />
-                                                    <small class="text-center"> 192x192 - safari-pinned-tab.svg </small>
+                                                    <small class="text-center"> 512x512 - safari-pinned-tab.svg </small>
                                                 </x-frontend::cards.card>
                                             </div>
                                             <div class="col-md-6">
@@ -3983,6 +3987,15 @@ Disabled textarea with some text inside</textarea>
                                                 title="imagem titulo"
                                                 alt="imagem alt"
                                                 aspect-ratio="-h-100 ratio ratio-1x1 ratio-md-16x9"
+                                            />
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <h2 class="fs-xlarge">Embedded video without image (YouTube thumbnail)</h2>
+                                            <x-frontend::glightbox.player-embed
+                                                id="youtube-thumb-video"
+                                                link="https://youtu.be/lG7o0r-7coo?si=a8uCcwaD_hsqgQM3"
+                                                aspect-ratio="ratio ratio-16x9"
                                             />
                                         </div>
                                     </div>
