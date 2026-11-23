@@ -73,9 +73,14 @@
                                 non. Sed faucibus consectetur quis et id bibendum dictum orci morbi. Natoque sem et enim
                                 ligula neque amet. Id diam porta id diam leo.
                             </p>
-                        </div>
 
-                        <div class="mb-block-small wysiwyg">
+                            <x-frontend::image
+                                image="ratios/img-16x9-xl.jpg"
+                                title="Imagem do conteúdo"
+                                alt="Imagem do conteúdo"
+                                class="rounded"
+                            />
+
                             <h3>Título médio</h3>
                             <p>
                                 Lorem ipsum dolor sit amet consectetur. Mattis morbi tellus purus tincidunt sagittis.

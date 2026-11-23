@@ -69,6 +69,8 @@ const safelist = {
     /^was-/,
     // HTML from the database (admix rich editor) never shows up in the views
     /^(table|thead|tbody|tfoot|tr|th|td|caption|figure|figcaption|blockquote|kbd|abbr|code|pre|mark|dl|dt|dd|hr|sub|sup)$/,
+    // Columns of the rich editor `grid` tool
+    /^grid-layout(-col)?$/,
   ],
 };
 

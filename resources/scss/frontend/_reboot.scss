@@ -15,11 +15,6 @@ a {
     transition: $transition-base;
 }
 
-.wysiwyg img {
-    max-width: 100%;
-    height: auto;
-}
-
 .stretch {
     // Full width on mobile: cancels the container padding (half the gutter). Not `100vw`, which
     // counts the vertical scrollbar and scrolls the page sideways where the scrollbar takes space

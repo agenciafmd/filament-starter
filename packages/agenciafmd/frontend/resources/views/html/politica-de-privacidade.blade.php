@@ -29,32 +29,26 @@
                     <div class="col-lg-8">
                         <h1 class="mb-block-small h2">Política de Privacidade</h1>
 
-                        <div class="mb-block-small wysiwyg">
+                        <div class="wysiwyg">
                             <h2>Quais dados coletamos</h2>
                             <p>
                                 Lorem ipsum dolor sit amet consectetur. Mattis morbi tellus purus tincidunt sagittis.
                                 Pellentesque quis feugiat pellentesque eget interdum. Dui ut at dignissim neque praesent
                                 ridiculus.
                             </p>
-                        </div>
 
-                        <div class="mb-block-small wysiwyg">
                             <h2>Para que usamos os dados</h2>
                             <p>
                                 Vulputate suscipit turpis ultrices tristique iaculis penatibus. Malesuada a sem eget id.
                                 Sed a consectetur eget feugiat. Sed tincidunt purus aliquam lectus.
                             </p>
-                        </div>
 
-                        <div class="mb-block-small wysiwyg">
                             <h2>Compartilhamento e cookies</h2>
                             <p>
                                 Urna orci at mattis non. Sed faucibus consectetur quis et id bibendum dictum orci morbi.
                                 Natoque sem et enim ligula neque amet. Id diam porta id diam leo.
                             </p>
-                        </div>
 
-                        <div class="wysiwyg">
                             <h2>Seus direitos e contato</h2>
                             <p>
                                 Lorem ipsum dolor sit amet consectetur. Lectus arcu mauris elementum sit id ut eu metus
