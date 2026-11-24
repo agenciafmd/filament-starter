@@ -4,7 +4,7 @@ import "bootstrap";
 // Components
 import "/resources/js/components/swal.js";
 import "/resources/js/components/glightbox.js";
-import "/resources/js/components/plyr.js";
+import "/resources/js/components/player-embed.js";
 import "/resources/js/components/tom-select.js";
 
 // Global usages

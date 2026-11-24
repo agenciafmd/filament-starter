@@ -1,11 +1,3 @@
-$icon-xxxsm: 1rem !default; // 16
-$icon-xxsm: 1.25rem !default; //20
-$icon-xsm: 1.5rem !default; //24
-$icon-sm: 2rem !default; //32
-$icon-md: 3rem !default; //48
-$icon-lg: 3.25rem !default; //52
-$icon-xl: 4rem !default; //64
-
 @mixin icons-size-setup {
     .ic {
         max-width: 100%;
@@ -73,12 +65,12 @@ $icon-xl: 4rem !default; //64
         color: $white;
         background: rgba($primary, $opacity-level-semi-opaque);
         transition: $transition-base;
-        width: $icon-md;
-        height: $icon-md;
+        width: $icon-play-size;
+        height: $icon-play-size;
 
         @include media-breakpoint-up(xl) {
-            width: $icon-md * 1.5;
-            height: $icon-md * 1.5;
+            width: $icon-play-size-xl;
+            height: $icon-play-size-xl;
         }
 
         &-container {

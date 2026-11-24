@@ -41,6 +41,7 @@ const staticAssets = [
 const vendorLibs = [
   'node_modules/swiper/**/*.js',
   'node_modules/glightbox/dist/js/*.js',
+  'node_modules/vlitejs/dist/**/*.js',
   'node_modules/sweetalert2/dist/*.js',
   'node_modules/tom-select/dist/js/*.js',
   'node_modules/wow.js/dist/*.js',
@@ -48,13 +49,12 @@ const vendorLibs = [
 ];
 
 // Third-party libs: their classes survive the purge
-const vendorPrefixes = [/^swal2-/, /^swiper-/, /^plyr-/, /^ts-/];
+const vendorPrefixes = [/^swal2-/, /^swiper-/, /^ts-/, /^v-/, /^vlite/];
 
 // Classes the purge can't find in the views or in vendorLibs (built at runtime or from the database)
 const safelist = {
   greedy: [
     /lang/,
-    /plyr/,
   ],
   standard: [
     ...vendorPrefixes,
