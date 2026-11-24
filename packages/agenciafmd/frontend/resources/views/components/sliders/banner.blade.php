@@ -41,7 +41,10 @@
                                             <div class="row">
                                                 <div class="col-md-7 col-xl-6">
                                                     <div class="mb-block-small pe-auto">
-                                                        <{{ $headingTag }} class="h2 text-primary">{{ $banner->content->name }}</{{ $headingTag }}>
+                                                        <{{ $headingTag }}
+                                                            class="h2 text-primary"
+                                                            >{{ $banner->content->name }}</{{ $headingTag }}
+                                                        >
                                                         <p class="mb-block-small text-primary">
                                                             {{ $banner->content->subtitle }}
                                                         </p>

@@ -17,7 +17,7 @@
 --}}
 @php
     $slotText = preg_replace('/<(\w+)\b[^>]*aria-hidden="true"[^>]*>.*?<\/\1>/s', '', (string) $slot);
-    $hasVisibleText = $label || trim(strip_tags($slotText)) !== '';
+    $hasVisibleText = $label || mb_trim(strip_tags($slotText)) !== '';
 @endphp
 <a
     href="{{ $link }}"

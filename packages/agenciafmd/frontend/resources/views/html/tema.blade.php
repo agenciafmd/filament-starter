@@ -1581,7 +1581,11 @@
                                         <nav aria-label="Paginação de exemplo">
                                             <ul class="pagination pagination-sm">
                                                 <li class="page-item">
-                                                    <x-frontend::link link="#" aria-label="Página anterior" class="page-link">
+                                                    <x-frontend::link
+                                                        link="#"
+                                                        aria-label="Página anterior"
+                                                        class="page-link"
+                                                    >
                                                         <span aria-hidden="true">&laquo;</span>
                                                     </x-frontend::link>
                                                 </li>
@@ -1595,7 +1599,11 @@
                                                     <x-frontend::link link="#" label="3" class="page-link" />
                                                 </li>
                                                 <li class="page-item">
-                                                    <x-frontend::link link="#" aria-label="Próxima página" class="page-link">
+                                                    <x-frontend::link
+                                                        link="#"
+                                                        aria-label="Próxima página"
+                                                        class="page-link"
+                                                    >
                                                         <span aria-hidden="true">&raquo;</span>
                                                     </x-frontend::link>
                                                 </li>
@@ -1610,7 +1618,11 @@
                                         <nav aria-label="Paginação de exemplo">
                                             <ul class="pagination pagination-lg">
                                                 <li class="page-item">
-                                                    <x-frontend::link link="#" aria-label="Página anterior" class="page-link">
+                                                    <x-frontend::link
+                                                        link="#"
+                                                        aria-label="Página anterior"
+                                                        class="page-link"
+                                                    >
                                                         <span aria-hidden="true">&laquo;</span>
                                                     </x-frontend::link>
                                                 </li>
@@ -1624,7 +1636,11 @@
                                                     <x-frontend::link link="#" label="3" class="page-link" />
                                                 </li>
                                                 <li class="page-item">
-                                                    <x-frontend::link link="#" aria-label="Próxima página" class="page-link">
+                                                    <x-frontend::link
+                                                        link="#"
+                                                        aria-label="Próxima página"
+                                                        class="page-link"
+                                                    >
                                                         <span aria-hidden="true">&raquo;</span>
                                                     </x-frontend::link>
                                                 </li>
@@ -1639,7 +1655,11 @@
                                         <nav aria-label="Paginação de exemplo">
                                             <ul class="pagination">
                                                 <li class="page-item">
-                                                    <x-frontend::link link="#" aria-label="Página anterior" class="page-link">
+                                                    <x-frontend::link
+                                                        link="#"
+                                                        aria-label="Página anterior"
+                                                        class="page-link"
+                                                    >
                                                         <span aria-hidden="true">&laquo;</span>
                                                     </x-frontend::link>
                                                 </li>
@@ -1653,7 +1673,11 @@
                                                     <x-frontend::link link="#" label="3" class="page-link" />
                                                 </li>
                                                 <li class="page-item">
-                                                    <x-frontend::link link="#" aria-label="Próxima página" class="page-link">
+                                                    <x-frontend::link
+                                                        link="#"
+                                                        aria-label="Próxima página"
+                                                        class="page-link"
+                                                    >
                                                         <span aria-hidden="true">&raquo;</span>
                                                     </x-frontend::link>
                                                 </li>
@@ -1668,7 +1692,11 @@
                                         <nav aria-label="Paginação de exemplo">
                                             <ul class="pagination">
                                                 <li class="page-item disabled">
-                                                    <x-frontend::link link="#" aria-label="Página anterior" class="page-link">
+                                                    <x-frontend::link
+                                                        link="#"
+                                                        aria-label="Página anterior"
+                                                        class="page-link"
+                                                    >
                                                         <span aria-hidden="true">&laquo;</span>
                                                     </x-frontend::link>
                                                 </li>
@@ -1682,7 +1710,11 @@
                                                     <x-frontend::link link="#" label="3" class="page-link" />
                                                 </li>
                                                 <li class="page-item">
-                                                    <x-frontend::link link="#" aria-label="Próxima página" class="page-link">
+                                                    <x-frontend::link
+                                                        link="#"
+                                                        aria-label="Próxima página"
+                                                        class="page-link"
+                                                    >
                                                         <span aria-hidden="true">&raquo;</span>
                                                     </x-frontend::link>
                                                 </li>
