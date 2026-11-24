@@ -72,12 +72,6 @@
       "_bootstrap-helpers-CMCBtARj.js"
     ]
   },
-  "node_modules/plyr/dist/plyr.mjs": {
-    "file": "assets/js/plyr-B0mrv3is.js",
-    "name": "plyr",
-    "src": "node_modules/plyr/dist/plyr.mjs",
-    "isDynamicEntry": true
-  },
   "node_modules/sweetalert2/dist/sweetalert2.esm.js": {
     "file": "assets/js/sweetalert2.esm-BSWp-6_N.js",
     "name": "sweetalert2.esm",
@@ -88,6 +82,24 @@
     "file": "assets/js/tom-select.complete-Q5al5wUH.js",
     "name": "tom-select.complete",
     "src": "node_modules/tom-select/dist/esm/tom-select.complete.js",
+    "isDynamicEntry": true
+  },
+  "node_modules/vlitejs/dist/providers/vimeo.js": {
+    "file": "assets/js/vimeo-Ch8EKwu1.js",
+    "name": "vimeo",
+    "src": "node_modules/vlitejs/dist/providers/vimeo.js",
+    "isDynamicEntry": true
+  },
+  "node_modules/vlitejs/dist/providers/youtube.js": {
+    "file": "assets/js/youtube-BpijbxGA.js",
+    "name": "youtube",
+    "src": "node_modules/vlitejs/dist/providers/youtube.js",
+    "isDynamicEntry": true
+  },
+  "node_modules/vlitejs/dist/vlite.js": {
+    "file": "assets/js/vlite-DJSr3lGx.js",
+    "name": "vlite",
+    "src": "node_modules/vlitejs/dist/vlite.js",
     "isDynamicEntry": true
   },
   "resources/fonts/Roboto-Bold.woff2": {
@@ -642,7 +654,7 @@
     ]
   },
   "resources/js/frontend-imports.js": {
-    "file": "assets/js/frontend-imports-CjXSrABV.js",
+    "file": "assets/js/frontend-imports-DqK4KBqd.js",
     "name": "frontend-imports",
     "src": "resources/js/frontend-imports.js",
     "isEntry": true,
@@ -652,7 +664,9 @@
     ],
     "dynamicImports": [
       "node_modules/sweetalert2/dist/sweetalert2.esm.js",
-      "node_modules/plyr/dist/plyr.mjs",
+      "node_modules/vlitejs/dist/providers/youtube.js",
+      "node_modules/vlitejs/dist/providers/vimeo.js",
+      "node_modules/vlitejs/dist/vlite.js",
       "node_modules/glightbox/dist/js/glightbox.min.js",
       "node_modules/tom-select/dist/esm/tom-select.complete.js",
       "node_modules/infinite-scroll/js/index.js"
@@ -693,12 +707,8 @@
     ]
   },
   "resources/scss/vendors/glightbox/glightbox.scss": {
-    "file": "assets/css/glightbox-0OhZKQD5.css",
+    "file": "assets/css/glightbox-ClatIW9J.css",
     "src": "resources/scss/vendors/glightbox/glightbox.scss"
-  },
-  "resources/scss/vendors/plyr/plyr.scss": {
-    "file": "assets/css/plyr-c8w7K2i7.css",
-    "src": "resources/scss/vendors/plyr/plyr.scss"
   },
   "resources/scss/vendors/sweetalert2/sweetalert2.scss": {
     "file": "assets/css/sweetalert2-kq7fxtnv.css",
@@ -707,6 +717,10 @@
   "resources/scss/vendors/swiper/swiper-modules.scss": {
     "file": "assets/css/swiper-modules-B6Jo6f_V.css",
     "src": "resources/scss/vendors/swiper/swiper-modules.scss"
+  },
+  "resources/scss/vendors/vlite/vlite.scss": {
+    "file": "assets/css/vlite-u3LUQlRi.css",
+    "src": "resources/scss/vendors/vlite/vlite.scss"
   },
   "webfonts.css": {
     "file": "assets/css/webfonts-BARmzCE6.css",
