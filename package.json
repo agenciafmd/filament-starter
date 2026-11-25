@@ -42,5 +42,9 @@
         "swiper": "^14.3.0",
         "tom-select": "^2.6.2",
         "wow.js": "^1.2.2"
+    },
+    "allowScripts": {
+        "puppeteer": true,
+        "cwebp-bin": true
     }
 }
