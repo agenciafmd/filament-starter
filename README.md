@@ -25,8 +25,8 @@ docker run --rm \
     -e COMPOSER_HOME=/tmp/composer \
     -v "$(pwd):/var/www/html" \
     -w /var/www/html \
-    serversideup/php:8.4-cli-v5.1.1 \
-    composer create-project agenciafmd/filament-starter:dev-master --ignore-platform-reqs nome-do-projeto
+    serversideup/php:8.5-cli-alpine \
+    composer create-project agenciafmd/filament-starter:v2.x-dev --ignore-platform-reqs nome-do-projeto
 ```
 
 O `.env` e a chave da aplicação já são criados. Entre na pasta do projeto e siga para [Subindo o ambiente](#subindo-o-ambiente).
@@ -41,9 +41,10 @@ docker run --rm \
     -e COMPOSER_HOME=/tmp/composer \
     -v "$(pwd):/var/www/html" \
     -w /var/www/html \
-    serversideup/php:8.4-cli-v5.1.1 \
+    serversideup/php:8.5-cli-alpine \
     composer install --ignore-platform-reqs
-
+```
+```bash
 cp .env.example .env
 ```
 
