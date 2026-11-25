@@ -2,9 +2,17 @@
 
 declare(strict_types=1);
 
+use Agenciafmd\Articles\ArticlesPlugin;
+use Agenciafmd\Banners\BannersPlugin;
+use Agenciafmd\BigNumbers\BigNumbersPlugin;
+use Agenciafmd\Faqs\FaqsPlugin;
+use Agenciafmd\HttpLogs\HttpLogsPlugin;
 use Agenciafmd\Leads\LeadsPlugin;
+use Agenciafmd\Partners\PartnersPlugin;
 use Agenciafmd\Postal\PostalPlugin;
+use Agenciafmd\Redirects\RedirectsPlugin;
 use Agenciafmd\Settings\SettingsPlugin;
+use Agenciafmd\Testimonials\TestimonialsPlugin;
 use Filament\Support\Colors\Color;
 
 return [
@@ -45,10 +53,21 @@ return [
      * Host of the panel (ex.: app.landingflow.com.br). Empty, the panel answers on every host.
      */
     'domain' => env('ADMIX_DOMAIN'),
+    /*
+     * Plugins whose package is not installed are skipped by the panel.
+     */
     'plugins' => [
+        ArticlesPlugin::class,
+        BannersPlugin::class,
+        BigNumbersPlugin::class,
+        FaqsPlugin::class,
+        HttpLogsPlugin::class,
         LeadsPlugin::class,
+        PartnersPlugin::class,
         PostalPlugin::class,
+        RedirectsPlugin::class,
         SettingsPlugin::class,
+        TestimonialsPlugin::class,
     ],
     'colors' => [
         'primary' => Color::Slate,
