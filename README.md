@@ -26,12 +26,11 @@ docker run --rm \
     -u "$(id -u):$(id -g)" \
     -v "$(pwd):/var/www/html" \
     -w /var/www/html \
-    laravelsail/php84-composer:latest \
+    composer:2 \
     composer create-project agenciafmd/filament-starter:dev-master --ignore-platform-reqs nome-do-projeto
 ```
 
-> O `v12.x-dev` no comando, irá garantir que a versão 11 do Laravel será usada.
-
+> Usamos a imagem oficial `composer:2` porque ela já vem com o PHP 8.5, exigido pelo projeto e pelos pacotes da agência. As imagens `laravelsail/phpXX-composer` param no PHP 8.4 e quebram no `package:discover`.
 
 ## Instalando o projeto
 
@@ -42,7 +41,7 @@ docker run --rm \
     -u "$(id -u):$(id -g)" \
     -v "$(pwd):/var/www/html" \
     -w /var/www/html \
-    laravelsail/php84-composer:latest \
+    composer:2 \
     composer install --ignore-platform-reqs
 ```
 
@@ -64,10 +63,10 @@ sail artisan migrate:fresh --seed
 
 ## Banco não encontrado?
 
-Por padrão, agora usamos o SQLite, então você pode criar o banco com o comando:
+Por padrão, usamos o MySQL do Sail (configurado no `.env.example`). O banco é criado quando o container sobe, então garanta que o ambiente está rodando antes das migrations:
 
 ```bash
-touch database/database.sqlite
+sail up -d
 ```
 
 ## Imagens quebradas?
@@ -113,8 +112,8 @@ Acesse a [documentação específica](./resources/README.md).
 
 ## Requisitos do projeto
 
-- Versão do PHP: **^8.4**
-- Versão do Laravel: **12**
+- Versão do PHP: **^8.5**
+- Versão do Laravel: **13**
 - Versão do Node: **24+**
 
 ## Licença

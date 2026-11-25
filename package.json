@@ -42,5 +42,11 @@
         "swiper": "^14.4.0",
         "tom-select": "^2.7.0",
         "wow.js": "^1.2.2"
+    },
+    "allowScripts": {
+        "@parcel/watcher": true,
+        "cwebp-bin": true,
+        "puppeteer": true,
+        "plyr": false
     }
 }
