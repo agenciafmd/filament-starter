@@ -94,17 +94,17 @@ final class ResponsiveImage extends Component
                 $filename = "{$slugName}-{$width}w.{$extension}";
                 $relativePath = "{$directory}/responsive/{$filename}";
                 if (Storage::exists($relativePath) === false) {
-                    $img = $manager->read($fileContent);
+                    $img = $manager->decodeBinary($fileContent);
                     $img->scale(width: $width);
-                    Storage::put($relativePath, (string) $img->encodeByExtension($extension, quality: $this->quality));
+                    Storage::put($relativePath, (string) $img->encodeUsingFileExtension($extension, quality: $this->quality));
                 }
 
                 $srcsetArray[] = Storage::url($relativePath) . " {$width}w";
             }
 
-            $placeholderImg = $manager->read($fileContent)
+            $placeholderImg = $manager->decodeBinary($fileContent)
                 ->scale(width: 32);
-            $base64String = base64_encode((string) $placeholderImg->encodeByExtension($extension, quality: 20));
+            $base64String = base64_encode((string) $placeholderImg->encodeUsingFileExtension($extension, quality: 20));
             $placeholderDataUri = "data:image/{$extension};base64,{$base64String}";
 
             return [
@@ -127,7 +127,7 @@ final class ResponsiveImage extends Component
      */
     private function getSizes(string $fileContent): array
     {
-        $img = $this->imageManager()->read($fileContent);
+        $img = $this->imageManager()->decodeBinary($fileContent);
 
         $sizes = [];
         $width = $img->width();
