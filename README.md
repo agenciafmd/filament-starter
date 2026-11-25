@@ -26,11 +26,11 @@ docker run --rm \
     -u "$(id -u):$(id -g)" \
     -v "$(pwd):/var/www/html" \
     -w /var/www/html \
-    composer:latest \
+    composer:2 \
     composer create-project agenciafmd/filament-starter:dev-master --ignore-platform-reqs --no-scripts nome-do-projeto
 ```
 
-> Usamos a imagem oficial `composer`, que já vem com PHP 8.5 (o Sail não publica uma `php85-composer`). O `--ignore-platform-reqs` dispensa as extensões que só existem no container do Sail, e o `--no-scripts` evita que o `create-project` tente subir o Sail de dentro do container do Composer; os passos abaixo fazem o que esses scripts fariam.
+> Usamos a imagem oficial `composer:2` porque ela já vem com o PHP 8.5, exigido pelo projeto e pelos pacotes da agência. As imagens `laravelsail/phpXX-composer` param no PHP 8.4 e quebram no `package:discover`. O `--ignore-platform-reqs` dispensa as extensões que só existem no container do Sail, e o `--no-scripts` evita que o `create-project` tente subir o Sail de dentro do container do Composer; os passos abaixo fazem o que esses scripts fariam.
 
 Em seguida, prepare o projeto:
 
@@ -51,11 +51,11 @@ docker run --rm \
     -u "$(id -u):$(id -g)" \
     -v "$(pwd):/var/www/html" \
     -w /var/www/html \
-    composer:latest \
+    composer:2 \
     composer install --ignore-platform-reqs
 ```
 
-> A imagem oficial `composer` já vem com PHP 8.5, então os scripts do Composer rodam normalmente. O `--ignore-platform-reqs` dispensa as extensões que só existem no container do Sail.
+> A imagem oficial `composer:2` já vem com PHP 8.5, então os scripts do Composer rodam normalmente. O `--ignore-platform-reqs` dispensa as extensões que só existem no container do Sail.
 
 Depois, crie o `.env` e suba os containers:
 
@@ -90,10 +90,10 @@ sail npm run build:filament
 
 ## Banco não encontrado?
 
-Por padrão, agora usamos o SQLite, então você pode criar o banco com o comando:
+Por padrão, usamos o MySQL do Sail (configurado no `.env.example`). O banco é criado quando o container sobe, então garanta que o ambiente está rodando antes das migrations:
 
 ```bash
-touch database/database.sqlite
+sail up -d
 ```
 
 ## Imagens quebradas?
