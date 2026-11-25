@@ -1,8 +1,7 @@
 services:
     app:
         build:
-            context: .
-            target: development
+            context: ./.docker/runtime/8.5
             args:
                 USER_ID: '${USER_ID:-1000}'
                 GROUP_ID: '${GROUP_ID:-1000}'
@@ -44,7 +43,7 @@ services:
             MYSQL_EXTRA_OPTIONS: '${MYSQL_EXTRA_OPTIONS:-}'
         volumes:
             - 'mysql-data:/var/lib/mysql'
-            - './docker/mysql/create-testing-database.sh:/docker-entrypoint-initdb.d/10-create-testing-database.sh'
+            - './.docker/database/mysql/create-testing-database.sh:/docker-entrypoint-initdb.d/10-create-testing-database.sh'
         healthcheck:
             test:
                 - CMD
