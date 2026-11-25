@@ -27,10 +27,8 @@ docker run --rm \
     -v "$(pwd):/var/www/html" \
     -w /var/www/html \
     composer:2 \
-    composer create-project agenciafmd/filament-starter:dev-master --ignore-platform-reqs --no-scripts nome-do-projeto
+    composer create-project agenciafmd/filament-starter:v2.x-dev --ignore-platform-reqs --no-scripts nome-do-projeto
 ```
-
-> Usamos a imagem oficial `composer:2` porque ela já vem com o PHP 8.5, exigido pelo projeto e pelos pacotes da agência. As imagens `laravelsail/phpXX-composer` param no PHP 8.4 e quebram no `package:discover`. O `--ignore-platform-reqs` dispensa as extensões que só existem no container do Sail, e o `--no-scripts` evita que o `create-project` tente subir o Sail de dentro do container do Composer; os passos abaixo fazem o que esses scripts fariam.
 
 Em seguida, prepare o projeto:
 
@@ -54,8 +52,6 @@ docker run --rm \
     composer:2 \
     composer install --ignore-platform-reqs
 ```
-
-> A imagem oficial `composer:2` já vem com PHP 8.5, então os scripts do Composer rodam normalmente. O `--ignore-platform-reqs` dispensa as extensões que só existem no container do Sail.
 
 Depois, crie o `.env` e suba os containers:
 
@@ -132,10 +128,10 @@ Acesse a [documentação específica](./resources/README.md).
 
 ## Conheça nossa família
 
-- [Área Administrativa](https://github.com/agenciafmd/admix)
-- [Banners](https://github.com/agenciafmd/admix-banners)
-- [Email](https://github.com/agenciafmd/admix-postal)
-- [e mais](https://github.com/agenciafmd?utf8=%E2%9C%93&q=admix-&type=&language=)
+- [Área Administrativa](https://github.com/agenciafmd/filament-admix)
+- [Banners](https://github.com/agenciafmd/filament-banners)
+- [Email](https://github.com/agenciafmd/filament-postal)
+- [e mais](https://github.com/agenciafmd?utf8=%E2%9C%93&q=filament-&type=&language=)
 
 ## Requisitos do projeto
 
