@@ -26,14 +26,6 @@ parameters:
         - config
         - packages/*/*/config
 
-    ignoreErrors:
-        -
-            identifier: trait.unused
-            paths:
-                - packages/agenciafmd/laravel-support/src/Traits/SeederSupport.php
-                - packages/agenciafmd/filament-admix/src/Testing/WithTenancy.php
-                - packages/agenciafmd/filament-admix/src/Traits/BelongsToOrganization.php
-
     databaseMigrationsPath:
         - database/migrations
         - packages/*/*/database/migrations
