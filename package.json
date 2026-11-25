@@ -43,5 +43,9 @@
         "tom-select": "^2.7.0",
         "vlitejs": "^8.1.1",
         "wow.js": "^1.2.2"
+    },
+    "allowScripts": {
+        "@parcel/watcher": false,
+        "puppeteer": false
     }
 }
