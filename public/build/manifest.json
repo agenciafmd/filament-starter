@@ -71,52 +71,52 @@
     "file": "assets/fonts/KFO7CnqEu92Fr1ME7kSn66aGLdTylUAMaxKUBGEe-B7iHSfaG.woff2",
     "src": "KFO7CnqEu92Fr1ME7kSn66aGLdTylUAMaxKUBGEe.woff2"
   },
-  "_frontend-CohvMK4M.js": {
-    "file": "assets/js/frontend-CohvMK4M.js",
+  "_frontend-B6zkkFgQ.js": {
+    "file": "assets/js/frontend-B6zkkFgQ.js",
     "name": "frontend",
     "dynamicImports": [
       "node_modules/infinite-scroll/js/index.js"
     ]
   },
-  "_swiper-CfQmySiv.js": {
-    "file": "assets/js/swiper-CfQmySiv.js",
+  "_swiper-CswjY1hE.js": {
+    "file": "assets/js/swiper-CswjY1hE.js",
     "name": "swiper"
   },
   "node_modules/glightbox/dist/js/glightbox.min.js": {
-    "file": "assets/js/glightbox.min-D6NmgAvh.js",
+    "file": "assets/js/glightbox.min-Cf2zsRAb.js",
     "name": "glightbox.min",
     "src": "node_modules/glightbox/dist/js/glightbox.min.js",
     "isDynamicEntry": true,
     "imports": [
-      "_frontend-CohvMK4M.js"
+      "_frontend-B6zkkFgQ.js"
     ]
   },
   "node_modules/infinite-scroll/js/index.js": {
-    "file": "assets/js/js-BDiBm9nI.js",
+    "file": "assets/js/js-a3fPy05u.js",
     "name": "js",
     "src": "node_modules/infinite-scroll/js/index.js",
     "isDynamicEntry": true,
     "imports": [
-      "_frontend-CohvMK4M.js"
+      "_frontend-B6zkkFgQ.js"
     ]
   },
   "node_modules/plyr/dist/plyr.mjs": {
-    "file": "assets/js/plyr-BbvgjYf_.js",
+    "file": "assets/js/plyr-B0mrv3is.js",
     "name": "plyr",
     "src": "node_modules/plyr/dist/plyr.mjs",
     "isDynamicEntry": true
   },
   "node_modules/sweetalert2/dist/sweetalert2.all.js": {
-    "file": "assets/js/sweetalert2.all-B53FOame.js",
+    "file": "assets/js/sweetalert2.all-OCaO1W5t.js",
     "name": "sweetalert2.all",
     "src": "node_modules/sweetalert2/dist/sweetalert2.all.js",
     "isDynamicEntry": true,
     "imports": [
-      "_frontend-CohvMK4M.js"
+      "_frontend-B6zkkFgQ.js"
     ]
   },
   "node_modules/tom-select/dist/esm/tom-select.complete.js": {
-    "file": "assets/js/tom-select.complete-CMsxsRkq.js",
+    "file": "assets/js/tom-select.complete-BkodLRdD.js",
     "name": "tom-select.complete",
     "src": "node_modules/tom-select/dist/esm/tom-select.complete.js",
     "isDynamicEntry": true
@@ -646,40 +646,40 @@
     "src": "resources/images/video-film.webp"
   },
   "resources/js/components/share-api.js": {
-    "file": "assets/js/share-api-DgSG_rA9.js",
+    "file": "assets/js/share-api-fS49TvXr.js",
     "name": "share-api",
     "src": "resources/js/components/share-api.js",
     "isEntry": true,
     "imports": [
-      "_frontend-CohvMK4M.js"
+      "_frontend-B6zkkFgQ.js"
     ]
   },
   "resources/js/components/sliders/articles.js": {
-    "file": "assets/js/articles-DTAXtbuF.js",
+    "file": "assets/js/articles-AYSqbw1p.js",
     "name": "articles",
     "src": "resources/js/components/sliders/articles.js",
     "isEntry": true,
     "imports": [
-      "_frontend-CohvMK4M.js",
-      "_swiper-CfQmySiv.js"
+      "_swiper-CswjY1hE.js",
+      "_frontend-B6zkkFgQ.js"
     ]
   },
   "resources/js/components/sliders/banners.js": {
-    "file": "assets/js/banners-DDjPtvmO.js",
+    "file": "assets/js/banners-NDgLCaAr.js",
     "name": "banners",
     "src": "resources/js/components/sliders/banners.js",
     "isEntry": true,
     "imports": [
-      "_swiper-CfQmySiv.js"
+      "_swiper-CswjY1hE.js"
     ]
   },
   "resources/js/frontend-imports.js": {
-    "file": "assets/js/frontend-imports-yIuy5KgQ.js",
+    "file": "assets/js/frontend-imports-BMEixUxl.js",
     "name": "frontend-imports",
     "src": "resources/js/frontend-imports.js",
     "isEntry": true,
     "imports": [
-      "_frontend-CohvMK4M.js"
+      "_frontend-B6zkkFgQ.js"
     ],
     "dynamicImports": [
       "node_modules/sweetalert2/dist/sweetalert2.all.js",
@@ -689,12 +689,12 @@
     ]
   },
   "resources/js/pages/theme.js": {
-    "file": "assets/js/theme-B1wF6Oe2.js",
+    "file": "assets/js/theme-BvWwTr1B.js",
     "name": "theme",
     "src": "resources/js/pages/theme.js",
     "isEntry": true,
     "imports": [
-      "_frontend-CohvMK4M.js"
+      "_frontend-B6zkkFgQ.js"
     ]
   },
   "resources/scss/frontend.scss": {
