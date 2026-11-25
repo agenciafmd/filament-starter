@@ -75,7 +75,7 @@ A aplicação fica em `http://localhost:${APP_PORT}`, o painel em `/admix` e o M
 docker compose up -d --wait
 docker compose stop
 
-# reconstruir a imagem depois de mudar o Dockerfile
+# reconstruir a imagem depois de mudar o .docker/runtime/8.5/Dockerfile
 docker compose up -d --build --wait
 
 # artisan, composer, npm e binários do vendor
@@ -135,10 +135,11 @@ Acesse a [documentação específica](./resources/README.md).
 
 ## Imagem de produção
 
-O `Dockerfile` tem dois targets:
+O `.docker/runtime/8.5/Dockerfile` tem três estágios:
 
-- `development`: usado pelo `compose.yaml`, com Node, xdebug e as dependências do Playwright. O código entra por bind mount.
-- `production`: sem Node, npm, xdebug, pacotes de dev nem Composer. O código e o `vendor/` (instalado com `--no-dev`) ficam dentro da imagem. É o target padrão: um `docker build` sem `--target` gera a imagem de produção.
+- `base`: o que é comum aos dois targets, com as extensões do PHP, o locale `pt_BR.UTF-8` e o fuso `America/Sao_Paulo`.
+- `development`: parte do `base` e é usado pelo `compose.yaml`, com Node, xdebug e as dependências do Playwright. O código entra por bind mount.
+- `production`: parte do `base`, sem Node, npm, xdebug, pacotes de dev nem Composer. O código e o `vendor/` (instalado com `--no-dev`) ficam dentro da imagem. É o target padrão: um `docker build` sem `--target` gera a imagem de produção.
 
 Os assets do frontend **não** são compilados no build. A imagem usa os arquivos commitados em `public/build`, `public/css/critical` e `public/filament-admix`. Antes de gerar a imagem, rode no ambiente de desenvolvimento e commite o resultado:
 
@@ -150,7 +151,7 @@ docker compose exec app npm run build:filament
 Gere a imagem a partir de um clone limpo do repositório. O contexto do build é a pasta, não o Git, então arquivos fora do Git (como pacotes locais em `packages/`) também entrariam na imagem.
 
 ```bash
-docker build --target production -t nome-do-projeto:producao .
+docker build -f .docker/runtime/8.5/Dockerfile --target production -t nome-do-projeto:producao .
 ```
 
 ### Testando a imagem de produção localmente

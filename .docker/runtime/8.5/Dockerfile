@@ -1,14 +1,12 @@
-FROM serversideup/php:8.5-frankenphp
-
-ARG USER_ID=1000
-ARG GROUP_ID=1000
-ARG NODE_VERSION=24
+# Base: o que é comum ao desenvolvimento e à produção
+FROM serversideup/php:8.5-frankenphp AS base
 
 ENV LANG=pt_BR.UTF-8 \
     LANGUAGE=pt_BR:pt \
     LC_ALL=pt_BR.UTF-8 \
     TZ=America/Sao_Paulo \
-    PHP_DATE_TIMEZONE=America/Sao_Paulo
+    PHP_DATE_TIMEZONE=America/Sao_Paulo \
+    HEALTHCHECK_PATH=/up
 
 USER root
 
@@ -24,6 +22,21 @@ RUN apt-get update \
 
 RUN install-php-extensions intl imagick bcmath sockets
 
+USER www-data
+
+# Desenvolvimento: código via bind mount, Node, Playwright e xdebug
+FROM base AS development
+
+ARG USER_ID=1000
+ARG GROUP_ID=1000
+ARG NODE_VERSION=24
+
+ENV XDEBUG_MODE=off
+
+USER root
+
+RUN install-php-extensions xdebug
+
 RUN apt-get update \
     && apt-get install -y --no-install-recommends ca-certificates curl gnupg \
     && mkdir -p /etc/apt/keyrings \
@@ -37,5 +50,30 @@ RUN apt-get update \
 
 RUN docker-php-serversideup-set-id www-data ${USER_ID}:${GROUP_ID} \
     && docker-php-serversideup-set-file-permissions --owner ${USER_ID}:${GROUP_ID}
+
+USER www-data
+
+# Produção: código e dependências dentro da imagem, sem Node, xdebug, pacotes de dev nem Composer.
+# É o último estágio, então é o target padrão do `docker build`.
+FROM base AS production
+
+ENV PHP_OPCACHE_ENABLE=1 \
+    AUTORUN_ENABLED=true \
+    AUTORUN_LARAVEL_MIGRATION=false
+
+WORKDIR /var/www/html
+
+COPY --chown=www-data:www-data composer.json composer.lock ./
+COPY --chown=www-data:www-data packages/ packages/
+
+RUN composer install --no-dev --no-scripts --no-autoloader --no-cache --prefer-dist --no-interaction
+
+COPY --chown=www-data:www-data . .
+
+RUN composer dump-autoload --no-dev --optimize --no-cache
+
+USER root
+
+RUN rm -f /usr/bin/composer
 
 USER www-data

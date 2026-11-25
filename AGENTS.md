@@ -3,14 +3,14 @@
 
 # Docker (serversideup/php)
 
-- This project runs in Docker with the `serversideup/php` image, FrankenPHP variant (Caddy + PHP, classic mode), in both the `development` and `production` targets. The application container is the `app` service in `compose.yaml`; the image is built from the project's `Dockerfile`.
+- This project runs in Docker with the `serversideup/php` image, FrankenPHP variant (Caddy + PHP, classic mode), in both the `development` and `production` targets. The application container is the `app` service in `compose.yaml`; the image is built from `.docker/runtime/8.5/Dockerfile`, with the project root as the build context.
 - There is no wrapper script and no Laravel Sail. You MUST run every PHP, Artisan, Composer, Node and `vendor/bin` command inside the `app` container with `docker compose exec app`. Examples:
     - Artisan: `php artisan migrate`
     - Composer: `docker compose exec app composer install`
     - Node: `docker compose exec app npm run dev`
     - Vendor binaries: `docker compose exec app vendor/bin/pest`
-- Start the services with `docker compose up -d --wait` and stop them with `docker compose stop`. After changing the `Dockerfile`, rebuild with `docker compose up -d --build --wait`.
-- The `Dockerfile` has two targets: `development` (used by `compose.yaml`, with Node, the Playwright dependencies and xdebug) and `production` (the default target). Each target starts from the same `serversideup/php` image on its own, so keep the image tag and the PHP extension list of both in sync (`production` has the same list minus xdebug). The FrankenPHP PHP is thread-safe (ZTS), so any new extension must be thread-safe too. Never add Node, npm, xdebug, `require-dev` packages or frontend build steps to the `production` target: the production image serves the frontend assets committed in `public/`.
+- Start the services with `docker compose up -d --wait` and stop them with `docker compose stop`. After changing the Dockerfile, rebuild with `docker compose up -d --build --wait`.
+- The Dockerfile is multi-stage: `base` (the `serversideup/php` image, the PHP extensions, the `pt_BR.UTF-8` locale and the `America/Sao_Paulo` timezone), `development` (built from `base` and used by `compose.yaml`, adding xdebug, Node, the Playwright dependencies and the `www-data` UID/GID of the host) and `production` (built from `base`, the last stage and the default target). Put anything both targets need in `base`, so the image tag and the PHP extension list stay in one place. The FrankenPHP PHP is thread-safe (ZTS), so any new extension must be thread-safe too. Never add Node, npm, xdebug, `require-dev` packages or frontend build steps to the `production` target: the production image serves the frontend assets committed in `public/`.
 - Inside the container the web server listens on port 8080; on the host it is exposed on `APP_PORT`.
 - Regenerate the AI guidelines and skills with `php artisan boost:update`. Do not run `boost:install`: it resets `"sail": true` in `boost.json`, which this project uses as the Docker command prefix, and rewrites the MCP configuration.
 
@@ -20,7 +20,7 @@
 
 ## Foundational Context
 
-This application is a Laravel application running on PHP 8.4. Always use the APIs that match the installed major version of each package — do not assume a version.
+This application is a Laravel application running on PHP 8.5. Always use the APIs that match the installed major version of each package — do not assume a version.
 
 Before relying on a package's API, confirm its installed version:
 - PHP packages: run `docker compose exec app composer show --direct` to list direct dependencies with versions, or `docker compose exec app composer show <vendor/package>` for a single package.
