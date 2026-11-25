@@ -55,9 +55,11 @@ O Google Tag Manager, o Google Analytics, a verificação do Google Search Conso
 | `resources/scss/frontend.scss` e `resources/js/frontend-imports.js` | Entradas do Vite carregadas no `master` |
 | `resources/images/` | Imagens usadas por `Vite::image()` e pelo `<x-img>` |
 | `resources/fonts/` | Fontes usadas por `Vite::font()` |
+| `resources/videos/` e `resources/pdf/` | Arquivos usados por `Vite::video()` e `Vite::pdf()` |
 | `resources/svg/` | Ícones do icon set `frontend` (`<x-icon name="frontend-...">`) |
 | `resources/views/errors/` | Registrado como namespace `errors::` |
-| `public/css/critical/{nome}_critical.min.css` | CSS crítico lido pelo `<x-frontend::critical-css>` |
+| `public/css/critical/{nome}_critical.min.css` | CSS crítico lido pelo `<x-frontend::critical-css>`, gerado no build (`resources/js/utilities/critical.js`) |
+| `public/manifest.json` | Manifest do PWA, gerado no build (`resources/js/utilities/create-manifest.js`) |
 
 ## Uso
 
@@ -93,7 +95,11 @@ Seções e stacks disponíveis: `@section('header')`, `@section('content')`, `@s
 ```blade
 <img src="{{ Vite::image('logo.png') }}" alt="Logo" />   {{-- resources/images/logo.png --}}
 <link rel="preload" href="{{ Vite::font('Roboto-Regular.woff2') }}" as="font" crossorigin />
+<video src="{{ Vite::video('institucional.mp4') }}" controls></video>   {{-- resources/videos/institucional.mp4 --}}
+<a href="{{ Vite::pdf('regulamento.pdf') }}" target="_blank">Regulamento</a>   {{-- resources/pdf/regulamento.pdf --}}
 ```
+
+Os arquivos passam pelo build: o nome ganha um hash, e o cache do navegador se renova a cada versão.
 
 ### Imagem responsiva (`<x-img>`)
 
@@ -106,13 +112,67 @@ Gera, na primeira renderização, as versões redimensionadas da imagem (da larg
 
 O `src` é procurado no disco padrão do Storage e em `resources/images/`.
 
+### Imagem principal da página (`priority`)
+
+Por padrão, o `<x-frontend::image>` e o `<x-frontend::picture>` carregam a imagem com `loading="lazy"`. Nas imagens da primeira dobra, use `priority`: elas são baixadas de imediato (`loading="eager"`), o que melhora o LCP.
+
+```blade
+<x-frontend::picture image="banners/home.jpg" title="Banner" has-breakpoints :priority="$loop->first" />
+
+{{-- grade de cards: a primeira linha (3 colunas no desktop), qualquer que seja a quantidade de itens --}}
+<x-frontend::articles.item :article="$article" :priority="$loop->index < 3" />
+```
+
+A **primeira** imagem com `priority` da página também ganha `fetchpriority="high"`. As outras ficam só `eager`, para não disputar a banda com ela. Isso é automático: o componente guarda no request que a prioridade alta já foi usada.
+
+### Tamanho das imagens (`width`/`height`)
+
+Com `width` e `height` no `<img>`, o navegador reserva o espaço da imagem antes de ela carregar. Sem eles, a imagem lazy ocupa 0 px e empurra a página quando chega (layout shift, que piora o CLS e faz âncoras pararem no lugar errado).
+
+O `<x-frontend::image>` (e o `picture`, que usa ele) preenche o tamanho sozinho em **PNG e JPG**, lendo o arquivo em `resources/images/`. Com breakpoints (`has-breakpoints`), vale o tamanho da imagem base, a do mobile: as variantes `-lg`/`-xl` devem manter a proporção, ou a imagem fica dentro de um `.ratio`.
+
+Nos outros casos (SVG, ICO, URL externa e `<img>` escrito à mão), passe `width` e `height`:
+
+```blade
+<x-frontend::image image="icons/safari-pinned-tab.svg" width="512" height="512" title="Safari pinned tab" />
+```
+
+**Aviso no navegador:** todo `<img>` sem `width` e `height` ganha o mesmo contorno vermelho do aviso de imagem sem `alt` (`resources/scss/components/_accessibilities.scss`). O aviso vale em qualquer ambiente, inclusive produção. Ficam de fora:
+- imagens dentro de `.wysiwyg`, que vêm do admin;
+- a imagem aberta no GLightbox (`.gslide-image img`), que fica por cima da página e não desloca nada;
+- `.fslightbox-source`;
+- imagens com a classe `skip-warning`, para quando o tamanho realmente não pode ser informado.
+
+### Conteúdo do admix (`.wysiwyg`)
+
+O rich editor do admix (`RichEditorWithDefault`) salva o corpo inteiro como um único HTML, só com tags. Na view, coloque esse conteúdo inteiro em **um** `.wysiwyg`:
+
+```blade
+<div class="wysiwyg">
+    {!! $article->content !!}
+</div>
+```
+
+O `.wysiwyg` (`resources/scss/components/_wysiwyg.scss`) estiliza o que o editor gera:
+
+- espaço antes de cada título (`h2`, `h3`…), separando as seções; por isso não divida o conteúdo em vários `.wysiwyg`;
+- imagem com a largura do conteúdo e altura proporcional (uma imagem redimensionada no editor mantém o tamanho escolhido, que vem no `style`);
+- citação com borda lateral e tabela no padrão `.table` do Bootstrap;
+- colunas da ferramenta `grid` (`.grid-layout`): lado a lado a partir do `lg`, empilhadas antes.
+
+O purge não enxerga esse HTML, que vem do banco. As tags e as classes `grid-layout`/`grid-layout-col` ficam no safelist do `vite.config.js`. Se um projeto ligar outra ferramenta no editor que escreva classes, adicione-as ao safelist e ao `_wysiwyg.scss`.
+
 ### CSS crítico
 
 ```blade
 <x-frontend::critical-css critical="index.css" />
 ```
 
-Lê `public/css/critical/index_critical.min.css` (em cache permanente) e imprime dentro de `<style>`. Não renderiza nada se o arquivo não existir.
+Lê `public/css/critical/index_critical.min.css` e imprime dentro de `<style>`. Os arquivos são gerados no `npm run build` por `resources/js/utilities/critical.js`: cada página de `views/html` (menos os layouts e o catálogo `tema`) é aberta num navegador real. A aplicação precisa estar rodando. Se não estiver, o build mantém o CSS crítico anterior.
+
+- **Cache:** a chave inclui a data de modificação do arquivo, então um novo build renova o cache sozinho, sem `cache:clear`.
+- **Sem arquivo:** não renderiza nada e não guarda cache. O CSS crítico passa a valer assim que o arquivo for gerado.
+- **Com o `vite dev` rodando:** não renderiza nada, para o CSS antigo do build não brigar com o do dev server.
 
 ### Componentes Blade
 
@@ -139,7 +199,30 @@ Exemplos:
 <x-frontend::modals.modal id="modalContato" title="Fale conosco">
     ...
 </x-frontend::modals.modal>
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalContato">Abrir</button>
 ```
+
+### JS e CSS dos componentes
+
+Componentes que precisam de JS ou CSS próprio (`sliders.banner`, `sliders.articles-gallery`, `link-share`) carregam esses arquivos sozinhos, só nas páginas em que aparecem:
+
+```blade
+@pushOnce('scripts')
+    @vite('resources/js/components/sliders/banners.js')
+@endPushOnce
+```
+
+- O `@vite` gera o `modulepreload` dos chunks importados, e o navegador baixa tudo em paralelo.
+- O `@pushOnce` imprime a tag uma vez só, mesmo com o componente repetido na página.
+- O layout precisa do `@stack('scripts')`. O `frontend::master` já inclui.
+
+Ao criar um componente com JS, siga o mesmo padrão e liste a entrada no `input` do `vite.config.js`.
+
+### PWA
+
+O `<x-frontend::pwa>` liga o `public/manifest.json` e os ícones (`apple-touch-icon`, `favicon`, `mask-icon`). Não há service worker: o site fica instalável, mas sem cache offline.
+
+A `theme_color` vem dos tokens do tema. O build a grava no manifest (`create-manifest.js`), e o componente usa a mesma cor nas metas `theme-color` e `msapplication-TileColor`.
 
 ### Formulário de contato (Livewire)
 
@@ -197,6 +280,65 @@ Pontos de atenção:
 - **Reordenação de tabelas.** O Filament grava a nova ordem com um `update` via query, que não dispara eventos do Eloquent. Por isso o `EventServiceProvider` do pacote registra um `afterReordering()` em todas as tabelas (`Table::configureUsing`) que dispara o evento `eloquent.reordered: {Model}` com a nova ordem (lista de chaves). O `events()` do subscriber já inclui o `reordered`, então todo model monitorado reage à reordenação com os mesmos handlers. O `modelUrlHandler` ignora esse evento, pois a ordem não muda a página de detalhe. Uma tabela que definir o próprio `afterReordering()` substitui esse callback; nesse caso, dispare o evento manualmente nele.
 - **Outros updates em massa via query** (`Article::query()->update(...)`) não disparam eventos do Eloquent e, portanto, não limpam o cache.
 - **Ambiente local:** com o `php artisan serve` de um único worker, o `GET` de aquecimento só é atendido depois da requisição atual; o timeout evita que ele trave. Falhas no aquecimento são ignoradas — o próximo visitante gera o cache. Falhas no `page-cache:clear` são reportadas no log.
+
+## Checklist de frontend
+
+```bash
+vendor/bin/sail npm run build
+vendor/bin/sail npm run checklist-frontend
+```
+
+Verifica os itens revisados antes de entregar o site. Ele confere as páginas de `views/html`, a mesma lista do CSS crítico. Precisa do app no ar e de um build, e não roda com o `npm run dev` ligado. Na primeira execução, instala o Firefox e o WebKit (o motor do Safari) do Playwright.
+
+| Item | O que verifica |
+| --- | --- |
+| PWA e favicon | Ícones do manifest e do `<x-frontend::pwa>` existem, com o tamanho certo; `/favicon.ico` não está vazio. Avisa se o ícone ou o nome do app ainda são os do starter |
+| Fontes | Todo `@font-face` carrega, as fontes vêm do build, e a fonte do `body` é uma web font carregada |
+| Critical CSS | Cada página tem o seu arquivo, gerado no último build, e a página o injeta |
+| Política de privacidade | Há um link de política/termos (ou o `privacyPolicyUrl`) que leva a uma página que responde 200, e não a `#` |
+| Navegadores | Sem erro de JS e sem requisição 4xx/5xx no Chromium, no Firefox e no WebKit |
+| Breakpoints | Sem rolagem horizontal em cada viewport do `critical.js`, nos três navegadores, com os elementos que passam da borda |
+| Lighthouse | Nota mínima em performance, acessibilidade, boas práticas e SEO. Performance abaixo do mínimo só avisa, porque o servidor local não comprime |
+
+### Resultado e relatório
+
+- **Terminal:** `✓` ok, `⚠` aviso (não reprova), `✗` falha. O comando sai com código 1 se houver `✗`.
+- **Relatório:** o terminal termina com o link, que abre com Ctrl+clique (ex.: `http://localhost:8081/checklist-frontend/index.html`, com a porta do `APP_URL`). O arquivo fica em `public/checklist-frontend/`, fora do git, e é refeito a cada execução. Traz os detalhes, o screenshot de cada página por navegador e breakpoint (borda vermelha = rolagem horizontal) e o relatório completo do Lighthouse de cada página.
+- **Revisão manual:** a quebra visual (sobreposição, texto cortado, espaçamento) é conferida nos screenshots.
+
+### Como resolver
+
+| Mensagem | Correção |
+| --- | --- |
+| `public/favicon.ico: arquivo vazio` / `é diferente de` | Copie `resources/images/icons/favicon.ico` para `public/favicon.ico` |
+| `ainda é o ícone do starter` / `ainda é "Starter"` (⚠) | Troque os ícones de `resources/images/icons` e o `app` de `resources/js/utilities/create-manifest.js`, depois `npm run build` |
+| `não existe ou está vazio` / `mais antigo que o último build` (critical) | Rode `npm run build` com o app no ar |
+| `a página não injeta o css crítico` | Confira o `'critical' => '<página>.css'` no `@extends` da view |
+| `nenhum link com o texto` | Coloque o `<x-frontend::privacy-policy-link />` na página (o footer de `views/html` já tem) |
+| `o link não aponta para uma página` / `respondeu 301 → …` | Aponte o `link` do `privacy-policy-link` para a rota real da política. `/html/*` redireciona para a home em produção |
+| `rolagem horizontal de Npx` | Corrija o elemento listado. "conteúdo de X passa da borda" indica um filho com `100vw`, `transform` ou `left/right` |
+| `console.error` / `erro de JS` / `404` | Corrija o erro. Bug conhecido de biblioteca entra em `ignoredConsoleErrors`, com o motivo |
+| Nota do Lighthouse abaixo do mínimo | Abra o relatório do Lighthouse da página no relatório do checklist e siga as oportunidades |
+
+### Ajustes por projeto
+
+Bloco "PROJECT SETTINGS" de `resources/js/utilities/checklist-frontend.js`:
+
+- `extraUrls`: rotas reais além de `views/html` (ex.: `"/"`, `"/contato"`);
+- `ignoredConsoleErrors`: erros conhecidos que não reprovam;
+- `lighthouseThresholds` e `performanceFailsBelowThreshold`: notas mínimas e se performance baixa reprova;
+- `privacyPolicyUrl`: url fixa da política, no lugar da busca pelo link;
+- `browsers`: navegadores testados.
+
+### Lighthouse: checklist × Chrome × produção
+
+As notas variam entre execuções e entre ambientes, então a do checklist pode diferir da do DevTools:
+
+- o checklist roda no container, num Chromium limpo, direto na porta 80;
+- o DevTools roda no seu Chrome, pela porta do Docker, com extensões, outras abas e o próprio DevTools disputando CPU (compare numa janela anônima, com "Simulated throttling" marcado);
+- localmente nada é comprimido e o `livewire.js` é o de debug.
+
+A referência final é o [PageSpeed Insights](https://pagespeed.web.dev/) em staging ou produção.
 
 ## Testes
 

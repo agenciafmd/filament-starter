@@ -22,10 +22,12 @@
         title="{{ $__env->yieldContent('title', 'A cultura come a estratégia no café da manhã') }} | {{ config('app.name') }}"
         description="{{ $__env->yieldContent('description') }}"
     />
+    {{-- canonical: endereço sem query string. Páginas com filtro ou paginação definem @section('canonical') --}}
+    <link rel="canonical" href="@yield('canonical', url()->current())" />
     <x-frontend::pwa />
     <x-frontend::fonts-preload />
     <x-filament-settings::site-verification />
-    <x-frontend::critical-css :$critical stylesheet="resources/scss/frontend.scss" />
+    <x-frontend::critical-css :$critical :stylesheet="$stylesheet ?? 'resources/scss/frontend.scss'" />
 
     <livewire:styles />
 
@@ -55,13 +57,5 @@
     @stack('scripts')
 
     <x-filament-settings::footer-scripts />
-
-    {{--
-@if(config('app.env') !== 'local')
-<script>
-    pwaManager();
-</script>
-@endif
---}}
 </body>
 </html>

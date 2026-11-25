@@ -15,18 +15,13 @@ a {
     transition: $transition-base;
 }
 
-.wysiwyg img {
-    max-width: 100%;
-    height: auto;
-}
-
 .stretch {
+    // Full width on mobile: cancels the container padding (half the gutter). Not `100vw`, which
+    // counts the vertical scrollbar and scrolls the page sideways where the scrollbar takes space
     &-on-mobile {
         @include media-breakpoint-down(md) {
-            width: 100vw;
-            position: relative;
-            transform: translateX(-50%);
-            left: 50%;
+            width: calc(100% + #{$grid-gutter-width});
+            margin-inline: calc(#{$grid-gutter-width} * -0.5);
             padding-inline: $spacer;
         }
     }

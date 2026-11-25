@@ -5,10 +5,13 @@
                 <ul class="pagination">
                     @if ($paginator->onFirstPage())
                         <li class="disabled">
-                            <span>&laquo;</span>
+                            <span aria-hidden="true">&laquo;</span>
                         </li>
                     @else
-                        <li><a href="{{ $paginator->previousPageUrl() }}" rel="prev">&laquo;</a></li>
+                        <li>
+                            <a href="{{ $paginator->previousPageUrl() }}" rel="prev" aria-label="Página anterior"
+                                ><span aria-hidden="true">&laquo;</span></a>
+                        </li>
                     @endif
 
                     @if (isset($elements))
@@ -34,10 +37,13 @@
                     @endif
 
                     @if ($paginator->hasMorePages())
-                        <li><a href="{{ $paginator->nextPageUrl() }}" rel="next">&raquo;</a></li>
+                        <li>
+                            <a href="{{ $paginator->nextPageUrl() }}" rel="next" aria-label="Próxima página"
+                                ><span aria-hidden="true">&raquo;</span></a>
+                        </li>
                     @else
                         <li class="disabled">
-                            <span>&raquo;</span>
+                            <span aria-hidden="true">&raquo;</span>
                         </li>
                     @endif
                 </ul>

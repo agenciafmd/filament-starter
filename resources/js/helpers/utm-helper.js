@@ -21,9 +21,13 @@ function getCookieByName(cookieName) {
 }
 
 export function setupUtmHelpers() {
-    const decodedUrlSearchParams = decodeURIComponent(
-        window.location.search.substring(1),
-    );
+    let decodedUrlSearchParams = window.location.search.substring(1);
+
+    try {
+        decodedUrlSearchParams = decodeURIComponent(decodedUrlSearchParams);
+    } catch {
+        // A lone "%" in the url (?utm_campaign=50%off) would stop the rest of frontend.js (color mode included)
+    }
 
     const urlSearchParamsList = decodedUrlSearchParams.split("&");
 

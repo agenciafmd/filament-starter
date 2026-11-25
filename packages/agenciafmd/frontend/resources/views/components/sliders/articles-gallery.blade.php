@@ -63,7 +63,6 @@
     </div>
 </div>
 
-@push('scripts')
-    <script type="module" src="{{ Vite::asset('resources/js/components/sliders/articles.js') }}"></script>
-
-@endpush
+@pushOnce('scripts')
+    @vite('resources/js/components/sliders/articles.js')
+@endPushOnce

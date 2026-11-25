@@ -11,7 +11,7 @@ Este é o esqueleto de desenvolvimento dos nossos sites e apps.
 
 ## Requisitos
 
-Estamos usando o [Laravel Sail](https://laravel.com/docs/11.x/sail) para desenvolvimento.
+Estamos usando o [Laravel Sail](https://laravel.com/docs/13.x/sail) para desenvolvimento.
 
 Veja mais na nossa documentação:
 
@@ -27,10 +27,20 @@ docker run --rm \
     -v "$(pwd):/var/www/html" \
     -w /var/www/html \
     composer:2 \
-    composer create-project agenciafmd/filament-starter:dev-master --ignore-platform-reqs nome-do-projeto
+    composer create-project agenciafmd/filament-starter:dev-master --ignore-platform-reqs --no-scripts nome-do-projeto
 ```
 
-> Usamos a imagem oficial `composer:2` porque ela já vem com o PHP 8.5, exigido pelo projeto e pelos pacotes da agência. As imagens `laravelsail/phpXX-composer` param no PHP 8.4 e quebram no `package:discover`.
+> Usamos a imagem oficial `composer:2` porque ela já vem com o PHP 8.5, exigido pelo projeto e pelos pacotes da agência. As imagens `laravelsail/phpXX-composer` param no PHP 8.4 e quebram no `package:discover`. O `--ignore-platform-reqs` dispensa as extensões que só existem no container do Sail, e o `--no-scripts` evita que o `create-project` tente subir o Sail de dentro do container do Composer; os passos abaixo fazem o que esses scripts fariam.
+
+Em seguida, prepare o projeto:
+
+```bash
+cd nome-do-projeto
+cp .env.example .env
+sail up -d
+sail artisan key:generate
+sail artisan migrate
+```
 
 ## Instalando o projeto
 
@@ -43,6 +53,15 @@ docker run --rm \
     -w /var/www/html \
     composer:2 \
     composer install --ignore-platform-reqs
+```
+
+> A imagem oficial `composer:2` já vem com PHP 8.5, então os scripts do Composer rodam normalmente. O `--ignore-platform-reqs` dispensa as extensões que só existem no container do Sail.
+
+Depois, crie o `.env` e suba os containers:
+
+```bash
+cp .env.example .env
+sail up -d
 ```
 
 ## Gerando a chave da aplicação
@@ -59,6 +78,14 @@ Alimente o projeto com dados fictícios usando o comando:
 
 ```bash
 sail artisan migrate:fresh --seed
+```
+
+Com o banco alimentado, instale as dependências do front-end e gere os assets:
+
+```bash
+sail npm ci
+sail npm run build
+sail npm run build:filament
 ```
 
 ## Banco não encontrado?

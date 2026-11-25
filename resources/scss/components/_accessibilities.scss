@@ -6,7 +6,12 @@ a {
             @include accessibility-warning;
         }
 
-        &:has(img):not([aria-label]):not([aria-labelledby]) {
+        // Link with an image and no name: no aria-label and no image alt to read (text next to the image can't be seen by CSS)
+        &:has(img):not(
+                [aria-label],
+                [aria-labelledby],
+                :has(img[alt]:not([alt=""]))
+            ) {
             @include accessibility-warning;
         }
     }
@@ -15,6 +20,17 @@ a {
 img {
     &:not(.skip-warning) {
         &:not([alt], [loading="lazy"], .fslightbox-source, .wysiwyg img) {
+            @include accessibility-warning;
+        }
+
+        // No width/height: the page jumps when the image loads (x-frontend::image reads them from the file).
+        // The GLightbox slide is skipped: it opens over the page and sizes its own image
+        &:not(
+            [width][height],
+            .fslightbox-source,
+            .gslide-image img,
+            .wysiwyg img
+        ) {
             @include accessibility-warning;
         }
     }

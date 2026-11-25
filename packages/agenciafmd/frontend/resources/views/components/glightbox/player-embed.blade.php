@@ -1,6 +1,5 @@
 @props([
     'id',
-    'provider' => 'youtube',
     'link',
     'image' => '',
     'title' => '',
@@ -29,18 +28,18 @@
         />
     @elseif ($link)
         <x-frontend::image
-            is-single-image="true"
-            image="https://i3.ytimg.com/vi/{{ \Agenciafmd\Support\Helper::youtubeId($link) }}/maxresdefault.jpg"
+            image="https://i.ytimg.com/vi/{{ \Agenciafmd\Support\Helper::youtubeId($link) }}/hqdefault.jpg"
             alt="Thumb do vídeo"
             title="Thumb do vídeo"
+            width="480"
+            height="360"
             class="img-cover rounded-1"
         />
     @endif
 
     <x-frontend::link
         link="#"
-        data-plyr-provider="{{ $provider }}"
-        data-plyr-embed-id="{{ $link }}"
+        data-video-link="{{ $link }}"
         id="player-{{ $id }}"
         class="stretched-link {{ $iconClass }} js-player-embed-link ic-play-container"
         aria-label="Clique para assistir o vídeo"

@@ -1928,3 +1928,20 @@ $kbd-bg: var(--#{$prefix}body-color) !default;
 $nested-kbd-font-weight: null !default; // Deprecated in v5.2.0, removing in v6
 
 $pre-color: null !default;
+
+// Icons
+// Sizes of the .ic icons (components/_icons.scss): here so the vendors loaded on demand
+// see them too (ex.: the big play button of resources/scss/vendors/vlite/vlite.scss)
+
+$icon-xxxsm: 1rem !default; // 16
+$icon-xxsm: 1.25rem !default; //20
+$icon-xsm: 1.5rem !default; //24
+$icon-sm: 2rem !default; //32
+$icon-md: 3rem !default; //48
+$icon-lg: 3.25rem !default; //52
+$icon-xl: 4rem !default; //64
+
+// Play button of the videos: the thumbs' .ic-play (components/_icons.scss) and the player's .v-bigPlay
+// (vendors/vlite/vlite.scss) read the same sizes, so changing them here keeps both equal
+$icon-play-size: $icon-md !default;
+$icon-play-size-xl: $icon-md * 1.5 !default;

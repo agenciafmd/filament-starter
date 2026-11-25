@@ -35,5 +35,7 @@ final class FrontendServiceProvider extends ServiceProvider
     {
         Vite::macro('image', static fn (string $asset): string => Vite::asset("resources/images/{$asset}"));
         Vite::macro('font', static fn (string $asset): string => Vite::asset("resources/fonts/{$asset}"));
+        Vite::macro('video', static fn (string $asset): string => Vite::asset("resources/videos/{$asset}"));
+        Vite::macro('pdf', static fn (string $asset): string => Vite::asset("resources/pdf/{$asset}"));
     }
 }

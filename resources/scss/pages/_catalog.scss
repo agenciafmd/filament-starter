@@ -1,0 +1,12 @@
+// Component catalog (/html/tema) only (it came from an inline <style> in tema.blade.php)
+.bd-example {
+    padding: 1rem;
+    border: $border-width solid $border-color;
+    border-radius: $border-radius;
+}
+
+.bd-example-code {
+    padding: 1rem;
+    border-radius: 1rem;
+    background: $gray-100;
+}

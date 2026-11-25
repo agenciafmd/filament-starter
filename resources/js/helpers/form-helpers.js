@@ -1,33 +1,24 @@
-function setupCustomFormFieldsVisibility() {
-    HTMLElement.prototype.disableFormFields = function () {
-        this.querySelectorAll("select").forEach(function (select) {
-            select.disabled = true;
-        });
+/**
+ * Hides a block of the form and disables its fields, so they are not validated nor submitted.
+ *
+ * import { disableFormFields, enableFormFields } from "../helpers/form-helpers.js";
+ * disableFormFields(document.querySelector(".js-company-fields"));
+ */
+export function disableFormFields(element) {
+    toggleFormFields(element, false);
+}
 
-        this.querySelectorAll("input").forEach(function (input) {
-            input.disabled = true;
-        });
+export function enableFormFields(element) {
+    toggleFormFields(element, true);
+}
 
-        // Bootstrap styles required
-        this.classList.add("d-none");
-    };
+function toggleFormFields(element, isEnabled) {
+    element.querySelectorAll("input, select, textarea").forEach((field) => {
+        field.disabled = !isEnabled;
+    });
 
-    HTMLElement.prototype.enableFormFields = function () {
-        const selects = this.querySelectorAll("select");
-
-        selects.forEach(function (select) {
-            select.disabled = false;
-        });
-
-        const inputs = this.querySelectorAll("input");
-
-        inputs.forEach(function (input) {
-            input.disabled = false;
-        });
-
-        // Bootstrap styles required
-        this.classList.remove("d-none");
-    };
+    // Bootstrap styles required
+    element.classList.toggle("d-none", !isEnabled);
 }
 
 function getFieldValue({ name, type }) {
@@ -54,21 +45,23 @@ function getFieldValue({ name, type }) {
 }
 
 function setCustomFileLabel() {
-    const inputFile = document.querySelector(".js-custom-file-input");
-    const fileLabel = document.querySelector(".js-custom-file-label");
+    // Delegated: also works for fields added after the load (Livewire)
+    document.addEventListener("change", function (event) {
+        const inputFile = event.target.closest(".js-custom-file-input");
 
-    if (!inputFile) {
-        return;
-    }
+        if (!inputFile) {
+            return;
+        }
 
-    inputFile.addEventListener("change", function () {
+        const fileLabel = document.querySelector(".js-custom-file-label");
+
         if (!fileLabel) {
             throw new Error(
                 `Adiciona classe '.js-custom-file-label' ao label do input file.`,
             );
         }
 
-        const file = this.files[0].name;
+        const file = inputFile.files[0].name;
         fileLabel.textContent = file;
     });
 }
@@ -94,20 +87,18 @@ function validateFullName({ fullNameElement, invalidMessage }) {
 }
 
 function setupFullNameValidate() {
-    const fullNameElements = document.querySelectorAll(".js-full-name");
-
-    if (!fullNameElements.length) {
-        return;
-    }
-
-    fullNameElements.forEach((fullNameElement) => {
-        // Execute as soon as it's found
+    // Execute as soon as it's found (fields already filled on the load)
+    document.querySelectorAll(".js-full-name").forEach((fullNameElement) => {
         fullNameValidateHandler({ fullNameElement });
+    });
 
-        fullNameElement.addEventListener("blur", function () {
-            // Execute on every blur event propagation
+    // Delegated: also works for fields added after the load (Livewire)
+    document.addEventListener("focusout", (event) => {
+        const fullNameElement = event.target.closest(".js-full-name");
+
+        if (fullNameElement) {
             fullNameValidateHandler({ fullNameElement });
-        });
+        }
     });
 
     function fullNameValidateHandler({ fullNameElement }) {
@@ -122,20 +113,23 @@ function setupFullNameValidate() {
 }
 
 function setupBrazilianCellphoneValidate() {
-    const phoneInputs = document.querySelectorAll(".js-cellphone-validate");
+    // Delegated: also works for fields added after the load (Livewire)
+    document.addEventListener("focusout", (event) => {
+        const phoneInput = event.target.closest(".js-cellphone-validate");
 
-    phoneInputs.forEach((phoneInput) => {
-        phoneInput.addEventListener("blur", function () {
-            if (!isValidPhone(phoneInput)) {
-                setInvalidInput({
-                    input: phoneInput,
-                    message: "Por favor, insira um número de celular válido",
-                });
-                return;
-            }
+        if (!phoneInput) {
+            return;
+        }
 
-            setValidInput({ input: phoneInput });
-        });
+        if (!isValidPhone(phoneInput)) {
+            setInvalidInput({
+                input: phoneInput,
+                message: "Por favor, insira um número de celular válido",
+            });
+            return;
+        }
+
+        setValidInput({ input: phoneInput });
     });
 
     function isValidPhone(phoneValue) {
@@ -147,20 +141,23 @@ function setupBrazilianCellphoneValidate() {
 }
 
 function setupBrazilianPhoneValidate() {
-    const phoneInputs = document.querySelectorAll(".js-phone-validate");
+    // Delegated: also works for fields added after the load (Livewire)
+    document.addEventListener("focusout", (event) => {
+        const phoneInput = event.target.closest(".js-phone-validate");
 
-    phoneInputs.forEach((phoneInput) => {
-        phoneInput.addEventListener("blur", function () {
-            if (!isValidPhone(phoneInput)) {
-                setInvalidInput({
-                    input: phoneInput,
-                    message: "Por favor, insira um número de telefone válido",
-                });
-                return;
-            }
+        if (!phoneInput) {
+            return;
+        }
 
-            setValidInput({ input: phoneInput });
-        });
+        if (!isValidPhone(phoneInput)) {
+            setInvalidInput({
+                input: phoneInput,
+                message: "Por favor, insira um número de telefone válido",
+            });
+            return;
+        }
+
+        setValidInput({ input: phoneInput });
     });
 
     function isValidPhone(phoneValue) {
@@ -181,7 +178,11 @@ export function setValidInput({ input }) {
     input.classList.remove("is-invalid");
 }
 
-export function guideUserToTheFirstError() {
+/**
+ * Scrolls to the first invalid field of `form`. Without it, the whole page is searched: with two forms
+ * on the page, the submit of the second one would scroll to the empty required fields of the first.
+ */
+export function guideUserToTheFirstError(form = document) {
     const currentScrollPosition = window.scrollY;
     const invalidInputsSelectors = [
         ".form-control:invalid",
@@ -194,7 +195,7 @@ export function guideUserToTheFirstError() {
         ".form-range.is-invalid",
     ];
 
-    const invalidInputs = document.querySelectorAll(
+    const invalidInputs = form.querySelectorAll(
         invalidInputsSelectors.join(", "),
     );
 
@@ -211,8 +212,10 @@ export function guideUserToTheFirstError() {
         `.${scrollContainerClass}`,
     );
 
-    if (_isFormOnModal()) {
-        _scrollToError(".modal.show .modal-body");
+    const modal = form instanceof Element ? form.closest(".modal") : null;
+
+    if (modal) {
+        _scrollModalToError(modal);
         return;
     }
 
@@ -239,8 +242,21 @@ export function guideUserToTheFirstError() {
         document.querySelector(container).scrollTo(animateConfig);
     }
 
-    function _isFormOnModal() {
-        return document.body.classList.contains("modal-open");
+    // The .modal-body only scrolls with .modal-dialog-scrollable; otherwise the .modal itself scrolls
+    function _scrollModalToError(modal) {
+        const modalBody = modal.querySelector(".modal-body");
+        const container =
+            modalBody && modalBody.scrollHeight > modalBody.clientHeight
+                ? modalBody
+                : modal;
+
+        container.scrollTo({
+            top:
+                container.scrollTop +
+                firstInvalidInputOffsetTop -
+                container.getBoundingClientRect().top,
+            behavior: "smooth",
+        });
     }
 
     function _getStickyHeaderOffset() {
@@ -256,7 +272,6 @@ export function guideUserToTheFirstError() {
 export function initializeFormHelpers() {
     // Form usability
     setCustomFileLabel();
-    setupCustomFormFieldsVisibility();
 
     // Validators
     setupFullNameValidate();

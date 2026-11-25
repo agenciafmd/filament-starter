@@ -1,0 +1,6 @@
+// Css of the Swiper modules registered in createSlider() (resources/js/components/swiper.js):
+// entry loaded on demand together with the slider. A module added there needs its css here.
+// The core (slides' layout) and the project's overrides (_swiper.scss) are in the global css.
+@import "swiper/css/navigation";
+@import "swiper/css/pagination";
+@import "swiper/css/effect-fade";

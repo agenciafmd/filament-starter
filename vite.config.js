@@ -2,116 +2,180 @@ import { defineConfig, loadEnv } from 'vite';
 import laravel from 'laravel-vite-plugin';
 import purge from '@erbelion/vite-plugin-laravel-purgecss';
 import { join } from 'node:path';
-import PluginCritical from 'rollup-plugin-critical';
 import webfontDownload from 'vite-plugin-webfont-dl';
+import critical from './resources/js/utilities/critical.js';
 
-const { APP_URL } = {
-  ...loadEnv(
-      process.env.NODE_ENV,
-      process.cwd(),
-      ['VITE', 'APP'],
-  ),
+// =====================================================================
+// PROJECT SETTINGS: adjust them for each project
+// =====================================================================
+
+// External font: vite-plugin-webfont-dl downloads it at build time and serves it from the build itself (webfonts.css).
+// To change the font: build the URL on fonts.google.com with only the weights in use, and update the
+// font-family of the maps in resources/scss/frontend/_fonts.scss.
+// To use only a local font: leave this list empty and turn on $should-use-local-font-face in _fonts.scss.
+const webfonts = [
+  'https://fonts.googleapis.com/css2?family=Roboto:wght@300..700&display=swap',
+];
+
+// Build entries: add a page or component that loads its own js/scss (@vite in the view)
+const entries = [
+  'resources/scss/frontend.scss',
+  'resources/scss/pages/theme.scss',
+  'resources/js/frontend-imports.js',
+  'resources/js/pages/theme.js',
+  'resources/js/components/sliders/articles.js',
+  'resources/js/components/sliders/banners.js',
+  'resources/js/components/share-api.js',
+];
+
+// Static folders copied to the build (Vite::image(), Vite::asset())
+const staticAssets = [
+  'resources/images/**',
+  'resources/fonts/**',
+  'resources/videos/**',
+  'resources/pdf/**',
+];
+
+// JS of the node_modules libs that add classes at runtime: the purge reads it to keep those classes.
+// Add the lib here when you install one that renders markup.
+const vendorLibs = [
+  'node_modules/swiper/**/*.js',
+  'node_modules/glightbox/dist/js/*.js',
+  'node_modules/vlitejs/dist/**/*.js',
+  'node_modules/sweetalert2/dist/*.js',
+  'node_modules/tom-select/dist/js/*.js',
+  'node_modules/wow.js/dist/*.js',
+  'node_modules/bootstrap/dist/js/bootstrap.min.js',
+];
+
+// Third-party libs: their classes survive the purge
+const vendorPrefixes = [/^swal2-/, /^swiper-/, /^ts-/, /^v-/, /^vlite/];
+
+// Classes the purge can't find in the views or in vendorLibs (built at runtime or from the database)
+const safelist = {
+  greedy: [
+    /lang/,
+  ],
+  standard: [
+    ...vendorPrefixes,
+    /^file-upload-button/,
+    /^fmd-header-/,
+    // GLightbox (glightbox, gslide, gclose...), without Bootstrap gutters (g-, gx-, gy-) and gap-
+    /^g(?![xy]?-|ap-)/,
+    // GLightbox description position, built at runtime ("desc-" + position, "description-" + position)
+    /^desc(ription)?-/,
+    /^hs-/,
+    /^js-/,
+    /^was-/,
+    // HTML from the database (admix rich editor) never shows up in the views
+    /^(table|thead|tbody|tfoot|tr|th|td|caption|figure|figcaption|blockquote|kbd|abbr|code|pre|mark|dl|dt|dd|hr|sub|sup)$/,
+    // Columns of the rich editor `grid` tool
+    /^grid-layout(-col)?$/,
+  ],
 };
+
+// Import shortcuts (rarely changed)
+const aliases = {
+  '@fonts': '/resources/fonts',
+  '@svg': '/resources/svg',
+  '@images': '/resources/images',
+  '@videos': '/resources/videos',
+  '@pdf': '/resources/pdf',
+};
+
+// Files that reload the browser in `npm run dev` (rarely changed)
+const refreshPaths = [
+  'resources/views/**',
+  'routes/**',
+  'lang/**',
+  'packages/agenciafmd/**/resources/views/**',
+  'packages/agenciafmd/**/src/**/*.php',
+];
+
+// =====================================================================
+// BUILD INFRASTRUCTURE: no need to change it
+// =====================================================================
+
+const { APP_URL } = loadEnv(
+    process.env.NODE_ENV,
+    process.cwd(),
+    ['VITE', 'APP'],
+);
 
 const DEFAULT_URL = 'http://localhost';
 const url = APP_URL ? new URL(APP_URL) : new URL(DEFAULT_URL);
+// Without the port on purpose: the build runs inside the Sail container, where the app listens on port 80
+// (the APP_URL port, e.g. 8081, only exists on the host)
 const CRITICAL_URL = `${ url.protocol }//${ url.hostname }`;
 
 const purgeCheckPaths = [
   'packages/agenciafmd/frontend/resources/views/**/*.php',
   'resources/js/**/*.js',
-  'node_modules/swiper/**/*.js',
-  'node_modules/glightbox/dist/js/*.js',
-  'node_modules/sweetalert2/dist/*.js',
-  'node_modules/tom-select/dist/js/*.js',
-  'node_modules/wow.js/dist/*.js',
-  'node_modules/bootstrap/dist/js/bootstrap.min.js',
+  ...vendorLibs,
 ]
     .map((path) => join(import.meta.dirname, path));
+
+// Node scripts under resources/js that never run in the page: their strings (e.g. the checklist report's
+// css) would keep unused classes in the build
+const purgeSkippedScripts = [
+  'resources/js/utilities/checklist-frontend.js',
+  'resources/js/utilities/checklist/**',
+]
+    .map((path) => join(import.meta.dirname, path));
+
+// Component catalog (/html/tema): it shows every component, so it stays out of the global purge and
+// loads its own stylesheet (resources/scss/pages/theme.scss). New pages are purged as usual.
+const catalogView = 'packages/agenciafmd/frontend/resources/views/html/tema.blade.php';
+
+const isCatalogCss = (file) => file.includes('/theme-');
+
+const purgeOptions = {
+  paths: purgeCheckPaths,
+  skippedContentGlobs: purgeSkippedScripts,
+  safelist,
+};
+
+// The purge plugin handles every css file of the build: this runs it only on the files accepted by `filter`
+const purgeOnly = (filter, options) => {
+  const plugin = purge(options);
+  const { generateBundle } = plugin;
+
+  plugin.generateBundle = function (outputOptions, bundle) {
+    const files = Object.entries(bundle).filter(([file]) => filter(file));
+
+    return generateBundle.call(this, outputOptions, Object.fromEntries(files));
+  };
+
+  return plugin;
+};
 
 const assetFolders = {
   css: /\.css$/,
   fonts: /\.(woff2?|ttf|otf|eot)$/,
   svg: /\.svg$/,
   images: /\.(png|jpe?g|gif|webp|avif|ico|bmp)$/,
+  videos: /\.(mp4|webm|ogv|mov)$/,
+  pdf: /\.pdf$/,
 };
 
 export default defineConfig({
   plugins: [
     laravel({
-      input: [
-        'resources/scss/frontend.scss',
-        'resources/js/frontend-imports.js',
-        'resources/js/frontend-imports.js',
-        'resources/js/pages/theme.js',
-        'resources/js/components/sliders/articles.js',
-        'resources/js/components/sliders/banners.js',
-        'resources/js/components/share-api.js',
-      ],
-      assets: [
-        'resources/images/**',
-        'resources/fonts/**',
-      ],
-      refresh: true, // TODO add all paths to watch and refresh on change
+      input: entries,
+      assets: staticAssets,
+      refresh: refreshPaths,
     }),
-    webfontDownload([
-      'https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap',
-    ]),
-    PluginCritical({
-      criticalUrl: `${ CRITICAL_URL }/html/`,
-      criticalBase: 'public/css/critical',
-      criticalPages: [
-        {
-          uri: '', template: 'index',
-        },
-      ],
-      criticalConfig: {
-        dimensions: [
-          {
-            width: 375,
-            height: 667,
-          },
-          {
-            width: 1024,
-            height: 768,
-          },
-          {
-            width: 1280,
-            height: 720,
-          },
-          {
-            width: 1366,
-            height: 768,
-          },
-          {
-            width: 1920,
-            height: 1080,
-          },
-        ],
-      },
+    ...(webfonts.length ? [webfontDownload(webfonts)] : []),
+    // Critical css of every page of views/html (resources/js/utilities/critical.js)
+    critical(`${ CRITICAL_URL }/html/`),
+    // Every css file but the catalog's (frontend.css and the lazy vendor chunks)
+    purgeOnly((file) => !isCatalogCss(file), {
+      ...purgeOptions,
+      // The catalog would keep every component in the global css
+      skippedContentGlobs: [...purgeSkippedScripts, join(import.meta.dirname, catalogView)],
     }),
-    purge({
-      paths: purgeCheckPaths,
-      // Include classes we don't have direct access
-      safelist: {
-        greedy: [
-          /lang/,
-          /plyr/,
-        ],
-        standard: [
-          /^file-upload-button/,
-          /^fmd-header-/,
-          // GLightbox (glightbox, gslide, gclose...), without Bootstrap gutters (g-, gx-, gy-) and gap-
-          /^g(?![xy]?-|ap-)/,
-          /^hs-/,
-          /^js-/,
-          /^swal2-/,
-          /^swiper-/,
-          /^ts-/,
-          /^was-/,
-        ],
-      },
-    }),
+    // The catalog's css, purged against every view (the catalog included)
+    purgeOnly(isCatalogCss, purgeOptions),
   ],
   css: {
     preprocessorOptions: {
@@ -141,11 +205,6 @@ export default defineConfig({
   },
   resolve: {
     // to improve JS imports
-    alias: {
-      '@fonts': '/resources/fonts',
-      '@svg': '/resources/svg',
-      '@images': '/resources/images',
-      '@videos': '/resources/videos',
-    },
+    alias: aliases,
   },
 });

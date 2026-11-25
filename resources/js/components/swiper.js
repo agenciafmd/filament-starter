@@ -1,7 +1,7 @@
 import Swiper from "swiper";
 import { Navigation, Pagination, EffectFade, Autoplay } from "swiper/modules";
 
-export function createSlider(options) {
+export async function createSlider(options) {
     if (!options.container) {
         throw new Error(
             "Sorry, but to create a slider, you need to pass a container element :(",
@@ -42,34 +42,18 @@ export function createSlider(options) {
         );
     }
 
+    // The modules' css comes with the slider (the core is in the global css)
+    await import("/resources/scss/vendors/swiper/swiper-modules.scss");
+
     return new Swiper(options.container, {
         roundLengths: true, //prevent blurry texts on usual resolution screens
         mousewheel: {
             forceToAxis: true,
         },
+        // A new module needs its css in resources/scss/vendors/swiper/swiper-modules.scss
         modules: [Navigation, Pagination, EffectFade, Autoplay],
         ...options,
     });
-}
-
-export function setupDefaultSlider() {
-    const defaultSliderSelector = ".js-slider";
-
-    if (!document.querySelectorAll(defaultSliderSelector).length) {
-        return;
-    }
-
-    document
-        .querySelectorAll(defaultSliderSelector)
-        .forEach(function createDefaultSlider(defaultSliderContainerElement) {
-            createSlider({
-                container: defaultSliderContainerElement,
-                navigation: {
-                    prevEl: `${defaultSliderSelector} .swiper-button-prev`,
-                    nextEl: `${defaultSliderSelector} .swiper-button-next`,
-                },
-            });
-        });
 }
 
 /* Example of a swiper constructor with most common options */

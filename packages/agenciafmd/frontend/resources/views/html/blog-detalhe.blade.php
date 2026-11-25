@@ -49,6 +49,7 @@
                             breakpointDesktopSuffix="xl"
                             breakpointNotebookWidth="768px"
                             breakpointNotebookSuffix="lg"
+                            priority
                         />
                     </div>
                 </div>
@@ -72,9 +73,14 @@
                                 non. Sed faucibus consectetur quis et id bibendum dictum orci morbi. Natoque sem et enim
                                 ligula neque amet. Id diam porta id diam leo.
                             </p>
-                        </div>
 
-                        <div class="mb-block-small wysiwyg">
+                            <x-frontend::image
+                                image="ratios/img-16x9-xl.jpg"
+                                title="Imagem do conteúdo"
+                                alt="Imagem do conteúdo"
+                                class="rounded"
+                            />
+
                             <h3>Título médio</h3>
                             <p>
                                 Lorem ipsum dolor sit amet consectetur. Mattis morbi tellus purus tincidunt sagittis.
@@ -191,10 +197,10 @@
                             class="position-sticky top-0 h-auto bg-gray-100 shadow"
                             card-body-class="p-block-small"
                         >
-                            <h5 class="fs-7 mb-2">Leia também:</h5>
+                            <h2 class="fs-7 mb-2">Leia também:</h2>
 
                             @foreach ($articles as $article)
-                                <x-frontend::articles.item-no-image :article="$article" />
+                                <x-frontend::articles.item-no-image :article="$article" heading-tag="h3" />
 
                                 @if (! $loop->last)
                                     <hr class="my-1h" />

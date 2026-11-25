@@ -1,0 +1,49 @@
+// Content from the admix rich editor (RichEditorWithDefault): it brings tags without classes, so the styles go by
+// element. The spacing between the sections lives here: the page puts the whole content in a single .wysiwyg
+.wysiwyg {
+    > :last-child {
+        margin-bottom: 0;
+    }
+
+    > * + :is(h2, h3, h4, h5, h6) {
+        margin-top: $block-spacer-small;
+    }
+
+    // Takes the width of the content and keeps its proportion, also on mobile
+    img {
+        display: block;
+        width: 100%;
+        height: auto;
+    }
+
+    blockquote {
+        @extend .blockquote;
+        padding-left: $spacer;
+        border-left: $border-width * 2 solid var(--#{$prefix}primary);
+    }
+
+    table {
+        @extend .table;
+    }
+
+    // Columns of the rich editor `grid` tool (styled by Filament only inside the admix): --cols and --col-span
+    // come in the style attribute. Side by side from lg (the editor default), stacked before it
+    .grid-layout {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr);
+        gap: $spacer;
+        margin-bottom: $spacer;
+
+        > .grid-layout-col {
+            min-width: 0;
+        }
+
+        @include media-breakpoint-up(lg) {
+            grid-template-columns: var(--cols);
+
+            > .grid-layout-col {
+                grid-column: var(--col-span);
+            }
+        }
+    }
+}

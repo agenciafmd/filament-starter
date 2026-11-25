@@ -63,7 +63,6 @@
                                         type="submit"
                                         wire:loading.attr="disabled"
                                         wire:target="submit"
-                                        aria-label="enviar formulário"
                                         class="me-0q btn btn-primary position-absolute translate-middle-y end-0 top-50 z-1"
                                     >
                                         <span wire:loading.remove wire:target="submit">Buscar </span>
@@ -227,7 +226,7 @@
                                     desktop: 475x356 - ratio 3x4
                                     --}}
 
-                                    <x-frontend::articles.item :article="$article" />
+                                    <x-frontend::articles.item :article="$article" :priority="$loop->index < 3" />
                                 </div>
 
                             @else
@@ -239,7 +238,7 @@
                                     desktop: 475x356 - ratio 3x4
                                     --}}
 
-                                    <x-frontend::articles.item :article="$article" />
+                                    <x-frontend::articles.item :article="$article" :priority="$loop->index < 3" />
                                 </div>
 
                             @endif

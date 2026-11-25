@@ -1,16 +1,8 @@
-import {
-    setupPopover,
-    setupShareAPI,
-    setupToast,
-    setupTooltip,
-} from "../frontend.js";
+import "share-api-polyfill";
+import { setupPopover, setupTooltip } from "../components/bootstrap-helpers.js";
 
 (function () {
-    setupShareAPI();
-
     setupPopover();
 
     setupTooltip();
-
-    setupToast();
 })();

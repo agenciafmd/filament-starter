@@ -3,6 +3,7 @@
     'title' => false,
     'description' => false,
     'gallery' => 'video',
+    'aspectRatio' => '',
 ])
 
 <x-frontend::link
@@ -12,7 +13,7 @@
     data-description="{{ $description }}"
     title="{{ $title ? $title : $description }}"
     aria-label="Link: {{ $title ? $title : $description }}"
-    {{ $attributes->merge(['class' => 'position-relative glightbox ic-play-container']) }}
+    {{ $attributes->merge(['class' => 'position-relative glightbox ic-play-container ' . $aspectRatio]) }}
 >
     {{ $slot }}
 

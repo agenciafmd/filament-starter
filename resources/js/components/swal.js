@@ -1,31 +1,22 @@
-let sweetAlertPromise;
-
-function loadSweetAlert() {
-    sweetAlertPromise ??= import("sweetalert2").then(({ default: Swal }) => {
-        window.Swal = Swal;
-
-        return Swal;
-    });
-
-    return sweetAlertPromise;
-}
-
 /**
- * SweetAlert is only downloaded on the first call (ex.: Swal.fire(...)).
+ * SweetAlert2 is only downloaded on the first call (ex.: Swal.fire(...)), together with the project theme.
  * Until then, window.Swal is a proxy that loads the library and forwards the call.
  */
-function setupSweetAlert() {
-    return (window.Swal = new Proxy(
-        {},
-        {
-            get:
-                (target, method) =>
-                (...args) =>
-                    loadSweetAlert().then((Swal) => Swal[method](...args)),
-        },
-    ));
+async function loadSweetAlert() {
+    const [{ default: Swal }] = await Promise.all([
+        import("sweetalert2/dist/sweetalert2.esm.js"),
+        import("/resources/scss/vendors/sweetalert2/sweetalert2.scss"),
+    ]);
+
+    return (window.Swal = Swal);
 }
 
-(() => {
-    setupSweetAlert();
-})();
+window.Swal = new Proxy(
+    {},
+    {
+        get:
+            (target, method) =>
+            async (...args) =>
+                (await loadSweetAlert())[method](...args),
+    },
+);

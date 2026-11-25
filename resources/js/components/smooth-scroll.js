@@ -8,59 +8,43 @@ function doScrollAnimate(targetSelector) {
         return;
     }
 
-    const additionalOffset =
-        Number(target.getAttribute("data-scroll-offset")) || 0;
+    // data-scroll-offset moves the stop point: negative leaves more room above the target, positive scrolls further
+    const extraOffset = Number(target.dataset.scrollOffset) || 0;
 
-    const scrollTop =
-        target.getBoundingClientRect().top +
-        document.body.scrollTop +
-        additionalOffset;
+    target.style.scrollMarginTop = extraOffset
+        ? `calc(var(--header-height) + ${-extraOffset}px)`
+        : "";
 
-    window.scrollBy({
-        top: scrollTop,
-        behavior: "smooth",
-    });
-}
-
-export function setupSmoothScrollInOffcanvas() {
-    const offcanvasElements = document.querySelectorAll(".offcanvas");
-
-    offcanvasElements.forEach(function (offcanvas) {
-        const offcanvasScrollTriggerElements = offcanvas.querySelectorAll(
-            'a.js-scroll-top[data-bs-dismiss="offcanvas"]',
-        );
-
-        offcanvasScrollTriggerElements.forEach(function (triggerElement) {
-            const hiddenOffcanvasHandler = (event) => {
-                doScrollAnimate(triggerElement.hash);
-                offcanvas.removeEventListener(
-                    "hidden.bs.offcanvas",
-                    hiddenOffcanvasHandler,
-                );
-            };
-
-            triggerElement.addEventListener("click", function (event) {
-                event.preventDefault();
-                offcanvas.addEventListener(
-                    "hidden.bs.offcanvas",
-                    hiddenOffcanvasHandler,
-                );
-            });
-        });
-    });
+    // No behavior: the root's scroll-behavior (Bootstrap reboot) animates it, except with prefers-reduced-motion.
+    // The header is discounted by the global scroll-margin-top (_fmd-header.scss)
+    target.scrollIntoView();
 }
 
 export function setupSmoothScroll() {
-    // This selector is needed because offcanvas animation blocks page scroll, so
-    // we need to handle each scroll separately.
-    const scrollTriggerElements = document.querySelectorAll(
-        "*:not(.offcanvas) a.js-scroll-top",
-    );
+    // Delegated: also works for links added after the load (Livewire, infinite scroll)
+    document.addEventListener("click", (event) => {
+        const link = event.target.closest("a.js-scroll-top");
 
-    scrollTriggerElements.forEach(function (element) {
-        element.addEventListener("click", function (event) {
-            event.preventDefault();
-            doScrollAnimate(this.hash);
-        });
+        if (!link) {
+            return;
+        }
+
+        event.preventDefault();
+
+        // An open offcanvas (mobile) blocks the page scroll: scrolls after it closes (the link needs
+        // data-bs-dismiss="offcanvas"). On desktop the navbar offcanvas is not open, so it scrolls right away
+        const openOffcanvas = link.closest(".offcanvas.show");
+
+        if (openOffcanvas) {
+            openOffcanvas.addEventListener(
+                "hidden.bs.offcanvas",
+                () => doScrollAnimate(link.hash),
+                { once: true },
+            );
+
+            return;
+        }
+
+        doScrollAnimate(link.hash);
     });
 }
