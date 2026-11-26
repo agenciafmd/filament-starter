@@ -1,6 +1,6 @@
 # Segredos e controle de versão
 .env*
-.git
+**/.git
 
 # Dependências do host: a imagem de produção instala as próprias
 vendor
