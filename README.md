@@ -258,7 +258,7 @@ Para um projeto que já rodava com o Laravel Sail:
     ```
 
 2. No `.env`, remova `WWWUSER`, `WWWGROUP` e `SAIL_XDEBUG_*`. Adicione `USER_ID`, `GROUP_ID`, `XDEBUG_MODE` e `XDEBUG_CONFIG` como no `.env.example`.
-3. Copie os dados para os volumes novos, como em [Volumes do MySQL e do Redis](#volumes-do-mysql-e-do-redis).
+3. Copie os dados do MySQL para o volume novo, como em [Volumes do MySQL e do Valkey](#volumes-do-mysql-e-do-valkey).
 4. Suba o ambiente e atualize as dependências:
 
     ```bash
@@ -270,9 +270,11 @@ Para um projeto que já rodava com o Laravel Sail:
 
 A imagem antiga `sail-8.4/app` é compartilhada por todos os projetos que ainda usam o Sail nessa máquina. Só remova (`docker image rm sail-8.4/app`) se nenhum outro projeto precisar dela.
 
-## Volumes do MySQL e do Redis
+## Volumes do MySQL e do Valkey
 
-Os dados ficam nos volumes `mysql-data` e `redis-data`. Projetos criados antes dessa mudança usavam `sail-mysql` e `sail-redis`. Se o seu projeto ainda tem esses volumes, copie os dados **antes** de subir o ambiente. Se o `docker compose up` rodar antes da cópia, o MySQL é inicializado vazio no volume novo.
+Os dados ficam nos volumes `mysql-data` e `valkey-data`. O serviço de cache continua se chamando `redis` (`REDIS_HOST=redis`), mas usa a imagem do [Valkey](https://valkey.io), compatível com o driver `redis` do Laravel.
+
+Projetos criados antes dessa mudança usavam `sail-mysql` e `sail-redis`. Se o seu projeto ainda tem o volume do MySQL, copie os dados **antes** de subir o ambiente. Se o `docker compose up` rodar antes da cópia, o MySQL é inicializado vazio no volume novo. Os dados do Redis não são copiados: são só cache, e o Valkey não lê o formato gravado pelo Redis 8.
 
 ```bash
 # veja o prefixo dos volumes antigos (normalmente o nome da pasta do projeto)
@@ -281,21 +283,22 @@ docker volume ls --filter name=sail-
 PROJETO=nome-do-projeto
 
 docker compose down
-docker compose create mysql redis
-docker run --rm -v ${PROJETO}_sail-mysql:/from:ro -v ${PROJETO}_mysql-data:/to --entrypoint sh redis:alpine -c 'cp -a /from/. /to/'
-docker run --rm -v ${PROJETO}_sail-redis:/from:ro -v ${PROJETO}_redis-data:/to --entrypoint sh redis:alpine -c 'cp -a /from/. /to/'
+docker compose create mysql
+docker run --rm -v ${PROJETO}_sail-mysql:/from:ro -v ${PROJETO}_mysql-data:/to --entrypoint sh valkey/valkey:8-alpine -c 'cp -a /from/. /to/'
 docker compose up -d --wait
 ```
 
-O `docker compose create` cria os volumes novos sem iniciar o MySQL. A cópia preserva dono e permissões dos arquivos, e os volumes antigos não são alterados.
+O `docker compose create` cria o volume novo sem iniciar o MySQL. A cópia preserva dono e permissões dos arquivos, e os volumes antigos não são alterados.
 
-Se o ambiente já subiu com os volumes novos vazios, rode `docker compose down`, remova os volumes novos (`docker volume rm ${PROJETO}_mysql-data ${PROJETO}_redis-data`) e repita os comandos acima.
+Se o ambiente já subiu com os volumes novos vazios, rode `docker compose down`, remova o volume novo (`docker volume rm ${PROJETO}_mysql-data`) e repita os comandos acima.
 
 Depois de conferir que os dados estão lá, remova os volumes antigos:
 
 ```bash
 docker volume rm ${PROJETO}_sail-mysql ${PROJETO}_sail-redis
 ```
+
+O volume `redis-data`, usado antes da troca para o Valkey, também pode ser removido: `docker volume rm ${PROJETO}_redis-data`.
 
 ## Conheça nossa família
 
