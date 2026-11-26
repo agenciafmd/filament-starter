@@ -1,3 +1,8 @@
+x-logging: &logging
+    options:
+        max-size: '10m'
+        max-file: '3'
+
 services:
     app:
         image: '${COMPOSE_PROJECT_NAME}-app:production'
@@ -14,9 +19,12 @@ services:
         environment: !override
             APP_ENV: production
             APP_DEBUG: 'false'
+            LOG_CHANNEL: stderr
         ports: !override
             - '${APP_PORT:-8081}:8080'
-        volumes: !reset [ ]
+        volumes: !override
+            - 'storage-app:/var/www/html/storage/app'
+        logging: *logging
     queue:
         image: '${COMPOSE_PROJECT_NAME}-queue:production'
         build:
@@ -35,8 +43,11 @@ services:
         environment: !override
             APP_ENV: production
             APP_DEBUG: 'false'
+            LOG_CHANNEL: stderr
             AUTORUN_ENABLED: 'false'
-        volumes: !reset [ ]
+        volumes: !override
+            - 'storage-app:/var/www/html/storage/app'
+        logging: *logging
     scheduler:
         image: '${COMPOSE_PROJECT_NAME}-scheduler:production'
         build:
@@ -52,7 +63,17 @@ services:
         environment: !override
             APP_ENV: production
             APP_DEBUG: 'false'
+            LOG_CHANNEL: stderr
             AUTORUN_ENABLED: 'false'
-        volumes: !reset [ ]
+        volumes: !override
+            - 'storage-app:/var/www/html/storage/app'
+        logging: *logging
+    mysql:
+        logging: *logging
+    redis:
+        logging: *logging
     mailpit:
         profiles: ['dev']
+volumes:
+    storage-app:
+        driver: local

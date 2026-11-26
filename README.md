@@ -207,7 +207,9 @@ Só o `AUTORUN_LARAVEL_OPTIMIZE=false` não basta: sem os outros, a imagem gera 
 
 No desenvolvimento local o `AUTORUN_ENABLED` fica desligado, então nada roda automaticamente.
 
-O `storage/` do container é efêmero: uploads e logs se perdem quando o container é recriado.
+Os uploads ficam no volume `storage-app`, montado em `storage/app` no `app`, no `queue` e no `scheduler`, e sobrevivem à recriação dos containers. O restante do `storage/` (caches e views compiladas) é efêmero.
+
+Os logs do Laravel vão para o stderr (`LOG_CHANNEL=stderr`) e aparecem no `docker compose logs`. O Docker guarda até 3 arquivos de 10 MB por serviço, para os logs não encherem o disco do servidor.
 
 ## FrankenPHP
 
