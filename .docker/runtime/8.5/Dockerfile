@@ -1,3 +1,5 @@
+# syntax=docker/dockerfile:1
+
 # Base: o que é comum ao desenvolvimento e à produção
 FROM serversideup/php:8.5-frankenphp AS base
 
@@ -72,7 +74,8 @@ WORKDIR /var/www/html
 COPY --chown=www-data:www-data composer.json composer.lock ./
 COPY --chown=www-data:www-data packages/ packages/
 
-RUN composer install --no-dev --no-scripts --no-autoloader --no-cache --prefer-dist --no-interaction
+RUN --mount=type=cache,target=/composer/cache,uid=33,gid=33 \
+    composer install --no-dev --no-scripts --no-autoloader --prefer-dist --no-interaction
 
 COPY --chown=www-data:www-data . .
 

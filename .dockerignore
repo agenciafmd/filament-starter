@@ -6,6 +6,18 @@
 vendor
 node_modules
 
+# Arquivos que não rodam em produção
+tests
+.github
+.claude
+.ai
+*.md
+_ide_helper*.php
+phpstan.neon
+rector.php
+pint.json
+phpunit.xml
+
 # Estado local do desenvolvimento
 bootstrap/cache/*
 public/hot
