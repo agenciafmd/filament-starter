@@ -1,7 +1,9 @@
 # Base: o que é comum ao desenvolvimento e à produção
 FROM serversideup/php:8.5-frankenphp AS base
 
-ENV LANG=pt_BR.UTF-8 \
+ENV AUTORUN_LARAVEL_MIGRATION=true \
+    AUTORUN_LARAVEL_STORAGE_LINK=true \
+    LANG=pt_BR.UTF-8 \
     LANGUAGE=pt_BR:pt \
     LC_ALL=pt_BR.UTF-8 \
     TZ=America/Sao_Paulo \
@@ -32,7 +34,7 @@ ARG GROUP_ID=1000
 ARG NODE_VERSION=24
 
 ENV XDEBUG_MODE=off \
-    XDEBUG_CONFIG=client_host=host.docker.internal \
+    XDEBUG_CONFIG="client_host=host.docker.internal" \
     PLAYWRIGHT_BROWSERS_PATH=0 \
     PUPPETEER_CACHE_DIR=/var/www/html/node_modules/.cache/puppeteer \
     CRITICAL_URL=http://localhost:8080
@@ -62,8 +64,7 @@ USER www-data
 FROM base AS production
 
 ENV PHP_OPCACHE_ENABLE=1 \
-    AUTORUN_ENABLED=true \
-    AUTORUN_LARAVEL_MIGRATION=false
+    AUTORUN_ENABLED=true
 
 WORKDIR /var/www/html
 

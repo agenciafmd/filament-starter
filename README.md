@@ -170,9 +170,21 @@ docker compose up -d --build --wait
 
 ### Configuração em runtime
 
-Na imagem de produção, toda a configuração vem de variáveis de ambiente (`APP_KEY`, banco, cache etc.). Ao subir, o container cria o link do `storage` e roda o `php artisan optimize`, que gera os caches de config, rotas, views, eventos e do Filament.
+Na imagem de produção, toda a configuração vem de variáveis de ambiente (`APP_KEY`, banco, cache etc.). Ao subir, o container cria o link do `storage`, roda as migrações (`php artisan migrate --force`) e roda o `php artisan optimize`, que gera os caches de config, rotas, views, eventos e do Filament.
 
-As migrações **não** rodam automaticamente. Para ligar, defina `AUTORUN_LARAVEL_MIGRATION=true`.
+A homologação usa a mesma imagem de produção, com o `compose.production.yaml`. As migrações rodam ao subir, mas o `optimize` e os caches não. Defina no `.env` da homologação, que o `compose.production.yaml` repassa ao container:
+
+```env
+AUTORUN_LARAVEL_OPTIMIZE=false
+AUTORUN_LARAVEL_CONFIG_CACHE=false
+AUTORUN_LARAVEL_ROUTE_CACHE=false
+AUTORUN_LARAVEL_VIEW_CACHE=false
+AUTORUN_LARAVEL_EVENT_CACHE=false
+```
+
+Só o `AUTORUN_LARAVEL_OPTIMIZE=false` não basta: sem os outros, a imagem gera os caches de config, rotas, views e eventos um a um.
+
+No desenvolvimento local o `AUTORUN_ENABLED` fica desligado, então nada roda automaticamente.
 
 O `storage/` do container é efêmero: uploads e logs se perdem quando o container é recriado.
 
