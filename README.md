@@ -95,6 +95,25 @@ O `npm run dev` sobe o Vite com HMR na porta `VITE_PORT`.
 
 Para usar o Xdebug, defina `XDEBUG_MODE=debug` no `.env` e rode `docker compose up -d`. Volte para `off` quando terminar.
 
+## Fila e agendamento
+
+O `docker compose up` também sobe dois serviços com a mesma imagem do `app`:
+
+- `queue`: processa a fila nas filas `high`, `default` e `low`. No desenvolvimento roda o `queue:listen`, que carrega o código atual a cada job, então não é preciso reiniciar o serviço depois de alterar um job. Em produção roda o `queue:work`.
+- `scheduler`: roda o `schedule:work`, que executa as tarefas agendadas (as rotinas do admix, como `audit:prune`, `model:prune` e `auth:clear-resets`). Confira a lista com `docker compose exec app php artisan schedule:list`.
+
+A fila só é processada pelo serviço `queue` quando o `QUEUE_CONNECTION` é `database` (o padrão) ou `redis`. Com `sync`, os jobs rodam na hora, dentro da requisição.
+
+O admix também sabe agendar um `queue:work` pelo scheduler, para hospedagens sem worker dedicado. A imagem desliga esse agendamento com `ADMIX_QUEUE_ENABLED=false`, para não haver dois workers na mesma fila.
+
+```bash
+# logs do worker e do scheduler
+docker compose logs -f queue scheduler
+
+# reiniciar o scheduler depois de mudar um agendamento
+docker compose restart scheduler
+```
+
 ## Alimentando o projeto
 
 Alimente o projeto com dados fictícios usando o comando:
@@ -156,7 +175,7 @@ docker build -f .docker/runtime/8.5/Dockerfile --target production -t nome-do-pr
 
 ### Testando a imagem de produção localmente
 
-O `compose.production.yaml` troca o serviço `app` pela imagem de produção, sem bind mount, e reaproveita o MySQL, o Redis e o Mailpit do ambiente de desenvolvimento. A configuração vem do `.env` quando o container sobe, com `APP_ENV=production` e `APP_DEBUG=false`. O `.env` nunca é copiado para a imagem.
+O `compose.production.yaml` troca os serviços `app`, `queue` e `scheduler` pela imagem de produção, sem bind mount, e reaproveita o MySQL, o Redis e o Mailpit do ambiente de desenvolvimento. A configuração vem do `.env` quando o container sobe, com `APP_ENV=production` e `APP_DEBUG=false`. O `.env` nunca é copiado para a imagem.
 
 ```bash
 docker compose -f compose.yaml -f compose.production.yaml up -d --build --wait
@@ -170,7 +189,7 @@ docker compose up -d --build --wait
 
 ### Configuração em runtime
 
-Na imagem de produção, toda a configuração vem de variáveis de ambiente (`APP_KEY`, banco, cache etc.). Ao subir, o container cria o link do `storage`, roda as migrações (`php artisan migrate --force`) e roda o `php artisan optimize`, que gera os caches de config, rotas, views, eventos e do Filament.
+Na imagem de produção, toda a configuração vem de variáveis de ambiente (`APP_KEY`, banco, cache etc.). Ao subir, o container `app` cria o link do `storage`, roda as migrações (`php artisan migrate --force`) e roda o `php artisan optimize`, que gera os caches de config, rotas, views, eventos e do Filament. Os containers `queue` e `scheduler` sobem com `AUTORUN_ENABLED=false`, para que só o `app` rode as migrações.
 
 A homologação usa a mesma imagem de produção, com o `compose.production.yaml`. As migrações rodam ao subir, mas o `optimize` e os caches não. Defina no `.env` da homologação, que o `compose.production.yaml` repassa ao container:
 
