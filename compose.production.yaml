@@ -18,6 +18,9 @@ services:
             context: .
             dockerfile: .docker/runtime/8.5/Dockerfile
             target: production
+        command: !override ['php', '/var/www/html/artisan', 'queue:work', '--tries=3', '--delay=5', '--timeout=60', '--queue=high,default,low']
+        healthcheck:
+            test: !override ['CMD', 'healthcheck-queue']
         env_file:
             -   path: .env
                 required: true

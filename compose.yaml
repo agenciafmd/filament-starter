@@ -27,11 +27,11 @@ services:
             - mailpit
     queue:
         build: *build
-        command: ['php', '/var/www/html/artisan', 'queue:work', '--tries=3', '--delay=5', '--timeout=60', '--queue=high,default,low']
+        command: ['php', '/var/www/html/artisan', 'queue:listen', '--tries=3', '--delay=5', '--timeout=60', '--queue=high,default,low']
         stop_signal: SIGTERM
         restart: unless-stopped
         healthcheck:
-            test: ['CMD', 'healthcheck-queue']
+            test: ['CMD', 'pgrep', '-f', 'queue:listen']
             start_period: 10s
         volumes:
             - '.:/var/www/html'
