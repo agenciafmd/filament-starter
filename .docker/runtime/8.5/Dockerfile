@@ -8,7 +8,8 @@ ENV AUTORUN_LARAVEL_MIGRATION=true \
     LC_ALL=pt_BR.UTF-8 \
     TZ=America/Sao_Paulo \
     PHP_DATE_TIMEZONE=America/Sao_Paulo \
-    HEALTHCHECK_PATH=/up
+    HEALTHCHECK_PATH=/up \
+    ADMIX_QUEUE_ENABLED=false
 
 USER root
 

@@ -1,6 +1,8 @@
 services:
     app:
         build:
+            context: .
+            dockerfile: .docker/runtime/8.5/Dockerfile
             target: production
         env_file:
             -   path: .env
@@ -8,6 +10,32 @@ services:
         environment: !override
             APP_ENV: production
             APP_DEBUG: 'false'
-        volumes: !reset [ ]
         ports: !override
             - '${APP_PORT:-8081}:8080'
+        volumes: !reset [ ]
+    queue:
+        build:
+            context: .
+            dockerfile: .docker/runtime/8.5/Dockerfile
+            target: production
+        env_file:
+            -   path: .env
+                required: true
+        environment: !override
+            APP_ENV: production
+            APP_DEBUG: 'false'
+            AUTORUN_ENABLED: 'false'
+        volumes: !reset [ ]
+    scheduler:
+        build:
+            context: .
+            dockerfile: .docker/runtime/8.5/Dockerfile
+            target: production
+        env_file:
+            -   path: .env
+                required: true
+        environment: !override
+            APP_ENV: production
+            APP_DEBUG: 'false'
+            AUTORUN_ENABLED: 'false'
+        volumes: !reset [ ]

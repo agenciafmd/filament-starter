@@ -1,13 +1,15 @@
+x-build: &build
+    context: .
+    dockerfile: .docker/runtime/8.5/Dockerfile
+    target: development
+    args:
+        USER_ID: '${USER_ID:-1000}'
+        GROUP_ID: '${GROUP_ID:-1000}'
+        NODE_VERSION: '${NODE_VERSION:-24}'
+
 services:
     app:
-        build:
-            context: .
-            dockerfile: .docker/runtime/8.5/Dockerfile
-            target: development
-            args:
-                USER_ID: '${USER_ID:-1000}'
-                GROUP_ID: '${GROUP_ID:-1000}'
-                NODE_VERSION: '${NODE_VERSION:-24}'
+        build: *build
         extra_hosts:
             - 'host.docker.internal:host-gateway'
         ports:
@@ -19,6 +21,34 @@ services:
         volumes:
             - '.:/var/www/html'
             - '/tmp/.X11-unix:/tmp/.X11-unix:rw'
+        depends_on:
+            - redis
+            - mysql
+            - mailpit
+    queue:
+        build: *build
+        command: ['php', '/var/www/html/artisan', 'queue:work', '--tries=3', '--delay=5', '--timeout=60', '--queue=high,default,low']
+        stop_signal: SIGTERM
+        restart: unless-stopped
+        healthcheck:
+            test: ['CMD', 'healthcheck-queue']
+            start_period: 10s
+        volumes:
+            - '.:/var/www/html'
+        depends_on:
+            - redis
+            - mysql
+            - mailpit
+    scheduler:
+        build: *build
+        command: ['php', '/var/www/html/artisan', 'schedule:work']
+        stop_signal: SIGTERM
+        restart: unless-stopped
+        healthcheck:
+            test: ['CMD', 'healthcheck-schedule']
+            start_period: 10s
+        volumes:
+            - '.:/var/www/html'
         depends_on:
             - redis
             - mysql
