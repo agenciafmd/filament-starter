@@ -31,7 +31,11 @@ ARG USER_ID=1000
 ARG GROUP_ID=1000
 ARG NODE_VERSION=24
 
-ENV XDEBUG_MODE=off
+ENV XDEBUG_MODE=off \
+    XDEBUG_CONFIG=client_host=host.docker.internal \
+    PLAYWRIGHT_BROWSERS_PATH=0 \
+    PUPPETEER_CACHE_DIR=/var/www/html/node_modules/.cache/puppeteer \
+    CRITICAL_URL=http://localhost:8080
 
 USER root
 

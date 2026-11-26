@@ -14,15 +14,7 @@ services:
             - '${APP_PORT:-8081}:8080'
             - '${VITE_PORT:-5181}:${VITE_PORT:-5181}'
         environment:
-            HEALTHCHECK_PATH: '/up'
-            PHP_OPCACHE_ENABLE: '0'
-            SSL_MODE: 'off'
-            AUTORUN_ENABLED: 'false'
             XDEBUG_MODE: '${XDEBUG_MODE:-off}'
-            XDEBUG_CONFIG: '${XDEBUG_CONFIG:-client_host=host.docker.internal}'
-            PLAYWRIGHT_BROWSERS_PATH: '0'
-            PUPPETEER_CACHE_DIR: '/var/www/html/node_modules/.cache/puppeteer'
-            CRITICAL_URL: 'http://localhost:8080'
             DISPLAY: ':0'
         volumes:
             - '.:/var/www/html'
@@ -32,7 +24,7 @@ services:
             - mysql
             - mailpit
     mysql:
-        image: 'mysql/mysql-server:8.0'
+        image: 'mysql:8.4'
         ports:
             - '${FORWARD_DB_PORT:-3381}:3306'
         environment:
@@ -41,8 +33,6 @@ services:
             MYSQL_DATABASE: '${DB_DATABASE:-laravel}'
             MYSQL_USER: '${DB_USERNAME:-laravel}'
             MYSQL_PASSWORD: '${DB_PASSWORD:-password}'
-            MYSQL_ALLOW_EMPTY_PASSWORD: 1
-            MYSQL_EXTRA_OPTIONS: '${MYSQL_EXTRA_OPTIONS:-}'
         volumes:
             - 'mysql-data:/var/lib/mysql'
             - './.docker/database/mysql/create-testing-database.sh:/docker-entrypoint-initdb.d/10-create-testing-database.sh'
