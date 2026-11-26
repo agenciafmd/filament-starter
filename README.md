@@ -181,10 +181,12 @@ O `compose.production.yaml` troca os serviços `app`, `queue` e `scheduler` pela
 docker compose -f compose.yaml -f compose.production.yaml up -d --build --wait
 ```
 
+As imagens de produção ganham a tag `production` (`<projeto>-app:production`, `<projeto>-queue:production` e `<projeto>-scheduler:production`), e as de desenvolvimento, a tag `local` (`<projeto>-app:local` etc.). Assim, uma stack não sobrescreve a imagem da outra.
+
 Enquanto a produção estiver no ar, o `docker compose exec app ...` roda no container de produção, que não tem Node nem Composer. Para voltar ao desenvolvimento:
 
 ```bash
-docker compose up -d --build --wait
+docker compose up -d --wait
 ```
 
 ### Configuração em runtime

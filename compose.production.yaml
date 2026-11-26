@@ -1,5 +1,6 @@
 services:
     app:
+        image: '${COMPOSE_PROJECT_NAME}-app:production'
         build:
             context: .
             dockerfile: .docker/runtime/8.5/Dockerfile
@@ -17,6 +18,7 @@ services:
             - '${APP_PORT:-8081}:8080'
         volumes: !reset [ ]
     queue:
+        image: '${COMPOSE_PROJECT_NAME}-queue:production'
         build:
             context: .
             dockerfile: .docker/runtime/8.5/Dockerfile
@@ -36,6 +38,7 @@ services:
             AUTORUN_ENABLED: 'false'
         volumes: !reset [ ]
     scheduler:
+        image: '${COMPOSE_PROJECT_NAME}-scheduler:production'
         build:
             context: .
             dockerfile: .docker/runtime/8.5/Dockerfile

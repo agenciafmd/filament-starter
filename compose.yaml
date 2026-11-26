@@ -9,6 +9,7 @@ x-build: &build
 
 services:
     app:
+        image: '${COMPOSE_PROJECT_NAME}-app:local'
         build: *build
         extra_hosts:
             - 'host.docker.internal:host-gateway'
@@ -26,6 +27,7 @@ services:
             - mysql
             - mailpit
     queue:
+        image: '${COMPOSE_PROJECT_NAME}-queue:local'
         build: *build
         command: ['php', '/var/www/html/artisan', 'queue:listen', '--tries=3', '--delay=5', '--timeout=60', '--queue=high,default,low']
         stop_signal: SIGTERM
@@ -40,6 +42,7 @@ services:
             - mysql
             - mailpit
     scheduler:
+        image: '${COMPOSE_PROJECT_NAME}-scheduler:local'
         build: *build
         command: ['php', '/var/www/html/artisan', 'schedule:work']
         stop_signal: SIGTERM
