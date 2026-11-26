@@ -175,7 +175,7 @@ docker build -f .docker/runtime/8.5/Dockerfile --target production -t nome-do-pr
 
 ### Testando a imagem de produção localmente
 
-O `compose.production.yaml` troca os serviços `app`, `queue` e `scheduler` pela imagem de produção, sem bind mount, e reaproveita o MySQL, o Redis e o Mailpit do ambiente de desenvolvimento. A configuração vem do `.env` quando o container sobe, com `APP_ENV=production` e `APP_DEBUG=false`. O `.env` nunca é copiado para a imagem.
+O `compose.production.yaml` troca os serviços `app`, `queue` e `scheduler` pela imagem de produção, sem bind mount, e reaproveita o MySQL e o Redis do ambiente de desenvolvimento. O Mailpit fica de fora, num profile que não é ativado: em produção, o envio de e-mail usa o SMTP definido no `.env`. A configuração vem do `.env` quando o container sobe, com `APP_ENV=production` e `APP_DEBUG=false`. O `.env` nunca é copiado para a imagem.
 
 ```bash
 docker compose -f compose.yaml -f compose.production.yaml up -d --build --wait
