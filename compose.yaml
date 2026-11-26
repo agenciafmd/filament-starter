@@ -55,6 +55,7 @@ services:
             - mailpit
     mysql:
         image: 'mysql:8.4'
+        restart: unless-stopped
         ports:
             - '${FORWARD_DB_PORT:-3381}:3306'
         environment:
@@ -72,6 +73,7 @@ services:
             timeout: 5s
     redis:
         image: 'redis:alpine'
+        restart: unless-stopped
         ports:
             - '${FORWARD_REDIS_PORT:-6381}:6379'
         volumes:
