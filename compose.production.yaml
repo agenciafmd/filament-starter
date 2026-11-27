@@ -69,8 +69,10 @@ services:
             - 'storage-app:/var/www/html/storage/app'
         logging: *logging
     mysql:
+        ports: !reset [ ]
         logging: *logging
     redis:
+        ports: !reset [ ]
         logging: *logging
     mailpit:
         profiles: ['dev']
