@@ -50,5 +50,6 @@ return RectorConfig::configure()
         codingStyle: true,
         typeDeclarations: true,
         privatization: true,
+        earlyReturn: true,
     )
     ->withPhpSets();
