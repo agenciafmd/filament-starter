@@ -127,10 +127,10 @@
         "test:types": "phpstan",
         "test": [
             "@php artisan config:clear --ansi",
-            "@test:type-coverage",
-            "@test:unit",
             "@test:lint",
-            "@test:types"
+            "@test:types",
+            "@test:type-coverage",
+            "@test:unit"
         ]
     },
     "extra": {
