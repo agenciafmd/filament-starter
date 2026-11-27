@@ -15,6 +15,12 @@ Usamos Docker com as imagens [serversideup/php](https://serversideup.net/open-so
 
 Não é preciso PHP nem Node no host. Todos os comandos PHP, Artisan, Composer e Node rodam dentro do container `app`, com `docker compose exec app ...`.
 
+O projeto usa:
+
+- PHP **^8.5**;
+- Laravel **13**;
+- Node **24+**.
+
 ## Criando o projeto
 
 Para começar, crie o projeto com o comando:
@@ -60,11 +66,15 @@ Antes de subir, confira no `.env`:
 docker compose up -d --build --wait
 docker compose exec app php artisan key:generate
 docker compose exec app php artisan migrate --seed
-docker compose exec app npm install
+docker compose exec app npm ci
 docker compose exec app npx playwright install chromium
 ```
 
 > Rode o `key:generate` só em um projeto clonado. O `create-project` já gera a chave.
+
+O `app`, o `queue` e o `scheduler` só sobem depois que o MySQL e o Valkey passam no healthcheck, então a primeira subida pode levar alguns segundos a mais.
+
+Se o `docker compose up` falhar com `port is already allocated`, outra aplicação já usa a porta. Troque a variável correspondente no `.env` e suba de novo.
 
 A aplicação fica em `http://localhost:${APP_PORT}`, o painel em `/admix` e o Mailpit em `http://localhost:${FORWARD_MAILPIT_DASHBOARD_PORT}`.
 
@@ -72,11 +82,11 @@ A aplicação fica em `http://localhost:${APP_PORT}`, o painel em `/admix` e o M
 
 ```bash
 # subir e parar os serviços
-docker compose up -d --wait
+docker compose up -d --remove-orphans --force-recreate --wait
 docker compose stop
 
 # reconstruir a imagem depois de mudar o .docker/runtime/8.5/Dockerfile
-docker compose up -d --build --wait
+docker compose up -d --build --remove-orphans --force-recreate --wait
 
 # artisan, composer, npm e binários do vendor
 docker compose exec app php artisan route:list
@@ -87,11 +97,16 @@ docker compose exec app vendor/bin/pint --dirty
 # testes (inclusive os de browser, com Playwright)
 docker compose exec app php artisan test --compact
 
+# logs da aplicação
+docker compose logs -f app
+
 # terminal dentro do container
 docker compose exec app bash
 ```
 
 O `npm run dev` sobe o Vite com HMR na porta `VITE_PORT`.
+
+Os testes usam o banco `testing` (definido no `phpunit.xml`), criado pelo MySQL na primeira subida, junto com o banco do `.env`.
 
 Para usar o Xdebug, defina `XDEBUG_MODE=debug` no `.env` e rode `docker compose up -d`. Volte para `off` quando terminar.
 
@@ -116,16 +131,15 @@ docker compose restart scheduler
 
 ## Alimentando o projeto
 
-Alimente o projeto com dados fictícios usando o comando:
+Para recriar o banco do zero com dados fictícios, rode:
 
 ```bash
 docker compose exec app php artisan migrate:fresh --seed
 ```
 
-Com o banco alimentado, instale as dependências do front-end e gere os assets:
+Para gerar os assets do site e do admix:
 
 ```bash
-docker compose exec app npm ci
 docker compose exec app npm run build
 docker compose exec app npm run build:filament
 ```
@@ -134,10 +148,10 @@ docker compose exec app npm run build:filament
 
 O ambiente Docker sobe um MySQL (serviço `mysql`) com o banco do `.env` e um banco `testing` para os testes. Confira se o `.env` usa `DB_CONNECTION=mysql` e `DB_HOST=mysql`.
 
-Se o projeto usar SQLite (`DB_CONNECTION=sqlite`), crie o banco com o comando:
+O banco do `.env` só é criado quando o volume `mysql-data` está vazio. Se você mudou o `DB_DATABASE` depois da primeira subida, crie o banco novo pelo container:
 
 ```bash
-touch database/database.sqlite
+docker compose exec mysql mysql -u root -p -e 'CREATE DATABASE nome_do_banco'
 ```
 
 ## Imagens quebradas?
@@ -168,7 +182,7 @@ docker compose exec app php artisan page-cache:clear
 
 ## Onde configuro o GTM, o Analytics, o Search Console, o Pixel da Meta e os scripts?
 
-No admix, menu **Configurações** (somente administradores), pelo pacote [`filament-settings`](./packages/agenciafmd/filament-settings/README.md). O `GOOGLE_TAGMANAGER` e o `GOOGLE_SITE_VERIFICATION` do `.env` não são mais usados.
+No admix, menu **Configurações** (somente administradores), pelo pacote [`filament-settings`](https://github.com/agenciafmd/filament-settings). O `GOOGLE_TAGMANAGER` e o `GOOGLE_SITE_VERIFICATION` do `.env` não são mais usados.
 
 ## Vai codar front-end?
 
@@ -197,7 +211,7 @@ docker build -f .docker/runtime/8.5/Dockerfile --target production -t nome-do-pr
 
 ### Testando a imagem de produção localmente
 
-O `compose.production.yaml` troca os serviços `app`, `queue` e `scheduler` pela imagem de produção, sem bind mount, e reaproveita o MySQL e o Redis do ambiente de desenvolvimento. O Mailpit fica de fora, num profile que não é ativado: em produção, o envio de e-mail usa o SMTP definido no `.env`. O MySQL e o Valkey não publicam portas no host: o Docker passa por cima do firewall do servidor, e eles ficariam acessíveis pela internet. A aplicação os acessa pela rede interna do Docker; para abrir o banco no servidor, use `docker compose exec mysql mysql -u root -p`. A configuração vem do `.env` quando o container sobe, com `APP_ENV=production` e `APP_DEBUG=false`. O `.env` nunca é copiado para a imagem.
+O `compose.production.yaml` troca os serviços `app`, `queue` e `scheduler` pela imagem de produção, sem bind mount, e reaproveita o MySQL e o Valkey do ambiente de desenvolvimento. O Mailpit fica de fora, num profile que não é ativado: em produção, o envio de e-mail usa o SMTP definido no `.env`. O MySQL e o Valkey não publicam portas no host: o Docker passa por cima do firewall do servidor, e eles ficariam acessíveis pela internet. A aplicação os acessa pela rede interna do Docker; para abrir o banco no servidor, use `docker compose exec mysql mysql -u root -p`. A configuração vem do `.env` quando o container sobe, com `APP_ENV=production` e `APP_DEBUG=false`. O `.env` nunca é copiado para a imagem.
 
 ```bash
 docker compose -f compose.yaml -f compose.production.yaml up -d --build --wait
@@ -235,7 +249,7 @@ Os logs do Laravel vão para o stderr (`LOG_CHANNEL=stderr`) e aparecem no `dock
 
 ## FrankenPHP
 
-Os dois targets usam a variante `frankenphp` da serversideup no modo clássico: cada requisição carrega o Laravel do zero, como no PHP-FPM. O Caddy responde em HTTP na porta 8080. Com `SSL_MODE=full` ou `SSL_MODE=mixed`, ele também responde em HTTPS na porta 8443, com HTTP/2 e HTTP/3 (veja a [configuração de SSL da serversideup](https://serversideup.net/open-source/docker-php/docs/deployment-and-production/configuring-ssl)). No desenvolvimento, o `compose.yaml` usa `SSL_MODE=off`.
+Os dois targets usam a variante `frankenphp` da serversideup no modo clássico: cada requisição carrega o Laravel do zero, como no PHP-FPM. O Caddy responde em HTTP na porta 8080. Com `SSL_MODE=full` ou `SSL_MODE=mixed`, ele também responde em HTTPS na porta 8443, com HTTP/2 e HTTP/3 (veja a [configuração de SSL da serversideup](https://serversideup.net/open-source/docker-php/docs/deployment-and-production/configuring-ssl)). Por padrão, a imagem usa `SSL_MODE=off`, e o `compose.yaml` não muda isso.
 
 O PHP dessa imagem roda em threads (ZTS), então toda extensão nova precisa ser thread-safe.
 
@@ -340,47 +354,17 @@ Para um projeto que já rodava com o Laravel Sail:
     ```
 
 2. No `.env`, remova `WWWUSER`, `WWWGROUP` e `SAIL_XDEBUG_*`. Adicione `USER_ID`, `GROUP_ID`, `XDEBUG_MODE` e `XDEBUG_CONFIG` como no `.env.example`.
-3. Copie os dados do MySQL para o volume novo, como em [Volumes do MySQL e do Valkey](#volumes-do-mysql-e-do-valkey).
-4. Suba o ambiente e atualize as dependências:
+
+3. Suba o ambiente e atualize as dependências:
 
     ```bash
     docker compose up -d --build --wait
     docker compose exec app composer install
-    docker compose exec app npm install
+    docker compose exec app npm ci
     docker compose exec app npx playwright install chromium
     ```
 
 A imagem antiga `sail-8.4/app` é compartilhada por todos os projetos que ainda usam o Sail nessa máquina. Só remova (`docker image rm sail-8.4/app`) se nenhum outro projeto precisar dela.
-
-## Volumes do MySQL e do Valkey
-
-Os dados ficam nos volumes `mysql-data` e `valkey-data`. O serviço de cache continua se chamando `redis` (`REDIS_HOST=redis`), mas usa a imagem do [Valkey](https://valkey.io), compatível com o driver `redis` do Laravel.
-
-Projetos criados antes dessa mudança usavam `sail-mysql` e `sail-redis`. Se o seu projeto ainda tem o volume do MySQL, copie os dados **antes** de subir o ambiente. Se o `docker compose up` rodar antes da cópia, o MySQL é inicializado vazio no volume novo. Os dados do Redis não são copiados: são só cache, e o Valkey não lê o formato gravado pelo Redis 8.
-
-```bash
-# veja o prefixo dos volumes antigos (normalmente o nome da pasta do projeto)
-docker volume ls --filter name=sail-
-
-PROJETO=nome-do-projeto
-
-docker compose down
-docker compose create mysql
-docker run --rm -v ${PROJETO}_sail-mysql:/from:ro -v ${PROJETO}_mysql-data:/to --entrypoint sh valkey/valkey:8-alpine -c 'cp -a /from/. /to/'
-docker compose up -d --wait
-```
-
-O `docker compose create` cria o volume novo sem iniciar o MySQL. A cópia preserva dono e permissões dos arquivos, e os volumes antigos não são alterados.
-
-Se o ambiente já subiu com os volumes novos vazios, rode `docker compose down`, remova o volume novo (`docker volume rm ${PROJETO}_mysql-data`) e repita os comandos acima.
-
-Depois de conferir que os dados estão lá, remova os volumes antigos:
-
-```bash
-docker volume rm ${PROJETO}_sail-mysql ${PROJETO}_sail-redis
-```
-
-O volume `redis-data`, usado antes da troca para o Valkey, também pode ser removido: `docker volume rm ${PROJETO}_redis-data`.
 
 ## Conheça nossa família
 
@@ -388,12 +372,6 @@ O volume `redis-data`, usado antes da troca para o Valkey, também pode ser remo
 - [Banners](https://github.com/agenciafmd/filament-banners)
 - [Email](https://github.com/agenciafmd/filament-postal)
 - [e mais](https://github.com/agenciafmd?utf8=%E2%9C%93&q=filament-&type=&language=)
-
-## Requisitos do projeto
-
-- Versão do PHP: **^8.5**
-- Versão do Laravel: **13**
-- Versão do Node: **24+**
 
 ## Licença
 
