@@ -28,7 +28,7 @@
         "rollup-plugin-critical": "^1.0.18",
         "sass": "^1.108.2",
         "sharp": "^0.35.5",
-        "vite": "^8.3.8",
+        "vite": "^8.4.0",
         "vite-plugin-webfont-dl": "^3.14.1"
     },
     "dependencies": {
@@ -39,7 +39,7 @@
         "infinite-scroll": "^5.0.0",
         "share-api-polyfill": "^1.1.1",
         "sweetalert2": "^11.26.26",
-        "swiper": "^14.4.0",
+        "swiper": "^14.5.0",
         "tom-select": "^2.7.0",
         "vlitejs": "^8.1.1",
         "wow.js": "^1.2.2"

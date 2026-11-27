@@ -130,10 +130,10 @@ Do not commit populated environment files or hard-code credentials. Read environ
 
 ## Audit dependencies
 
-Run `vendor/bin/sail composer audit` regularly and in continuous integration. Review findings for exploitability and update or mitigate affected packages promptly.
+Run `docker compose exec app composer audit` regularly and in continuous integration. Review findings for exploitability and update or mitigate affected packages promptly.
 
 ```bash
-vendor/bin/sail composer audit
+docker compose exec app composer audit
 ```
 
 ## Encrypt sensitive attributes when appropriate

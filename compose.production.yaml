@@ -1,0 +1,92 @@
+services:
+    app:
+        image: '${COMPOSE_PROJECT_NAME}-app:production'
+        build:
+            context: .
+            dockerfile: .docker/runtime/8.5/Dockerfile
+            target: production
+        depends_on: !override
+            - redis
+            - mysql
+        env_file:
+            -   path: .env
+                required: true
+        environment: !override
+            APP_ENV: production
+            APP_DEBUG: 'false'
+            LOG_CHANNEL: stderr
+        ports: !override
+            - '${APP_PORT:-8081}:8080'
+        volumes: !override
+            - 'storage-app:/var/www/html/storage/app'
+        logging:
+            options:
+                max-size: '10m'
+                max-file: '3'
+    queue:
+        image: '${COMPOSE_PROJECT_NAME}-queue:production'
+        build:
+            context: .
+            dockerfile: .docker/runtime/8.5/Dockerfile
+            target: production
+        depends_on: !override
+            - redis
+            - mysql
+        command: !override ['php', '/var/www/html/artisan', 'queue:work', '--tries=3', '--delay=5', '--timeout=60', '--queue=high,default,low']
+        stop_grace_period: 70s
+        healthcheck:
+            test: !override ['CMD', 'healthcheck-queue']
+        env_file:
+            -   path: .env
+                required: true
+        environment: !override
+            APP_ENV: production
+            APP_DEBUG: 'false'
+            LOG_CHANNEL: stderr
+            AUTORUN_ENABLED: 'false'
+        volumes: !override
+            - 'storage-app:/var/www/html/storage/app'
+        logging:
+            options:
+                max-size: '10m'
+                max-file: '3'
+    scheduler:
+        image: '${COMPOSE_PROJECT_NAME}-scheduler:production'
+        build:
+            context: .
+            dockerfile: .docker/runtime/8.5/Dockerfile
+            target: production
+        depends_on: !override
+            - redis
+            - mysql
+        env_file:
+            -   path: .env
+                required: true
+        environment: !override
+            APP_ENV: production
+            APP_DEBUG: 'false'
+            LOG_CHANNEL: stderr
+            AUTORUN_ENABLED: 'false'
+        volumes: !override
+            - 'storage-app:/var/www/html/storage/app'
+        logging:
+            options:
+                max-size: '10m'
+                max-file: '3'
+    mysql:
+        ports: !reset [ ]
+        logging:
+            options:
+                max-size: '10m'
+                max-file: '3'
+    redis:
+        ports: !reset [ ]
+        logging:
+            options:
+                max-size: '10m'
+                max-file: '3'
+    mailpit:
+        profiles: ['dev']
+volumes:
+    storage-app:
+        driver: local

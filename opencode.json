@@ -5,7 +5,12 @@
             "type": "local",
             "enabled": true,
             "command": [
-                "vendor/bin/sail",
+                "docker",
+                "compose",
+                "exec",
+                "-T",
+                "app",
+                "php",
                 "artisan",
                 "boost:mcp"
             ]

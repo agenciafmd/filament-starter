@@ -11,7 +11,7 @@
         "agenciafmd/filament-admix",
         "filament/filament"
     ],
-    "sail": true,
+    "sail": false,
     "skills": [
         "infer-conventions",
         "laravel-best-practices",

@@ -1,0 +1,37 @@
+# Segredos e controle de versão
+.env*
+**/.git
+
+# Dependências do host: a imagem de produção instala as próprias
+vendor
+node_modules
+
+# Arquivos que não rodam em produção
+tests
+.github
+.claude
+.ai
+*.md
+_ide_helper*.php
+phpstan.neon
+rector.php
+pint.json
+phpunit.xml
+
+# Estado local do desenvolvimento
+bootstrap/cache/*
+public/hot
+public/storage
+public/page-cache
+storage/logs/*
+storage/framework/cache/*
+storage/framework/sessions/*
+storage/framework/testing/*
+storage/framework/views/*
+storage/app/public/*
+storage/app/private/*
+storage/clockwork/*
+
+# Mantém a estrutura de diretórios versionada
+!bootstrap/cache/.gitignore
+!storage/**/.gitignore

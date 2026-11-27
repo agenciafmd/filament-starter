@@ -15,7 +15,7 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(static function (Middleware $middleware): void {
         $middleware->trustProxies(at: '*');
         $middleware->trustHosts(at: [
-            'filament.local',
+            '^localhost$',
         ]);
         $middleware->encryptCookies(except: [
             'cid',
