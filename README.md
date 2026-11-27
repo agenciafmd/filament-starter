@@ -191,7 +191,7 @@ docker compose up -d --wait
 
 ### Configuração em runtime
 
-Na imagem de produção, toda a configuração vem de variáveis de ambiente (`APP_KEY`, banco, cache etc.). Ao subir, o container `app` cria o link do `storage`, roda as migrações (`php artisan migrate --force`) e roda o `php artisan optimize`, que gera os caches de config, rotas, views, eventos e do Filament. Os containers `queue` e `scheduler` sobem com `AUTORUN_ENABLED=false`, para que só o `app` rode as migrações.
+Na imagem de produção, toda a configuração vem de variáveis de ambiente (`APP_KEY`, banco, cache etc.). Ao subir, o container `app` cria o link do `storage`, roda as migrações (`php artisan migrate --force`) e roda o `php artisan optimize`, que gera os caches de config, rotas, views, eventos e do Filament. Os containers `queue` e `scheduler` sobem com `AUTORUN_ENABLED=false`, para que só o `app` rode as migrações. Ao parar, o `queue` tem 70 segundos (`stop_grace_period`) para terminar o job em andamento, um pouco mais que o `--timeout=60` do worker.
 
 A homologação usa a mesma imagem de produção, com o `compose.production.yaml`. As migrações rodam ao subir, mas o `optimize` e os caches não. Defina no `.env` da homologação, que o `compose.production.yaml` repassa ao container:
 

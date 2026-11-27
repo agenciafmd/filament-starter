@@ -35,6 +35,7 @@ services:
             - redis
             - mysql
         command: !override ['php', '/var/www/html/artisan', 'queue:work', '--tries=3', '--delay=5', '--timeout=60', '--queue=high,default,low']
+        stop_grace_period: 70s
         healthcheck:
             test: !override ['CMD', 'healthcheck-queue']
         env_file:
