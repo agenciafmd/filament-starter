@@ -284,8 +284,8 @@ Pontos de atenção:
 ## Checklist de frontend
 
 ```bash
-vendor/bin/sail npm run build
-vendor/bin/sail npm run checklist-frontend
+docker compose exec app npm run build
+docker compose exec app npm run checklist-frontend
 ```
 
 Verifica os itens revisados antes de entregar o site. Ele confere as páginas de `views/html`, a mesma lista do CSS crítico. Precisa do app no ar e de um build, e não roda com o `npm run dev` ligado. Na primeira execução, instala o Firefox e o WebKit (o motor do Safari) do Playwright.

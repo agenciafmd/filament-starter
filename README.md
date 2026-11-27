@@ -125,9 +125,9 @@ docker compose exec app php artisan migrate:fresh --seed
 Com o banco alimentado, instale as dependências do front-end e gere os assets:
 
 ```bash
-sail npm ci
-sail npm run build
-sail npm run build:filament
+docker compose exec app npm ci
+docker compose exec app npm run build
+docker compose exec app npm run build:filament
 ```
 
 ## Banco não encontrado?
@@ -163,7 +163,7 @@ As páginas com a middleware `turbo` são gravadas em `public/page-cache` e serv
 Alterações feitas pelo console (seeders, imports, filas) não limpam o cache. Nesse caso, rode:
 
 ```bash
-sail artisan page-cache:clear
+docker compose exec app php artisan page-cache:clear
 ```
 
 ## Onde configuro o GTM, o Analytics, o Search Console, o Pixel da Meta e os scripts?
