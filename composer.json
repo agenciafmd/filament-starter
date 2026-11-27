@@ -52,7 +52,8 @@
         "pestphp/pest-plugin-laravel": "^5.0.1",
         "pestphp/pest-plugin-rector": "^5.0.7",
         "pestphp/pest-plugin-type-coverage": "^5.1.1",
-        "phpstan/extension-installer": "^1.4.3"
+        "phpstan/extension-installer": "^1.4.3",
+        "roave/security-advisories": "dev-latest"
     },
     "autoload": {
         "psr-4": {
@@ -145,6 +146,15 @@
             "pestphp/pest-plugin": true,
             "php-http/discovery": true,
             "phpstan/extension-installer": true
+        },
+        "policy": {
+            "cooldown": {
+                "period": "1 day",
+                "ignore": [
+                    "agenciafmd/*",
+                    "roave/security-advisories"
+                ]
+            }
         }
     },
     "minimum-stability": "dev",
