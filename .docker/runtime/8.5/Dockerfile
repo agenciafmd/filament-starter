@@ -25,9 +25,9 @@ RUN apt-get update \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-# Binários usados pelo spatie/image-optimizer na otimização das imagens enviadas
+# Binários usados na otimização das imagens (spatie/image-optimizer) e dos vídeos (pbmedia/laravel-ffmpeg) enviados
 RUN apt-get update \
-    && apt-get install -y --no-install-recommends jpegoptim optipng pngquant gifsicle webp libavif-bin \
+    && apt-get install -y --no-install-recommends jpegoptim optipng pngquant gifsicle webp libavif-bin ffmpeg \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 

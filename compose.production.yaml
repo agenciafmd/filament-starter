@@ -36,8 +36,8 @@ services:
                 condition: service_healthy
             mysql:
                 condition: service_healthy
-        command: !override ['php', '/var/www/html/artisan', 'queue:work', '--tries=3', '--delay=5', '--timeout=60', '--queue=high,default,low']
-        stop_grace_period: 70s
+        command: !override ['php', '/var/www/html/artisan', 'queue:work', '--tries=3', '--delay=5', '--timeout=600', '--queue=high,default,low']
+        stop_grace_period: 610s
         healthcheck:
             test: !override ['CMD', 'healthcheck-queue']
         env_file:

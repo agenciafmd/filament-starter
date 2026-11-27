@@ -30,7 +30,7 @@ services:
     queue:
         image: '${COMPOSE_PROJECT_NAME}-queue:local'
         build: *build
-        command: ['php', '/var/www/html/artisan', 'queue:listen', '--tries=3', '--delay=5', '--timeout=60', '--queue=high,default,low']
+        command: ['php', '/var/www/html/artisan', 'queue:listen', '--tries=3', '--delay=5', '--timeout=600', '--queue=high,default,low']
         stop_signal: SIGTERM
         restart: unless-stopped
         healthcheck:
