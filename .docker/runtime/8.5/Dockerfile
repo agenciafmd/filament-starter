@@ -25,6 +25,12 @@ RUN apt-get update \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
+# Binários usados pelo spatie/image-optimizer na otimização das imagens enviadas
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends jpegoptim optipng pngquant gifsicle webp libavif-bin \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
+
 RUN install-php-extensions intl imagick bcmath sockets
 
 COPY .docker/runtime/8.5/php.ini /usr/local/etc/php/conf.d/zzz-app.ini
