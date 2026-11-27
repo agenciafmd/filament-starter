@@ -27,6 +27,8 @@ RUN apt-get update \
 
 RUN install-php-extensions intl imagick bcmath sockets
 
+COPY .docker/runtime/8.5/php.ini /usr/local/etc/php/conf.d/zzz-app.ini
+
 USER www-data
 
 # Desenvolvimento: código via bind mount, Node, Playwright e xdebug
