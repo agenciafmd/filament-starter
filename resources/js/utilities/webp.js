@@ -69,7 +69,7 @@ const convertImages = async (sourceDir) => {
         results.forEach((result, index) => {
             if (result.status === "rejected") {
                 console.error(
-                    `❌  Error converting ${files[index]}`,
+                    `\x1b[31m✗\x1b[0m Error converting ${files[index]}`,
                     result.reason,
                 );
             }
@@ -80,10 +80,13 @@ const convertImages = async (sourceDir) => {
         ).length;
 
         console.log(
-            `✅  Images Converted Successfully in ${sourceDir} (${converted} converted, ${files.length - converted} unchanged)`,
+            `\x1b[32m✓\x1b[0m Images Converted Successfully in ${sourceDir} (${converted} converted, ${files.length - converted} unchanged)`,
         );
     } catch (error) {
-        console.error(`❌  Error converting images in ${sourceDir}`, error);
+        console.error(
+            `\x1b[31m✗\x1b[0m Error converting images in ${sourceDir}`,
+            error,
+        );
     }
 };
 
@@ -94,7 +97,10 @@ const getDirectories = async (sourceDir) => {
             .filter((entry) => entry.isDirectory())
             .map((entry) => path.join(sourceDir, entry.name));
     } catch (error) {
-        console.error(`❌  Error reading directories in ${sourceDir}`, error);
+        console.error(
+            `\x1b[31m✗\x1b[0m Error reading directories in ${sourceDir}`,
+            error,
+        );
         return [];
     }
 };
@@ -111,8 +117,8 @@ const processDirectories = async () => {
 
 processDirectories()
     .then(() => {
-        console.log("✅  Images Converted Successfully!");
+        console.log("\x1b[32m✓\x1b[0m Images Converted Successfully!");
     })
     .catch((error) => {
-        console.error("❌  Error processing directories:", error);
+        console.error("\x1b[31m✗\x1b[0m Error processing directories:", error);
     });

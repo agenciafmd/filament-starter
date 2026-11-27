@@ -62,11 +62,11 @@ async function generateManifest() {
 
         writeFileSync(outputPath, JSON.stringify(manifest, null, 2), "utf8");
         console.log(
-            `✅  PWA manifest successfully generated! File path: ${outputPath}`,
+            `\x1b[32m✓\x1b[0m PWA manifest successfully generated! File path: ${outputPath}`,
         );
     } catch (error) {
         console.error(
-            `⚠️  Oops! Something went wrong while generating the manifest: ${error.message}`,
+            `\x1b[31m✗\x1b[0m Oops! Something went wrong while generating the manifest: ${error.message}`,
         );
     }
 }
