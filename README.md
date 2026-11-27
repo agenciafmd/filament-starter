@@ -223,6 +223,62 @@ Para migrar para o [Laravel Octane](https://laravel.com/docs/octane), o código 
 2. versione o `public/frankenphp-worker.php` (o instalador o coloca no `.gitignore`);
 3. troque o comando do container por `php artisan octane:start --server=frankenphp --port=8080 --caddyfile=/etc/frankenphp/Caddyfile`. No desenvolvimento, acrescente `--watch` para o worker recarregar quando o código mudar (precisa do pacote `chokidar` no npm).
 
+## PHP e Caddy
+
+Os dois arquivos ficam em `.docker/runtime/8.5/` e são copiados no estágio `base` do Dockerfile, então valem para o desenvolvimento e para a produção. Qualquer mudança neles exige rebuild:
+
+```bash
+docker compose up -d --build --wait
+```
+
+### php.ini
+
+O `php.ini` é copiado como `/usr/local/etc/php/conf.d/zzz-app.ini` e lido depois dos arquivos da imagem. Use-o só para diretivas que a serversideup não expõe como variável de ambiente.
+
+Para as diretivas comuns, prefira as [variáveis da serversideup](https://serversideup.net/open-source/docker-php/docs/reference/environment-variable-specification), que podem mudar por ambiente sem rebuild: no `.env` do servidor (o `compose.production.yaml` repassa ao container) ou no `environment` do `compose.yaml`.
+
+| Variável | Diretiva | Padrão |
+|---|---|---|
+| `PHP_MEMORY_LIMIT` | `memory_limit` | 256M |
+| `PHP_UPLOAD_MAX_FILE_SIZE` | `upload_max_filesize` | 100M |
+| `PHP_POST_MAX_SIZE` | `post_max_size` | 100M |
+| `PHP_MAX_EXECUTION_TIME` | `max_execution_time` | 0 |
+| `PHP_MAX_INPUT_VARS` | `max_input_vars` | 1000 |
+
+Para conferir o valor em uso:
+
+```bash
+docker compose exec app php -i | grep memory_limit
+```
+
+### app.caddyfile
+
+O `app.caddyfile` é copiado para `/etc/frankenphp/caddyfile-server.d/` e importado dentro do bloco do site, como o `server { }` do nginx. O Caddyfile padrão da imagem (`/etc/frankenphp/Caddyfile`, dentro do container) já faz:
+
+- compressão zstd, br e gzip;
+- `X-Frame-Options`, `X-Content-Type-Options` e `Referrer-Policy`, e remove `Server` e `X-Powered-By`;
+- cache de 1 ano para css, js, imagens e fontes;
+- redirect de `/index.php/caminho` para `/caminho`.
+
+O `app.caddyfile` acrescenta:
+
+- **page cache**: serve o HTML gerado pelo `silber/page-cache` (usado pelo `laravel-turbo`) sem passar pelo PHP, só em `GET` e `HEAD`;
+- **index.php**: redireciona qualquer `index.php` (`/index.php`, `/blog/index.php`) para o caminho sem ele;
+- **PDF**: cache de 1 ano, como os outros estáticos;
+- **cabeçalhos de segurança**, só com `APP_ENV=production` no container (produção e homologação), para não bloquear o Vite no desenvolvimento: `Content-Security-Policy`, `Strict-Transport-Security` e `Permissions-Policy`. Com os cabeçalhos da imagem, são os seis que o [securityheaders.com](https://securityheaders.com) avalia.
+
+A CSP é montada a partir das variáveis do bloco `vars`, uma por diretiva (`csp_script`, `csp_style`, `csp_font` etc.). Para liberar um domínio, acrescente-o na variável certa. Os domínios variam por projeto, então revise as variáveis em cada cliente.
+
+O `'unsafe-eval'` no `csp_script` é necessário: sem ele, o Alpine do Livewire e do Filament não funciona. Por causa dele e do `'unsafe-inline'`, o securityheaders.com dá nota A, e não A+.
+
+O `Permissions-Policy` usa `(self)`, que já é o padrão dos navegadores, então não muda o comportamento do site. Para bloquear um recurso que o projeto não usa, troque por `()`, por exemplo `camera=()`.
+
+Para conferir os cabeçalhos com a stack de produção no ar (troque `8081` pela porta do `APP_PORT`):
+
+```bash
+curl -sI http://localhost:8081/ | grep -iE "content-security|strict-transport|permissions-policy"
+```
+
 ## Agentes de IA (Laravel Boost)
 
 O `AGENTS.md` e as skills em `.claude/skills` e `.github/skills` são gerados pelo Laravel Boost já com os comandos `docker compose exec app ...`. Os arquivos que controlam isso são versionados:
