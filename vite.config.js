@@ -96,17 +96,18 @@ const refreshPaths = [
 // BUILD INFRASTRUCTURE: no need to change it
 // =====================================================================
 
-const { APP_URL } = loadEnv(
+const { APP_URL, VITE_PORT } = loadEnv(
     process.env.NODE_ENV,
     process.cwd(),
     ['VITE', 'APP'],
 );
 
 const DEFAULT_URL = 'http://localhost';
+const DEFAULT_VITE_PORT = 5181;
 const url = APP_URL ? new URL(APP_URL) : new URL(DEFAULT_URL);
-// Without the port on purpose: the build runs inside the Sail container, where the app listens on port 80
+// Inside the container Caddy (FrankenPHP) listens on 8080, so the Dockerfile sets CRITICAL_URL
 // (the APP_URL port, e.g. 8081, only exists on the host)
-const CRITICAL_URL = `${ url.protocol }//${ url.hostname }`;
+const CRITICAL_URL = process.env.CRITICAL_URL ?? `${ url.protocol }//${ url.hostname }`;
 
 const purgeCheckPaths = [
   'packages/agenciafmd/frontend/resources/views/**/*.php',
@@ -159,6 +160,16 @@ const assetFolders = {
 };
 
 export default defineConfig({
+  // The dev server runs inside the container: listen on every interface, on the port compose.yaml publishes,
+  // and point the HMR client to the host
+  server: {
+    host: '0.0.0.0',
+    port: Number(VITE_PORT ?? DEFAULT_VITE_PORT),
+    strictPort: true,
+    hmr: {
+      host: 'localhost',
+    },
+  },
   plugins: [
     laravel({
       input: entries,
