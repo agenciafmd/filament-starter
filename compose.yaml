@@ -23,9 +23,10 @@ services:
             - '.:/var/www/html'
             - '/tmp/.X11-unix:/tmp/.X11-unix:rw'
         depends_on:
-            - redis
-            - mysql
-            - mailpit
+            redis:
+                condition: service_healthy
+            mysql:
+                condition: service_healthy
     queue:
         image: '${COMPOSE_PROJECT_NAME}-queue:local'
         build: *build
@@ -38,9 +39,10 @@ services:
         volumes:
             - '.:/var/www/html'
         depends_on:
-            - redis
-            - mysql
-            - mailpit
+            redis:
+                condition: service_healthy
+            mysql:
+                condition: service_healthy
     scheduler:
         image: '${COMPOSE_PROJECT_NAME}-scheduler:local'
         build: *build
@@ -53,9 +55,10 @@ services:
         volumes:
             - '.:/var/www/html'
         depends_on:
-            - redis
-            - mysql
-            - mailpit
+            redis:
+                condition: service_healthy
+            mysql:
+                condition: service_healthy
     mysql:
         image: 'mysql:8.4'
         restart: unless-stopped
