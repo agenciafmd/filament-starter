@@ -28,6 +28,7 @@ RUN apt-get update \
 RUN install-php-extensions intl imagick bcmath sockets
 
 COPY .docker/runtime/8.5/php.ini /usr/local/etc/php/conf.d/zzz-app.ini
+COPY .docker/runtime/8.5/app.caddyfile /etc/frankenphp/caddyfile-server.d/app.caddyfile
 
 USER www-data
 

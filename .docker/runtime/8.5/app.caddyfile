@@ -1,0 +1,65 @@
+# Diretivas do Caddy próprias da aplicação, importadas dentro do bloco do site.
+#
+# A imagem serversideup já faz, por padrão (veja /etc/frankenphp/Caddyfile no container):
+# - compressão zstd, br e gzip;
+# - X-Frame-Options, X-Content-Type-Options e Referrer-Policy, e remove Server e X-Powered-By;
+# - cache de 1 ano para css, js, imagens e fontes;
+# - redirect de /index.php/caminho para /caminho.
+#
+# Cabeçalho próprio (o defer aplica depois da resposta do PHP, sem duplicar):
+# header {
+# 	defer
+# 	Permissions-Policy "camera=(), microphone=(), geolocation=()"
+# }
+
+# Content-Security-Policy, montada a partir das variáveis abaixo. Para liberar um domínio,
+# acrescente-o na diretiva certa. Só vale em produção e homologação (APP_ENV=production no
+# container), para não bloquear o Vite do desenvolvimento.
+vars {
+	csp_script "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.google-analytics.com https://www.googletagmanager.com https://fmd-whatsapp.vercel.app https://connect.facebook.net https://*.force.com https://*.salesforceliveagent.com https://tag.goadopt.io"
+	csp_style "style-src 'self' 'unsafe-inline' https://fonts.gstatic.com https://fonts.googleapis.com https://service.force.com https://fonts.bunny.net"
+	csp_font "font-src 'self' data: https://fonts.gstatic.com https://fonts.googleapis.com https://fonts.bunny.net"
+	csp_media "media-src 'self'"
+	csp_frame "frame-src 'self' https://www.googletagmanager.com https://www.youtube.com https://www.facebook.com https://service.force.com"
+	csp_connect "connect-src 'self' https://www.google-analytics.com https://disclaimer-api.goadopt.io"
+	csp_object "object-src 'self'"
+}
+
+@production expression {env.APP_ENV} == "production"
+header @production {
+	defer
+	Content-Security-Policy "{vars.csp_script}; {vars.csp_style}; {vars.csp_font}; {vars.csp_media}; {vars.csp_frame}; {vars.csp_connect}; {vars.csp_object}"
+	Strict-Transport-Security "max-age=31536000; includeSubDomains"
+	# Valor neutro: (self) já é o padrão dos navegadores para esses recursos, então nada muda no
+	# comportamento. Serve para o cabeçalho aparecer nas verificações de segurança dos clientes.
+	Permissions-Policy "geolocation=(self), camera=(self), microphone=(self)"
+}
+
+# PDF com cache longo, como os outros estáticos
+@pdf path *.pdf
+header @pdf Cache-Control "public, max-age=31536000"
+
+# Redireciona qualquer index.php (/index.php, /blog/index.php) para o caminho sem ele, evitando
+# conteúdo duplicado. O caminho antes e depois do index.php não pode começar com "/", "\" ou
+# espaço, para o Location relativo não virar outro host.
+@indexphp-any {
+	method GET HEAD
+	path_regexp indexphpany ^(/(?:[^/\x5c\s][^\x00-\x1f\x7f]*/)?)index\.php(?:/([^/\x5c\s][^\x00-\x1f\x7f]*)?)?$
+}
+redir @indexphp-any {re.indexphpany.1}{re.indexphpany.2}{?query} 301
+
+# Page cache (silber/page-cache, usado pelo laravel-turbo): serve o HTML gerado sem passar pelo PHP.
+# Só GET e HEAD, porque o file_server responde 405 aos outros métodos.
+@pagecache-home {
+	method GET HEAD
+	path /
+	file /page-cache/pc__index__pc.html
+}
+rewrite @pagecache-home /page-cache/pc__index__pc.html
+
+@pagecache {
+	method GET HEAD
+	not path /
+	file /page-cache{path}.html /page-cache{path}.json
+}
+rewrite @pagecache {file_match.relative}
