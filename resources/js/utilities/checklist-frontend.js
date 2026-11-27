@@ -3,7 +3,7 @@
  *
  *   vendor/bin/sail npm run checklist-frontend
  *
- * Needs the app running (Sail) and a build (`npm run build`). Each page of views/html (the same
+ * Needs the app running (docker compose) and a build (`npm run build`). Each page of views/html (the same
  * list as the critical css) is opened in Chromium, Firefox and WebKit (Safari's engine).
  * The terminal shows ✓ / ⚠ / ✗ per item and the exit code is 1 when something fails.
  * The report (screenshots, Lighthouse) is written to public/checklist-frontend/ (ignored by git)
@@ -73,9 +73,10 @@ const appUrl = new URL(
         .APP_URL || "http://localhost",
 );
 
-// Same url as the critical css (vite.config.js): without the port, because the checklist runs
-// inside the Sail container, where the app listens on port 80
-const getBaseUrl = () => `${appUrl.protocol}//${appUrl.hostname}`;
+// Same url as the critical css (vite.config.js): the checklist runs inside the container, where Caddy
+// (FrankenPHP) listens on 8080, so the Dockerfile sets CRITICAL_URL
+const getBaseUrl = () =>
+    process.env.CRITICAL_URL ?? `${appUrl.protocol}//${appUrl.hostname}`;
 
 // The report as the host sees it: APP_URL with its port (e.g. http://localhost:8081)
 const getReportUrl = () =>

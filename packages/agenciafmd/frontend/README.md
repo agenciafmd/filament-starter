@@ -334,8 +334,8 @@ Bloco "PROJECT SETTINGS" de `resources/js/utilities/checklist-frontend.js`:
 
 As notas variam entre execuções e entre ambientes, então a do checklist pode diferir da do DevTools:
 
-- o checklist roda no container, num Chromium limpo, direto na porta 80;
-- o DevTools roda no seu Chrome, pela porta do Docker, com extensões, outras abas e o próprio DevTools disputando CPU (compare numa janela anônima, com "Simulated throttling" marcado);
+- o checklist roda no container, num Chromium limpo, direto na porta 8080 (`CRITICAL_URL`);
+- o DevTools roda no seu Chrome, pela porta do `APP_PORT`, com extensões, outras abas e o próprio DevTools disputando CPU (compare numa janela anônima, com "Simulated throttling" marcado);
 - localmente nada é comprimido e o `livewire.js` é o de debug.
 
 A referência final é o [PageSpeed Insights](https://pagespeed.web.dev/) em staging ou produção.

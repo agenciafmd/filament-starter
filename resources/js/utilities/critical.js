@@ -184,7 +184,7 @@ function onlyPageStylesheet(bundle) {
 // ---------------------------------------------------------------------------------------------
 
 /**
- * - App down (CI, composer setup, Sail stopped): warns and returns false.
+ * - App down (CI, composer setup, containers stopped): warns and returns false.
  *   The critical css of the last build stays as it is.
  * - App up but a page doesn't answer 200: stops the build. A 3xx (production redirects /html/)
  *   or an error page would become that page's critical css.
