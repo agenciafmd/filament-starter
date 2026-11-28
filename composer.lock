@@ -12,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/agenciafmd/filament-admix.git",
-                "reference": "2d62b8c888ead9f98578dc234e8f7c4fd2f5ce4f"
+                "reference": "e53c66f63c31983467d465b54329c241a13389ae"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/agenciafmd/filament-admix/zipball/2d62b8c888ead9f98578dc234e8f7c4fd2f5ce4f",
-                "reference": "2d62b8c888ead9f98578dc234e8f7c4fd2f5ce4f",
+                "url": "https://api.github.com/repos/agenciafmd/filament-admix/zipball/e53c66f63c31983467d465b54329c241a13389ae",
+                "reference": "e53c66f63c31983467d465b54329c241a13389ae",
                 "shasum": ""
             },
             "require": {
@@ -67,8 +67,8 @@
                 "issues": "https://github.com/agenciafmd/filament-admix/issues",
                 "source": "https://github.com/agenciafmd/filament-admix/tree/master"
             },
-            "time": "2026-11-25T18:09:22+00:00",
-            "published-time": "2026-11-25T18:15:56+00:00"
+            "time": "2026-11-28T00:26:24+00:00",
+            "published-time": "2026-11-28T02:19:44+00:00"
         },
         {
             "name": "agenciafmd/filament-leads",
@@ -226,7 +226,7 @@
         },
         {
             "name": "agenciafmd/frontend",
-            "version": "dev-main",
+            "version": "dev-master",
             "dist": {
                 "type": "path",
                 "url": "packages/agenciafmd/frontend",
