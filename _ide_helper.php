@@ -26268,6 +26268,37 @@ namespace Livewire {
             }
     }
 
+namespace ProtoneMedia\LaravelFFMpeg\Support {
+    /**
+     * @method static \ProtoneMedia\LaravelFFMpeg\MediaOpener fromDisk($disk)
+     * @method static \ProtoneMedia\LaravelFFMpeg\MediaOpener fromFilesystem(\Illuminate\Contracts\Filesystem\Filesystem $filesystem)
+     * @method static \ProtoneMedia\LaravelFFMpeg\MediaOpener open($path)
+     * @method static \ProtoneMedia\LaravelFFMpeg\MediaOpener openUrl($path, array $headers = [])
+     * @method static \ProtoneMedia\LaravelFFMpeg\MediaOpener cleanupTemporaryFiles()
+     * @see \ProtoneMedia\LaravelFFMpeg\MediaOpener
+     */
+    class FFMpeg {
+        /**
+         * @static
+         */
+        public static function new()
+        {
+            /** @var \ProtoneMedia\LaravelFFMpeg\Support\MediaOpenerFactory $instance */
+            return $instance->new();
+        }
+
+        /**
+         * @static
+         */
+        public static function dynamicHLSPlaylist()
+        {
+            /** @var \ProtoneMedia\LaravelFFMpeg\Support\MediaOpenerFactory $instance */
+            return $instance->dynamicHLSPlaylist();
+        }
+
+            }
+    }
+
 namespace Illuminate\Http {
     /**
      */
@@ -35295,6 +35326,7 @@ namespace  {
     class Clockwork extends \Clockwork\Support\Laravel\Facade {}
     class Mcp extends \Laravel\Mcp\Facades\Mcp {}
     class Livewire extends \Livewire\Livewire {}
+    class FFMpeg extends \ProtoneMedia\LaravelFFMpeg\Support\FFMpeg {}
 }
 
 
