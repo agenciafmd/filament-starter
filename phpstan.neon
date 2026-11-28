@@ -24,6 +24,21 @@ parameters:
 
     level: max
 
+    # Plugins e models de pacotes opcionais: quando o pacote não está instalado (ex.: no CI), a classe não existe.
+    # O admix ignora os plugins ausentes e o PageCacheEventSubscriber só usa o nome da classe nos eventos.
+    ignoreErrors:
+        -
+            identifier: class.notFound
+            paths:
+                - config/filament-admix.php
+                - packages/agenciafmd/frontend/src/Listeners/PageCacheEventSubscriber.php
+            reportUnmatched: false
+        -
+            identifier: argument.type
+            message: '#expects class-string<Illuminate\\Database\\Eloquent\\Model>, string given#'
+            path: packages/agenciafmd/frontend/src/Listeners/PageCacheEventSubscriber.php
+            reportUnmatched: false
+
     parseModelCastsMethod: true
 
     tmpDir: /tmp/phpstan
