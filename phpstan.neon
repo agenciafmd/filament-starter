@@ -13,8 +13,14 @@ parameters:
         - routes
 
     excludePaths:
-        - packages/*/*/tests/*
-        - */resources/boost/*
+        analyseAndScan:
+            - packages/*/*/tests/*
+            - */resources/boost/*
+        # Clones locais dos pacotes, que são analisados nos próprios repositórios: ficam fora da análise, mas
+        # continuam no scan, para que o config e o frontend, que referenciam as classes deles, sigam resolvendo.
+        analyse:
+            - packages/agenciafmd/filament-*
+            - packages/agenciafmd/laravel-*
 
     level: max
 
